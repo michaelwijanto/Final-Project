@@ -1,5 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User } = requrie("../models");
+const { User} = require('../models/index')
 
 class UserController {
   static async postRegister(req, res, next) {
