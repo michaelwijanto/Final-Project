@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Content.belongsTo(models.Level);
+      Content.belongsTo(models.Level)
+      Content.hasMany(models.UserContent)
     }
   }
   Content.init(
@@ -22,43 +23,41 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Youtube URL cannot be empty" },
         },
       },
-      description: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        validate: {
-          notNull: { msg: "Description Required" },
-          notEmpty: { msg: "Description cannot be empty" },
-        },
-      },
-      LevelId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        validate: {
-          notNull: { msg: "Level Id Required" },
-          notEmpty: { msg: "Level cannot be empty" },
-        },
-      },
-      likes: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        validate: {
-          notNull: { msg: "Likes Required" },
-          notEmpty: { msg: "Likes cannot be empty" },
-        },
-      },
-      title: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        validate: {
-          notNull: { msg: "Title Required" },
-          notEmpty: { msg: "Title  cannot be empty" },
-        },
-      },
+    description: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+      validate: {
+        notNull: {msg: "Description Required"},
+        notEmpty: {msg: "Description cannot be empty"}
+      }
     },
-    {
-      sequelize,
-      modelName: "Content",
-    }
-  );
+    LevelId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {msg: "Level Id Required"},
+        notEmpty: {msg: "Level cannot be empty"}
+      }
+    },
+    likes: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      validate: {
+        notNull: {msg: "Likes Required"},
+        notEmpty: {msg: "Likes cannot be empty"}
+      }
+    },
+    title: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {msg: "Title Required"},
+        notEmpty: {msg: "Title  cannot be empty"}
+      }
+    },
+  }, {
+    sequelize,
+    modelName: 'Content',
+  });
   return Content;
 };
