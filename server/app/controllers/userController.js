@@ -9,18 +9,14 @@ class UserController {
       let created = await User.create(newUser);
       res.status(201).json({ fullName: created.fullName, email: created, role: created.user, isRegister: created.isRegister });
     } catch (err) {
-      if (err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstaintError")
-        res.status(400).json({ message: err.errors[0].message });
-      else {
-        res.status(500).json(err);
-      }
+      next(err);
     }
   }
 
   static async postLogin(req, res, next) {
     try {
       const { email, password } = req.body;
-      if (!email || !password) throw { name: "required" };
+      if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
       if (!user || !compare(password, user.password)) {
         throw { name: "Invalid" };
@@ -36,13 +32,7 @@ class UserController {
       const token = sign(payload);
       res.status(200).json(token);
     } catch (err) {
-      if (err.name === "required") {
-        res.status(400).json({ message: "Email or Password is required" });
-      } else if (err.name === "Invalid") {
-        res.status(401).json({ message: "Invalid email/password" });
-      } else {
-        res.status(500).json(err);
-      }
+      next(err);
     }
   }
 
