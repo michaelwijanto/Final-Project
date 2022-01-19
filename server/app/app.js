@@ -9,4 +9,4 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use("/", router)
 
-module.exports = app
+module.exports = app;
