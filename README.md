@@ -18,8 +18,8 @@
 [ ] Update subscription & levelId in UserProfile
 
 # Whisnu Budi
-[ ] CRUD Contents
-[ ] Seeding Contents
+[v] CRUD Contents
+[v] Seeding Contents
 
 # Arie Sastra
 [v] User Seeder
