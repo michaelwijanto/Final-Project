@@ -48,6 +48,16 @@ class UserController {
       next(err);
     }
   }
+
+  static async patchUser(req, res, next) {
+    let { isRegister } = req.body;
+    const { id } = req.params;
+    try {
+      const patchedUser = await User.update({ isRegister }, { where: { id }, returning: true });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = UserController;
