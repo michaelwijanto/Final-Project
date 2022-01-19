@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Content extends Model {
     /**
@@ -11,49 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Content.hasMany(models.User)
-      Content.belongsTo(models.Level)
+      Content.belongsTo(models.Level);
     }
   }
-  Content.init({
-    youtubeUrl: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Youtube URL Required"}
-      }
+  Content.init(
+    {
+      youtubeUrl: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Youtube URL Required" },
+        },
+      },
+      description: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Description Required" },
+        },
+      },
+      LevelId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: { msg: "Level Id Required" },
+        },
+      },
+      likes: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: { msg: "Likes Required" },
+        },
+      },
+      title: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Title Required" },
+        },
+      },
     },
-    description: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Description Required"}
-      }
-    },
-    LevelId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {msg: "Level Id Required"}
-      }
-    },
-    likes: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {msg: "Likes Required"}
-      }
-    },
-    title: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Title Required"}
-      }
-    },
-  }, {
-    sequelize,
-    modelName: 'Content',
-  });
+    {
+      sequelize,
+      modelName: "Content",
+    }
+  );
   return Content;
 };
