@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "user1",
+      "fullName": "User 1",
+      "isRegister": "false",
+      "role": "user"
+    },
+    {
+      "email": "user2@gmail.com",
+      "password": "user2@gmail.com",
+      "fullName": "user2@gmail.com",
+      "id": 2,
+      "isRegister": "true"
+    },
+    {
+      "email": "user3@gmail.com",
+      "password": "user3@gmail.com",
+      "fullName": "user3@gmail.com",
+      "id": 3,
+      "isRegister": "true"
+    },
+    {
+      "email": "user3@gmail.com",
+      "password": "user3@gmail.com",
+      "fullName": "user3@gmail.com",
+      "id": 4,
+      "isRegister": "true"
+    },
+    {
+      "email": "user5@gmail.com",
+      "password": "user5@gmail.com",
+      "fullName": "user5@gmail.com",
+      "id": 5,
+      "isRegister": "true"
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 6,
+      "isRegister": "true"
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 7
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 8
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 9
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 10
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 11
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 12
+    },
+    {
+      "email": "user6@gmail.com",
+      "password": "user6@gmail.com",
+      "fullName": "user6@gmail.com",
+      "id": 13
+    }
+  ]
+}
