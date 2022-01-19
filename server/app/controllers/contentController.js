@@ -1,4 +1,4 @@
-const { Content,Level} = require('../models/index')
+const { Content, Level} = require('../models/index')
 
 
 const getContents = async (req,res,next) => {
@@ -44,10 +44,15 @@ const getContentsId = async (req,res,next) => {
 const addContetnts = async (req,res,next) => {
     try {
         const {youtubeUrl,description,title,LevelId,likes  } = req.body
-        const result = await Content.create({youtubeUrl,description,title,LevelId,likes: 0})
+        const result = await Content.create({
+            youtubeUrl,
+            description,
+            title,
+            LevelId,
+            likes: 0
+        })
 
         res.status(201).json(result)
-
     } catch (err) {
         next(err)
     }
@@ -57,7 +62,13 @@ const editContents = async (req,res,next) => {
     try {
         
         const { id } = req.params
-        const {youtubeUrl,description,title,LevelId,likes } = req.body
+        const {
+            youtubeUrl,
+            description,
+            title,
+            LevelId,
+            likes
+        } = req.body
        
         const findContent = await Content.findByPk(id)
         if (!findContent) {
@@ -95,4 +106,10 @@ const deleteContents= async (req,res,next) => {
    }
 }
 
-module.exports = {getContents,addContetnts,editContents,deleteContents,getContentsId}
+module.exports = {
+    getContents,
+    addContetnts,
+    editContents,
+    deleteContents,
+    getContentsId
+}

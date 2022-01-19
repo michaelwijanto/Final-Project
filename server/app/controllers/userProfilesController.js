@@ -117,57 +117,6 @@ class userProfilesController {
     }
   }
 
-  static async updateLevel(req, res, next) {
-    try {
-      const userId = req.user.id;
-
-      const findLevel = await UserProfile.findOne({
-        where: {
-          UserId: userId,
-        },
-      });
-
-      let message;
-      let code;
-
-      if (findLevel.LevelId === 3) {
-        code = 200;
-        message = `Congrats! You reach maximum Level!`;
-      } else {
-        if (findLevel.LevelId === 2) {
-          await UserProfile.update(
-            {
-              LevelId: 3,
-            },
-            {
-              where: {
-                UserId: userId,
-              },
-            }
-          );
-          code = 200;
-          message = `Congrats, You did It! You level up Hard Level!`;
-        } else {
-          await UserProfile.update(
-            {
-              LevelId: 2,
-            },
-            {
-              where: {
-                UserId: userId,
-              },
-            }
-          );
-          code = 200;
-          message = `Congrats, You did It! You level up Medium Level!`;
-        }
-      }
-
-      res.status(code).json({ message });
-    } catch (err) {
-      next(err);
-    }
-  }
 }
 
 module.exports = userProfilesController;

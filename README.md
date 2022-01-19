@@ -8,26 +8,30 @@
 [ ] Orchestrator GraphQL & Redis (Tondiki)
 
 # Michael Wijanto
-
 [v] Sign Up with Hash Password (Role= user)
 [v] Sign In with Hash password, send JWT token
 [v] Authentication
 [ ] Validation/Konfirmasi Valid Email
 
-# Gregorius Andre
+# NOTE
+saya nambahin constrain UserContent di Model user
 
-[v] HIT API, Create Log with Arie, and Create UserProfile
-[v] Update subscription & levelId in UserProfile
+# Gregorius Andre
+[ ] HIT API, Create Log with Arie, and Create UserProfile
+[ ] Update subscription & levelId in UserProfile
 
 # Whisnu Budi
-
 [v] CRUD Contents
 [v] Seeding Contents
 
 # Arie Sastra
-
-[ ] Create Log with Andre
-[ ] CRUD UserContent
+[v] User Seeder
+[v] lever Seeder
+[v] Create Log with Andre
+[v] Create User Content
+[v] Get User Content
+[v] Get User Content Details
+[v] Put User Content
 
 # Tondiki Andika
 

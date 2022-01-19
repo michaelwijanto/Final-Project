@@ -12,10 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 const userRouter = require("./routes/userRouter");
 const userProfileRouter = require("./routes/userProfileRouter");
 const contentRouter = require("./routes/contentRouter")
+const userContent = require('./routes/UserContentRouter')
 
 app.use("/api/users", userRouter);
 app.use("/api/user-profiles", userProfileRouter);
 app.use("/api/contents",contentRouter)
+app.use("/api/user-contents",userContent)
 
 // Error Handler
 const errorHandler = require("./middlewares/errorHandler");
