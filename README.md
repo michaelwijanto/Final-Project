@@ -11,7 +11,7 @@
 
 [v] Sign Up with Hash Password (Role= user)
 [v] Sign In with Hash password, send JWT token
-[ ] Authentication
+[v] Authentication
 [ ] Validation/Konfirmasi Valid Email
 
 # Gregorius Andre
