@@ -2,6 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
+
     "database": "Active8",
     "host": "localhost",
     "dialect": "postgres"

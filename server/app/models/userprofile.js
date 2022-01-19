@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     dateBirth: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       validate: {
         notNull: {msg: "Date Birth Required"}
       }
