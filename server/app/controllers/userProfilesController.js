@@ -21,7 +21,7 @@ class userProfilesController {
 
         let LevelId = 1
         
-        const postLog = await Log.create({
+        await Log.create({
           UserId,
           height,
           weight,
