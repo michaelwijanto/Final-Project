@@ -54,6 +54,7 @@ class UserController {
     const { id } = req.params;
     try {
       const patchedUser = await User.update({ isRegister }, { where: { id }, returning: true });
+      res.status(200).json(patchedUser[1][0]);
     } catch (err) {
       next(err);
     }
