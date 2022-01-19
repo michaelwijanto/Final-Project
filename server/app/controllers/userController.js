@@ -1,6 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User} = require('../models/index')
-
+const { User } = require("../models/index");
 
 class UserController {
   static async postRegister(req, res, next) {
@@ -8,7 +7,9 @@ class UserController {
     let newUser = { email, password, fullname, role: "user", isRegister: "false" };
     try {
       let created = await User.create(newUser);
-      res.status(201).json({ fullName: created.fullName, email: created, role: created.user, isRegister: created.isRegister });
+      res
+        .status(201)
+        .json({ fullName: created.fullName, email: created.email, role: created.user, isRegister: created.isRegister });
     } catch (err) {
       next(err);
     }
@@ -45,6 +46,15 @@ class UserController {
         },
       });
       res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async patchUser(req, res, next) {
+    let { isRegister } = req.body;
+    const { id } = req.params;
+    try {
+      const patchedUser = await User.update({ isRegister }, { where: { id }, returning: true });
     } catch (err) {
       next(err);
     }
