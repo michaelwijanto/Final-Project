@@ -1,10 +1,10 @@
 const userProfileRouter = require("express").Router();
-const userProfileController = require("../controllers/userProfileController");
+const userProfilesController = require("../controllers/userProfilesController");
 
-userProfileRouter.post("/", userProfileController.createUserProfile);
+userProfileRouter.post("/", userProfilesController.createUserProfile);
 
-userProfileRouter.patch("/updateSubs", userProfileController.updateSubscription);
+userProfileRouter.patch("/updateSubs", userProfilesController.updateSubscription);
 
-userProfileRouter.patch("/updateLevel", userProfileController.updateLevel);
+userProfileRouter.patch("/updateLevel", userProfilesController.updateLevel);
 
 module.exports = userProfileRouter;
