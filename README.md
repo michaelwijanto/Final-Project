@@ -16,13 +16,13 @@
 
 # Gregorius Andre
 
-[ ] HIT API, Create Log with Arie, and Create UserProfile
-[ ] Update subscription & levelId in UserProfile
+[v] HIT API, Create Log with Arie, and Create UserProfile
+[v] Update subscription & levelId in UserProfile
 
 # Whisnu Budi
 
-[ ] CRUD Contents
-[ ] Seeding Contents
+[v] CRUD Contents
+[v] Seeding Contents
 
 # Arie Sastra
 
