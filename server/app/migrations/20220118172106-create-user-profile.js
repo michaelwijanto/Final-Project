@@ -29,7 +29,7 @@ module.exports = {
       },
       dateBirth: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       LevelId: {
         allowNull: false,
