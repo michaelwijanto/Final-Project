@@ -13,6 +13,9 @@
 [v] Authentication
 [ ] Validation/Konfirmasi Valid Email
 
+# NOTE
+saya nambahin constrain UserContent di Model user
+
 # Gregorius Andre
 [ ] HIT API, Create Log with Arie, and Create UserProfile
 [ ] Update subscription & levelId in UserProfile
@@ -28,7 +31,7 @@
 [v] Create User Content
 [v] Get User Content
 [v] Get User Content Details
-[ ] Put User Content
+[v] Put User Content
 
 # Tondiki Andika
 

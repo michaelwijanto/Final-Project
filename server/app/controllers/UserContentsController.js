@@ -5,6 +5,8 @@ const {
   UserProfile
 } = require('../models')
 
+const userProfilesController = require("./userProfilesController")
+
 class UserContentsController{
   static async postUserContent(req, res, next) {
     try {
@@ -28,6 +30,7 @@ class UserContentsController{
       next(error)
     }
   }
+
   static async getUserContent(req, res, next) {
     try {
       const userContent = await UserContent.findAll({
@@ -53,6 +56,7 @@ class UserContentsController{
       next(error)
     }
   }
+
   static async getUserContentDetail(req, res, next) {
     try {
       const { id } = req.params
@@ -84,9 +88,10 @@ class UserContentsController{
       next(error)
     }
   }
+
   static async putUserContent(req, res, next) {
     try {
-      const { ContentId } = req.body
+      const { id: ContentId } = req.params
       // const { id: UserID } = req.user
       const UserId = 1
 
@@ -103,7 +108,7 @@ class UserContentsController{
           UserId
         }
       })
-
+     
       // Ambil Total Content Base current user level
       const LevelId = levelUser.LevelId
       const content = await Content.findAll({
@@ -112,25 +117,75 @@ class UserContentsController{
         }
       })
       const lastContentId = content[content.length-1].id
-      
+
+      let message;
+      let code;
+
+      // compare content base User content
       if (lastContentId !== findContent.id) {
         // Update content
-        const updateContent = await UserContent.update({
+        await UserContent.update({
           status : 'finish'
         }, {
           where: {
-            id
+            ContentId
           }
         })
+        code = 200;
+        message = `Congrats! You finished! Go to the next exercise..`;
+      } else {
+        // Update Status User Content
+        await UserContent.update({
+          status : 'finish'
+        }, {
+          where: {
+            ContentId
+          }
+        })
+
+        // Find Level
+        const findLevel = await UserProfile.findOne({
+          where: {
+            UserId
+          },
+        });
+
+        // Condition
+        if (findLevel.LevelId === 3) {
+          code = 200;
+          message = `Congrats! You reach maximum Level!`;
+        } else {
+          if (findLevel.LevelId === 2) {
+            await UserProfile.update(
+              {
+                LevelId: 3,
+              },
+              {
+                where: {
+                  UserId,
+                },
+              }
+            );
+            code = 200;
+            message = `Congrats, You did It! You level up to Hard Level!`;
+          } else {
+            await UserProfile.update(
+              {
+                LevelId: 2,
+              },
+              {
+                where: {
+                  UserId,
+                },
+              }
+            );
+            code = 200;
+            message = `Congrats, You did It! You level up to Medium Level!`;
+          }
+        }
       }
-
-      // compare content base User content
-
-      // if total User Content === content, update levelId Users Profile
-      
-
-
-
+         
+      res.status(code).json({ message });
     } catch (error) {
       next(error)
     }
