@@ -32,7 +32,7 @@ const getContentsId = async (req,res,next) => {
         }
     )
     if (!result) {
-        throw { name: "Content Not Found"}
+        throw { name: "Content_Not_Found"}
     }
         res.status(200).json(result)
         
@@ -61,7 +61,7 @@ const editContents = async (req,res,next) => {
        
         const findContent = await Content.findByPk(id)
         if (!findContent) {
-            throw { name: "Content Not Found"}
+            throw { name: "Content_Not_Found"}
         } 
       
         const result = await Content.update({
@@ -83,7 +83,7 @@ const deleteContents= async (req,res,next) => {
         const {id} = req.params
         const findContent= await Content.findByPk(id)
         if (!findContent) {
-            throw { name: "Content Not Found"}
+            throw { name: "Content_Not_Found"}
         } 
         const result = await Content.destroy({
             where:{id}
@@ -91,8 +91,7 @@ const deleteContents= async (req,res,next) => {
         res.status(200).json({msg:`id${findContent.id} success deleted`})
    } catch (error) {
        next(error)
-       console.log(error.name)
-       res.status(400).json(error.name)
+     
    }
 }
 
