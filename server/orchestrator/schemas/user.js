@@ -15,26 +15,15 @@ const typeDefs = gql`
     message: String
   }
 
-  type AcessToken {
+  type AccessToken {
     access_token: String
-  }
-
-  type UserProfile {
-    id: ID,
-    UserId: ID,
-    phoneNumber: String
-    subscription: String
-    gender: String
-    dateBirth: String
-    LevelId: String
-    goals: String
-    createdAt: String
-    updatedAt: String
   }
 
 
   type Query {
-    getUsers: [User]
+    getUsers(
+      access_token: String
+    ): [User]
   }
 
 
@@ -47,14 +36,15 @@ const typeDefs = gql`
     signInUser(
       email: String
       password: String
-    ): Message
+    ): AccessToken
   }
   `;
   
 const resolvers = {
   Query: {
-    getUsers: async () => {
+    getUsers: async (_, args) => {
       try {
+        await redis.del("users")
         const usersCache = await redis.get("users");
         if (usersCache) {
           console.log("udah ada");
@@ -62,7 +52,8 @@ const resolvers = {
         } else {
           console.log("blum ada");
           const { data: users } = await axios.get(
-            "http://localhost:3000/users/"
+            "http://localhost:3000/api/users/",
+            {headers: {access_token: args.access_token}}
           );
           await redis.set("users", JSON.stringify(users));
           return users;
@@ -88,9 +79,9 @@ const resolvers = {
     },
     signInUser: async (_, args) => {
       try {
-        const {data: user} = await axios.post("http://localhost:3000/api/users/login", args);
-        console.log({user});
-        return { message: "Sign Up Succesful" };
+        const {data} = await axios.post("http://localhost:3000/api/users/login", args);
+        console.log(data);
+        return data
       } catch (err) {
         console.log({ err });
         return err;

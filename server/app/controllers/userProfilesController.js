@@ -19,6 +19,18 @@ class userProfilesController {
         goals,
       } = req.body;
 
+      console.log({
+        height,
+        weight,
+        activityLevel,
+        UserId,
+        phoneNumber,
+        subscription,
+        gender,
+        dateBirth,
+        goals,
+      });
+
       let LevelId = 1;
 
       await Log.create(
@@ -111,63 +123,12 @@ class userProfilesController {
         }
       );
 
-      res.status(201).json(`Thank you for your subsciption`);
+      res.status(201).json({message: `Thank you for your subsciption`});
     } catch (err) {
       next(err);
     }
   }
 
-  static async updateLevel(req, res, next) {
-    try {
-      const userId = req.user.id;
-
-      const findLevel = await UserProfile.findOne({
-        where: {
-          UserId: userId,
-        },
-      });
-
-      let message;
-      let code;
-
-      if (findLevel.LevelId === 3) {
-        code = 200;
-        message = `Congrats! You reach maximum Level!`;
-      } else {
-        if (findLevel.LevelId === 2) {
-          await UserProfile.update(
-            {
-              LevelId: 3,
-            },
-            {
-              where: {
-                UserId: userId,
-              },
-            }
-          );
-          code = 200;
-          message = `Congrats, You did It! You level up Hard Level!`;
-        } else {
-          await UserProfile.update(
-            {
-              LevelId: 2,
-            },
-            {
-              where: {
-                UserId: userId,
-              },
-            }
-          );
-          code = 200;
-          message = `Congrats, You did It! You level up Medium Level!`;
-        }
-      }
-
-      res.status(code).json({ message });
-    } catch (err) {
-      next(err);
-    }
-  }
 }
 
 module.exports = userProfilesController;

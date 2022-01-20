@@ -1,6 +1,6 @@
 const { compare } = require("../helpers/bcrypt");
 const { User} = require('../models/index')
-
+const {sign} = require("../helpers/jwt")
 
 class UserController {
   static async postRegister(req, res, next) {
@@ -33,7 +33,7 @@ class UserController {
         isRegister: user.isRegister,
       };
       const token = sign(payload);
-      res.status(200).json(token);
+      res.status(200).json({access_token: token});
     } catch (err) {
       next(err);
     }

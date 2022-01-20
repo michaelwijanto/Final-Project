@@ -14,7 +14,7 @@ module.exports = {
       },
       description: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       LevelId: {
         allowNull: false,
@@ -26,6 +26,10 @@ module.exports = {
       likes: {
         allowNull: false,
         type: Sequelize.INTEGER
+      },
+      statusLike: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       title: {
         allowNull: false,
