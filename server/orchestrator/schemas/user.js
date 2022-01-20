@@ -10,24 +10,13 @@ const typeDefs = gql`
     isRegister: String
     role: String
   }
+
   type Message {
     message: String
   }
+
   type AcessToken {
     access_token: String
-  }
-  type MacroValue {
-    protein: Int
-    fat: Int
-    carbs: Int
-  }
-
-  type Macro {
-    calorie: Int
-    balanced: MacroValue
-    lowfat: MacroValue
-    lowcarbs: MacroValue
-    highprotein: MacroValue
   }
 
   type UserProfile {
@@ -43,36 +32,25 @@ const typeDefs = gql`
     updatedAt: String
   }
 
+
   type Query {
     getUsers: [User]
   }
 
 
   type Mutation {
-    postUser(
+    signUpUser(
       email: String
       password: String
       fullName: String
     ): Message
-    loginUser(
+    signInUser(
       email: String
       password: String
-    ): User
-    patchSubscriptionUser(
-      userId: ID
-      isRegister: String
     ): Message
-    postMacro(
-      age: Int
-      gender: String
-      height: Int
-      weight: Int
-      activitylevel: String
-      goal: String
-    ): Macro
   }
-`;
-
+  `;
+  
 const resolvers = {
   Query: {
     getUsers: async () => {
@@ -84,7 +62,7 @@ const resolvers = {
         } else {
           console.log("blum ada");
           const { data: users } = await axios.get(
-            "http://localhost:3000/users"
+            "http://localhost:3000/users/"
           );
           await redis.set("users", JSON.stringify(users));
           return users;
@@ -96,58 +74,26 @@ const resolvers = {
     },
   },
   Mutation: {
-    postUser: async (_, args) => {
+    signUpUser: async (_, args) => {
       try {
         console.log(args, "<<<<<<");
-        const user = await axios.post("http://localhost:3000/users", args);
+        const {data: user} = await axios.post("http://localhost:3000/api/users/register", args);
+        console.log({user});
         await redis.del("users");
+        return { message: "Sign Up Succesful" };
+      } catch (err) {
+        console.log(err.response.data);
+        return err;
+      }
+    },
+    signInUser: async (_, args) => {
+      try {
+        const {data: user} = await axios.post("http://localhost:3000/api/users/login", args);
+        console.log({user});
         return { message: "Sign Up Succesful" };
       } catch (err) {
         console.log({ err });
         return err;
-      }
-    },
-    patchSubscriptionUser: async (_, args) => {
-      try {
-        const { isRegister, userId } = args;
-        const user = axios.patch(`http://localhost:3000/users/${userId}`, {
-          isRegister,
-        });
-        await redis.del("users");
-        return {
-          message:
-            "Thank you for your subscription, your account is upgraded to Premium now.",
-        };
-      } catch (err) {
-        console.log({ err });
-        return err;
-      }
-    },
-    postMacro: async (_, args) => {
-      try {
-        console.log({args});
-        let {data} = await axios({
-          method: "GET",
-          url: "https://fitness-calculator.p.rapidapi.com/macrocalculator",
-          params: args,
-          headers: {
-            "x-rapidapi-host": "fitness-calculator.p.rapidapi.com",
-            "x-rapidapi-key":
-              "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
-          },
-        });
-        const result = data.data
-        for(const i in result){
-          if(result[i].protein){
-            for(const j in result[i]){
-              result[i][j] = Math.floor(result[i][j])
-            }
-          } else result[i] = Math.floor(result[i])
-        }
-        return result
-      } catch (err) {
-        console.log({err});
-        return err
       }
     },
   },
