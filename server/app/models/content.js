@@ -48,6 +48,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {msg: "Likes cannot be empty"}
       }
     },
+    statusLike: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: {msg: "Status Like Required"},
+        notEmpty: {msg: "Status Like cannot be empty"}
+      }
+    },
     title: {
       allowNull: false,
       type: DataTypes.STRING,

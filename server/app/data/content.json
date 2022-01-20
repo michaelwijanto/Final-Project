@@ -5,6 +5,7 @@
         "description": "T7 Hari Bakar Lemak dengan Senam Aerobik! Cuma 15 Menit dan Cocok untuk Pemula",
         "youtubeUrl": "https://www.youtube.com/watch?v=l3Z_O2hUTM8&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=1",
         "likes": 1000,
+        "statusLike": "not like",
         "LevelId": 1
     },
     {
@@ -13,6 +14,7 @@
         "description": "7 Hari Jadwal latihan otot di rumah.",
         "youtubeUrl": "https://www.youtube.com/watch?v=lppA33-4Sdo",
         "likes": 2000,
+        "statusLike": "not like",
         "LevelId": 1
     },
     {
@@ -21,6 +23,7 @@
         "description": "7 HARIMEMBENTUK OTOT DIRUMAH TANPA ALAT SATU PUN !!!... LATIHAN CALISTHENICS UNTUK PEMULA DARI NOL",
         "youtubeUrl": "https://www.youtube.com/watch?v=JdlPviK2Dws",
         "likes": 2000,
+        "statusLike": "not like",
         "LevelId": 1
     },
     {
@@ -29,6 +32,7 @@
         "description": "7 Hari Bakar Lemak Seluruh Tubuh dengan Senam Aerobik Selama 15 Menit.",
         "youtubeUrl": "https://www.youtube.com/watch?v=q7ThUwbRfdw&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=5",
         "likes": 20000,
+        "statusLike": "not like",
         "LevelId": 2
     },
     {
@@ -37,6 +41,7 @@
         "description": "Olahraga 10 Menit Bakar Lemak Perut dan Paha Tanpa Alat | Olahraga di Rumah",
         "youtubeUrl": "https://www.youtube.com/watch?v=XNwcdekqqNA",
         "likes": 50000,
+        "statusLike": "not like",
         "LevelId": 2
     },
     {
@@ -45,6 +50,7 @@
         "description": "13 LATIHAN TERBAIK DI RUMAH TANPA ALAT GYM",
         "youtubeUrl": "https://www.youtube.com/watch?v=dZ0XZBtaASE",
         "likes": 50000,
+        "statusLike": "not like",
         "LevelId": 2
     },
     {
@@ -53,6 +59,7 @@
         "description": "7 Hari Menghilangkan Lemak dengan Senam Aerobik! Bakar Kalori Seluruh Tubuh",
         "youtubeUrl": "https://www.youtube.com/watch?v=z2E6uO9oIxM&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=7",
         "likes": 100000,
+        "statusLike": "not like",
         "LevelId": 3
     },
     {
@@ -61,6 +68,7 @@
         "description": "20 Menit Full Body Workout di Rumah",
         "youtubeUrl": "https://www.youtube.com/watch?v=WTqrBmCz2R4",
         "likes": 200000,
+        "statusLike": "not like",
         "LevelId": 3
     },
     {
@@ -69,6 +77,7 @@
         "description": "Program latihan di Gym",
         "youtubeUrl": "https://www.youtube.com/watch?v=sNgZRSSHvs4",
         "likes": 240000,
+        "statusLike": "not like",
         "LevelId": 3
     }
   ]
