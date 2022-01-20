@@ -7,7 +7,8 @@
     "db:dev": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "db:test": "NODE_ENV=test npx sequelize-cli db:migrate:undo:all && NODE_ENV=test npx sequelize-cli db:migrate",
     "start": "node bin/www",
-    "dev": "nodemon bin/www"
+    "dev": "nodemon bin/www",
+    "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +22,11 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
-    "sequelize": "^6.13.0"
+    "sequelize": "^6.13.0",
+    "supertest": "^6.2.2"
   },
   "devDependencies": {
+    "jest": "^27.4.7",
     "nodemon": "^2.0.15",
     "sequelize-cli": "^6.4.1"
   }
