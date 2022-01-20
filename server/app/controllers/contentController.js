@@ -42,13 +42,15 @@ const getContentsId = async (req,res,next) => {
 
 const addContetnts = async (req,res,next) => {
     try {
-        const {youtubeUrl,description,title,LevelId,likes  } = req.body
+        const {youtubeUrl,description,title,LevelId,likes,statusLike,imgThumbnail  } = req.body
         const result = await Content.create({
             youtubeUrl,
             description,
             title,
             LevelId,
-            likes: 0
+            likes: 0,
+            statusLike: "not like",
+            imgThumbnail
         })
 
         res.status(201).json(result)
@@ -66,7 +68,9 @@ const editContents = async (req,res,next) => {
             description,
             title,
             LevelId,
-            likes
+            likes,
+            statusLike,
+            imgThumbnail
         } = req.body
        
         const findContent = await Content.findByPk(id)
@@ -75,14 +79,14 @@ const editContents = async (req,res,next) => {
         } 
       
         const result = await Content.update({
-            youtubeUrl,description,title,LevelId,likes:0
+            youtubeUrl,description,title,LevelId,likes:0,statusLike,imgThumbnail
         },
         {
             where: {id},
             returning: true
         })
     
-        res.status(201).json(result[1][0])
+        res.status(200).json(result[1][0])
     } catch (err) {
         next(err)
     }
@@ -98,7 +102,7 @@ const deleteContents= async (req,res,next) => {
         const result = await Content.destroy({
             where:{id}
         })
-        res.status(200).json({msg:`id${findContent.id} success deleted`})
+        res.status(200).json({message:`Id ${findContent.id} success deleted`})
    } catch (error) {
        next(error)
      
@@ -148,7 +152,7 @@ const getStatus = async (req,res,next) => {
             })
         }
         console.log(result[1][0].statusLike, 'ini woy');
-            res.status(201).json(result[1][0])       
+            res.status(200).json(result[1][0])       
     } catch (err) {
         next(err)
  }
