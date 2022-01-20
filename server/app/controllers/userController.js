@@ -1,5 +1,6 @@
 const { compare } = require("../helpers/bcrypt");
 const { User } = require("../models/index");
+const { sign } = require('../helpers/jwt')
 
 class UserController {
   static async postRegister(req, res, next) {
@@ -17,6 +18,7 @@ class UserController {
 
   static async postLogin(req, res, next) {
     try {
+      console.log(req.body);
       const { email, password } = req.body;
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
@@ -32,7 +34,9 @@ class UserController {
         isRegister: user.isRegister,
       };
       const token = sign(payload);
-      res.status(200).json(token);
+      res.status(200).json({
+        access_token: token
+      });
     } catch (err) {
       next(err);
     }
@@ -50,11 +54,20 @@ class UserController {
       next(err);
     }
   }
+  
   static async patchUser(req, res, next) {
-    let { isRegister } = req.body;
-    const { id } = req.params;
     try {
-      const patchedUser = await User.update({ isRegister }, { where: { id }, returning: true });
+      let { isRegister } = req.body;
+      const { id } = req.params;
+      const patchedUser = await User.update({ 
+        isRegister 
+      }, 
+      { 
+        where: { 
+          id 
+        },
+        returning: true 
+      });
     } catch (err) {
       next(err);
     }

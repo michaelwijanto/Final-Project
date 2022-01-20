@@ -1,7 +1,7 @@
 const { Content, Level} = require('../models/index')
 
 
-const getContents = async (req,res,next) => {
+const getContents = async (req, res, next) => {
     try {
         const result = await Content.findAll({
             include: [
@@ -13,7 +13,6 @@ const getContents = async (req,res,next) => {
         })
 
         res.status(200).json(result)
-        
     } catch (error) {
         next(err)
     }

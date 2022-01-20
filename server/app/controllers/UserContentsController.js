@@ -5,15 +5,12 @@ const {
   UserProfile
 } = require('../models')
 
-const userProfilesController = require("./userProfilesController")
-
 class UserContentsController{
   static async postUserContent(req, res, next) {
     try {
-      const id = 1
+      const {id: UserId} = req.user 
       const {
         ContentId,
-        UserId = id,
         isLike = false,
         status = 'started'
       } = req.body
@@ -92,8 +89,7 @@ class UserContentsController{
   static async putUserContent(req, res, next) {
     try {
       const { id: ContentId } = req.params
-      // const { id: UserID } = req.user
-      const UserId = 1
+      const { id: UserId } = req.user
 
       const findContent = await UserContent.findOne({
         where: {
@@ -108,7 +104,7 @@ class UserContentsController{
           UserId
         }
       })
-     
+
       // Ambil Total Content Base current user level
       const LevelId = levelUser.LevelId
       const content = await Content.findAll({
@@ -117,7 +113,7 @@ class UserContentsController{
         }
       })
       const lastContentId = content[content.length-1].id
-
+      console.log(content, lastContentId);
       let message;
       let code;
 
