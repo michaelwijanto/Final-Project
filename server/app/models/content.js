@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Content.hasMany(models.User)
       Content.belongsTo(models.Level)
+      Content.hasMany(models.UserContent)
     }
   }
   Content.init({
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       validate: {
         notNull: {msg: "Description Required"},
         notEmpty: {msg: "Description cannot be empty"}
