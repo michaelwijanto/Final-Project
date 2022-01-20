@@ -1,26 +1,45 @@
 const { gql } = require("apollo-server");
-const redis = require("../redis");
 const axios = require("axios");
 
 const typeDefs = gql`
+  type Level {
+    id: ID
+    name: String
+  }
+  type UserProfile {
+    id: ID
+    UserId: ID
+    phoneNumber: String
+    subscription: String
+    gender: String
+    dateBirth: String
+    LevelId: String
+    goals: String
+    createdAt: String
+    updatedAt: String
+    Level: Level
+    User: User
+  }
 
-type UserProfile {
-  id: ID,
-  UserId: ID,
-  phoneNumber: String
-  subscription: String
-  gender: String
-  dateBirth: String
-  LevelId: String
-  goals: String
-  createdAt: String
-  updatedAt: String
-}
+  type Log {
+    id: ID
+    height: String
+    weight: String
+    activityLevel: String
+    LevelId: ID
+    UserId: ID
+    updatedAt: String
+  }
+
+  type ResponUserProfile {
+    UserProfile: UserProfile
+    Log: Log
+  }
 
   type Query {
     getUserProfile(
       access_token: String
-    ): UserProfile
+    ): ResponUserProfile
   }
 
   type Mutation {
@@ -40,7 +59,8 @@ const resolvers = {
   Query: {
     getUserProfile: async (_, args) => {
       try {
-        const {data: user} = await axios.post("http://localhost:3000/api/user-profiles", {headers: {access_token: args.access_token}});
+        const {access_token} = args
+        const {data: user} = await axios.get("http://localhost:3000/api/user-profiles", {headers: {access_token}});
         console.log(user);
         return user
       } catch (err) {
@@ -52,11 +72,10 @@ const resolvers = {
   Mutation: {
     postUserProfile: async (_, args) => {
       try {
-        args.subscription = "false"
-        args.UserId = 1
-        const {data} = await axios.post("http://localhost:3000/api/user-profiles", args);
+        const {access_token} = args
+        const {data} = await axios.post("http://localhost:3000/api/user-profiles", args, {headers: {access_token}});
         console.log(data);
-        return {message: "tes"}
+        return data
       } catch (err) {
         console.log({err});
         return err

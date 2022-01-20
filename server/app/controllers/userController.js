@@ -9,7 +9,9 @@ class UserController {
     let newUser = { email, password, fullName, role: "user", isRegister: "false" };
     try {
       let created = await User.create(newUser);
-      res.status(201).json({ fullName: created.fullName, email: created, role: created.user, isRegister: created.isRegister });
+      res
+        .status(201)
+        .json({ fullName: created.fullName, email: created.email, role: created.user, isRegister: created.isRegister });
     } catch (err) {
       next(err);
     }
@@ -17,6 +19,7 @@ class UserController {
 
   static async postLogin(req, res, next) {
     try {
+      console.log(req.body);
       const { email, password } = req.body;
       console.log({ email, password });
       if (!email || !password) throw { name: "Required" };
@@ -33,7 +36,9 @@ class UserController {
         isRegister: user.isRegister,
       };
       const token = sign(payload);
-      res.status(200).json({access_token: token});
+      res.status(200).json({
+        access_token: token
+      });
     } catch (err) {
       next(err);
     }
@@ -47,6 +52,24 @@ class UserController {
         },
       });
       res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+  
+  static async patchUser(req, res, next) {
+    try {
+      let { isRegister } = req.body;
+      const { id } = req.params;
+      const patchedUser = await User.update({ 
+        isRegister 
+      }, 
+      { 
+        where: { 
+          id 
+        },
+        returning: true 
+      });
     } catch (err) {
       next(err);
     }

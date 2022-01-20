@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Content extends Model {
     /**
@@ -15,15 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       Content.hasMany(models.UserContent)
     }
   }
-  Content.init({
-    youtubeUrl: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Youtube URL Required"},
-        notEmpty: {msg: "Youtube URL cannot be empty"}
-      }
-    },
+  Content.init(
+    {
+      youtubeUrl: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Youtube URL Required" },
+          notEmpty: { msg: "Youtube URL cannot be empty" },
+        },
+      },
     description: {
       allowNull: false,
       type: DataTypes.TEXT,

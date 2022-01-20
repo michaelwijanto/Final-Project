@@ -13,6 +13,24 @@ module.exports = {
         isRegister: "false",
         createdAt : new Date(),
         updatedAt: new Date()
+      },
+      {
+        email: "andre@mail.com",
+        password: hash("password"),
+        fullName: "Andre Gregorius",
+        role: "admin",
+        isRegister: "false",
+        createdAt : new Date(),
+        updatedAt: new Date()
+      },
+      {
+        email: "tondiki@mail.com",
+        password: hash("password"),
+        fullName: "Tondiki",
+        role: "admin",
+        isRegister: "false",
+        createdAt : new Date(),
+        updatedAt: new Date()
       }
     ]
 
