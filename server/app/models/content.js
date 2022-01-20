@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Youtube URL cannot be empty" },
         },
       },
+      imgThumbnail: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: " Image Thumbnail Required" },
+          notEmpty: { msg: " Image Thumbnail cannot be empty" },
+        },
+      },
     description: {
       allowNull: false,
       type: DataTypes.TEXT,
