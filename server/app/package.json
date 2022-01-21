@@ -6,6 +6,7 @@
   "scripts": {
     "db:dev": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "db:test": "NODE_ENV=test npx sequelize-cli db:migrate:undo:all && NODE_ENV=test npx sequelize-cli db:migrate",
+    "db:create": "NODE_ENV=test npx sequelize-cli db:create",
     "start": "node bin/www",
     "dev": "nodemon bin/www",
     "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand --verbose"
@@ -21,6 +22,7 @@
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.2",
     "pg": "^8.7.1",
     "sequelize": "^6.13.0"
   },
