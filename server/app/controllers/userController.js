@@ -18,7 +18,6 @@ class UserController {
 
   static async postLogin(req, res, next) {
     try {
-      console.log(req.body);
       const { email, password } = req.body;
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
