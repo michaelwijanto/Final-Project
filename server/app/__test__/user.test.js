@@ -4,6 +4,12 @@ const { User } = require("../models");
 const { sign } = require("../helpers/jwt");
 
 beforeAll(async () => {
+  User.destroy({
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+
   User.create({
     email: "testemail@email.com",
     password: "password",
@@ -19,14 +25,6 @@ beforeAll(async () => {
       role: res.role,
       isRegister: res.isRegister,
     });
-  });
-});
-
-afterAll(async () => {
-  User.destroy({
-    truncate: true,
-    restartIdentity: true,
-    cascade: true,
   });
 });
 
