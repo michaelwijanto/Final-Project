@@ -5,7 +5,6 @@ const {sign} = require("../helpers/jwt")
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    console.log({ email, password, fullName });
     let newUser = { email, password, fullName, role: "user", isRegister: "false" };
     try {
       let created = await User.create(newUser);
@@ -24,7 +23,6 @@ class UserController {
   static async postLogin(req, res, next) {
     try {
       const { email, password } = req.body;
-      console.log({ email, password });
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
       if (!user || !compare(password, user.password)) {

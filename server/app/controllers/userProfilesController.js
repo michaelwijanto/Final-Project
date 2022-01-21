@@ -49,7 +49,7 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-      console.log({ callBMI });
+      
       if (
         callBMI.data.data.health == "Severe Thinness" ||
         callBMI.data.data.health == "Moderate Thinness" ||
@@ -115,8 +115,6 @@ class userProfilesController {
       });
     } catch (err) {
       await t.rollback();
-
-      console.log(err, "<<<<<<<<<<<<<<<<<<<<<");
       next(err);
     }
   }

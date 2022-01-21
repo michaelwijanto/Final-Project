@@ -1,30 +1,11 @@
 const request = require("supertest");
 const app = require("../app");
-const { UserProfile, User,Level,Log } = require("../models");
+const { UserProfile, User } = require("../models");
 
 
 beforeAll(async () =>{
-  Level.bulkCreate(
-    [
-        {
-          name: "Easy",
-          createdAt: new Date(),
-          updateedAt: new Date()
-          
-        },
-        {
-          name: "Medium",
-          createdAt: new Date(),
-          updateedAt: new Date()
-        },
-        {
-            name: "Hard",
-            createdAt: new Date(),
-            updateedAt: new Date()
-        }
-     ]
-  ) 
-  User.create({
+
+  await User.create({
       email: "ariesastra@mail.com",
       password: "password",
       fullName: "Arie Sastra",
@@ -34,7 +15,7 @@ beforeAll(async () =>{
   })
   .then(()=> {
   
-    return UserProfile.create({
+    returnzzUserProfile.create({
        UserId: 1,
        phoneNumber: "08123123123",
        subscription: "false",
@@ -43,9 +24,6 @@ beforeAll(async () =>{
        LevelId: 1,
        goals: "weightlose",
      });
-  })
-  .catch((err)=>{
-    console.log(err, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> error")
   })
   
 })
@@ -65,18 +43,6 @@ beforeAll(async () =>{
     cascade: true,
     restartIdentity: true,
   });
-  await Level.destroy({
-    where: {},
-    truncate: true,
-    cascade: true,
-    restartIdentity: true,
-})
-await Log.destroy({
-  where: {},
-  truncate: true,
-  cascade: true,
-  restartIdentity: true,
-})
 })
 
 describe("GET /api/user-profiles", () => {
@@ -88,7 +54,7 @@ describe("GET /api/user-profiles", () => {
       password: "password",
      })
      .then((resp) =>{
-         
+         console.log(resp.body, ">>>>>>>>>>>>>>>>>>>>>>>>>>")
          access_token = resp.body.access_token 
            
          expect(resp.status).toBe(200)
@@ -106,51 +72,22 @@ describe("GET /api/user-profiles", () => {
 
 
   // Get User Profile
-  test("[postUserProfile - success]", (done) => {
-    request(app)
-      .post("/api/user-profiles")
-      .set("access_token", access_token)
-      .send({
-        height: "170",
-        weight: "80",
-        activityLevel: "4",
-        phoneNumber: "081123123123",
-        subscription: "false",
-        gender: "male",
-        dateBirth: "30-12-2000",
-        goals: "weightlose",
-      })
-      .then((res) => {
-        console.log(res.body, ">>>>>>>>>>>>>>>>>>>>>>>>>> ini dari post")
-        const result = res.body;
-        expect(res.status).toBe(201);
-        expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message");
-        done();
-      })
-      .catch((err) => {
-        console.log(er)
-      });
-  });
-
-
-  test("[showUserProfile - success]", (done) => {
-    request(app)
-      .get("/api/user-profiles")
-      .set("access_token", access_token)
-      .then((res) => {
-        console.log(res.body, ">>>>>>>>>>>>>>>>>>>>>>>>>> ini dari get")
-        const result = res.body;
-        expect(res.status).toBe(200);
-        expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("UserProfile")
-        // expect(result).toHaveProperty("Log")
-        done();
-      })
-      .catch((err) => {
-        console.log(err, '<<<<<<<<<<<<<<<<< error')
-      });
-  });
+  // test("[showUserProfile - success]", (done) => {
+  //   request(app)
+  //     .get("/api/user-profiles")
+  //     .set("access_token", access_token)
+  //     .then((res) => {
+  //       const result = res.body;
+  //       expect(res.status).toBe(200);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("UserProfile")
+  //       expect(result).toHaveProperty("Log")
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.data, '<<<<<<<<<<<<<<<<< error')
+  //     });
+  // });
 
 //   test("[showUserProfile - invalidToken]", (done) => {
 //     request(app)
@@ -169,6 +106,31 @@ describe("GET /api/user-profiles", () => {
 
 
 //   // Post User Profile
+//   test("[postUserProfile - success]", (done) => {
+//     request(app)
+//       .post("/api/user-profiles")
+//       .set("access_token", access_token)
+//       .send({
+//         height = "170",
+//         weight = "80",
+//         activityLevel = "4",
+//         phoneNumber = "081123123123",
+//         subscription = "false",
+//         gender = "male",
+//         dateBirth = "30-12-2000",
+//         goals = "weightlose",
+//       })
+//       .then((res) => {
+//         const result = res.body;
+//         expect(res.status).toBe(201);
+//         expect(result).toEqual(expect.any(Object));
+//         expect(result).toHaveProperty("message");
+//         done();
+//       })
+//       .catch((err) => {
+//         console.log(er)
+//       });
+//   });
 
 //   test("[postUserProfile - noAccessToken]", (done) => {
 //     request(app)

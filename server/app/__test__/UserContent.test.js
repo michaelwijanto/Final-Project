@@ -1,17 +1,141 @@
 const request = require('supertest')
 const app = require('../app')
 
-const { UserContent } = require('../models')
+const { UserContent, Content, User } = require('../models')
 
 let access_token = ''
 
 beforeAll(() => {
+  User.destroy({
+    where: {},
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  })
+
+  Content.destroy({
+    where: {},
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  })
+
   UserContent.destroy({
     where: {},
     truncate: true,
     restartIdentity: true,
     cascade: true,
   });
+
+  User.create({
+    email: "ariesastra@mail.com",
+    password: "password",
+    fullName: "Arie Sastra",
+    role: "admin",
+    isRegister: "false",
+  })
+
+  Content.bulkCreate([
+    {
+      title: "Program untuk pemula 1",
+      description: "T7 Hari Bakar Lemak dengan Senam Aerobik! Cuma 15 Menit dan Cocok untuk Pemula",
+      youtubeUrl: "https://www.youtube.com/watch?v=l3Z_O2hUTM8&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=1",
+      imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+      likes: 1000,
+      statusLike: "not like",
+      LevelId: 1,
+      createdAt: new Date(),
+      updateedAt: new Date()
+    },
+    // {
+    //   title: "Program untuk pemula 2",
+    //   description: "7 Hari Jadwal latihan otot di rumah.",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=lppA33-4Sdo",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 2000,
+    //   statusLike: "not like",
+    //   LevelId: 1,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk pemula 3",
+    //   description: "7 HARIMEMBENTUK OTOT DIRUMAH TANPA ALAT SATU PUN !!!... LATIHAN CALISTHENICS UNTUK PEMULA DARI NOL",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=JdlPviK2Dws",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 2000,
+    //   statusLike: "not like",
+    //   LevelId: 1,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Intermediete 1",
+    //   description: "7 Hari Bakar Lemak Seluruh Tubuh dengan Senam Aerobik Selama 15 Menit.",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=q7ThUwbRfdw&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=5",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 20000,
+    //   statusLike: "not like",
+    //   LevelId: 2,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Intermediete 2",
+    //   description: "Olahraga 10 Menit Bakar Lemak Perut dan Paha Tanpa Alat | Olahraga di Rumah",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=XNwcdekqqNA",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 50000,
+    //   statusLike: "not like",
+    //   LevelId: 2,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Intermediete 3",
+    //   description: "13 LATIHAN TERBAIK DI RUMAH TANPA ALAT GYM",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=dZ0XZBtaASE",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 50000,
+    //   statusLike: "not like",
+    //   LevelId: 2,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Expert 1",
+    //   description: "7 Hari Menghilangkan Lemak dengan Senam Aerobik! Bakar Kalori Seluruh Tubuh",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=z2E6uO9oIxM&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=7",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 100000,
+    //   statusLike: "not like",
+    //   LevelId: 3,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Expert 2",
+    //   description: "20 Menit Full Body Workout di Rumah",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=WTqrBmCz2R4",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 200000,
+    //   statusLike: "not like",
+    //   LevelId: 3,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // },
+    // {
+    //   title: "Program untuk Expert 3",
+    //   description: "Program latihan di Gym",
+    //   youtubeUrl: "https://www.youtube.com/watch?v=sNgZRSSHvs4",
+    //   imgThumbnail:"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
+    //   likes: 240000,
+    //   statusLike: "not like",
+    //   LevelId: 3,
+    //   createdAt: new Date(),
+    //   updateedAt: new Date()
+    // }
+  ])
 })
 
 describe("SET TOKEN", _ => {
@@ -21,7 +145,7 @@ describe("SET TOKEN", _ => {
         .post("/api/users/login")
         .send({
           email: "ariesastra@mail.com",
-          password: "password"
+          password: "password",
         })
         .then(res => {
           const result = res.body;
@@ -77,7 +201,7 @@ describe("USER CONTENT TEST", _ => {
           expect(result).toHaveProperty("message");
           done();
         })
-        .catch(error => {
+          .catch(error => {
           done(error);
         });
     });

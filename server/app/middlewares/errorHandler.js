@@ -24,7 +24,6 @@ const errorHandler = (err, req, res, next) => {
       res.status(400).json({ message: "Please fill all the blank!" });
       break;
     default:
-      console.log(err);
       res.status(500).json({ message: "Internal server error" });
       break;
   }
