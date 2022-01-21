@@ -97,13 +97,13 @@ class UserContentsController{
         }
       })
       if (!findContent) throw {name: `Content_Not_Found` }
-
       // Ambil Level
       const levelUser = await UserProfile.findOne({
         where: {
           UserId
         }
       })
+      console.log(UserId);
 
       // Ambil Total Content Base current user level
       const LevelId = levelUser.LevelId
