@@ -12,24 +12,23 @@ class userProfilesController {
         weight,
         activityLevel,
         phoneNumber,
-        subscription,
         gender,
         dateBirth,
         goals,
       } = req.body;
 
-      let LevelId = 1;
+      if (
+        !height ||
+        !weight ||
+        !activityLevel ||
+        !phoneNumber ||
+        !gender ||
+        !dateBirth ||
+        !goals
+      )
+        throw { name: "Bad_Request" };
 
-      await Log.create(
-        {
-          height,
-          weight,
-          activityLevel,
-          UserId,
-          LevelId,
-        },
-        { transaction: t }
-      );
+      let LevelId = 1;
 
       let date = dateBirth.split("-");
       const day = date[0];
@@ -50,12 +49,17 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-
-      if (callBMI.data.health == "Severe Thinness") {
+      console.log({ callBMI });
+      if (
+        callBMI.data.data.health == "Severe Thinness" ||
+        callBMI.data.data.health == "Moderate Thinness" ||
+        callBMI.data.data.health == "Mild Thinness"
+      ) {
         LevelId = 1;
-      } else if (callBMI.data.health == "Mild Thinness") {
-        LevelId = 1;
-      } else if (callBMI.data.health == "Normal") {
+      } else if (
+        callBMI.data.data.health == "Normal" ||
+        callBMI.data.data.health == "Healthy weight"
+      ) {
         LevelId = 2;
       } else {
         LevelId = 3;
@@ -65,7 +69,7 @@ class userProfilesController {
         {
           UserId,
           phoneNumber,
-          subscription,
+          subscription: "false",
           gender,
           dateBirth: birthDate,
           goals,
@@ -74,12 +78,55 @@ class userProfilesController {
         { transaction: t }
       );
 
+      // Update Log
+      await Log.create(
+        {
+          height,
+          weight,
+          activityLevel,
+          UserId,
+          LevelId,
+        },
+        { transaction: t }
+      );
+
+      await User.update(
+        {
+          isRegister: "true",
+        },
+        {
+          where: {
+            id: UserId,
+          },
+        },
+        { transaction: t, returning: true }
+      );
+
       await t.commit();
 
-      // Update Log
-      await Log.update(
+      const levelUser = await Level.findOne({
+        where: {
+          id: LevelId,
+        },
+      });
+
+      res.status(201).json({
+        message: `Your health status is ${callBMI.data.data.health}, so you will be in the ${levelUser.name} Level!`,
+      });
+    } catch (err) {
+      await t.rollback();
+
+      console.log(err, "<<<<<<<<<<<<<<<<<<<<<");
+      next(err);
+    }
+  }
+
+  static async updateSubscription(req, res, next) {
+    try {
+      const { id: UserId } = req.user;
+      await UserProfile.update(
         {
-          LevelId,
+          subscription: "true",
         },
         {
           where: {
@@ -88,37 +135,8 @@ class userProfilesController {
         }
       );
 
-      const levelUser = await Level.findOne({
-        where : {
-          id : LevelId
-        }
-      })
-  
-      res.status(201).json({
-        message: `Your health status is ${callBMI.data.health}, so you will be in the ${levelUser.name} Level!`
-      });
-    } catch (err) {
-      await t.rollback();
-      next(err);
-    }
-  }
-
-  static async updateSubscription(req, res, next) {
-    try {
-      const {id: UserId} = req.user;
-      await UserProfile.update(
-        {
-          subscription: "true",
-        },
-        {
-          where: {
-            UserId
-          },
-        }
-      );
-
-      res.status(200).json({ 
-        message : `Thank you for your subsciption` 
+      res.status(200).json({
+        message: `Thank you for your subsciption`,
       });
     } catch (err) {
       next(err);
@@ -127,36 +145,34 @@ class userProfilesController {
 
   static async getUserProfile(req, res, next) {
     try {
-      const UserId = req.user.id
-
+      const UserId = req.user.id;
       const response = await UserProfile.findOne({
         where: {
-          UserId
+          UserId,
         },
         include: [
           {
-            model : Level
+            model: Level,
           },
           {
-            model : User
-          }
-        ]
-      })
+            model: User,
+          },
+        ],
+      });
 
       const newestLog = await Log.findAll({
-        where : {
-          UserId
+        where: {
+          UserId,
         },
-        order: [['updatedAt', 'DESC']]
-      })
+        order: [["updatedAt", "DESC"]],
+      });
 
       res.status(200).json({
-        UserProfile : response,
-        Log : newestLog[0]
-      })
-
+        UserProfile: response,
+        Log: newestLog[0],
+      });
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }
