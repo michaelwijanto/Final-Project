@@ -33,6 +33,8 @@ saya nambahin constrain UserContent di Model user
 [v] Get User Content Details
 [v] Put User Content
 [v] Add Authentication to router
+[ ] UserCOntent Testing
+[ ] Loging Testing
 
 # Tondiki Andika
 
