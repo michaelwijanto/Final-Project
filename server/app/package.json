@@ -6,6 +6,7 @@
   "scripts": {
     "db:dev": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "db:test": "NODE_ENV=test npx sequelize-cli db:migrate:undo:all && NODE_ENV=test npx sequelize-cli db:migrate",
+    "db:create": "NODE_ENV=test npx sequelize-cli db:create",
     "start": "node bin/www",
     "dev": "nodemon bin/www",
     "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand"
