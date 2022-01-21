@@ -9,9 +9,13 @@ class UserController {
     let newUser = { email, password, fullName, role: "user", isRegister: "false" };
     try {
       let created = await User.create(newUser);
-      res
-        .status(201)
-        .json({ fullName: created.fullName, email: created.email, role: created.user, isRegister: created.isRegister });
+      res.status(201).json({
+        id: created.id,
+        fullName: created.fullName,
+        email: created.email,
+        role: created.role,
+        isRegister: created.isRegister,
+      });
     } catch (err) {
       next(err);
     }

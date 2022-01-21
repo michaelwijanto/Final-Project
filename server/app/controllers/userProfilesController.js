@@ -61,7 +61,6 @@ class userProfilesController {
         },
       });
       console.log({callBMI});
-
       if (callBMI.data.data.health == "Severe Thinness") {
         LevelId = 1;
       } else if (callBMI.data.data.health == "Mild Thinness") {
