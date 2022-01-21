@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { UserProfile, User,Level } = require("../models");
+const { UserProfile, User,Level,Log } = require("../models");
 
 
 beforeAll(async () =>{
@@ -71,6 +71,12 @@ beforeAll(async () =>{
     cascade: true,
     restartIdentity: true,
 })
+await Log.destroy({
+  where: {},
+  truncate: true,
+  cascade: true,
+  restartIdentity: true,
+})
 })
 
 describe("GET /api/user-profiles", () => {
@@ -100,12 +106,40 @@ describe("GET /api/user-profiles", () => {
 
 
   // Get User Profile
+  test("[postUserProfile - success]", (done) => {
+    request(app)
+      .post("/api/user-profiles")
+      .set("access_token", access_token)
+      .send({
+        height: "170",
+        weight: "80",
+        activityLevel: "4",
+        phoneNumber: "081123123123",
+        subscription: "false",
+        gender: "male",
+        dateBirth: "30-12-2000",
+        goals: "weightlose",
+      })
+      .then((res) => {
+        console.log(res.body, ">>>>>>>>>>>>>>>>>>>>>>>>>> ini dari post")
+        const result = res.body;
+        expect(res.status).toBe(201);
+        expect(result).toEqual(expect.any(Object));
+        expect(result).toHaveProperty("message");
+        done();
+      })
+      .catch((err) => {
+        console.log(er)
+      });
+  });
+
+
   test("[showUserProfile - success]", (done) => {
     request(app)
       .get("/api/user-profiles")
       .set("access_token", access_token)
       .then((res) => {
-        console.log(res.body, ">>>>>>>>>>>>>>>>>>>>>>>>>>")
+        console.log(res.body, ">>>>>>>>>>>>>>>>>>>>>>>>>> ini dari get")
         const result = res.body;
         expect(res.status).toBe(200);
         expect(result).toEqual(expect.any(Object));
@@ -135,31 +169,6 @@ describe("GET /api/user-profiles", () => {
 
 
 //   // Post User Profile
-//   test("[postUserProfile - success]", (done) => {
-//     request(app)
-//       .post("/api/user-profiles")
-//       .set("access_token", access_token)
-//       .send({
-//         height = "170",
-//         weight = "80",
-//         activityLevel = "4",
-//         phoneNumber = "081123123123",
-//         subscription = "false",
-//         gender = "male",
-//         dateBirth = "30-12-2000",
-//         goals = "weightlose",
-//       })
-//       .then((res) => {
-//         const result = res.body;
-//         expect(res.status).toBe(201);
-//         expect(result).toEqual(expect.any(Object));
-//         expect(result).toHaveProperty("message");
-//         done();
-//       })
-//       .catch((err) => {
-//         console.log(er)
-//       });
-//   });
 
 //   test("[postUserProfile - noAccessToken]", (done) => {
 //     request(app)
