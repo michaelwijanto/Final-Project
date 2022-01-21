@@ -1,118 +1,164 @@
-const { UserProfile, Log } = require('../models')
-const axios = require('axios')
+const { User, UserProfile, Log, Level } = require("../models");
+const axios = require("axios");
 const { sequelize } = require("../models");
 
 class userProfilesController {
   static async createUserProfile(req, res, next) {
     const t = await sequelize.transaction();
     try {
-        const userId = 1;
-        const {
-          height,
-          weight,
-          activityLevel,
-          UserId = userId,
-          phoneNumber,
-          subscription,
-          gender,
-          dateBirth,
-          goals
-        } = req.body
+      const { id: UserId } = req.user;
+      const {
+        height,
+        weight,
+        activityLevel,
+        phoneNumber,
+        gender,
+        dateBirth,
+        goals,
+      } = req.body;
 
-        let LevelId = 1
-        
-        await Log.create({
-          UserId,
+      let LevelId = 1;
+
+      await Log.create(
+        {
           height,
           weight,
           activityLevel,
-          UserId: userId,
+          UserId,
           LevelId,
         },
-        { transaction: t })
+        { transaction: t }
+      );
 
-        let date = dateBirth.split('-')
-        const day = date[0]
-        const month = date[1]
-        const year = date[2]
+      let date = dateBirth.split("-");
+      const day = date[0];
+      const month = date[1];
+      const year = date[2];
 
-        let today = new Date();
-        let birthDate = new Date(year, month, day);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        
-        let callBMI = await axios({
-          method: 'GET',
-          url: 'https://fitness-calculator.p.rapidapi.com/bmi',
-          params: {age, weight, height},
-          headers: {
-            'x-rapidapi-host': 'fitness-calculator.p.rapidapi.com',
-            'x-rapidapi-key': '8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca'
-          }
-        })
+      let today = new Date();
+      let birthDate = new Date(year, month, day);
+      let age = today.getFullYear() - birthDate.getFullYear();
 
-        if(callBMI.data.health == "Severe Thinness") {
-            LevelId = 1
-        } else if (callBMI.data.health == "Mild Thinness") {
-            LevelId = 1
-        } else if (callBMI.data.health == "Normal") {
-          LevelId = 2
-        } else {
-            LevelId = 3
-        }
-        
-        const postUserProfile = await UserProfile.create({
-        UserId,
-        phoneNumber,
-        subscription,
-        gender,
-        dateBirth: birthDate,
-        goals,
-        LevelId,
+      let callBMI = await axios({
+        method: "GET",
+        url: "https://fitness-calculator.p.rapidapi.com/bmi",
+        params: { age, weight, height },
+        headers: {
+          "x-rapidapi-host": "fitness-calculator.p.rapidapi.com",
+          "x-rapidapi-key":
+            "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
-        {transaction: t})
-        
-        await t.commit()
+      });
 
-        // Update Log
-        await Log.update({
-            LevelId
-        }, {
-            where : {
-                UserId : userId
-            }
-        })
+      if (callBMI.data.data.health == "Severe Thinness") {
+        LevelId = 1;
+      } else if (callBMI.data.data.health == "Mild Thinness") {
+        LevelId = 1;
+      } else if (callBMI.data.data.health == "Normal") {
+        LevelId = 2;
+      } else {
+        LevelId = 3;
+      }
 
-        res.status(201).json(postUserProfile)
+      await t.commit();
+
+      // Update Log
+      await Log.update(
+        {
+          LevelId,
+        },
+        {
+          where: {
+            UserId,
+          },
+        }
+      );
+
+      const postUserProfile = await UserProfile.create(
+        {
+          UserId,
+          phoneNumber,
+          subscription: "false",
+          gender,
+          dateBirth: birthDate,
+          goals,
+          LevelId,
+        },
+        { transaction: t }
+      );
+
+      await t.commit();
+
+      const levelUser = await Level.findOne({
+        where: {
+          id: LevelId,
+        },
+      });
+
+      res.status(201).json({
+        message: `Your health status is ${callBMI.data.data.health}, so you will be in the ${levelUser.name} Level!`,
+      });
     } catch (err) {
-        await t.rollback();
-        next(err)
+      await t.rollback();
+      next(err);
     }
   }
 
   static async updateSubscription(req, res, next) {
-      try {
-        const userId = req.user.id
-        const response = await UserProfile.update({
-          subscription : "true"
-        }, {
-          where : {
-            UserId : userId
-          }
-        })
-        
-        res.status(201).json(`Thank you for your subsciption`)
-      } catch (err) {
-          next(err)
-      }
+    try {
+      const { id: UserId } = req.user;
+      await UserProfile.update(
+        {
+          subscription: "true",
+        },
+        {
+          where: {
+            UserId,
+          },
+        }
+      );
+
+      res.status(200).json({
+        message: `Thank you for your subsciption`,
+      });
+    } catch (err) {
+      next(err);
+    }
   }
 
-  static async updateLevel(req, res, next) {
-      try {
-          
-      } catch (err) {
-          next(err)
-      }
+  static async getUserProfile(req, res, next) {
+    try {
+      const UserId = req.user.id;
+
+      const response = await UserProfile.findOne({
+        where: {
+          UserId,
+        },
+        include: [
+          {
+            model: Level,
+          },
+          {
+            model: User,
+          },
+        ],
+      });
+
+      const newestLog = await Log.findAll({
+        where: {
+          UserId,
+        },
+        order: [["updatedAt", "DESC"]],
+      });
+
+      res.status(200).json({
+        UserProfile: response,
+        Log: newestLog[0],
+      });
+    } catch (err) {
+      next(err);
+    }
   }
 }
 
-module.exports = userProfilesController
+module.exports = userProfilesController;

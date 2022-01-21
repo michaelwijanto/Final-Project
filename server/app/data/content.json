@@ -4,6 +4,7 @@
         "title": "Program untuk pemula 1",
         "description": "T7 Hari Bakar Lemak dengan Senam Aerobik! Cuma 15 Menit dan Cocok untuk Pemula",
         "youtubeUrl": "https://www.youtube.com/watch?v=l3Z_O2hUTM8&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=1",
+        "imgThumbnail":"https://i.ytimg.com/vi/l3Z_O2hUTM8/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAw6intqe7S0_0BL4_wf4j5Fo8cHQ",
         "likes": 1000,
         "statusLike": "not like",
         "LevelId": 1
@@ -13,6 +14,7 @@
         "title": "Program untuk pemula 2",
         "description": "7 Hari Jadwal latihan otot di rumah.",
         "youtubeUrl": "https://www.youtube.com/watch?v=lppA33-4Sdo",
+        "imgThumbnail":"https://i.ytimg.com/vi/lppA33-4Sdo/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCF5LuGrWCFqwhOBUsbI4yODMoy_g",
         "likes": 2000,
         "statusLike": "not like",
         "LevelId": 1
@@ -22,6 +24,7 @@
         "title": "Program untuk pemula 3",
         "description": "7 HARIMEMBENTUK OTOT DIRUMAH TANPA ALAT SATU PUN !!!... LATIHAN CALISTHENICS UNTUK PEMULA DARI NOL",
         "youtubeUrl": "https://www.youtube.com/watch?v=JdlPviK2Dws",
+        "imgThumbnail":"https://i.ytimg.com/vi/JdlPviK2Dws/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBE799FhxuDJB0_c1nA7QfgCvCYxA",
         "likes": 2000,
         "statusLike": "not like",
         "LevelId": 1
@@ -31,6 +34,7 @@
         "title": "Program untuk Intermediete 1",
         "description": "7 Hari Bakar Lemak Seluruh Tubuh dengan Senam Aerobik Selama 15 Menit.",
         "youtubeUrl": "https://www.youtube.com/watch?v=q7ThUwbRfdw&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=5",
+        "imgThumbnail":"https://i.ytimg.com/vi/q7ThUwbRfdw/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLB8OP3yK5HaMr8-xjMOIxoI5_bRUw",
         "likes": 20000,
         "statusLike": "not like",
         "LevelId": 2
@@ -40,6 +44,7 @@
         "title": "Program untuk Intermediete 2",
         "description": "Olahraga 10 Menit Bakar Lemak Perut dan Paha Tanpa Alat | Olahraga di Rumah",
         "youtubeUrl": "https://www.youtube.com/watch?v=XNwcdekqqNA",
+        "imgThumbnail":"https://i.ytimg.com/vi/XNwcdekqqNA/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAdw3OmDqFHIKChUAp5CTtdHeShJQ",
         "likes": 50000,
         "statusLike": "not like",
         "LevelId": 2
@@ -47,8 +52,9 @@
     {
         "id": 6,
         "title": "Program untuk Intermediete 3",
-        "description": "13 LATIHAN TERBAIK DI RUMAH TANPA ALAT GYM",
-        "youtubeUrl": "https://www.youtube.com/watch?v=dZ0XZBtaASE",
+        "description": "7 hari Olahraga Di Rumah Membakar Lemak ",
+        "youtubeUrl": "https://www.youtube.com/watch?v=94B1VMOAWIU",
+        "imgThumbnail":"https://i.ytimg.com/vi/94B1VMOAWIU/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAtl1zniTfhkje_8DUEE9y-5KqHWQ",
         "likes": 50000,
         "statusLike": "not like",
         "LevelId": 2
@@ -58,6 +64,7 @@
         "title": "Program untuk Expert 1",
         "description": "7 Hari Menghilangkan Lemak dengan Senam Aerobik! Bakar Kalori Seluruh Tubuh",
         "youtubeUrl": "https://www.youtube.com/watch?v=z2E6uO9oIxM&list=PLFCuzxdXaCc38p2skVkR6d8rl2nEdz6IB&index=7",
+        "imgThumbnail":"https://i.ytimg.com/vi/z2E6uO9oIxM/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDrW86r6V5eJyfjuSKekdYg_LlTCA",
         "likes": 100000,
         "statusLike": "not like",
         "LevelId": 3
@@ -67,6 +74,7 @@
         "title": "Program untuk Expert 2",
         "description": "20 Menit Full Body Workout di Rumah",
         "youtubeUrl": "https://www.youtube.com/watch?v=WTqrBmCz2R4",
+        "imgThumbnail":"https://i.ytimg.com/vi/JfsO27BuP6U/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDZ1B5hzZxFqFyJtf3mPoPKFGPW9A",
         "likes": 200000,
         "statusLike": "not like",
         "LevelId": 3
@@ -76,6 +84,7 @@
         "title": "Program untuk Expert 3",
         "description": "Program latihan di Gym",
         "youtubeUrl": "https://www.youtube.com/watch?v=sNgZRSSHvs4",
+        "imgThumbnail":"https://i.ytimg.com/vi/sNgZRSSHvs4/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLD0ioCn-NvkXaxpT9Kjctsyw6J94Q",
         "likes": 240000,
         "statusLike": "not like",
         "LevelId": 3
