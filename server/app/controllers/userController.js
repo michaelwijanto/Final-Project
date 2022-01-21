@@ -1,11 +1,44 @@
 const { compare } = require("../helpers/bcrypt");
-const { User} = require('../models/index')
-const {sign} = require("../helpers/jwt")
+const { User } = require("../models/index");
+const { sign } = require("../helpers/jwt");
+const nodemailer = require("nodemailer");
 
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    let newUser = { email, password, fullName, role: "user", isRegister: "false" };
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "tokomovieh8@gmail.com",
+        pass: "ToKoMovieH8!",
+      },
+    });
+    let notif = {
+      from: "tokomovieh8@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "Succesfull Buy  ✔", // Subject line
+      text: `Hello ${email}, Thank you for buy our stuff!
+This is your invoice
+You have bought these stuff :
+`,
+    };
+
+    transporter.sendMail(notif, (err, data) => {
+      if (err) {
+        console.log(`Email not send`);
+      } else {
+        console.log(`Email has been sent`);
+      }
+    });
+
+    console.log("LOLOS");
+    let newUser = {
+      email,
+      password,
+      fullName,
+      role: "user",
+      isRegister: "false",
+    };
     try {
       let created = await User.create(newUser);
       res.status(201).json({
@@ -38,7 +71,7 @@ class UserController {
       };
       const token = sign(payload);
       res.status(200).json({
-        access_token: token
+        access_token: token,
       });
     } catch (err) {
       next(err);
@@ -57,20 +90,22 @@ class UserController {
       next(err);
     }
   }
-  
+
   static async patchUser(req, res, next) {
     try {
       let { isRegister } = req.body;
       const { id } = req.params;
-      const patchedUser = await User.update({ 
-        isRegister 
-      }, 
-      { 
-        where: { 
-          id 
+      const patchedUser = await User.update(
+        {
+          isRegister,
         },
-        returning: true 
-      });
+        {
+          where: {
+            id,
+          },
+          returning: true,
+        }
+      );
     } catch (err) {
       next(err);
     }
