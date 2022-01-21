@@ -1,11 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const { User } = require("../models");
-<<<<<<< HEAD
-const { sign } = require("../helpers/jwt")
-=======
 const { sign } = require("../helpers/jwt");
->>>>>>> db49ee44f6e3bcb45b0031a7e205a21625aae8b4
 
 beforeAll(async () => {
   User.create({
