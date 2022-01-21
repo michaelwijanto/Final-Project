@@ -9,7 +9,7 @@
     "db:create": "NODE_ENV=test npx sequelize-cli db:create",
     "start": "node bin/www",
     "dev": "nodemon bin/www",
-    "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand"
+    "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand --verbose"
   },
   "keywords": [],
   "author": "",
@@ -24,12 +24,12 @@
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.7.2",
     "pg": "^8.7.1",
-    "sequelize": "^6.13.0",
-    "supertest": "^6.2.2"
+    "sequelize": "^6.13.0"
   },
   "devDependencies": {
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2"
   }
 }

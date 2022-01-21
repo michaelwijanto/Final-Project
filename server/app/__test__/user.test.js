@@ -1,8 +1,15 @@
 const request = require("supertest");
 const app = require("../app");
 const { User } = require("../models");
+const { sign } = require("../helpers/jwt");
 
 beforeAll(async () => {
+  User.destroy({
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+
   User.create({
     email: "testemail@email.com",
     password: "password",
@@ -18,14 +25,6 @@ beforeAll(async () => {
       role: res.role,
       isRegister: res.isRegister,
     });
-  });
-});
-
-afterAll(async () => {
-  User.destroy({
-    truncate: true,
-    restartIdentity: true,
-    cascade: true,
   });
 });
 
@@ -65,9 +64,10 @@ describe("POST /api/users/register", () => {
       })
       .then((response) => {
         const result = response.body;
+        console.log(result);
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Email Required");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Email Required"]));
         done();
       })
       .catch((err) => {
@@ -87,7 +87,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Email cannot be empty");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Email cannot be empty", "Invalid email format"]));
         done();
       })
       .catch((err) => {
@@ -107,7 +107,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Email already exist");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Email already exist"]));
         done();
       })
       .catch((err) => {
@@ -127,7 +127,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Invalid email format");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Invalid email format"]));
         done();
       })
       .catch((err) => {
@@ -146,7 +146,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Password Required");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Password Required"]));
         done();
       })
       .catch((err) => {
@@ -166,7 +166,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Password cannot be empty");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Password cannot be empty"]));
         done();
       })
       .catch((err) => {
@@ -185,13 +185,131 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Full Name Required");
+        expect(result).toHaveProperty("message", expect.arrayContaining(["Full Name Required"]));
         done();
       })
       .catch((err) => {
         done(err);
       });
   });
+  // test("should fail if email empty", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "",
+  //       password: "password",
+  //       fullName: "test name",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Email cannot be empty");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
+  // test("should fail if email is not unique", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "new@email.com",
+  //       password: "password",
+  //       fullName: "test name",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Email already exist");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
+  // test("should fail if not email", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "testemail",
+  //       password: "password",
+  //       fullName: "test name",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Invalid email format");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
+  // test("should fail if no password", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "new@email.com",
+  //       fullName: "test name",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Password Required");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
+  // test("should fail if password is empty", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "new@email.com",
+  //       password: "",
+  //       fullName: "test name",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Password cannot be empty");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
+  // test("should fail if full name is empty", (done) => {
+  //   request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       email: "new23@email.com",
+  //       password: "password",
+  //       address: "alamat rumah",
+  //     })
+  //     .then((response) => {
+  //       const result = response.body;
+  //       expect(response.status).toBe(400);
+  //       expect(result).toEqual(expect.any(Object));
+  //       expect(result).toHaveProperty("message", "Full Name Required");
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
 });
 
 describe("POST /api/users/login", () => {

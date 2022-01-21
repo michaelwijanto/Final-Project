@@ -1,8 +1,9 @@
 const errorHandler = (err, req, res, next) => {
+  // console.log(err);
   switch (err.name) {
     case "SequelizeValidationError":
     case "SequelizeUniqueConstraintError":
-      res.status(400).json({ message: err.errors.map(el => el.message)});
+      res.status(400).json({ message: err.errors.map((el) => el.message) });
       break;
     case "Required":
       res.status(400).json({ message: "Email or Password is required" });
@@ -19,8 +20,10 @@ const errorHandler = (err, req, res, next) => {
     case "Content_Not_Found":
       res.status(401).json({ message: "Content Not Found" });
       break;
+    case "Bad_Request":
+      res.status(400).json({ message: "Please fill all the blank!" });
+      break;
     default:
-      console.log(err);
       res.status(500).json({ message: "Internal server error" });
       break;
   }
