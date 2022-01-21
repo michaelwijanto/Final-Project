@@ -53,10 +53,10 @@ beforeAll(async () => {
   });
 });
 
-describe("GET /api/user-profile", () => {
+describe("GET /api/user-profiles", () => {
   test("[showUserProfile - success]", (done) => {
     request(app)
-      .get("/api/user-profile")
+      .get("/api/user-profiles")
       .set("access_token", access_token)
       .then((res) => {
         const result = res.body;
@@ -76,8 +76,14 @@ describe("GET /api/user-profile", () => {
       .post("/api/user-profile")
       .set("access_token", access_token)
       .send({
-        UserId: 1,
-        MovieId: 1,
+        height = "170",
+        weight = "80",
+        activityLevel = "4",
+        phoneNumber = "081123123123",
+        subscription = "false",
+        gender = "male",
+        dateBirth = "30-12-2000",
+        goals = "weightlose",
       })
       .then((res) => {
         const result = res.body;
