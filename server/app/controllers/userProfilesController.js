@@ -17,18 +17,18 @@ class userProfilesController {
         goals,
       } = req.body;
 
-      let LevelId = 1;
+      if (
+        !height ||
+        !weight ||
+        !activityLevel ||
+        !phoneNumber ||
+        !gender ||
+        !dateBirth ||
+        !goals
+      )
+        throw { name: "Bad_Request" };
 
-      await Log.create(
-        {
-          height,
-          weight,
-          activityLevel,
-          UserId,
-          LevelId,
-        },
-        { transaction: t }
-      );
+      let LevelId = 1;
 
       let date = dateBirth.split("-");
       const day = date[0];
@@ -49,30 +49,21 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-
-      if (callBMI.data.data.health == "Severe Thinness") {
+      console.log({ callBMI });
+      if (
+        callBMI.data.data.health == "Severe Thinness" ||
+        callBMI.data.data.health == "Moderate Thinness" ||
+        callBMI.data.data.health == "Mild Thinness"
+      ) {
         LevelId = 1;
-      } else if (callBMI.data.data.health == "Mild Thinness") {
-        LevelId = 1;
-      } else if (callBMI.data.data.health == "Normal") {
+      } else if (
+        callBMI.data.data.health == "Normal" ||
+        callBMI.data.data.health == "Healthy weight"
+      ) {
         LevelId = 2;
       } else {
         LevelId = 3;
       }
-
-      await t.commit();
-
-      // Update Log
-      await Log.update(
-        {
-          LevelId,
-        },
-        {
-          where: {
-            UserId,
-          },
-        }
-      );
 
       const postUserProfile = await UserProfile.create(
         {
@@ -85,6 +76,30 @@ class userProfilesController {
           LevelId,
         },
         { transaction: t }
+      );
+
+      // Update Log
+      await Log.create(
+        {
+          height,
+          weight,
+          activityLevel,
+          UserId,
+          LevelId,
+        },
+        { transaction: t }
+      );
+
+      await User.update(
+        {
+          isRegister: "true",
+        },
+        {
+          where: {
+            id: UserId,
+          },
+        },
+        { transaction: t, returning: true }
       );
 
       await t.commit();
@@ -100,6 +115,8 @@ class userProfilesController {
       });
     } catch (err) {
       await t.rollback();
+
+      console.log(err, "<<<<<<<<<<<<<<<<<<<<<");
       next(err);
     }
   }
@@ -129,7 +146,6 @@ class userProfilesController {
   static async getUserProfile(req, res, next) {
     try {
       const UserId = req.user.id;
-
       const response = await UserProfile.findOne({
         where: {
           UserId,

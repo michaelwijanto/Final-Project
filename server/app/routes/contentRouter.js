@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const cantentController = require('../controllers/contentController')
 
-
-
 router.get('/', cantentController.getContents)
 router.post('/', cantentController.addContetnts)
 

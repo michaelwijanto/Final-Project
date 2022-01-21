@@ -128,7 +128,6 @@ const getStatus = async (req,res,next) => {
         {
            where: {id},
            returning: true
-            
         })
         if (result[1][0].statusLike == 'not like') {
             result[1][0].likes --
@@ -140,7 +139,7 @@ const getStatus = async (req,res,next) => {
                returning: true
                 
             })
-        }else{
+        }else if (result[1][0].statusLike == 'like'){
             result[1][0].likes ++
             const result1 = await Content.update({
                 likes: result[1][0].likes
