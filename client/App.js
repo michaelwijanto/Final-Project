@@ -5,12 +5,16 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider, Box } from "native-base";
-import { ApolloProvider } from "@apollo/client";
 
+// Apollo Client
+import { ApolloProvider } from "@apollo/client";
+import client from "./config/apolloClient";
+
+// Components
 import Home from "./src/screens/Home";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
-import client from "./config/apolloClient";
+import Profile from './src/screens/Profile'
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +24,7 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Home"
               component={Home}
               options={{
@@ -39,6 +43,14 @@ function App() {
               component={LevelContent}
               options={{
                 headerShown: true,
+              }}
+            /> */}
+            <Stack.Screen
+              name="Account Profile"
+              component={Profile}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center"
               }}
             />
           </Stack.Navigator>
