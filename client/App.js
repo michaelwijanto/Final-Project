@@ -24,20 +24,20 @@ function App() {
               headerShown: false,
             }}
           /> */}
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Contents"
             component={Contents}
             options={{
               headerShown: true,
             }}
-          />
-          {/* <Stack.Screen
+          /> */}
+          <Stack.Screen
             name="Level"
             component={LevelContent}
             options={{
               headerShown: true,
             }}
-          /> */}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

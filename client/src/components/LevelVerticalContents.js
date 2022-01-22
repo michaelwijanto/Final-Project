@@ -7,6 +7,7 @@ import {
   Text,
   Stack,
   ChevronRightIcon,
+  Button
 } from "native-base";
 
 // import { useQuery } from "@apollo/client";
@@ -100,6 +101,33 @@ export default function LevelHorizontal({ navigation }) {
                   >
                     {item.nama}
                   </Heading>
+                  {/* <View style={{
+                flexDirection:"row",
+                justifyContent:"center",
+                padding:3,
+                marginTop: 20
+            }}>
+              <View style={{
+                backgroundColor: "orange",
+                width: 100,
+                height:40,
+                borderRadius: 8,
+                alignItems: "center",
+                
+                
+               
+            }}> 
+
+            <Text style={{
+                marginTop:5,
+                 fontWeight: 'bold',
+                fontSize: 18,
+                color: 'white',
+                alignItems:"flex-start",
+                
+            }}>Easy</Text>
+              </View>
+            </View>  */}
                 </Stack>
               </Stack>
             </Box>
