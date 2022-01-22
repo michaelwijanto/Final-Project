@@ -12,9 +12,7 @@ import {
   IconButton,
   Text,
   Icon,
-  HStack,
   Center,
-  Pressable,
 } from "native-base";
 import SwitchMode from "../components/SwitchMode";
 import AppBar from "../components/AppBar";
@@ -50,6 +48,7 @@ export default function Home({ navigation }) {
           /> */}
         </Box>
       </View>
+      <TabBar></TabBar>
       <View></View>
     </Box>
   );
