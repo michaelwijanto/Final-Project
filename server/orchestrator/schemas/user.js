@@ -43,16 +43,10 @@ const resolvers = {
   Query: {
     getCoaches: async () => {
       try {
-        const coachCache = await redis.get("coaches");
-        if (coachCache) {
-          return JSON.parse(usersCache);
-        } else {
-          const { data: coaches } = await axios.get(
-            "http://localhost:3000/api/users/coach"
-          );
-          await redis.set("coaches", JSON.stringify(coaches));
-          return coaches;
-        }
+        const { data: coaches } = await axios.get(
+          "http://localhost:3000/api/users/coach"
+        );
+        return coaches;
       } catch (err) {
         return err;
       }
@@ -64,7 +58,6 @@ const resolvers = {
         const { data: coach } = await axios.get(
           `http://localhost:3000/api/users/coach/${id}`
         );
-        await redis.set("users", JSON.stringify(coach));
         return coach;
       } catch (err) {
         return err;
