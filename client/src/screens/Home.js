@@ -68,18 +68,19 @@ export default function Home({ navigation }) {
             <CoachHorizontal />
           </Box>
         </Box>
-        <Box style={styles.boxCoach}>
-          <Box style={styles.textBoxPrograms}>
-            <Text style={styles.textPrograms}>Articles</Text>
-            <Text style={styles.textViewAll}>View all</Text>
+        <Pressable onPress={() => navigation.navigate("Log")}>
+          <Box style={styles.boxCoach}>
+            <Box style={styles.textBoxPrograms}>
+              <Text style={styles.textPrograms}>Articles</Text>
+              <Text style={styles.textViewAll}>View all</Text>
+            </Box>
+            <Box style={styles.programsCard}>
+              <CoachHorizontal />
+            </Box>
           </Box>
-          <Box style={styles.programsCard}>
-            <CoachHorizontal />
-          </Box>
-        </Box>
+        </Pressable>
       </ScrollView>
-      {/* <TabBar></TabBar> */}
-      <View></View>
+      {/* <TabBar/> */}
     </Box>
   );
 }
