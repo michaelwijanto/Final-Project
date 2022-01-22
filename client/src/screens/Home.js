@@ -38,14 +38,7 @@ export default function Home({ navigation }) {
       <View style={styles.top}>
         <AppBar />
         <Box>
-          {/* <Image
-            // style={styles.imageBanner}
-            source={{
-              uri: "https://previews.123rf.com/images/hstrongart/hstrongart2101/hstrongart210100027/162633914-energetic-fitness-training-banner-ad-3d-illustration-of-athletic-woman-doing-barbell-squat-designed-.jpg",
-            }}
-            alt="Alternate Text"
-            size="lg"
-          /> */}
+          
         </Box>
       </View>
       <View></View>
