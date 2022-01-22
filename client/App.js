@@ -4,13 +4,13 @@ import * as React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { NativeBaseProvider, Box } from "native-base";
+import { ApolloProvider } from "@apollo/client";
+
 import Home from "./src/screens/Home";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
 import client from "./config/apolloClient";
-import { ApolloProvider } from "@apollo/client";
 
 const Stack = createNativeStackNavigator();
 
