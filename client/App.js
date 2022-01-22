@@ -19,9 +19,9 @@ function App() {
         <Stack.Navigator>
           {/* <Stack.Screen
             name="Home"
-            component={Home}
+            component={Profile}
             options={{
-              headerShown: false,
+              headerShown: true,
             }}
           /> */}
           <Stack.Screen
