@@ -31,18 +31,16 @@ export default function Home({ navigation }) {
       style={styles.container}
       _dark={{
         borderColor: "coolGray.900",
-        backgroundColor: "#5E454B",
+        backgroundColor: "#1C2F3C",
       }}
-      _light={{ backgroundColor: "transparent" }}
+      _light={{ backgroundColor: "#F5F8FA" }}
     >
-      <View style={styles.top}>
+      <View style={styles.containerBox}>
         <AppBar />
         <Box>
-          
         </Box>
       </View>
       <TabBar />
-      <View></View>
     </Box>
   );
 }
@@ -51,11 +49,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  top: {
-    flex: 1,
-  },
-  imageBanner: {
-    width: 200,
-    height: 2000,
+  containerBox: {
+    width: '100%',
+    height: '91%',
   },
 });

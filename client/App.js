@@ -5,6 +5,8 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider, Box } from "native-base";
+
+// Component
 import Home from "./src/screens/Home";
 
 const Stack = createNativeStackNavigator();
