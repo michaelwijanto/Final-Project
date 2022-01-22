@@ -1,6 +1,12 @@
 import React from "react";
 
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import {
   Box,
   Heading,
@@ -23,26 +29,16 @@ import {
   AntDesign,
 } from "@expo/vector-icons";
 
-export default function Home({ navigation }) {
+export default function LevelList({ navigation }) {
   const [selected, setSelected] = React.useState(1);
 
   return (
-    <Box
-      style={styles.container}
-      _dark={{
-        borderColor: "coolGray.900",
-        backgroundColor: "#5E454B",
-      }}
-      _light={{ backgroundColor: "transparent" }}
-    >
-      <View style={styles.top}>
-        <AppBar />
-        <Box>
-          
-        </Box>
-      </View>
-      <TabBar></TabBar>
-      <View></View>
+    <Box style={styles.container}>
+      <AppBar />
+      <Pressable onPress={() => navigation.push("Contents")}>
+        <Heading>Level List</Heading>
+      </Pressable>
+      {/* <TabBar navigation={navigation} /> */}
     </Box>
   );
 }
@@ -50,6 +46,7 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 30,
   },
   top: {
     flex: 1,
