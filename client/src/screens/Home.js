@@ -1,5 +1,4 @@
 import React from "react";
-
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import {
   Box,
@@ -20,6 +19,7 @@ import AppBar from "../components/AppBar";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
+import Articles from "../components/Articles";
 import {
   MaterialCommunityIcons,
   MaterialIcons,
@@ -36,7 +36,7 @@ export default function Home({ navigation }) {
         borderColor: "coolGray.900",
         backgroundColor: "#1C2F3C",
       }}
-      _light={{ backgroundColor: "warmGray.100" }}
+      _light={{ backgroundColor: "#F5F8FA" }}
     >
       <ScrollView style={styles.top}>
         <AppBar />
@@ -68,19 +68,17 @@ export default function Home({ navigation }) {
             <CoachHorizontal />
           </Box>
         </Box>
-        <Pressable onPress={() => navigation.navigate("Log")}>
-          <Box style={styles.boxCoach}>
-            <Box style={styles.textBoxPrograms}>
-              <Text style={styles.textPrograms}>Articles</Text>
-              <Text style={styles.textViewAll}>View all</Text>
-            </Box>
-            <Box style={styles.programsCard}>
-              <CoachHorizontal />
-            </Box>
+        <Box style={styles.boxArticle}>
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>Articles</Text>
+            <Text style={styles.textViewAll}>View all</Text>
           </Box>
-        </Pressable>
+          <Box style={styles.programsCard}>
+            <Articles />
+          </Box>
+        </Box>
       </ScrollView>
-      {/* <TabBar/> */}
+      {/* <TabBar></TabBar> */}
     </Box>
   );
 }
@@ -111,9 +109,10 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingLeft: 10,
     fontSize: 22,
+    color: "#1C2F3C",
   },
   textViewAll: {
-    paddingTop: 10,
+    paddingTop: 12,
     paddingRight: 15,
     color: "gray",
   },
@@ -123,5 +122,10 @@ const styles = StyleSheet.create({
   boxCoach: {
     marginTop: 15,
     backgroundColor: "white",
+  },
+  boxArticle: {
+    marginTop: 15,
+    backgroundColor: "white",
+    paddingBottom: 20,
   },
 });

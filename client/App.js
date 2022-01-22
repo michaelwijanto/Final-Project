@@ -1,16 +1,18 @@
 // In App.js in a new project
 
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeBaseProvider, Box } from "native-base";
 import {ApolloProvider} from "@apollo/client"
 import client from "./config/apolloClient";
 
-// Component
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { NativeBaseProvider, Box } from "native-base";
 import Home from "./src/screens/Home";
-import Log from "./src/screens/Log";
-import Macro from "./src/screens/Macro";
+import Contents from "./src/screens/Content";
+import LevelContent from "./src/components/LevelContent";
+import Log from "./src/screens/Log"
+import Macro from "./src/screens/Macro"
 
 const Stack = createNativeStackNavigator();
 
@@ -22,26 +24,39 @@ function App() {
         <Stack.Navigator>
           {/* <Stack.Screen
             name="Home"
-            component={Home}
+            component={Profile}
             options={{
               headerShown: true,
             }}
           /> */}
           {/* <Stack.Screen
+            name="Contents"
+            component={Contents}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
+          {/* <Stack.Screen
+            name="Level"
+            component={LevelContent}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
+          <Stack.Screen
             name="Log"
             component={Log}
             options={{
               headerShown: true,
             }}
-          /> */}
-
-          <Stack.Screen
+          />
+          {/* <Stack.Screen
             name="Macro"
             component={Macro}
             options={{
               headerShown: true,
             }}
-          />
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
