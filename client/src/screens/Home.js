@@ -37,7 +37,7 @@ export default function Home({ navigation }) {
         borderColor: "coolGray.900",
         backgroundColor: "#1C2F3C",
       }}
-      _light={{ backgroundColor: "warmGray.100" }}
+      _light={{ backgroundColor: "#F5F8FA" }}
     >
       <ScrollView style={styles.top}>
         <AppBar />
@@ -79,7 +79,6 @@ export default function Home({ navigation }) {
           </Box>
         </Box>
       </ScrollView>
-
       {/* <TabBar></TabBar> */}
     </Box>
   );
