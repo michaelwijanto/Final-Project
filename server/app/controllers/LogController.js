@@ -30,6 +30,24 @@ class LogController {
       next(error)
     }
   }
+
+  static async getLog (req, res, next) {
+    try {
+      const {
+        id: UserId
+      } = req.user
+
+      const logData = await Log.findAll({
+        where: {
+          UserId
+        }
+      })
+      console.log(UserId, logData);
+      res.status(200).json(logData)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = LogController
