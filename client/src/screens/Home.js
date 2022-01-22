@@ -19,6 +19,7 @@ import SwitchMode from "../components/SwitchMode";
 import AppBar from "../components/AppBar";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
+import CoachHorizontal from "../components/CoachHorizontalHome";
 import {
   MaterialCommunityIcons,
   MaterialIcons,
@@ -58,6 +59,24 @@ export default function Home({ navigation }) {
             <LevelHorizontal />
           </Box>
         </Box>
+        <Box style={styles.boxCoach}>
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>Coaches</Text>
+            <Text style={styles.textViewAll}>View all</Text>
+          </Box>
+          <Box style={styles.programsCard}>
+            <CoachHorizontal />
+          </Box>
+        </Box>
+        <Box style={styles.boxCoach}>
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>Articles</Text>
+            <Text style={styles.textViewAll}>View all</Text>
+          </Box>
+          <Box style={styles.programsCard}>
+            <CoachHorizontal />
+          </Box>
+        </Box>
       </ScrollView>
       {/* <TabBar></TabBar> */}
       <View></View>
@@ -79,6 +98,7 @@ const styles = StyleSheet.create({
   boxPrograms: {
     marginTop: 7,
     backgroundColor: "white",
+    paddingBottom: 25,
   },
   textBoxPrograms: {
     margin: 5,
@@ -98,5 +118,9 @@ const styles = StyleSheet.create({
   },
   programsCard: {
     paddingLeft: 18,
+  },
+  boxCoach: {
+    marginTop: 15,
+    backgroundColor: "white",
   },
 });
