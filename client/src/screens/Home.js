@@ -11,16 +11,16 @@ import {
 } from "native-base";
 
 export default function Home({ navigation }) {
-    return (
-        <Box style={styles.container}>
-            <Heading>HOME</Heading>
-        </Box>
-    )
+  return (
+    <Box style={styles.container}>
+      <Heading>Testing Home Use Native Base</Heading>
+    </Box>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
 });
