@@ -7,7 +7,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider, Box } from "native-base";
 
 // Component
-import Home from "./src/screens/Home";
+// import Home from "./src/screens/Home";
+import Profile from "./src/screens/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,9 +19,9 @@ function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
-            component={Home}
+            component={Profile}
             options={{
-              headerShown: false,
+              headerShown: true,
             }}
           />
         </Stack.Navigator>
