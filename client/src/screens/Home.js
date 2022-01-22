@@ -1,3 +1,5 @@
+import React from "react";
+
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import {
   Box,
@@ -9,12 +11,21 @@ import {
   HStack,
   IconButton,
   Text,
+  Icon,
+  Center,
 } from "native-base";
 import SwitchMode from "../components/SwitchMode";
 import AppBar from "../components/AppBar";
-import { AntDesign } from "@expo/vector-icons";
+import TabBar from "../components/TabBar";
+import {
+  MaterialCommunityIcons,
+  MaterialIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 
 export default function Home({ navigation }) {
+  const [selected, setSelected] = React.useState(1);
+
   return (
     <Box
       style={styles.container}
@@ -37,6 +48,7 @@ export default function Home({ navigation }) {
           /> */}
         </Box>
       </View>
+      <View></View>
     </Box>
   );
 }
