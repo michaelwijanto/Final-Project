@@ -1,71 +1,221 @@
-import React from "react";
-
-import {
-  StyleSheet,
-  View,
-  Pressable,
-  FlatList,
-  ScrollView,
-} from "react-native";
+import { View } from 'native-base';
+import { SafeAreaView,Text,Image,StyleSheet,FlatList,ScrollView } from 'react-native';
 import {
   Box,
   Heading,
-  Image,
   useColorMode,
   ChevronRightIcon,
   StatusBar,
   HStack,
   IconButton,
-  Text,
   Icon,
   Center,
 } from "native-base";
-import SwitchMode from "../components/SwitchMode";
-import AppBar from "../components/AppBar";
-import TabBar from "../components/TabBar";
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
-import LevelContents from "../components/LevelContents";
-import LevelList from "../components/LevelList";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-const Stack = createNativeStackNavigator();
+import LevelHorizontal from "../components/LevelHorizontalHome";
+import CoachHorizontal from "../components/CoachHorizontalHome";
 
-export default function Contents({ navigation }) {
-  const [selected, setSelected] = React.useState(1);
 
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="LevelContents"
-        component={LevelContents}
-        options={{
-          headerShown: false,
-        }}
-      ></Stack.Screen>
-      <Stack.Screen
-        name="LevelList"
-        component={LevelList}
-        options={{
-          headerShown: false,
-        }}
-      ></Stack.Screen>
-    </Stack.Navigator>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 30,
-  },
-  top: {
-    flex: 1,
-  },
-  imageBanner: {
-    width: 200,
-    height: 2000,
-  },
-});
+
+
+export default function AboutScreen({navigation}) {
+    return <ScrollView style={styles.container}  >
+<View style={styles.container2}>
+        <View style={{
+                flexDirection:"row",
+                padding:3
+            }}>
+            <Text style={{
+                marginTop: 10,
+                 fontWeight: 'bold',
+                fontSize: 25,
+                color: 'grey',
+                alignItems:"flex-start"
+                
+            }}>Levels</Text>
+          
+            </View>
+            <View style={{
+                flexDirection:"row",
+                justifyContent:"center",
+                padding:3,
+                marginTop: 20
+            }}>
+              <View style={{
+                backgroundColor: "orange",
+                width: 100,
+                height:40,
+                borderRadius: 8,
+                alignItems: "center",
+                
+                
+               
+            }}> 
+
+            <Text style={{
+                marginTop:5,
+                 fontWeight: 'bold',
+                fontSize: 18,
+                color: 'white',
+                alignItems:"flex-start",
+                
+            }}>Easy</Text>
+              </View>
+
+              <View style={{
+                backgroundColor: "orange",
+                width: 100,
+                height:40,
+                borderRadius: 8,
+                alignItems: "center",
+                marginLeft: 10
+                
+               
+            }}> 
+
+            <Text style={{
+                marginTop:5,
+                 fontWeight: 'bold',
+                fontSize: 18,
+                color: 'white',
+                alignItems:"flex-start"
+                
+            }}>Medium</Text>
+              </View>
+              <View style={{
+                backgroundColor: "orange",
+                width: 100,
+                height:40,
+                borderRadius: 8,
+                alignItems: "center",
+                marginLeft: 10
+                
+               
+            }}> 
+
+            <Text style={{
+                marginTop:5,
+                 fontWeight: 'bold',
+                fontSize: 18,
+                color: 'white',
+                alignItems:"flex-start"
+                
+            }}>Hard</Text>
+              </View>
+
+            </View>
+        </View>
+
+<View style={styles.container1}>
+        <View style={{
+                flexDirection:"row",
+                justifyContent:"space-between",
+                padding:3
+            }}>
+            <Text style={{
+                marginTop: 10,
+                 fontWeight: 'bold',
+                fontSize: 25,
+                color: 'grey',
+                alignItems:"flex-start"
+                
+            }}>Coaches</Text>
+            <Text style={{
+                marginTop: 10,
+                 fontWeight: 'bold',
+                fontSize: 20,
+                color: 'grey',
+                alignItems:"flex-start"
+                
+            }}>View all</Text>
+            
+
+            </View>
+            <Box style={styles.programsCard}>
+            <CoachHorizontal />
+          </Box>
+        </View>
+
+
+
+<View style={styles.container1}>
+        <View style={{
+                flexDirection:"row",
+                justifyContent:"space-between",
+                padding:3
+            }}>
+            <Text style={{
+                marginTop: 10,
+                 fontWeight: 'bold',
+                fontSize: 25,
+                color: 'grey',
+                alignItems:"flex-start"
+                
+            }}>Programs</Text>
+            <Text style={{
+                marginTop: 10,
+                 fontWeight: 'bold',
+                fontSize: 20,
+                color: 'grey',
+                alignItems:"flex-start"
+                
+            }}>View all</Text>
+            
+
+            </View>
+            <Box style={styles.programsCard}>
+            <LevelHorizontal />
+          </Box>
+        </View>
+
+       
+        
+
+
+           </ScrollView>
+  }
+
+  const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+      
+       
+      },
+      container2: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding:10,
+        paddingBottom: 25,
+      },
+
+      container1: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding:10,
+        marginTop: 20,
+        paddingBottom: 20
+       
+      },
+      imagetop: {
+        width: "100%",
+        height: 200,
+        marginTop: 10,
+        borderRadius: 20,
+
+      },
+
+      imagetop1: {
+        width: "100%",
+        height: 200,
+        marginTop: 10,
+        borderRadius: 200
+
+      },
+      programsCard: {
+        paddingLeft: 18,
+      },
+    
+  
+  
+  });
+  
