@@ -41,7 +41,7 @@ export default function Home({ navigation }) {
           
         </Box>
       </View>
-      <TabBar></TabBar>
+      <TabBar />
       <View></View>
     </Box>
   );
