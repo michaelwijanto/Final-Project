@@ -17,7 +17,7 @@ export default function AppBar({ navigation }) {
   return (
     <Box
       safeAreaTop
-      backgroundColor="#87A8A4"
+      backgroundColor="#b9d0df"
       _dark={{
         color: "white",
         // backgroundColor: "gray.900",
@@ -29,7 +29,7 @@ export default function AppBar({ navigation }) {
       borderColor="white"
     >
       <HStack
-        bg="#87A8A4"
+        bg="#b9d0df"
         px="1"
         py="3"
         justifyContent="space-between"
@@ -37,9 +37,9 @@ export default function AppBar({ navigation }) {
       >
         <HStack space="4" alignItems="center">
           <IconButton
-            icon={<AntDesign name="home" size={24} color="white" />}
+            icon={<AntDesign name="home" size={24} color="#003049" />}
           />
-          <Text color="white" fontSize="20" fontWeight="bold">
+          <Text color="#003049" fontSize="20" fontWeight="bold">
             Active8
           </Text>
         </HStack>
