@@ -28,7 +28,7 @@ function SwitchMode() {
         !isEnabled ? (
           <Ionicons style={styles.logo} name="moon" size={24} color="#3e3e3e" />
         ) : (
-          <MaterialCommunityIcons style={styles.logo} name="white-balance-sunny" size={24} color="#ffffff" />
+          <MaterialCommunityIcons style={styles.logo} name="white-balance-sunny" size={24} color="#EEF9BF" />
         )
       }
     </View>
@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logo: {
-    marginTop: 3,
-    marginLeft: 10,
-    marginRight: 10,
+    marginTop: "10%",
+    marginLeft: "3%",
+    marginRight: "3%",
   },
 });
 
