@@ -16,7 +16,7 @@ function SwitchMode() {
     <View style={styles.container}>
       <Switch
         trackColor={{ 
-          false: "#ffcf25", // toggle to dark
+          false: "#3e3e3e", // toggle to dark
           true: "#ffffff" // toggle to light
         }}
         thumbColor={ !isEnabled ? "#FFF" : "#3e3e3e" }
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logo: {
-    marginTop: 3,
-    marginLeft: 10,
+    marginTop: 10,
+    marginLeft: 0,
     marginRight: 10,
   },
 });
