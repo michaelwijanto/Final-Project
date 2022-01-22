@@ -16,13 +16,22 @@ function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Log" component={Log} />
-        </Tab.Navigator>
-        {/* <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator> */}
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+          <Stack.Screen
+            name="Log"
+            component={Log}
+            options={{
+              headerShown: false,
+            }}
+          />
       </NavigationContainer>
     </NativeBaseProvider>
   );
