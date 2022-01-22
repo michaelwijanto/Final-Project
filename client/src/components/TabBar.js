@@ -3,21 +3,18 @@ import {
   NativeBaseProvider,
   Box,
   Text,
-  Heading,
-  VStack,
-  FormControl,
-  Input,
-  Link,
-  Button,
   Icon,
   HStack,
   Center,
   Pressable,
 } from "native-base";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { 
+  MaterialCommunityIcons,
+  MaterialIcons
+} from "@expo/vector-icons";
 
 export default function TabBar() {
-  const [selected, setSelected] = React.useState(1);
+  const [selected, setSelected] = React.useState(0);
   return (
     <NativeBaseProvider>
       <Box flex={1} bg="white" safeAreaTop>
@@ -56,18 +53,18 @@ export default function TabBar() {
             <Center>
               <Icon
                 mb="1"
-                as={<MaterialIcons name="search" />}
+                as={<MaterialCommunityIcons name="yoga" />}
                 color="white"
                 size="sm"
               />
               <Text color="white" fontSize="12">
-                Search
+                Content
               </Text>
             </Center>
           </Pressable>
           <Pressable
             // cursor="pointer"
-            opacity={selected === 2 ? 1 : 0.6}
+            opacity={selected === 2 ? 1 : 0.5}
             py="2"
             flex={1}
             onPress={() => setSelected(2)}
@@ -76,15 +73,15 @@ export default function TabBar() {
               <Icon
                 mb="1"
                 as={
-                  <MaterialCommunityIcons
-                    name={selected === 2 ? "cart" : "cart-outline"}
+                  <MaterialIcons 
+                    name={selected === 2 ? "history" : "history-toggle-off"} 
                   />
                 }
                 color="white"
                 size="sm"
               />
               <Text color="white" font="12">
-                Cart
+                History Log
               </Text>
             </Center>
           </Pressable>
@@ -100,7 +97,30 @@ export default function TabBar() {
                 mb="1"
                 as={
                   <MaterialCommunityIcons
-                    name={selected === 3 ? "account" : "account-outline"}
+                    name="food-variant"
+                  />
+                }
+                color="white"
+                size="sm"
+              />
+              <Text color="white" font="12">
+                Macro
+              </Text>
+            </Center>
+          </Pressable>
+          <Pressable
+            // cursor="pointer"
+            opacity={selected === 4 ? 1 : 0.5}
+            py="2"
+            flex={1}
+            onPress={() => setSelected(4)}
+          >
+            <Center>
+              <Icon
+                mb="1"
+                as={
+                  <MaterialCommunityIcons
+                    name={selected === 4 ? "account" : "account-outline"}
                   />
                 }
                 color="white"

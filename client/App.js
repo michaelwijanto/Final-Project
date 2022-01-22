@@ -6,8 +6,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { NativeBaseProvider, Box } from "native-base";
-// import Home from "./src/screens/Home";
+import Home from "./src/screens/Home";
 import Contents from "./src/screens/Content";
+import LevelContent from "./src/components/LevelContent";
+
 const Stack = createNativeStackNavigator();
 
 function App() {
@@ -29,6 +31,13 @@ function App() {
               headerShown: true,
             }}
           />
+          {/* <Stack.Screen
+            name="Level"
+            component={LevelContent}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
