@@ -33,7 +33,7 @@ export default function Home({ navigation }) {
       style={styles.container}
       _dark={{
         borderColor: "coolGray.900",
-        backgroundColor: "#5E454B",
+        backgroundColor: "#1C2F3C",
       }}
       _light={{ backgroundColor: "warmGray.100" }}
     >
