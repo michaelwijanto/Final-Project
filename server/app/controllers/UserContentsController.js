@@ -2,7 +2,8 @@ const {
   UserContent,
   User,
   Content,
-  UserProfile
+  UserProfile,
+  Log
 } = require('../models')
 
 class UserContentsController{
@@ -103,9 +104,9 @@ class UserContentsController{
           UserId
         }
       })
-      console.log(UserId);
-
+      
       // Ambil Total Content Base current user level
+      console.log(levelUser);
       const LevelId = levelUser.LevelId
       const content = await Content.findAll({
         where: {
@@ -147,12 +148,19 @@ class UserContentsController{
         });
 
         // Condition
+        const getLog = await Log.findOne({
+          where: {
+            UserId
+          }
+        })
+
         if (findLevel.LevelId === 3) {
           code = 200;
           message = `Congrats! You reach maximum Level!`;
         } else {
           if (findLevel.LevelId === 2) {
-            await UserProfile.update(
+            // Update Profile
+            const profile = await UserProfile.update(
               {
                 LevelId: 3,
               },
@@ -160,8 +168,19 @@ class UserContentsController{
                 where: {
                   UserId,
                 },
+                returning: true,
               }
             );
+            
+            // Post Log History
+            await Log.create({
+              height: getLog.height,
+              weight: getLog.weight,
+              activityLevel: getLog.activityLevel,
+              UserId,
+              LevelId: 3,
+            })
+
             code = 200;
             message = `Congrats, You did It! You level up to Hard Level!`;
           } else {
@@ -175,6 +194,17 @@ class UserContentsController{
                 },
               }
             );
+
+            // Post Log History
+            console.log(getLog, 'masuk');
+            await Log.create({
+              height: getLog.height,
+              weight: getLog.weight,
+              activityLevel: getLog.activityLevel,
+              UserId,
+              LevelId: 2,
+            })
+
             code = 200;
             message = `Congrats, You did It! You level up to Medium Level!`;
           }
