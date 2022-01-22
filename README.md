@@ -35,6 +35,8 @@ saya nambahin constrain UserContent di Model user
 [v] Add Authentication to router
 [ ] UserCOntent Testing
 [ ] Loging Testing
+[v] initialize react native with expo, apollo/client/ react navigation
+
 
 # Tondiki Andika
 
