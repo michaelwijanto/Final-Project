@@ -11,6 +11,14 @@ const typeDefs = gql`
     role: String
   }
 
+  type Coach {
+    id: ID
+    name: String
+    imgCoach: String
+    age: String
+    bio: String
+  }
+
   type Message {
     message: String
   }
@@ -19,32 +27,53 @@ const typeDefs = gql`
     access_token: String
   }
 
-
   type Query {
-    getUsers(
-      access_token: String
-    ): [User]
+    getUsers(access_token: String): [User]
+    getCoaches: [Coach]
+    getCoachDetail(id: ID): Coach
   }
-
 
   type Mutation {
-    signUpUser(
-      email: String
-      password: String
-      fullName: String
-    ): Message
-    signInUser(
-      email: String
-      password: String
-    ): AccessToken
+    signUpUser(email: String, password: String, fullName: String): Message
+    signInUser(email: String, password: String): AccessToken
   }
-  `;
-  
+`;
+
 const resolvers = {
   Query: {
+    getCoaches: async () => {
+      try {
+        const coachCache = await redis.get("coaches");
+        if (coachCache) {
+          return JSON.parse(usersCache);
+        } else {
+          const { data: coaches } = await axios.get(
+            "http://localhost:3000/api/users/coach"
+          );
+          await redis.set("coaches", JSON.stringify(coaches));
+          return coaches;
+        }
+      } catch (err) {
+        return err;
+      }
+    },
+
+    getCoachDetail: async (_, args) => {
+      try {
+        const { id } = args;
+        const { data: coach } = await axios.get(
+          `http://localhost:3000/api/users/coach/${id}`
+        );
+        await redis.set("users", JSON.stringify(coach));
+        return coach;
+      } catch (err) {
+        return err;
+      }
+    },
+
     getUsers: async (_, args) => {
       try {
-        await redis.del("users")
+        await redis.del("users");
         const usersCache = await redis.get("users");
         if (usersCache) {
           console.log("udah ada");
@@ -53,7 +82,7 @@ const resolvers = {
           console.log("blum ada");
           const { data: users } = await axios.get(
             "http://localhost:3000/api/users/",
-            {headers: {access_token: args.access_token}}
+            { headers: { access_token: args.access_token } }
           );
           await redis.set("users", JSON.stringify(users));
           return users;
@@ -68,8 +97,11 @@ const resolvers = {
     signUpUser: async (_, args) => {
       try {
         console.log(args, "<<<<<<");
-        const {data: user} = await axios.post("http://localhost:3000/api/users/register", args);
-        console.log({user});
+        const { data: user } = await axios.post(
+          "http://localhost:3000/api/users/register",
+          args
+        );
+        console.log({ user });
         await redis.del("users");
         return { message: "Sign Up Succesful" };
       } catch (err) {
@@ -79,9 +111,12 @@ const resolvers = {
     },
     signInUser: async (_, args) => {
       try {
-        const {data} = await axios.post("http://localhost:3000/api/users/login", args);
+        const { data } = await axios.post(
+          "http://localhost:3000/api/users/login",
+          args
+        );
         console.log(data);
-        return data
+        return data;
       } catch (err) {
         console.log({ err });
         return err;

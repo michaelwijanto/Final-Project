@@ -20,6 +20,7 @@ import AppBar from "../components/AppBar";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
+import Articles from "../components/Articles";
 import {
   MaterialCommunityIcons,
   MaterialIcons,
@@ -68,18 +69,17 @@ export default function Home({ navigation }) {
             <CoachHorizontal />
           </Box>
         </Box>
-        <Box style={styles.boxCoach}>
+        <Box style={styles.boxArticle}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Articles</Text>
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <CoachHorizontal />
+            <Articles />
           </Box>
         </Box>
       </ScrollView>
-      {/* <TabBar /> */}
-      <View></View>
+      {/* <TabBar></TabBar> */}
     </Box>
   );
 }
@@ -110,9 +110,10 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingLeft: 10,
     fontSize: 22,
+    color: "#1C2F3C",
   },
   textViewAll: {
-    paddingTop: 10,
+    paddingTop: 12,
     paddingRight: 15,
     color: "gray",
   },
@@ -122,5 +123,10 @@ const styles = StyleSheet.create({
   boxCoach: {
     marginTop: 15,
     backgroundColor: "white",
+  },
+  boxArticle: {
+    marginTop: 15,
+    backgroundColor: "white",
+    paddingBottom: 20,
   },
 });
