@@ -42,6 +42,7 @@ saya nambahin constrain UserContent di Model user
 [v] Add Authentication to router
 [v] UserCOntent Testing
 [v] Loging Testing
+[v] Initialize expo
 
 # Tondiki Andika
 
