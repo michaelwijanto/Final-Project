@@ -1,5 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User } = require("../models/index");
+const { User, Coach } = require("../models/index");
 const { sign } = require("../helpers/jwt");
 const nodemailer = require("nodemailer");
 
@@ -109,6 +109,25 @@ You have bought these stuff :
     } catch (err) {
       next(err);
     }
+  }
+
+  static async getCoaches(req, res, next) {
+    try {
+      const result = await Coach.findAll();
+
+      res.status(200).json(result);
+    } catch (err) {}
+  }
+
+  static async getCoachDetail(req, res, next) {
+    try {
+      const { id } = req.params;
+      const result = await Coach.findOne({
+        where: { id },
+      });
+
+      res.status(200).json(result);
+    } catch (err) {}
   }
 }
 
