@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react'
+import { useMutation } from "@apollo/client";
+
 import {
   Box,
   Text,
@@ -12,7 +14,33 @@ import {
   Center,
   NativeBaseProvider,
 } from "native-base";
+
+import { REGISTER } from  '../../mutations';
+
 export default function Example({ navigation }){
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
+
+  const register = (e) => {
+    e.preventDefault()
+    console.log(fullName, email, password);
+    SignUpUser({
+      variables: {
+        newUser: {
+          fullName,
+          email,
+          password
+        }
+      }
+    })
+  }
+
+  useEffect(() => {
+    console.log(error);
+  }, [error])
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
@@ -40,7 +68,6 @@ export default function Example({ navigation }){
           >
             Sign Up to Active8!
           </Heading>
-
           <VStack space={3} mt="5">
             <FormControl>
               <FormControl.Label>Full Name</FormControl.Label>
@@ -48,21 +75,36 @@ export default function Example({ navigation }){
                 type="text"
                 name="fullName"
                 placeholder="input full name..."
+                value={fullName}
+                onChangeText={setFullName}
               />
             </FormControl>
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
-              <Input type="text" name="email" placeholder="input email..." />
+              <Input 
+                type="text"
+                name="email"
+                value={email}
+                placeholder="input email..."
+                onChangeText={setEmail}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
               <Input
                 type="password"
                 name="password"
+                value={password}
+                onChangeText={setPassword}
                 placeholder="input password..."
               />
             </FormControl>
-            <Button mt="2" colorScheme="indigo">
+
+            <Button
+              mt="2"
+              colorScheme="indigo"
+              onPress={e => register(e)}
+            >  
               Sign Up
             </Button>
             <HStack mt="6" justifyContent="center">
@@ -73,7 +115,7 @@ export default function Example({ navigation }){
                   color: "warmGray.200",
                 }}
               >
-                I'm a new user.{" "}
+                Have an Account ?{" "}
               </Text>
               <Text
                 _text={{
