@@ -113,6 +113,7 @@ You have bought these stuff :
 
   static async getCoaches(req, res, next) {
     try {
+      console.log("MASUKKKK");
       const result = await Coach.findAll();
 
       res.status(200).json(result);

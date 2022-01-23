@@ -16,55 +16,22 @@ import { GET_COACHES } from "../../queries";
 // import LoadingPage from "../components/loadingPage";
 
 export default function CoachHorizontal({ navigation }) {
-  const array = [
-    {
-      id: 1,
-      nama: "Tondiki",
-      imgUrl:
-        "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
-    },
-    {
-      id: 2,
-      nama: "Arie",
-      imgUrl:
-        "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
-    },
-    {
-      id: 3,
-      nama: "Wisnu",
-      imgUrl:
-        "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
-    },
-    {
-      id: 4,
-      nama: "Michael",
-      imgUrl:
-        "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
-    },
-    {
-      id: 5,
-      nama: "Andre",
-      imgUrl:
-        "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
-    },
-  ];
-    const { loading, error, data } = useQuery(GET_COACHES);
+  const { loading, error, data } = useQuery(GET_COACHES);
 
-    console.log(data);
-  //   if (loading) return <LoadingPage></LoadingPage>;
-  //   if (error) return <ErrorPage></ErrorPage>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error...</Text>;
   return (
     <FlatList
       horizontal
-      data={array}
+      data={data.getCoaches}
       renderItem={({ item }) => {
         return (
           <Pressable
-          // onPress={() =>
-          //   navigation.navigate("ResultGenre", {
-          //     categoryName: item.name,
-          //   })
-          // }
+            onPress={() =>
+              navigation.navigate("CoachDetail", {
+                id: item.id,
+              })
+            }
           >
             <Box
               w="150"
@@ -85,16 +52,16 @@ export default function CoachHorizontal({ navigation }) {
             >
               <Box h="130" w="150">
                 <Avatar
-                  bg="purple.600"
+                  bg="warmGray.500"
                   alignSelf="center"
                   size="2xl"
                   source={{
-                    uri: item.imgUrl,
+                    uri: item.imgCoach,
                   }}
                 ></Avatar>
               </Box>
               <Box>
-                <Heading textAlign="center">{item.nama}</Heading>
+                <Heading textAlign="center">{item.name}</Heading>
               </Box>
             </Box>
           </Pressable>
