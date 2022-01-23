@@ -25,17 +25,29 @@ export const Example = () => {
     activitylevel: 0,
     goal: 0,
   });
+
   useEffect(() => {
     console.log({data});
   }, [data])
+  
   useEffect(() => {
     console.log(formMacro);
   }, [formMacro])
+
   const onSubmitMacro = () => {
     // e.preventDefault();
     console.log("SUBMIT");
     console.log({ formMacro });
-    postSignIn({variables: {age: formMacro.age, gender: formMacro.gender, height: formMacro.height, weight: formMacro.weight, activitylevel: formMacro.activitylevel, goal: formMacro.goal}})
+    postSignIn({
+      variables: {
+        age: formMacro.age, 
+        gender: formMacro.gender, 
+        height: formMacro.height, 
+        weight: formMacro.weight, 
+        activitylevel: formMacro.activitylevel, 
+        goal: formMacro.goal
+      }
+    })
     .then((res) => {
       console.log({res});
     })
@@ -43,6 +55,7 @@ export const Example = () => {
       console.log({err});
     })
   };
+  
   if(data) return <Text>{JSON.stringify(data)}</Text>
   return (
     <Box
