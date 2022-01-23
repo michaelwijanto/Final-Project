@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "password",
+    "password": "postgres",
     "database": "Active8",
     "host": "localhost",
     "dialect": "postgres"
