@@ -30,13 +30,6 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: true,
-              }}
-            /> */}
-            {/* <Stack.Screen
               name="Contents"
               component={Contents}
               options={{
@@ -67,6 +60,13 @@ function App() {
               component={SignIn}
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                headerShown: true,
               }}
             />
             <Stack.Screen
