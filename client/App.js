@@ -82,17 +82,24 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            />
+            /> 
             {/* <Stack.Screen
               name="Media player"
               component={VideoScreen}
               options={{
                 headerShown: true,
               }}
-            /> */}
+            />
             {/* <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
+              options={{
+                headerShown: true,
+              }}
+            /> */}
+              {/* <Stack.Screen
+              name="Coach"
+              component={Profile}
               options={{
                 headerShown: true,
               }}
