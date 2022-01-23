@@ -52,12 +52,12 @@ function App() {
               headerShown: true,
             }}
           /> */}
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Macro"
               component={Macro}
               options={{ headerShown: true }}
-            /> */}
-            <Stack.Screen
+            />
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -70,7 +70,7 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            />
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
