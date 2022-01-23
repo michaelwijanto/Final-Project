@@ -67,26 +67,25 @@ function App() {
                 headerTitleAlign: "center"
               }}
             />
-            */}
             <Stack.Screen
               name="Macro"
               component={Macro}
               options={{ headerShown: true }}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
                 headerShown: false,
               }}
-            />
+            /> */}
             <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            /> */}
+            /> 
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
