@@ -1,7 +1,11 @@
-import { 
+import {
   ApolloClient,
-  InMemoryCache
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
 } from "@apollo/client";
+
 
 // Andre;
 // const client = new ApolloClient({
@@ -23,7 +27,7 @@ import {
 
 // Whisnu
 const client = new ApolloClient({
-  uri: "http://10.236.197.245:4000",
+  uri: "http://192.168.218.140:4000",
   cache: new InMemoryCache(),
 });
 
@@ -39,5 +43,6 @@ const client = new ApolloClient({
 // });
 
 //
+
 
 export default client;

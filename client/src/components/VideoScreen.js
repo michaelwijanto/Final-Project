@@ -6,19 +6,15 @@ import {
   Pressable,
   FlatList,
   ScrollView,
+  Dimensions
 } from "react-native";
 import {
-  Box,
-  Heading,
-  Image,
-  useColorMode,
-  ChevronRightIcon,
-  StatusBar,
-  HStack,
-  IconButton,
+  Container,
+  ListItem,
+  List,
   Text,
-  Icon,
-  Center,
+  Content,
+  
 } from "native-base";
 import SwitchMode from "../components/SwitchMode";
 import AppBar from "../components/AppBar";
@@ -28,19 +24,38 @@ import {
   MaterialIcons,
   AntDesign,
 } from "@expo/vector-icons";
-import Video from 'react-native-video';
-import VideoPlayer from 'react-native-video-controls';
+// import Video  from "react-native-video";
+
+import { Video } from 'expo-av';
 
 
 
 
 export default function VideoScreen({ navigation }) {
   const [selected, setSelected] = React.useState(1);
-
+  const {width,height} = Dimensions.get('screen')
   return (
+    // <Container>
+    //   <VideoPlayer 
+    //   controls
+    //   source={{uri:'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
+    //   style={{flex: 1}}
+    //   />
+    // </Container>
     <View style={styles.mainPlayerView}>
-      <View style={{height:height/3,backgroundColor:'grey',width:'100%'}}>
-        <VideoPlayer seekColor={'blue'} controls={true} source={{uri: "https://www.youtube.com/watch?v=mpSmBuco6I0"}} style={styles.video} />
+      <View>
+               <Video
+               
+                source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+                rate={1.0}
+                volume={1.0}
+                isMuted={false}
+                resizeMode="cover"
+                shouldPlay
+                isLooping
+                controls
+                style={{ width: 300, height: 300 }}
+                /> 
       </View>
       <Text style={styles.title}>SENAM KEBUGARAN JAS MANI</Text>
     </View>

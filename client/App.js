@@ -1,6 +1,7 @@
-// In App.js in a new project
+// // In App.js in a new project
 
 import * as React from "react";
+import client from "./config/apolloClient";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,8 +11,11 @@ import { ApolloProvider } from "@apollo/client";
 import Home from "./src/screens/Home";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
-import client from "./config/apolloClient";
 import VideoScreen from "./src/components/VideoScreen";
+import Log from "./src/screens/Log";
+import Macro from "./src/screens/Macro";
+import SignIn from "./src/screens/SignIn";
+import SignUp from "./src/screens/SignUp";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,24 +26,54 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* <Stack.Screen
-              name="Home"
-              component={Home}
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: true,
+          }}
+        /> */}
+            {/* <Stack.Screen
+          name="Contents"
+          component={Contents}
+          options={{
+            headerShown: true,
+          }}
+        /> */}
+            {/* <Stack.Screen
+          name="Level"
+          component={LevelContent}
+          options={{
+           headerShown: true,
+          }}
+          /> */}
+            {/* <Stack.Screen
+            name="Log"
+            component={Log}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
+            {/* <Stack.Screen
+              name="Macro"
+              component={Macro}
+              options={{ headerShown: true }}
+            /> */}
+            {/* <Stack.Screen
+              name="SignIn"
+              component={SignIn}
               options={{
                 headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Contents"
-              component={Contents}
-              options={{
-                headerShown: true,
               }}
             /> */}
             {/* <Stack.Screen
               name="Level"
               component={LevelContent}
+            /> */}
+            {/* <Stack.Screen
+              name="SignUp"
+              component={SignUp}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             /> */}
              <Stack.Screen
@@ -55,5 +89,4 @@ function App() {
     </ApolloProvider>
   );
 }
-
 export default App;
