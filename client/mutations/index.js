@@ -11,7 +11,8 @@ mutation SignUpUser(
     email: $email,
     password: $password
   ) {
-    message
+    message,
+    error
   }
 }
 `;
