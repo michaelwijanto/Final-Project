@@ -52,7 +52,7 @@ export default function SignUp({ navigation }){
         //   })
         // })
       } else {
-        navigation.navigate('SignIn')
+        navigation.navigate('SignIn', {})
       }
     } catch (error) {
       console.log(error);

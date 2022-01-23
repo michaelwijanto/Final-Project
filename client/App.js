@@ -76,13 +76,13 @@ function App() {
                 headerShown: true,
               }}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            /> */}
+            />
             {/* <Stack.Screen
               name="Media player"
               component={VideoScreen}
