@@ -28,13 +28,13 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Home"
               component={Home}
               options={{
                 headerShown: true,
               }}
-            />
+            /> */}
             {/* <Stack.Screen
           name="Contents"
           component={Contents}
@@ -68,31 +68,13 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-            {/* <Stack.Screen
-              name="Level"
-              component={LevelContent}
-            /> */}
-            {/* <Stack.Screen
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            /> */}
-             <Stack.Screen
-              name="Media player"
-              component={VideoScreen}
-              options={{
-                headerShown: true,
-              }}
-            />
-            {/* <Stack.Screen
-              name="CoachDetail"
-              component={CoachDetail}
-              options={{
-                headerShown: true,
-              }}
-            /> */}
+            /> 
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

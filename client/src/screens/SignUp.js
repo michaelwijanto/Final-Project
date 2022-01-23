@@ -17,32 +17,38 @@ import {
 
 import { REGISTER } from  '../../mutations';
 
-export default function Example({ navigation }){
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+export default function SignUp({ navigation }){
+  const [formRegister, setRegister] = useState({
+    fullName: '',
+    email: '',
+    password: ''
+  })
   const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
 
-  const register = (e) => {
-    e.preventDefault()
-    console.log(fullName, email, password);
-    SignUpUser({
-      variables: {
-        newUser: {
-          fullName,
-          email,
-          password
+  const submitRegister = async (e) => {
+    try {
+      e.preventDefault()
+      console.log(formRegister);
+      const signUp = await SignUpUser({
+        variables: {
+          fullName: formRegister.fullName,
+          email: formRegister.email,
+          password: formRegister.password
         }
-      }
-    })
+      })
+      console.log(signUp);
+    } catch (error) {
+      error.graphQLErrors.map(({ message }) => (
+        console.log(message)
+      ))
+    }
   }
-
-  useEffect(() => {
-    console.log(error);
-  }, [error])
 
   return (
     <NativeBaseProvider>
+      {
+
+      }
       <Center flex={1} px="3">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
           <Heading
@@ -75,8 +81,7 @@ export default function Example({ navigation }){
                 type="text"
                 name="fullName"
                 placeholder="input full name..."
-                value={fullName}
-                onChangeText={setFullName}
+                onChangeText={value => setRegister({...formRegister, fullName: value})}
               />
             </FormControl>
             <FormControl>
@@ -84,9 +89,8 @@ export default function Example({ navigation }){
               <Input 
                 type="text"
                 name="email"
-                value={email}
                 placeholder="input email..."
-                onChangeText={setEmail}
+                onChangeText={value => setRegister({...formRegister, email: value})}
               />
             </FormControl>
             <FormControl>
@@ -94,8 +98,7 @@ export default function Example({ navigation }){
               <Input
                 type="password"
                 name="password"
-                value={password}
-                onChangeText={setPassword}
+                onChangeText={value => setRegister({...formRegister, password: value})}
                 placeholder="input password..."
               />
             </FormControl>
@@ -103,7 +106,7 @@ export default function Example({ navigation }){
             <Button
               mt="2"
               colorScheme="indigo"
-              onPress={e => register(e)}
+              onPress={e => submitRegister(e)}
             >  
               Sign Up
             </Button>
