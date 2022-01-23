@@ -10,8 +10,10 @@ import client from "./config/apolloClient";
 
 // Components
 import Home from "./src/screens/Home";
+import CoachDetail from "./src/components/CoachDetail"
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
+import VideoScreen from "./src/components/VideoScreen";
 import Profile from './src/screens/Profile'
 import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
@@ -27,52 +29,39 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* <Stack.Screen
-               name="Home"
-               component={Home}
-               options={{
-                 headerShown: true,
-               }}
-             />
-            <Stack.Screen
-               name="Contents"
-               component={Contents}
-               options={{
-                 headerShown: true,
-               }}
-             />
-            <Stack.Screen
-               name="Level"
-               component={LevelContent}
-               options={{
-                 headerShown: true,
-               }}
-             />
-            <Stack.Screen
-              name="Log"
-              component={Log}
+              name="Home"
+              component={Home}
               options={{
                 headerShown: true,
               }}
-            /> 
+            /> */}
+            {/* <Stack.Screen
+          name="Contents"
+          component={Contents}
+          options={{
+            headerShown: true,
+          }}
+        /> */}
+            {/* <Stack.Screen
+            name="Level"
+            component={LevelContent}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
+            {/* <Stack.Screen
+            name="Log"
+            component={Log}
+            options={{
+              headerShown: true,
+            }}
+          /> */}
             {/* <Stack.Screen
               name="Macro"
               component={Macro}
               options={{ headerShown: true }}
-            /> 
-            <Stack.Screen
-              name="Account Profile"
-              component={Profile}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center"
-              }}
-            />
-            <Stack.Screen
-              name="Macro"
-              component={Macro}
-              options={{ headerShown: true }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
