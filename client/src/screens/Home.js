@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
       const value = await AsyncStorage.getItem('@access_token')
       if(value !== null) {
         // value previously stored
-        console.log(value);
+        // console.log(value);
       }
     } catch(e) {
       // error reading value
@@ -76,7 +76,7 @@ export default function Home({ navigation }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <Articles />
+            {/* <Articles /> */}
           </Box>
         </Box>
       </ScrollView>
