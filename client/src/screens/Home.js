@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {
-  Box,
-  Image,
-  Text,
-  ScrollView,
-} from "native-base";
+// Native Base
+import { Box, Image, Text, ScrollView } from "native-base";
 
-// 
-import AppBar from "../components/AppBar";
+// Components
+import AppBar from "../components/NavBar/NavBarHome";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
-
 export default function Home({ navigation }) {
-  
+
+  useEffect(() => {
+    getStorage()
+  }, [])
+
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@access_token')
+      if(value !== null) {
+        // value previously stored
+        console.log(value);
+      }
+    } catch(e) {
+      // error reading value
+      console.error(e);
+    }
+  }
+
   return (
     <Box
       style={styles.container}
@@ -27,8 +40,8 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
+      <AppBar style={styles.appBarStyle} />
       <ScrollView style={styles.top}>
-        <AppBar />
         <Box width="100%">
           <Image
             style={styles.imageBanner}
@@ -67,7 +80,7 @@ export default function Home({ navigation }) {
           </Box>
         </Box>
       </ScrollView>
-      {/* <TabBar></TabBar> */}
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
@@ -78,6 +91,10 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+  },
+  appBarStyle: {
+    top: 0,
+    position: "absolute",
   },
   imageBanner: {
     width: "100%",

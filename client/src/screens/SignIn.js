@@ -68,6 +68,9 @@ export default function SignIn({
       console.log(route.params);
       setIsLogin(false)
     }
+    // Invoking Local Storage
+    getStorage()
+    // removeStorage('@access_token')
   }, [route.params])
 
   // Local Storage
@@ -80,6 +83,30 @@ export default function SignIn({
     }
   }
 
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@access_token')
+      if(value !== null) {
+        // value previously stored
+        // console.log(value); 
+        navigation.navigate('Home')
+      }
+    } catch(e) {
+      // error reading value
+      console.error(e);
+    }
+  }
+
+  const removeStorage = async (key) => {
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
+  }
+  console.log(loading);
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">

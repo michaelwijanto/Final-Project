@@ -23,7 +23,6 @@ const client = new ApolloClient({
 //   uri: "http://192.168.218.140:4000",
 //   cache: new InMemoryCache(),
 // });
-
 // Michael
 // const client = new ApolloClient({
 //   uri: "http://192.168.1.4:4000",
@@ -36,7 +35,5 @@ const client = new ApolloClient({
 // });
 
 //
-
-
 
 export default client;

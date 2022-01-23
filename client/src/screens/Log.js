@@ -10,9 +10,13 @@ import {
   Spacer,
   Center,
   NativeBaseProvider,
+  ScrollView,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export const Example = () => {
+import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarLog";
+
+export default function Log({ navigation }) {
   const data = [
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -47,11 +51,13 @@ export const Example = () => {
   ];
   return (
     <Box
+      flex={1}
       w={{
         base: "100%",
         md: "25%",
       }}
     >
+      <AppBar />
       <Heading fontSize="xl" p="4" pb="3">
         Logs
       </Heading>
@@ -114,16 +120,17 @@ export const Example = () => {
         )}
         keyExtractor={(item) => item.id}
       />
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
-};
+}
 
-export default function Log(){
-  return (
-    <NativeBaseProvider>
-      <Center px="3">
-        <Example flex={1} />
-      </Center>
-    </NativeBaseProvider>
-  );
-};
+// export default function Log({ navigation }) {
+//   return (
+//     <NativeBaseProvider>
+//       <Center px="3">
+//         <Example flex={1} />
+//       </Center>
+//     </NativeBaseProvider>
+//   );
+// }
