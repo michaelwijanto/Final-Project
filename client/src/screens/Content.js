@@ -115,6 +115,41 @@ export default function AboutScreen({ navigation }) {
 
             </View> */}
       </View>
+      <View style={styles.container1}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            padding: 3,
+          }}
+        >
+          <Text
+            style={{
+              marginTop: 10,
+              fontWeight: "bold",
+              fontSize: 25,
+              color: "grey",
+              alignItems: "flex-start",
+            }}
+          >
+            Programs
+          </Text>
+          <Text
+            style={{
+              marginTop: 10,
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "grey",
+              alignItems: "flex-start",
+            }}
+          >
+            View all
+          </Text>
+        </View>
+        <Box style={styles.programsCard}>
+          <LevelHorizontal navigation={navigation} />
+        </Box>
+      </View>
 
       <View style={styles.container1}>
         <View
@@ -149,42 +184,6 @@ export default function AboutScreen({ navigation }) {
         </View>
         <Box style={styles.programsCard}>
           <CoachHorizontal navigation={navigation} />
-        </Box>
-      </View>
-
-      <View style={styles.container1}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 3,
-          }}
-        >
-          <Text
-            style={{
-              marginTop: 10,
-              fontWeight: "bold",
-              fontSize: 25,
-              color: "grey",
-              alignItems: "flex-start",
-            }}
-          >
-            Programs
-          </Text>
-          <Text
-            style={{
-              marginTop: 10,
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "grey",
-              alignItems: "flex-start",
-            }}
-          >
-            View all
-          </Text>
-        </View>
-        <Box style={styles.programsCard}>
-          <LevelHorizontal />
         </Box>
       </View>
     </ScrollView>
