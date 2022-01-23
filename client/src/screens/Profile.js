@@ -17,10 +17,12 @@ import {
   Badge,
 } from "native-base";
 import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarProfile";
 
 export default function Profile({ navigation }) {
   return (
     <Box style={styles.Container}>
+      <AppBar />
       <ScrollView>
         <Heading>
           <HStack space={3} alignItems="center">

@@ -28,7 +28,7 @@ export default function CoachHorizontal({ navigation }) {
         return (
           <Pressable
             onPress={() =>
-              navigation.navigate("CoachDetail", {
+              navigation.navigate("CoachDetailContent", {
                 id: item.id,
                 coachName: item.name,
               })

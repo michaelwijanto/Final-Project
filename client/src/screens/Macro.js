@@ -17,6 +17,7 @@ import {
   ScrollView,
 } from "native-base";
 import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarMacro";
 
 export const Example = ({ navigation }) => {
   const [postSignIn, { data, loading, error }] = useMutation(POST_MACRO);
@@ -62,6 +63,7 @@ export const Example = ({ navigation }) => {
   if (data) return <Text>{JSON.stringify(data)}</Text>;
   return (
     <Box>
+      <AppBar />
       <Box
         marginTop="5"
         flex={1}

@@ -10,7 +10,8 @@ import client from "./config/apolloClient";
 
 // Components
 import Home from "./src/screens/Home";
-import CoachDetail from "./src/components/CoachDetail";
+import CoachDetail from "./src/components/CoachDetailHome";
+import CoachDetailContent from "./src/components/CoachDetailContent";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
 import LevelFilter from "./src/components/LevelVerticalContents";
@@ -33,14 +34,14 @@ function App() {
               name="Home"
               component={Home}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Contents"
               component={Contents}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
@@ -54,13 +55,15 @@ function App() {
               name="Log"
               component={Log}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Macro"
               component={Macro}
-              options={{ headerShown: true }}
+              options={{
+                headerShown: false,
+              }}
             />
             <Stack.Screen
               name="SignIn"
@@ -73,7 +76,7 @@ function App() {
               name="LevelFilter"
               component={LevelFilter}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
@@ -87,21 +90,28 @@ function App() {
               name="Content Detail"
               component={ContentDetail}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
               options={{
-                headerShown: true,
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="CoachDetailContent"
+              component={CoachDetailContent}
+              options={{
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Profile"
               component={Profile}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
           </Stack.Navigator>

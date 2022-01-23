@@ -2,14 +2,16 @@ import { View } from "native-base";
 import { Text, StyleSheet, ScrollView } from "react-native";
 import { Box } from "native-base";
 
-import CoachHorizontal from "../components/CoachHorizontalHome";
+import CoachHorizontal from "../components/CoachHorizontalContent";
 import LevelButton from "../components/LevelButton";
 import ContentHorizontal from "../components/ContentHorizontal";
 import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarContent";
 
 export default function AboutScreen({ navigation }) {
   return (
     <Box style={styles.container}>
+      <AppBar />
       <ScrollView>
         <View style={styles.container2}>
           <View

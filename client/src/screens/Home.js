@@ -1,12 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import {
-  Box,
-  Image,
-  Text,
-  ScrollView,
-} from "native-base";
-import AppBar from "../components/AppBar";
+import { Box, Image, Text, ScrollView } from "native-base";
+import AppBar from "../components/NavBar/NavBarHome";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
@@ -22,8 +17,8 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
+      <AppBar style={styles.appBarStyle} />
       <ScrollView style={styles.top}>
-        <AppBar />
         <Box width="100%">
           <Image
             style={styles.imageBanner}
@@ -73,6 +68,10 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+  },
+  appBarStyle: {
+    top: 0,
+    position: "absolute",
   },
   imageBanner: {
     width: "100%",
