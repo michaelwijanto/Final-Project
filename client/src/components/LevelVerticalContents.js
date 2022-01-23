@@ -11,6 +11,7 @@ import {
   Icon,
 } from "native-base";
 
+import AppBar from "./NavBar/NavBarLevelFilter";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
@@ -42,17 +43,12 @@ export default function LevelFilter({ navigation, route }) {
   const subscription = "false";
 
   return (
-    <FlatList
-      data={newData}
-      renderItem={({ item }) => {
-        return (
-          <Pressable
-          // onPress={() =>
-          //   navigation.navigate("Detail", {
-          //     id: item.id,
-          //   })
-          // }
-          >
+    <Box>
+      <AppBar navigation={navigation} levelName={levelName} />
+      <FlatList
+        data={newData}
+        renderItem={({ item }) => {
+          return (
             <Box
               w="380"
               h="230"
@@ -138,11 +134,11 @@ export default function LevelFilter({ navigation, route }) {
                             size: "lg",
                           },
                         }}
-                        // onPress={() =>
-                        //   navigation.navigate("Detail", {
-                        //     id: item.id,
-                        //   })
-                        // }
+                        onPress={() =>
+                          navigation.navigate("Content Detail", {
+                            id: item.id,
+                          })
+                        }
                       />
                     );
                   } else {
@@ -174,21 +170,21 @@ export default function LevelFilter({ navigation, route }) {
                             size: "lg",
                           },
                         }}
-                        // onPress={() =>
-                        //   navigation.navigate("Detail", {
-                        //     id: item.id,
-                        //   })
-                        // }
+                        onPress={() =>
+                          navigation.navigate("Content Detail", {
+                            id: item.id,
+                          })
+                        }
                       />
                     );
                   }
                 })()}
               </Box>
             </Box>
-          </Pressable>
-        );
-      }}
-    ></FlatList>
+          );
+        }}
+      ></FlatList>
+    </Box>
   );
 }
 

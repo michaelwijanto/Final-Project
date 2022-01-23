@@ -1,19 +1,10 @@
-import SwitchMode from "../components/SwitchMode";
+import SwitchMode from "../SwitchMode";
 import { AntDesign } from "@expo/vector-icons";
 
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import {
-  Box,
-  Heading,
-  useColorMode,
-  ChevronRightIcon,
-  StatusBar,
-  HStack,
-  IconButton,
-  Text,
-} from "native-base";
+import { View, Pressable, FlatList } from "react-native";
+import { Box, HStack, IconButton, Text } from "native-base";
 
-export default function AppBar({ navigation }) {
+export default function AppBar({ navigation, coachName }) {
   return (
     <Box
       safeAreaTop
@@ -37,15 +28,14 @@ export default function AppBar({ navigation }) {
       >
         <HStack space="4" alignItems="center">
           <IconButton
-            icon={<AntDesign name="home" size={24} color="#003049" />}
+            onPress={() => navigation.push("Contents")}
+            icon={<AntDesign name="back" size={24} color="#003049" />}
           />
           <Text color="#003049" fontSize="20" fontWeight="bold">
-            Active8
+            Coach {coachName}
           </Text>
         </HStack>
-        <HStack space="2">
-          <SwitchMode></SwitchMode>
-        </HStack>
+        <HStack space="2">{/* <SwitchMode></SwitchMode> */}</HStack>
       </HStack>
     </Box>
   );

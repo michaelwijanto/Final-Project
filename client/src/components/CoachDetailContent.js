@@ -9,6 +9,7 @@ import {
   ChevronRightIcon,
   Avatar,
 } from "native-base";
+import AppBar from "./NavBar/NavBarCoachContent";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
@@ -17,6 +18,7 @@ import { GET_COACH_DETAIL } from "../../queries";
 
 export default function CoachDetail({ navigation, route }) {
   const { id } = route.params;
+  const { coachName } = route.params;
   const { loading, error, data } = useQuery(GET_COACH_DETAIL, {
     variables: {
       getCoachDetailId: id,
@@ -26,6 +28,7 @@ export default function CoachDetail({ navigation, route }) {
   if (error) return <Text>Error...</Text>;
   return (
     <Box style={styles.container}>
+      <AppBar navigation={navigation} coachName={coachName} />
       <Box style={styles.top}>
         <Image
           style={styles.imageBanner}
