@@ -1,5 +1,4 @@
 import React from "react";
-
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import {
   Box,
