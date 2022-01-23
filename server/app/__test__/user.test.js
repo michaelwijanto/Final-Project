@@ -64,10 +64,9 @@ describe("POST /api/users/register", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result);
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Email Required"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Email Required"]));
         done();
       })
       .catch((err) => {
@@ -87,7 +86,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Email cannot be empty", "Invalid email format"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Email cannot be empty", "Invalid email format"]));
         done();
       })
       .catch((err) => {
@@ -107,7 +106,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Email already exist"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Email already exist"]));
         done();
       })
       .catch((err) => {
@@ -127,7 +126,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Invalid email format"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Invalid email format"]));
         done();
       })
       .catch((err) => {
@@ -146,7 +145,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Password Required"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Password Required"]));
         done();
       })
       .catch((err) => {
@@ -166,7 +165,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Password cannot be empty"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Password cannot be empty"]));
         done();
       })
       .catch((err) => {
@@ -185,7 +184,7 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", expect.arrayContaining(["Full Name Required"]));
+        expect(result).toHaveProperty("error", expect.arrayContaining(["Full Name Required"]));
         done();
       })
       .catch((err) => {
@@ -341,7 +340,7 @@ describe("POST /api/users/login", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Email or Password is required");
+        expect(result).toHaveProperty("error", "Email or Password is required");
         done();
       })
       .catch((err) => {
@@ -358,7 +357,7 @@ describe("POST /api/users/login", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Email or Password is required");
+        expect(result).toHaveProperty("error", "Email or Password is required");
         done();
       })
       .catch((err) => {
@@ -376,7 +375,7 @@ describe("POST /api/users/login", () => {
         const result = response.body;
         expect(response.status).toBe(401);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Invalid email/password");
+        expect(result).toHaveProperty("error", "Invalid email/password");
         done();
       })
       .catch((err) => {
@@ -394,7 +393,7 @@ describe("POST /api/users/login", () => {
         const result = response.body;
         expect(response.status).toBe(401);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("message", "Invalid email/password");
+        expect(result).toHaveProperty("error", "Invalid email/password");
         done();
       })
       .catch((err) => {
