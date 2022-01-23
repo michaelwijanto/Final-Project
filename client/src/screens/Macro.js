@@ -16,7 +16,7 @@ import {
   Text,
 } from "native-base";
 export const Example = () => {
-  const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
+  const [postSignIn, { data, loading, error }] = useMutation(POST_MACRO);
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
@@ -28,7 +28,7 @@ export const Example = () => {
   const onSubmitMacro = (e) => {
     e.preventDefault();
     console.log({ formMacro });
-    postMacro({variables: {age: formMacro.age, gender: formMacro.gender, height: formMacro.height, weight: formMacro.weight, activitylevel: formMacro.activitylevel, goal: formMacro.goal}})
+    postSignIn({variables: {age: formMacro.age, gender: formMacro.gender, height: formMacro.height, weight: formMacro.weight, activitylevel: formMacro.activitylevel, goal: formMacro.goal}})
   };
   const changeValue = (e) => {
     const { name, value } = e.target;
