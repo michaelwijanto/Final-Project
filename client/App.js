@@ -29,13 +29,13 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Home"
               component={Home}
               options={{
                 headerShown: true,
               }}
-            />
+            /> */}
             {/* <Stack.Screen
           name="Contents"
           component={Contents}
