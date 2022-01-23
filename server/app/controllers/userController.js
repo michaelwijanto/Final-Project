@@ -1,5 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User, Coach } = require("../models/index");
+const { User, Coach, Level } = require("../models/index");
 const { sign } = require("../helpers/jwt");
 const nodemailer = require("nodemailer");
 
@@ -18,9 +18,9 @@ class UserController {
       to: email, // list of receivers
       subject: "Succesfull Buy  ✔", // Subject line
       text: `Hello ${email}, Thank you for buy our stuff!
-This is your invoice
-You have bought these stuff :
-`,
+        This is your invoice
+        You have bought these stuff :
+      `,
     };
 
     transporter.sendMail(notif, (err, data) => {
@@ -31,7 +31,6 @@ You have bought these stuff :
       }
     });
 
-    console.log("LOLOS");
     let newUser = {
       email,
       password,
@@ -39,6 +38,7 @@ You have bought these stuff :
       role: "user",
       isRegister: "false",
     };
+    
     try {
       let created = await User.create(newUser);
       res.status(201).json({
@@ -113,8 +113,15 @@ You have bought these stuff :
 
   static async getCoaches(req, res, next) {
     try {
-      console.log("MASUKKKK");
       const result = await Coach.findAll();
+
+      res.status(200).json(result);
+    } catch (err) {}
+  }
+
+  static async getLevels(req, res, next) {
+    try {
+      const result = await Level.findAll();
 
       res.status(200).json(result);
     } catch (err) {}

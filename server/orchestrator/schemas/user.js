@@ -20,7 +20,8 @@ const typeDefs = gql`
   }
 
   type Message {
-    message: String
+    message: [String],
+    error: [String]
   }
 
   type AccessToken {
@@ -99,7 +100,7 @@ const resolvers = {
         return { message: "Sign Up Succesful" };
       } catch (err) {
         console.log(err.response.data);
-        return err.response.data;
+        return err.response.data
       }
     },
     signInUser: async (_, args) => {
