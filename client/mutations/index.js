@@ -1,5 +1,16 @@
- 
 import { gql } from "@apollo/client";
+
+export const REGISTER = gql`
+mutation SignUpUser(
+  $newUser: RegisterUser!
+) {
+  signUpUser(
+    newUser: $newUser
+  ) {
+    message
+  }
+}
+`;
 
 export const POST_MACRO = gql`
 mutation PostMacro($age: Int, $gender: String, $height: Int, $weight: Int, $activitylevel: Int, $goal: String) {
