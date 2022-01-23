@@ -17,6 +17,7 @@ import {
 } from "native-base";
 export const Example = () => {
   const [postSignIn, { data, loading, error }] = useMutation(POST_MACRO);
+  console.log({data, loading, error});
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
