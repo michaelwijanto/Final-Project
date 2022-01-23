@@ -22,20 +22,26 @@ beforeAll(async () =>{
         restartIdentity: true,
     })
 
-    await Level.bulkCreate([
+     Level.bulkCreate([
         {
             name: "Easy",
+            thumbnail:
+          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
             createdAt: new Date(),
             updateedAt: new Date()
             
         },
         {
             name: "Medium",
+            thumbnail:
+          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
             createdAt: new Date(),
             updateedAt: new Date()
         },
         {
             name: "Hard",
+            thumbnail:
+          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
             createdAt: new Date(),
             updateedAt: new Date()
         }
@@ -159,8 +165,7 @@ test("[POST/api/users/login success] - should be return object with status code 
         password: "password",
      })
      .then((resp) =>{ 
-         access_token = resp.body.access_token 
-           
+         access_token = resp.body.access_token  
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
          expect(resp.body).toHaveProperty("access_token")
@@ -202,8 +207,8 @@ test("[GET/api/contents ERROR]  - should be return object with status code 401",
         
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Invalid token')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Invalid token')
         
         
         done()
@@ -243,8 +248,8 @@ test("[GET/api/contents/:id ERROR] - should be return object with status code 20
      .then((resp) =>{
          expect(resp.status).toBe(401)
          expect(resp.body).toEqual(expect.any(Object))
-         expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Content Not Found')
+         expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Content Not Found')
          done()
      })
      .catch((err) =>{
@@ -258,8 +263,8 @@ test("[GET/api/contents/;id ERROR]  - should be return object with status code 4
     .then((resp) =>{
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Invalid token')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Invalid token')
         
         
         done()
@@ -317,7 +322,7 @@ test("[POST/api/contents ERROR] - should be return object with status code 401",
         
         expect(resp.status).toBe(400)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
+        expect(resp.body).toHaveProperty("error")
        
         
         
@@ -344,8 +349,8 @@ test("[POST/api/contents ERROR] - should be return object with status code 401",
         .then((resp) =>{
             expect(resp.status).toBe(401)
             expect(resp.body).toEqual(expect.any(Object))
-            expect(resp.body).toHaveProperty("message")
-            expect(resp.body.message).toBe('Invalid token')
+            expect(resp.body).toHaveProperty("error")
+            expect(resp.body.error).toBe('Invalid token')
             
             
             done()
@@ -405,8 +410,8 @@ test("[PUT/api/contents/:id ERROR] - should be return object with status code 40
     .then((resp) =>{
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Content Not Found')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Content Not Found')
         
         
         done()
@@ -433,7 +438,7 @@ test("[PUT/api/contents/:id ERROR] - should be return object with status code 40
     .then((resp) =>{
         expect(resp.status).toBe(400)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
+        expect(resp.body).toHaveProperty("error")
        
         
         
@@ -460,8 +465,8 @@ test("[PUT/api/contents/:id ERROR] - should be return object with status code 40
         .then((resp) =>{
             expect(resp.status).toBe(401)
             expect(resp.body).toEqual(expect.any(Object))
-            expect(resp.body).toHaveProperty("message")
-            expect(resp.body.message).toBe('Invalid token')
+            expect(resp.body).toHaveProperty("error")
+            expect(resp.body.error).toBe('Invalid token')
             
             
             done()
@@ -509,8 +514,8 @@ test("[PATCH/api/contents/:id ERROR] - should be return object with status code 
         
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Content Not Found')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Content Not Found')
         
         
         done()
@@ -530,7 +535,7 @@ test("[PATCH/api/contents/:id ERROR] - should be return object with status code 
     .then((resp) =>{
         expect(resp.status).toBe(400)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
+        expect(resp.body).toHaveProperty("error")
        
         
         
@@ -551,8 +556,8 @@ test("[PATCH/api/contents/:id ERROR] - should be return object with status code 
         .then((resp) =>{
             expect(resp.status).toBe(401)
             expect(resp.body).toEqual(expect.any(Object))
-            expect(resp.body).toHaveProperty("message")
-            expect(resp.body.message).toBe('Invalid token')
+            expect(resp.body).toHaveProperty("error")
+            expect(resp.body.error).toBe('Invalid token')
             
             
             done()
@@ -587,8 +592,8 @@ test("[DELETE/api/contents/:id ERROR] - should be return object with status code
     .then((resp) =>{
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Content Not Found')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Content Not Found')
         done()
     })
     .catch((err) =>{
@@ -603,8 +608,8 @@ test("[DELETE/api/contents/:id ERROR] - should be return object with status code
     .then((resp) =>{
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Invalid token')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Invalid token')
         
         
         
