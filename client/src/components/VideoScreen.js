@@ -24,9 +24,9 @@ import {
   MaterialIcons,
   AntDesign,
 } from "@expo/vector-icons";
-// import Video  from "react-native-video";
+import Video  from "react-native-video";
 
-import { Video } from 'expo-av';
+// import { Video } from 'expo-av';
 
 
 
