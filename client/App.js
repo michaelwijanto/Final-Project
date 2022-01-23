@@ -62,7 +62,7 @@ function App() {
               component={Macro}
               options={{ headerShown: true }}
             /> */}
-            <Stack.Screen
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -75,7 +75,7 @@ function App() {
               options={{
                 headerShown: true,
               }}
-            />
+            /> */}
             {/* <Stack.Screen
               name="SignUp"
               component={SignUp}
@@ -83,7 +83,7 @@ function App() {
                 headerShown: false,
               }}
             />  */}
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Media player"
               component={VideoScreen}
               options={{
@@ -96,7 +96,7 @@ function App() {
               options={{
                 headerShown: true,
               }}
-            /> */}
+            />
               {/* <Stack.Screen
               name="Coach"
               component={Profile}
