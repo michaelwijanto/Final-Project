@@ -198,7 +198,7 @@ describe("USER CONTENT TEST", _ => {
           const result = res.body;
           expect.status = 201;
           expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
+          expect(result).toHaveProperty("error");
           done();
         })
           .catch(error => {
@@ -217,7 +217,7 @@ describe("USER CONTENT TEST", _ => {
           const result = res.body;
           expect.status = 201;
           expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
+          expect(result).toHaveProperty("error");
           done();
         })
         .catch(error => {
@@ -275,7 +275,7 @@ describe("USER CONTENT TEST", _ => {
           const result = res.body;
           expect.status = 400;
           expect(result).toEqual(expect.any(Object))
-          expect(result).toHaveProperty("message");
+          expect(result).toHaveProperty("error");
 
           done();
         })
