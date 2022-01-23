@@ -22,7 +22,7 @@ const typeDefs = gql`
       gender: String
       height: Int
       weight: Int
-      activitylevel: String
+      activitylevel: Int
       goal: String
     ): Macro
   }
