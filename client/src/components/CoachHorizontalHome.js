@@ -10,8 +10,8 @@ import {
   Avatar,
 } from "native-base";
 
-// import { useQuery } from "@apollo/client";
-// import { GET_COACHES } from "../../queries";
+import { useQuery } from "@apollo/client";
+import { GET_COACHES } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 // import LoadingPage from "../components/loadingPage";
 
@@ -48,9 +48,9 @@ export default function CoachHorizontal({ navigation }) {
         "https://factsbio.com/wp-content/uploads/2021/06/0EF77481-3A80-4CF3-AADA-28DC9DF14539.jpg",
     },
   ];
-    // const { loading, error, data } = useQuery(GET_COACHES);
+    const { loading, error, data } = useQuery(GET_COACHES);
 
-    // console.log(data);
+    console.log(data);
   //   if (loading) return <LoadingPage></LoadingPage>;
   //   if (error) return <ErrorPage></ErrorPage>;
   return (
