@@ -11,3 +11,15 @@ export const GET_COACHES = gql`
     }
   }
 `;
+
+export const GET_COACH_DETAIL = gql`
+  query GetCoachDetail($getCoachDetailId: ID) {
+    getCoachDetail(id: $getCoachDetailId) {
+      id
+      name
+      imgCoach
+      age
+      bio
+    }
+  }
+`;

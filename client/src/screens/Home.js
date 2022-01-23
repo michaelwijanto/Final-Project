@@ -56,7 +56,7 @@ export default function Home({ navigation }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <LevelHorizontal />
+            <LevelHorizontal navigation={navigation} />
           </Box>
         </Box>
         <Box style={styles.boxCoach}>
@@ -65,7 +65,7 @@ export default function Home({ navigation }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <CoachHorizontal />
+            <CoachHorizontal navigation={navigation} />
           </Box>
         </Box>
         <Box style={styles.boxArticle}>
