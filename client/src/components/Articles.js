@@ -53,7 +53,6 @@ export default function Articles({ navigation }) {
 
   return (
     <FlatList
-      horizontal
       data={array}
       renderItem={({ item }) => {
         return (
