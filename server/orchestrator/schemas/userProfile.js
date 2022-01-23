@@ -28,7 +28,7 @@ const typeDefs = gql`
     activityLevel: String
     LevelId: ID
     UserId: ID
-    updatedAt: String
+    createdAt: String
   }
 
   type ResponUserProfile {
@@ -40,6 +40,9 @@ const typeDefs = gql`
     getUserProfile(
       access_token: String
     ): ResponUserProfile
+    getUserLogs(
+      access_token: String
+    ): [Log]
   }
 
   type Mutation {
@@ -53,34 +56,77 @@ const typeDefs = gql`
       dateBirth: String,
       goals: String
     ): Message
+    postUserLog(
+      access_token: String
+      height: Int
+      weight: Int
+    ): Message
   }
 `;
+
 const resolvers = {
   Query: {
     getUserProfile: async (_, args) => {
       try {
-        const {access_token} = args
-        const {data: user} = await axios.get("http://localhost:3000/api/user-profiles", {headers: {access_token}});
+        const { access_token } = args;
+        const { data: user } = await axios.get(
+          "http://localhost:3000/api/user-profiles",
+          { headers: { access_token } }
+        );
         console.log(user);
-        return user
+        return user;
       } catch (err) {
-        console.log({err});
-        return err
+        console.log({ err });
+        return err;
       }
-    }
+    },
+    getUserLogs: async (_, args) => {
+      try {
+        const { access_token } = args;
+        console.log({access_token});
+        const { data: logs } = await axios.get(
+          "http://localhost:3000/api/log-history",
+          { headers: { access_token } }
+        );
+        console.log(logs);
+        return logs;
+      } catch (err) {
+        console.log({ err });
+        return err;
+      }
+    },
   },
   Mutation: {
     postUserProfile: async (_, args) => {
       try {
-        const {access_token} = args
-        const {data} = await axios.post("http://localhost:3000/api/user-profiles", args, {headers: {access_token}});
+        const { access_token } = args;
+        const { data } = await axios.post(
+          "http://localhost:3000/api/user-profiles",
+          args,
+          { headers: { access_token } }
+        );
         console.log(data);
-        return data
+        return {message: [data.message]};
       } catch (err) {
-        console.log({err});
-        return err
+        console.log({ err });
+        return {error: [err.response.data.error]};
       }
-    }
+    },
+    postUserLog: async (_, args) => {
+      try {
+        const { access_token } = args;
+        const { data } = await axios.post(
+          "http://localhost:3000/api/log-history",
+          args,
+          { headers: { access_token } }
+        );
+        console.log(data);
+        return {message: ["Your latest body development has been added"]};
+      } catch (err) {
+        console.log({ err });
+        return {error: err.response.data.error};
+      }
+    },
   },
 };
 
