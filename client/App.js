@@ -36,13 +36,13 @@ function App() {
                 headerShown: true,
               }}
             /> */}
-            {/* <Stack.Screen
-          name="Contents"
-          component={Contents}
-          options={{
-            headerShown: true,
-          }}
-        /> */}
+            <Stack.Screen
+              name="Contents"
+              component={Contents}
+              options={{
+                headerShown: true,
+              }}
+            />
             {/* <Stack.Screen
             name="Level"
             component={LevelContent}
