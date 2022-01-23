@@ -55,7 +55,7 @@ export default function LevelHorizontal({ navigation }) {
           >
             <Box
               w="380"
-              h="180"
+              h="300"
               rounded="lg"
               overflow="hidden"
               marginTop="3"
@@ -101,13 +101,14 @@ export default function LevelHorizontal({ navigation }) {
                   >
                     {item.nama}
                   </Heading>
-                  {/* <View style={{
+                </Stack>
+                  <Stack style={{
                 flexDirection:"row",
-                justifyContent:"center",
+                
                 padding:3,
                 marginTop: 20
             }}>
-              <View style={{
+              <Stack style={{
                 backgroundColor: "orange",
                 width: 100,
                 height:40,
@@ -125,10 +126,9 @@ export default function LevelHorizontal({ navigation }) {
                 color: 'white',
                 alignItems:"flex-start",
                 
-            }}>Easy</Text>
-              </View>
-            </View>  */}
-                </Stack>
+            }}>button</Text>
+              </Stack>
+            </Stack> 
               </Stack>
             </Box>
           </Pressable>
