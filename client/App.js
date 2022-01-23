@@ -27,26 +27,26 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* <Stack.Screen
-//             name="Home"
-//             component={Home}
-//             options={{
-//               headerShown: true,
-//             }}
-//           />
+               name="Home"
+               component={Home}
+               options={{
+                 headerShown: true,
+               }}
+             />
             <Stack.Screen
-//             name="Contents"
-//             component={Contents}
-//             options={{
-//               headerShown: true,
-//             }}
-//           />
+               name="Contents"
+               component={Contents}
+               options={{
+                 headerShown: true,
+               }}
+             />
             <Stack.Screen
-//             name="Level"
-//             component={LevelContent}
-//             options={{
-//               headerShown: true,
-//             }}
-//           />
+               name="Level"
+               component={LevelContent}
+               options={{
+                 headerShown: true,
+               }}
+             />
             <Stack.Screen
               name="Log"
               component={Log}
@@ -69,6 +69,11 @@ function App() {
             />
             */}
             <Stack.Screen
+              name="Macro"
+              component={Macro}
+              options={{ headerShown: true }}
+            />
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -81,7 +86,7 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            /> 
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
