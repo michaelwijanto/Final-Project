@@ -5,14 +5,17 @@ import {
   Box,
   Text,
   Heading,
-  VStack,
   FormControl,
   Input,
-  Link,
+  Alert,
   Button,
   HStack,
+  VStack,
   Center,
   NativeBaseProvider,
+  IconButton,
+  CloseIcon,
+  useToast
 } from "native-base";
 
 import { REGISTER } from  '../../mutations';
@@ -23,12 +26,13 @@ export default function SignUp({ navigation }){
     email: '',
     password: ''
   })
+  const [newError, setNewError] = useState([])
   const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
+  const toast = useToast()
 
   const submitRegister = async (e) => {
     try {
       e.preventDefault()
-      console.log(formRegister);
       const signUp = await SignUpUser({
         variables: {
           fullName: formRegister.fullName,
@@ -36,19 +40,27 @@ export default function SignUp({ navigation }){
           password: formRegister.password
         }
       })
-      console.log(signUp);
+      if (!signUp.data.signUpUser.message) {
+        const errors = signUp.data.signUpUser.error
+        setNewError(errors)
+
+        // newError.forEach((error) => {
+        //   toast.show({
+        //     title: error,
+        //     placement: 'top-right',
+        //     backgroundColor: 'red.700'
+        //   })
+        // })
+      } else {
+        navigation.navigate('SignIn')
+      }
     } catch (error) {
-      error.graphQLErrors.map(({ message }) => (
-        console.log(message)
-      ))
+      console.log(error);
     }
   }
 
   return (
     <NativeBaseProvider>
-      {
-
-      }
       <Center flex={1} px="3">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
           <Heading
@@ -75,6 +87,26 @@ export default function SignUp({ navigation }){
             Sign Up to Active8!
           </Heading>
           <VStack space={3} mt="5">
+            {
+              newError && newError.map((item, i) => (
+                <Alert w="100%" status="error" key={i}>
+                  <VStack space={2} flexShrink={1} w="100%">
+                    <HStack flexShrink={1} space={2} justifyContent="space-between">
+                      <HStack space={2} flexShrink={1}>
+                        <Alert.Icon mt="1" />
+                        <Text fontSize="md" textAlign='center' color="coolGray.800">
+                          {item}
+                        </Text>
+                      </HStack>
+                      {/* <IconButton
+                        variant="unstyled"
+                        icon={<CloseIcon size="3" color="coolGray.600" />}
+                      /> */}
+                    </HStack>
+                  </VStack>
+                </Alert>
+              ))
+            }
             <FormControl>
               <FormControl.Label>Full Name</FormControl.Label>
               <Input
