@@ -27,23 +27,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { POST_USER_LOG } from "../../mutations";
-// export const Example = () => {
-//   const toast = useToast();
-//   const [customNotif, setCustomNotif] = useState({
-//     customLoading: false,
-//     customError: null,
-//   });
-//   const [showModal, setShowModal] = useState(false);
-//   const [formLog, setFormLog] = useState({
-//     height: 0,
-//     weight: 0,
-//   });
-//   const { loading, data, error } = useQuery(GET_USER_LOGS, {
-//     variables: {
-//       accessToken:
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
-//     }})
-// }
 export default function Log({ navigation }) {
   const toast = useToast();
   const [customNotif, setCustomNotif] = useState({
