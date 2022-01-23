@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, from, InMemoryCache } from "@apollo/client";
 
 // Andre;
 const client = new ApolloClient({
