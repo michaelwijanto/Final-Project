@@ -29,10 +29,10 @@ export default function SignUp({ navigation }){
   const [newError, setNewError] = useState([])
   const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
   const toast = useToast()
-
   const submitRegister = async (e) => {
     try {
       e.preventDefault()
+      console.log(formRegister);
       const signUp = await SignUpUser({
         variables: {
           fullName: formRegister.fullName,

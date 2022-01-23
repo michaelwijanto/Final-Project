@@ -1,4 +1,6 @@
-import React from "react";
+import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarLog";
+import { useEffect, useState } from "react";
 import {
   Box,
   FlatList,
@@ -10,45 +12,69 @@ import {
   Spacer,
   Center,
   NativeBaseProvider,
-  ScrollView,
+  Button,
+  Modal,
+  FormControl,
+  useToast,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "native-base";
+import { GET_USER_LOGS } from "../../queries";
+import { useQuery, useMutation } from "@apollo/client";
+import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import TabBar from "../components/TabBar";
-import AppBar from "../components/NavBar/NavBarLog";
-
+import { POST_USER_LOG } from "../../mutations";
 export default function Log({ navigation }) {
-  const data = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      height: "168 cm",
-      createdAt: "02-01-2022",
-      weight: "77 kg",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      height: "168 cm",
-      createdAt: "06-01-2022",
-      weight: "76 kg",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      height: "169 cm",
-      createdAt: "12-01-2022",
-      weight: "74 kg",
-    },
-    {
-      id: "68694a0f-3da1-431f-bd56-142371e29d72",
-      height: "169 cm",
-      createdAt: "17-01-2022",
-      weight: "73 kg",
-    },
-    {
-      id: "28694a0f-3da1-471f-bd96-142456e29d72",
-      height: "170 cm",
-      createdAt: "22-01-2022",
-      weight: "71 kg",
-    },
-  ];
+  const toast = useToast();
+  const [customNotif, setCustomNotif] = useState({
+    customLoading: false,
+    customError: null,
+  });
+  const [showModal, setShowModal] = useState(false);
+  const [formLog, setFormLog] = useState({
+    height: 0,
+    weight: 0,
+  });
+  const { loading, data, error } = useQuery(GET_USER_LOGS, {
+    variables: {
+      accessToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
+    }})
+  const [postUserLog, {}] = useMutation(POST_USER_LOG);
+  const onSubmitLog = async (e) => {
+    try {
+      e.preventDefault();
+      setCustomNotif({ ...customNotif, customLoading: true });
+      console.log({ formLog });
+      const createLog = await postUserLog({
+        variables: {
+          accessToken:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
+          height: formLog.height,
+          weight: formLog.weight,
+        },
+      });
+      console.log({ createLog });
+      toast.show({
+        title: "Success update body Log",
+        status: "success",
+        description: createLog.data.postUserLog.message[0],
+      });
+    } catch (err) {
+      console.log({ err });
+      setCustomNotif({ ...customNotif, customError: err });
+    } finally {
+      setCustomNotif({ ...customNotif, customLoading: false });
+      setShowModal(false);
+    }
+  };
+
+  if (loading || customNotif.customLoading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error Fetching Logs</Text>;
+  if (customNotif.customError) return <Text>Error Add Log</Text>;
   return (
     <Box
       flex={1}
@@ -58,11 +84,8 @@ export default function Log({ navigation }) {
       }}
     >
       <AppBar />
-      <Heading fontSize="xl" p="4" pb="3">
-        Logs
-      </Heading>
       <FlatList
-        data={data}
+        data={data.getUserLogs}
         renderItem={({ item }) => (
           <Box
             borderBottomWidth="1"
@@ -73,35 +96,43 @@ export default function Log({ navigation }) {
             pl="4"
             pr="5"
             py="2"
+            style={{ marginLeft: 10 }}
           >
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
+                  <Text
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    color="coolGray.800"
+                    bold
+                    style={{ marginRight: 5 }}
+                  >
+                    {item.height}
+                  </Text>
                   <MaterialCommunityIcons
                     name="human-male-height"
                     size={24}
                     color="black"
                   />
-                  <Text
-                    _dark={{
-                      color: "warmGray.50",
-                    }}
-                    color="coolGray.800"
-                    bold
-                  >
-                    {item.height}
-                  </Text>
                 </Box>
-                <Box style={{ flexDirection: "row" }}>
+                <Box style={{ flexDirection: "row", marginTop: 5 }}>
                   <Text
                     _dark={{
                       color: "warmGray.50",
                     }}
                     color="coolGray.800"
                     bold
+                    style={{ marginRight: 5 }}
                   >
                     {item.weight}
                   </Text>
+                  <MaterialCommunityIcons
+                    name="weight-kilogram"
+                    size={24}
+                    color="black"
+                  />
                 </Box>
               </VStack>
               <Spacer />
@@ -113,19 +144,70 @@ export default function Log({ navigation }) {
                 color="coolGray.800"
                 alignSelf="flex-start"
               >
-                {item.createdAt}
+                {item.createdAt.split("").slice(0, 10).join("")}
               </Text>
             </HStack>
           </Box>
         )}
         keyExtractor={(item) => item.id}
       />
+      <Box style={{position: "absolute", bottom: 75, alignSelf: "center"}}>
+        <Button onPress={() => setShowModal(true)}>
+          <MaterialIcons name="add" size={24} color="black" />
+        </Button>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Content maxWidth="400px">
+            <Modal.CloseButton />
+            <Modal.Header>Update your body development!</Modal.Header>
+            <Modal.Body>
+              <FormControl.Label>Height</FormControl.Label>
+              <NumberInput
+                min={130}
+                max={230}
+                onChange={(val) => setFormLog({ ...formLog, height: val })}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <FormControl.Label>Weight</FormControl.Label>
+              <NumberInput
+                min={40}
+                max={160}
+                onChange={(val) => setFormLog({ ...formLog, weight: val })}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button
+                  variant="ghost"
+                  colorScheme="blueGray"
+                  onPress={() => {
+                    setShowModal(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button onPress={onSubmitLog}>Save</Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+      </Box>
       <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
 
-// export default function Log({ navigation }) {
+// export default function Log() {
 //   return (
 //     <NativeBaseProvider>
 //       <Center px="3">

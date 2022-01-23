@@ -2,7 +2,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeBaseProvider, Box } from "native-base";
+import { NativeBaseProvider } from "native-base";
 
 // Apollo Client
 import { ApolloProvider } from "@apollo/client";
@@ -30,7 +30,7 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Home"
               component={Home}
               options={{
@@ -50,14 +50,14 @@ function App() {
               options={{
                 headerShown: true,
               }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="Log"
               component={Log}
               options={{
                 headerShown: false,
               }}
-            />
+            /> */}
             <Stack.Screen
               name="Macro"
               component={Macro}
@@ -65,7 +65,7 @@ function App() {
                 headerShown: false,
               }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -113,7 +113,7 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            />
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
