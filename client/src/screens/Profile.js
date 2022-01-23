@@ -1,97 +1,105 @@
-import React from "react";
-
-// React Native
-import { StyleSheet, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 
 // Native Base
-import {
+import { 
   Box,
-  Container,
   Text,
-  Heading,
+  ScrollView,
   Avatar,
   HStack,
-  Center,
-  View,
-  Button,
+  VStack,
   Badge,
+  Button,
 } from "native-base";
+
+// Components
+import AppBar from "../components/NavBar/NavBarHome";
 import TabBar from "../components/TabBar";
-import AppBar from "../components/NavBar/NavBarProfile";
 
-export default function Profile({ navigation }) {
+export default function Home({ navigation }) {
+
   return (
-    <Box style={styles.Container}>
-      <AppBar />
-      <ScrollView>
-        <Heading>
-          <HStack space={3} alignItems="center">
-            <View h="100%" w="38%">
-              <Avatar
-                bg="purple.600"
-                alignSelf="center"
-                size="xl"
-                source={{
-                  uri: "https://pbs.twimg.com/profile_images/1320985200663293952/lE_Kg6vr_400x400.jpg",
-                }}
-              >
-                RB
-              </Avatar>
-            </View>
-            <View h="100%" w="100%">
-              <HStack h="50%" w="100%">
-                <Text style={styles.sureName}>Arie Sastra Hadiprawira</Text>
+    <Box
+      style={styles.container}
+      _dark={{
+        borderColor: "coolGray.900",
+        backgroundColor: "#1C2F3C",
+      }}
+      _light={{ backgroundColor: "#F5F8FA" }}
+    >
+      <AppBar style={styles.appBarStyle} />
+      <ScrollView style={styles.top}>
+        <Box width="100%">
+          <HStack space={2}>
+            <Avatar
+              bg="purple.600"
+              alignSelf="center"
+              size="2xl"
+              source={{
+                uri: "https://pbs.twimg.com/profile_images/1320985200663293952/lE_Kg6vr_400x400.jpg",
+              }}
+            >
+              RB
+            </Avatar>
+            <VStack style={styles.section1}>
+              <Text style={styles.fullName}>
+                Arie Sastra Hadiprawira
+              </Text>
+              <Text style={styles.email}>
+                ariesastra@mail.com
+              </Text>
+              <HStack mt={2}>
+                <Badge variant="solid" mr={2}>
+                  Easy
+                </Badge>
+                <Badge variant="subtle" colorScheme="info">
+                  Six Pack
+                </Badge>
               </HStack>
-              <HStack h="50%" w="100%" mt={1}>
-                <Text styles={styles.email}>ariesastrah@gmail.com</Text>
-              </HStack>
-              <HStack
-                space={{
-                  base: 2,
-                  md: 4,
-                }}
-                mt={1}
-              >
-                <Badge>Male</Badge>
-                <Badge colorScheme="success">Easy</Badge>
-              </HStack>
-            </View>
+            </VStack>
           </HStack>
-        </Heading>
-
-        <Center mt={5} width={370}>
-          <Button
-            onPress={() => console.log("hello world")}
-            style={styles.button}
-          >
-            Unlock Premium Now
-          </Button>
-        </Center>
+          <HStack style={styles.section2}>
+              <Button w="100%" size="lg" colorScheme="gray">
+                Subscribe Now
+              </Button>
+          </HStack>
+        </Box>
       </ScrollView>
-      <TabBar style={styles.adjustTabBar} navigation={navigation}></TabBar>
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
 
 const styles = StyleSheet.create({
-  Container: {
-    paddingLeft: 25,
-    marginTop: 100,
+  container: {
     flex: 1,
   },
-  sureName: {
+  top: {
+    flex: 1,
+    padding: 15,
+  },
+  appBarStyle: {
+    top: 0,
+    position: "absolute",
+  },
+  section1: {
+    marginVertical: 25,
+    marginLeft: 5
+  },
+  fullName: {
+    fontWeight: 'bold',
     fontSize: 18,
-    fontWeight: "bold",
   },
   email: {
     fontSize: 16,
-    fontWeight: "bold",
+    marginTop: 5
   },
-  button: {
-    backgroundColor: "#1C2F3C",
-    fontWeight: "bold",
+  section2: {
+    marginTop: 15
   },
-  adjustTabBar: {
-    marginLeft: -25,
-  },
+  goal: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
 });
