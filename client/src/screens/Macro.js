@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { POST_MACRO } from "../../queries/macro";
-import { useState } from "react";
+import { POST_MACRO } from "../../mutations/";
+import { useState, useEffect } from "react";
 import {
   FormControl,
   Button,
@@ -25,14 +25,23 @@ export const Example = () => {
     activitylevel: 0,
     goal: 0,
   });
-  const onSubmitMacro = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    console.log({data});
+  }, [data])
+  useEffect(() => {
+    console.log(formMacro);
+  }, [formMacro])
+  const onSubmitMacro = () => {
+    // e.preventDefault();
+    console.log("SUBMIT");
     console.log({ formMacro });
     postSignIn({variables: {age: formMacro.age, gender: formMacro.gender, height: formMacro.height, weight: formMacro.weight, activitylevel: formMacro.activitylevel, goal: formMacro.goal}})
-  };
-  const changeValue = (e) => {
-    const { name, value } = e.target;
-    setFormMacro({ ...formMacro, [name]: value });
+    .then((res) => {
+      console.log({res});
+    })
+    .catch((err) => {
+      console.log({err});
+    })
   };
   if(data) return <Text>{JSON.stringify(data)}</Text>
   return (
@@ -50,7 +59,7 @@ export const Example = () => {
           <FormControl.Label>Gender</FormControl.Label>
           <Select
             name="gender"
-            onChange={(e) => changeValue(e)}
+            onValueChange={(itemValue) => setFormMacro({ ...formMacro, gender: itemValue })}
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -70,7 +79,7 @@ export const Example = () => {
           <FormControl.Label>Age</FormControl.Label>
           <Input
             name="age"
-            onChange={(e) => changeValue(e)}
+            onChangeText={val => setFormMacro({ ...formMacro, age: val })}
             type="number"
             placeholder="Input your age..."
           />
@@ -78,11 +87,12 @@ export const Example = () => {
             Age required
           </FormControl.ErrorMessage>
         </Stack>
+        
         <Stack mx="4">
           <FormControl.Label>Height</FormControl.Label>
           <Input
             name="height"
-            onChange={(e) => changeValue(e)}
+            onChangeText={val => setFormMacro({ ...formMacro, height: val })}
             type="number"
             placeholder="Input your gender..."
           />
@@ -90,11 +100,12 @@ export const Example = () => {
             Height required.
           </FormControl.ErrorMessage>
         </Stack>
+
         <Stack mx="4">
           <FormControl.Label>Weight</FormControl.Label>
           <Input
             name="weight"
-            onChange={(e) => changeValue(e)}
+            onChangeText={val => setFormMacro({ ...formMacro, weight: val })}
             type="number"
             placeholder="Input your weight..."
           />
@@ -106,7 +117,7 @@ export const Example = () => {
           <FormControl.Label>Activity Level</FormControl.Label>
           <Select
             name="activitylevel"
-            onChange={(e) => changeValue(e)}
+            onValueChange={(itemValue) => setFormMacro({ ...formMacro, activitylevel: itemValue })}
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -146,11 +157,12 @@ export const Example = () => {
             Activity Level required.
           </FormControl.ErrorMessage>
         </Stack>
+
         <Stack mx="4">
           <FormControl.Label>Goal</FormControl.Label>
           <Select
             name="goal"
-            onChange={(e) => changeValue(e)}
+            onValueChange={(itemValue) => setFormMacro({ ...formMacro, goal: itemValue })}
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -199,6 +211,7 @@ export const Example = () => {
           }}
           style={{ marginTop: 10 }}
           px="3"
+          onPress={onSubmitMacro}
         >
           Submit
         </Button>
