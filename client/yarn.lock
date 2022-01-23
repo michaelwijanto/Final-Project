@@ -1142,7 +1142,7 @@
     "base64-js" "^1.2.3"
     "xmlbuilder" "^14.0.0"
 
-"@expo/vector-icons@^12.0.4", "@expo/vector-icons@^12.0.5":
+"@expo/vector-icons@^12.0.0", "@expo/vector-icons@^12.0.4":
   "integrity" "sha512-zWvHBmkpbi1KrPma6Y+r/bsGI6MjbM1MBSe6W9A4uYMLhNI5NR4JtTnqxhf7g1XdpaDtBdv5aOWKEx4d5rxnhg=="
   "resolved" "https://registry.npmjs.org/@expo/vector-icons/-/vector-icons-12.0.5.tgz"
   "version" "12.0.5"
@@ -5579,7 +5579,7 @@
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.1.9.tgz"
   "version" "3.1.9"
 
-"react-native-screens@^3.10.2", "react-native-screens@>= 3.0.0":
+"react-native-screens@>= 3.0.0", "react-native-screens@~3.10.1":
   "integrity" "sha512-bMKSpwMeqAoXBqTJiDEG1ogM1cMk66sEmpp/4dGqdX59v+OwMqPeTuBk37qaSuS7gPOFFKsNW2X3ymGvBT4iEw=="
   "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.10.2.tgz"
   "version" "3.10.2"

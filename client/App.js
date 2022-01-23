@@ -1,17 +1,19 @@
 // // In App.js in a new project
-
 import * as React from "react";
-import client from "./config/apolloClient";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider, Box } from "native-base";
-import { ApolloProvider } from "@apollo/client";
 
+// Apollo Client
+import { ApolloProvider } from "@apollo/client";
+import client from "./config/apolloClient";
+
+// Components
 import Home from "./src/screens/Home";
 import CoachDetail from "./src/components/CoachDetail"
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
+import Profile from './src/screens/Profile'
 import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
 import SignIn from "./src/screens/SignIn";
