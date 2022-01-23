@@ -7,9 +7,11 @@ import {
   Text,
   Stack,
   ChevronRightIcon,
-  Button,
+  IconButton,
+  Icon,
 } from "native-base";
 
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
@@ -19,27 +21,6 @@ export default function LevelFilter({ navigation, route }) {
   const { id } = route.params;
   const { levelName } = route.params;
 
-  console.log(id, levelName, "<<<<<<<<<<");
-  const array = [
-    {
-      id: 1,
-      nama: "Easy",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-    {
-      id: 2,
-      nama: "Medium",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-    {
-      id: 3,
-      nama: "Hard",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-  ];
   const { loading, error, data } = useQuery(GET_CONTENT_CARD, {
     variables: {
       accessToken:
@@ -50,8 +31,6 @@ export default function LevelFilter({ navigation, route }) {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
 
-  console.log(data.getContents);
-
   let newData = [];
 
   data.getContents.map((el) => {
@@ -60,7 +39,7 @@ export default function LevelFilter({ navigation, route }) {
     }
   });
 
-  // console.log(newData);
+  const subscription = "false";
 
   return (
     <FlatList
@@ -126,7 +105,84 @@ export default function LevelFilter({ navigation, route }) {
                 </Stack>
               </Stack>
               <Box style={styles.titleContent}>
-                <Heading>{item.title}</Heading>
+                <Text style={styles.textTitle}>{item.title}</Text>
+              </Box>
+              <Box style={styles.iconContent}>
+                {(() => {
+                  if (subscription == "false") {
+                    return (
+                      <IconButton
+                        paddingTop="-5"
+                        icon={<Icon as={AntDesign} name="playcircleo" />}
+                        borderRadius="full"
+                        _icon={{
+                          color: "orange.500",
+                          size: "md",
+                        }}
+                        _hover={{
+                          bg: "orange.600:alpha.20",
+                        }}
+                        _pressed={{
+                          bg: "orange.600:alpha.20",
+                          _icon: {
+                            name: "playcircleo",
+                          },
+                          _ios: {
+                            _icon: {
+                              size: "lg",
+                            },
+                          },
+                        }}
+                        _ios={{
+                          _icon: {
+                            size: "lg",
+                          },
+                        }}
+                        // onPress={() =>
+                        //   navigation.navigate("Detail", {
+                        //     id: item.id,
+                        //   })
+                        // }
+                      />
+                    );
+                  } else {
+                    return (
+                      <IconButton
+                        paddingTop="-5"
+                        icon={<Icon as={MaterialIcons} name="lock" />}
+                        borderRadius="full"
+                        _icon={{
+                          color: "orange.500",
+                          size: "md",
+                        }}
+                        _hover={{
+                          bg: "orange.600:alpha.20",
+                        }}
+                        _pressed={{
+                          bg: "orange.600:alpha.20",
+                          _icon: {
+                            name: "lock",
+                          },
+                          _ios: {
+                            _icon: {
+                              size: "lg",
+                            },
+                          },
+                        }}
+                        _ios={{
+                          _icon: {
+                            size: "lg",
+                          },
+                        }}
+                        // onPress={() =>
+                        //   navigation.navigate("Detail", {
+                        //     id: item.id,
+                        //   })
+                        // }
+                      />
+                    );
+                  }
+                })()}
               </Box>
             </Box>
           </Pressable>
@@ -137,32 +193,21 @@ export default function LevelFilter({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-  },
-  button: {
-    marginBottom: "10px",
-  },
-  top: {
-    flex: 1,
-    margin: 15,
-  },
-  bottom: {
-    flex: 1,
-    margin: 15,
-  },
-  middle: {
-    flex: 1,
-  },
-  titleCollections: {
-    color: "#010203",
+  titleContent: {
+    paddingLeft: 19,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  titleContent: {
-    paddingLeft: 30,
+    paddingRight: 30,
     // marginTop: -10,
+  },
+  textTitle: {
+    paddingRight: 30,
+    fontSize: 16,
+  },
+  iconContent: {
+    bottom: 5,
+    right: 5,
+    position: "absolute",
+    alignItems: "flex-end",
   },
 });
