@@ -9,49 +9,32 @@ import {
   ChevronRightIcon,
 } from "native-base";
 
-// import { useQuery } from "@apollo/client";
-// import { GET_MOVIES } from "../../queries";
+import { useQuery } from "@apollo/client";
+import { GET_LEVEL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 // import LoadingPage from "../components/loadingPage";
 
 export default function LevelHorizontal({ navigation }) {
-  const array = [
-    {
-      id: 1,
-      nama: "Easy",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-    {
-      id: 2,
-      nama: "Medium",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-    {
-      id: 3,
-      nama: "Hard",
-      imgUrl:
-        "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
-    },
-  ];
-  //   const { loading, error, data } = useQuery(GET_MOVIES);
+  const { loading, error, data } = useQuery(GET_LEVEL);
+  
+  
 
-  //   if (loading) return <LoadingPage></LoadingPage>;
-  //   if (error) return <ErrorPage></ErrorPage>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error...</Text>;
+
   return (
     <FlatList
       horizontal
-      data={array}
+      data={data.getLevel}
       renderItem={({ item }) => {
         return (
           <Pressable
-          // onPress={() =>
-          //   navigation.navigate("Detail", {
-          //     id: item.id,
-          //     rating: item.rating,
-          //   })
-          // }
+            onPress={() =>
+              navigation.navigate("LevelFilter", {
+                id: item.id,
+                levelName: item.name,
+              })
+            }
           >
             <Box
               w="380"
@@ -84,7 +67,7 @@ export default function LevelHorizontal({ navigation }) {
                     borderWidth="1"
                     rounded="2xl"
                     source={{
-                      uri: item.imgUrl,
+                      uri: item.thumbnail,
                     }}
                     alt="image"
                   />
@@ -99,7 +82,7 @@ export default function LevelHorizontal({ navigation }) {
                     paddingLeft="5"
                     justifyContent="center"
                   >
-                    {item.nama}
+                    {item.name}
                   </Heading>
                 </Stack>
               </Stack>

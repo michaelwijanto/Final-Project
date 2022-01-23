@@ -1,5 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User, Coach } = require("../models/index");
+const { User, Coach, Level } = require("../models/index");
 const { sign } = require("../helpers/jwt");
 const nodemailer = require("nodemailer");
 
@@ -113,8 +113,15 @@ class UserController {
 
   static async getCoaches(req, res, next) {
     try {
-      console.log("MASUKKKK");
       const result = await Coach.findAll();
+
+      res.status(200).json(result);
+    } catch (err) {}
+  }
+
+  static async getLevels(req, res, next) {
+    try {
+      const result = await Level.findAll();
 
       res.status(200).json(result);
     } catch (err) {}
