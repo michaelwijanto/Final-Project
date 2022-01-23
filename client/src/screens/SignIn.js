@@ -14,7 +14,8 @@ import {
   HStack,
   Center,
   NativeBaseProvider,
-  Alert
+  Alert,
+  Spinner
 } from "native-base";
 
 // Component
@@ -24,7 +25,7 @@ export default function SignIn({
   navigation,
   route
 }) {
-  const [signInUser, { data, loading, error}] = useMutation(SIGN_IN)
+  const [signInUser, {}] = useMutation(SIGN_IN)
   const [signIn, setSignIn] = useState({
     email: '',
     password: ''
@@ -34,6 +35,7 @@ export default function SignIn({
     message: null
   })
   const [isLogin, setIsLogin] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const submitLogin = (e) => {
     e.preventDefault()
@@ -107,122 +109,134 @@ export default function SignIn({
     }
   }
   console.log(loading);
-  return (
-    <NativeBaseProvider>
-      <Center flex={1} px="3">
-        <Box safeArea p="2" py="8" w="90%" maxW="290">
-          <Heading
-            size="2xl"
-            fontWeight="600"
-            color="coolGray.800"
-            _dark={{
-              color: "warmGray.50",
-            }}
-            style={{ textAlign: "center" }}
-          >
-            Welcome
-          </Heading>
-          <Heading
-            mt="1"
-            _dark={{
-              color: "warmGray.200",
-            }}
-            color="coolGray.600"
-            fontWeight="medium"
-            size="xs"
-            style={{ textAlign: "center" }}
-          >
-            Sign in to continue!
-          </Heading>
 
-          <VStack space={3} mt="5">
-            {
-              isLogin ? (
-                <Alert w="100%" status={newError.status}>
-                  <VStack space={2} flexShrink={1} w="100%">
-                    <HStack flexShrink={1} space={2} justifyContent="space-between">
-                      <HStack space={2} flexShrink={1}>
-                        <Alert.Icon mt="1" />
-                        <Text fontSize="md" textAlign='center' color="coolGray.800">
-                          {newError.message}
-                        </Text>
-                      </HStack>
-                      {/* <IconButton
-                        variant="unstyled"
-                        icon={<CloseIcon size="3" color="coolGray.600" />}
-                      /> */}
-                    </HStack>
-                  </VStack>
-                </Alert>
-              ) : route.params && (
-                <Alert w="100%" status={route.params.status}>
-                  <VStack space={2} flexShrink={1} w="100%">
-                    <HStack flexShrink={1} space={2} justifyContent="space-between">
-                      <HStack space={2} flexShrink={1}>
-                        <Alert.Icon mt="1" />
-                        <Text fontSize="md" textAlign='center' color="coolGray.800">
-                          {route.params.message}
-                        </Text>
-                      </HStack>
-                      {/* <IconButton
-                        variant="unstyled"
-                        icon={<CloseIcon size="3" color="coolGray.600" />}
-                      /> */}
-                    </HStack>
-                  </VStack>
-                </Alert>
-              )
-            }  
-            <FormControl>
-              <FormControl.Label>Email ID</FormControl.Label>
-              <Input 
-                type="text"
-                name="email"
-                placeholder="input email..."
-                onChangeText={value => setSignIn({...signIn, email: value})}
-              />
-            </FormControl>
-            <FormControl>
-              <FormControl.Label>Password</FormControl.Label>
-              <Input
-                type="password"
-                name="password"
-                placeholder="input password..."
-                onChangeText={value => setSignIn({...signIn, password: value})}
-              />
-            </FormControl>
-            <Button 
-              mt="2"
-              colorScheme="indigo"
-              style={{ marginTop: 25 }}
-              onPress={e => submitLogin(e)}
+  if (!loading) {
+    return (
+      <HStack space={2} alignItems="center">
+        <Spinner accessibilityLabel="Loading posts" />
+        <Heading color="primary.500" fontSize="md">
+          Loading
+        </Heading>
+      </HStack>
+    )
+  } else {
+    return (
+      <NativeBaseProvider>
+        <Center flex={1} px="3">
+          <Box safeArea p="2" py="8" w="90%" maxW="290">
+            <Heading
+              size="2xl"
+              fontWeight="600"
+              color="coolGray.800"
+              _dark={{
+                color: "warmGray.50",
+              }}
+              style={{ textAlign: "center" }}
             >
-              Sign in
-            </Button>
-            <HStack mt="6" justifyContent="center">
-              <Text
-                fontSize="sm"
-                color="coolGray.600"
-                _dark={{
-                  color: "warmGray.200",
-                }}
+              Welcome
+            </Heading>
+            <Heading
+              mt="1"
+              _dark={{
+                color: "warmGray.200",
+              }}
+              color="coolGray.600"
+              fontWeight="medium"
+              size="xs"
+              style={{ textAlign: "center" }}
+            >
+              Sign in to continue!
+            </Heading>
+  
+            <VStack space={3} mt="5">
+              {
+                isLogin ? (
+                  <Alert w="100%" status={newError.status}>
+                    <VStack space={2} flexShrink={1} w="100%">
+                      <HStack flexShrink={1} space={2} justifyContent="space-between">
+                        <HStack space={2} flexShrink={1}>
+                          <Alert.Icon mt="1" />
+                          <Text fontSize="md" textAlign='center' color="coolGray.800">
+                            {newError.message}
+                          </Text>
+                        </HStack>
+                        {/* <IconButton
+                          variant="unstyled"
+                          icon={<CloseIcon size="3" color="coolGray.600" />}
+                        /> */}
+                      </HStack>
+                    </VStack>
+                  </Alert>
+                ) : route.params && (
+                  <Alert w="100%" status={route.params.status}>
+                    <VStack space={2} flexShrink={1} w="100%">
+                      <HStack flexShrink={1} space={2} justifyContent="space-between">
+                        <HStack space={2} flexShrink={1}>
+                          <Alert.Icon mt="1" />
+                          <Text fontSize="md" textAlign='center' color="coolGray.800">
+                            {route.params.message}
+                          </Text>
+                        </HStack>
+                        {/* <IconButton
+                          variant="unstyled"
+                          icon={<CloseIcon size="3" color="coolGray.600" />}
+                        /> */}
+                      </HStack>
+                    </VStack>
+                  </Alert>
+                )
+              }  
+              <FormControl>
+                <FormControl.Label>Email ID</FormControl.Label>
+                <Input 
+                  type="text"
+                  name="email"
+                  placeholder="input email..."
+                  onChangeText={value => setSignIn({...signIn, email: value})}
+                />
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Password</FormControl.Label>
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="input password..."
+                  onChangeText={value => setSignIn({...signIn, password: value})}
+                />
+              </FormControl>
+              <Button 
+                mt="2"
+                colorScheme="indigo"
+                style={{ marginTop: 25 }}
+                onPress={e => submitLogin(e)}
               >
-                Do not have a credentials ?{" "}
-              </Text>
-              <Text
-                _text={{
-                  color: "indigo.500",
-                  fontWeight: "medium",
-                  fontSize: "sm",
-                }}
-                onPress={() => navigation.navigate("SignUp")}
-              >
-                Sign Up
-              </Text>
-            </HStack>
-          </VStack>
-        </Box>
-      </Center>
-    </NativeBaseProvider>
-  );
+                Sign in
+              </Button>
+              <HStack mt="6" justifyContent="center">
+                <Text
+                  fontSize="sm"
+                  color="coolGray.600"
+                  _dark={{
+                    color: "warmGray.200",
+                  }}
+                >
+                  Do not have a credentials ?{" "}
+                </Text>
+                <Text
+                  _text={{
+                    color: "indigo.500",
+                    fontWeight: "medium",
+                    fontSize: "sm",
+                  }}
+                  onPress={() => navigation.navigate("SignUp")}
+                >
+                  Sign Up
+                </Text>
+              </HStack>
+            </VStack>
+          </Box>
+        </Center>
+      </NativeBaseProvider>
+    );
+  }
 }
