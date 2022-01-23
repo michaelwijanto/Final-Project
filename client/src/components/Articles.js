@@ -9,6 +9,7 @@ import {
   ChevronRightIcon,
 } from "native-base";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Articles({ navigation }) {
   const array = [
@@ -32,29 +33,58 @@ export default function Articles({ navigation }) {
     },
   ];
 
-  //   const options = {
-  //     method: "GET",
-  //     url: "https://newsdata2.p.rapidapi.com/news",
-  //     params: { category: "health", language: "en" },
-  //     headers: {
-  //       "x-rapidapi-host": "newsdata2.p.rapidapi.com",
-  //       "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
-  //     },
-  //   };
+    // const options = {
+    //   method: "GET",
+    //   url: "https://newsdata2.p.rapidapi.com/news",
+    //   params: { category: "health", language: "en", page: '10'},
+    //   headers: {
+    //     "x-rapidapi-host": "newsdata2.p.rapidapi.com",
+    //     "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
+    //   },
+    // };
 
-  //   axios
-  //     .request(options)
-  //     .then(function (response) {
-  //       //   console.log(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //     });
-
+    // axios
+    //   .request(options)
+    //   .then(function (response) {
+    //       console.log(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
+    const [data,setData] = useState()
+    const getData = async () => {
+      try {
+        const res = await axios.get('https://newsdata2.p.rapidapi.com/news',{
+          // params: {country: 'us', category: 'health', page: '10'},
+          headers: {
+            'x-rapidapi-host': 'newsdata2.p.rapidapi.com',
+            'x-rapidapi-key': '01b70b795emsh8af40416d7b1f37p15f9e2jsn0471dc11ba9f'
+          }
+        })
+        setData(res.results)
+        console.log(res.results)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
+    useEffect(()=>{
+      getData
+    },[])
+    
+    console.log(data,">>>>>>>>>>>>>>>>>>>")
   return (
+    // <View>
+    //   {data && 
+    //   data.map((item,i)=>{
+    //     return <>
+    //     <Text> {item.title}</Text>
+    //     </>
+    //   })}
+    // </View>
     <FlatList
       horizontal
-      data={array}
+      data={data}
       renderItem={({ item }) => {
         return (
           <Pressable
@@ -96,7 +126,7 @@ export default function Articles({ navigation }) {
                     borderWidth="1"
                     rounded="2xl"
                     source={{
-                      uri: item.imgUrl,
+                      uri: item.image_url,
                     }}
                     alt="image"
                   />
@@ -111,7 +141,7 @@ export default function Articles({ navigation }) {
                     paddingLeft="5"
                     justifyContent="center"
                   >
-                    {item.nama}
+                    {item.title}
                   </Heading>
                 </Stack>
               </Stack>
