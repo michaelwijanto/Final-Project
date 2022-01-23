@@ -32,24 +32,24 @@ export default function Articles({ navigation }) {
     },
   ];
 
-//   const options = {
-//     method: "GET",
-//     url: "https://newsdata2.p.rapidapi.com/news",
-//     params: { category: "health", language: "en" },
-//     headers: {
-//       "x-rapidapi-host": "newsdata2.p.rapidapi.com",
-//       "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
-//     },
-//   };
+  //   const options = {
+  //     method: "GET",
+  //     url: "https://newsdata2.p.rapidapi.com/news",
+  //     params: { category: "health", language: "en" },
+  //     headers: {
+  //       "x-rapidapi-host": "newsdata2.p.rapidapi.com",
+  //       "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
+  //     },
+  //   };
 
-//   axios
-//     .request(options)
-//     .then(function (response) {
-//       //   console.log(response.data);
-//     })
-//     .catch(function (error) {
-//       console.error(error);
-//     });
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       //   console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
 
   return (
     <FlatList
