@@ -2,32 +2,17 @@ import React from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import {
   Box,
-  Heading,
   Image,
-  useColorMode,
-  ChevronRightIcon,
-  StatusBar,
-  HStack,
-  IconButton,
   Text,
-  Icon,
-  Center,
   ScrollView,
 } from "native-base";
-import SwitchMode from "../components/SwitchMode";
 import AppBar from "../components/AppBar";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
 
 export default function Home({ navigation }) {
-  
   return (
     <Box
       style={styles.container}
@@ -77,7 +62,7 @@ export default function Home({ navigation }) {
           </Box>
         </Box>
       </ScrollView>
-      {/* <TabBar></TabBar> */}
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }

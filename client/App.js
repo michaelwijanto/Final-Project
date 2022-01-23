@@ -14,7 +14,7 @@ import CoachDetail from "./src/components/CoachDetail";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
 import LevelFilter from "./src/components/LevelVerticalContents";
-import VideoScreen from "./src/components/VideoScreen";
+import ContentDetail from "./src/components/ContentDetail";
 import Profile from "./src/screens/Profile";
 import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
@@ -29,40 +29,40 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Home"
               component={Home}
               options={{
                 headerShown: true,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="Contents"
               component={Contents}
               options={{
                 headerShown: true,
               }}
-            /> */}
-            {/* <Stack.Screen
-            name="Level"
-            component={LevelContent}
-            options={{
-              headerShown: true,
-            }}
-          /> */}
-            {/* <Stack.Screen
-            name="Log"
-            component={Log}
-            options={{
-              headerShown: true,
-            }}
-          /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
+              name="Level"
+              component={LevelContent}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <Stack.Screen
+              name="Log"
+              component={Log}
+              options={{
+                headerShown: true,
+              }}
+            />
+            <Stack.Screen
               name="Macro"
               component={Macro}
               options={{ headerShown: true }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -75,35 +75,35 @@ function App() {
               options={{
                 headerShown: true,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            />  */}
+            />
             <Stack.Screen
-              name="Media player"
-              component={VideoScreen}
+              name="Content Detail"
+              component={ContentDetail}
               options={{
                 headerShown: true,
               }}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
               options={{
                 headerShown: true,
               }}
             />
-              {/* <Stack.Screen
-              name="Coach"
+            <Stack.Screen
+              name="Profile"
               component={Profile}
               options={{
                 headerShown: true,
               }}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
