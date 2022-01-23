@@ -89,7 +89,7 @@ const resolvers = {
   Mutation: {
     signUpUser: async (_, args) => {
       try {
-        console.log(args, "<<<<<<");
+        console.log(args, "<<<<<< args value");
         const { data: user } = await axios.post(
           "http://localhost:3000/api/users/register",
           args
@@ -99,7 +99,7 @@ const resolvers = {
         return { message: "Sign Up Succesful" };
       } catch (err) {
         console.log(err.response.data);
-        return err;
+        return err.response.data;
       }
     },
     signInUser: async (_, args) => {

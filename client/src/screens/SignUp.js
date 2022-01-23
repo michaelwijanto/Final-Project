@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react'
+import { useMutation } from "@apollo/client";
+
 import {
   Box,
   Text,
@@ -12,9 +14,41 @@ import {
   Center,
   NativeBaseProvider,
 } from "native-base";
-export default function Example({ navigation }){
+
+import { REGISTER } from  '../../mutations';
+
+export default function SignUp({ navigation }){
+  const [formRegister, setRegister] = useState({
+    fullName: '',
+    email: '',
+    password: ''
+  })
+  const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
+
+  const submitRegister = async (e) => {
+    try {
+      e.preventDefault()
+      console.log(formRegister);
+      const signUp = await SignUpUser({
+        variables: {
+          fullName: formRegister.fullName,
+          email: formRegister.email,
+          password: formRegister.password
+        }
+      })
+      console.log(signUp);
+    } catch (error) {
+      error.graphQLErrors.map(({ message }) => (
+        console.log(message)
+      ))
+    }
+  }
+
   return (
     <NativeBaseProvider>
+      {
+
+      }
       <Center flex={1} px="3">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
           <Heading
@@ -40,7 +74,6 @@ export default function Example({ navigation }){
           >
             Sign Up to Active8!
           </Heading>
-
           <VStack space={3} mt="5">
             <FormControl>
               <FormControl.Label>Full Name</FormControl.Label>
@@ -48,21 +81,33 @@ export default function Example({ navigation }){
                 type="text"
                 name="fullName"
                 placeholder="input full name..."
+                onChangeText={value => setRegister({...formRegister, fullName: value})}
               />
             </FormControl>
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
-              <Input type="text" name="email" placeholder="input email..." />
+              <Input 
+                type="text"
+                name="email"
+                placeholder="input email..."
+                onChangeText={value => setRegister({...formRegister, email: value})}
+              />
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
               <Input
                 type="password"
                 name="password"
+                onChangeText={value => setRegister({...formRegister, password: value})}
                 placeholder="input password..."
               />
             </FormControl>
-            <Button mt="2" colorScheme="indigo">
+
+            <Button
+              mt="2"
+              colorScheme="indigo"
+              onPress={e => submitRegister(e)}
+            >  
               Sign Up
             </Button>
             <HStack mt="6" justifyContent="center">
@@ -73,7 +118,7 @@ export default function Example({ navigation }){
                   color: "warmGray.200",
                 }}
               >
-                I'm a new user.{" "}
+                Have an Account ?{" "}
               </Text>
               <Text
                 _text={{
