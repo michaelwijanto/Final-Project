@@ -10,9 +10,12 @@ import {
   Spacer,
   Center,
   NativeBaseProvider,
+  ScrollView,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export const Example = () => {
+import TabBar from "../components/TabBar";
+
+export default function Log({ navigation }) {
   const data = [
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -47,83 +50,85 @@ export const Example = () => {
   ];
   return (
     <Box
+      flex={1}
       w={{
         base: "100%",
         md: "25%",
       }}
     >
-      <Heading fontSize="xl" p="4" pb="3">
-        Logs
-      </Heading>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <Box
-            borderBottomWidth="1"
-            _dark={{
-              borderColor: "gray.600",
-            }}
-            borderColor="coolGray.200"
-            pl="4"
-            pr="5"
-            py="2"
-          >
-            <HStack space={3} justifyContent="space-between">
-              <VStack>
-                <Box style={{ flexDirection: "row" }}>
-                  <MaterialCommunityIcons
-                    name="human-male-height"
-                    size={24}
-                    color="black"
-                  />
-                  <Text
-                    _dark={{
-                      color: "warmGray.50",
-                    }}
-                    color="coolGray.800"
-                    bold
-                  >
-                    {item.height}
-                  </Text>
-                </Box>
-                <Box style={{ flexDirection: "row" }}>
-                  <Text
-                    _dark={{
-                      color: "warmGray.50",
-                    }}
-                    color="coolGray.800"
-                    bold
-                  >
-                    {item.weight}
-                  </Text>
-                </Box>
-              </VStack>
-              <Spacer />
-              <Text
-                fontSize="xs"
-                _dark={{
-                  color: "warmGray.50",
-                }}
-                color="coolGray.800"
-                alignSelf="flex-start"
-              >
-                {item.createdAt}
-              </Text>
-            </HStack>
-          </Box>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+        <Heading fontSize="xl" p="4" pb="3">
+          Logs
+        </Heading>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <Box
+              borderBottomWidth="1"
+              _dark={{
+                borderColor: "gray.600",
+              }}
+              borderColor="coolGray.200"
+              pl="4"
+              pr="5"
+              py="2"
+            >
+              <HStack space={3} justifyContent="space-between">
+                <VStack>
+                  <Box style={{ flexDirection: "row" }}>
+                    <MaterialCommunityIcons
+                      name="human-male-height"
+                      size={24}
+                      color="black"
+                    />
+                    <Text
+                      _dark={{
+                        color: "warmGray.50",
+                      }}
+                      color="coolGray.800"
+                      bold
+                    >
+                      {item.height}
+                    </Text>
+                  </Box>
+                  <Box style={{ flexDirection: "row" }}>
+                    <Text
+                      _dark={{
+                        color: "warmGray.50",
+                      }}
+                      color="coolGray.800"
+                      bold
+                    >
+                      {item.weight}
+                    </Text>
+                  </Box>
+                </VStack>
+                <Spacer />
+                <Text
+                  fontSize="xs"
+                  _dark={{
+                    color: "warmGray.50",
+                  }}
+                  color="coolGray.800"
+                  alignSelf="flex-start"
+                >
+                  {item.createdAt}
+                </Text>
+              </HStack>
+            </Box>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
-};
+}
 
-export default function Log(){
-  return (
-    <NativeBaseProvider>
-      <Center px="3">
-        <Example flex={1} />
-      </Center>
-    </NativeBaseProvider>
-  );
-};
+// export default function Log({ navigation }) {
+//   return (
+//     <NativeBaseProvider>
+//       <Center px="3">
+//         <Example flex={1} />
+//       </Center>
+//     </NativeBaseProvider>
+//   );
+// }

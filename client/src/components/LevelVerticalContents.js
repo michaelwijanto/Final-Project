@@ -105,8 +105,9 @@ export default function LevelFilter({ navigation, route }) {
                 </Stack>
               </Stack>
               <Box style={styles.titleContent}>
-                <Heading>{item.title}</Heading>
-                {/* <AntDesign name="playcircleo" size={30} color="black" /> */}
+                <Text style={styles.textTitle}>{item.title}</Text>
+              </Box>
+              <Box style={styles.iconContent}>
                 {(() => {
                   if (subscription == "false") {
                     return (
@@ -124,7 +125,7 @@ export default function LevelFilter({ navigation, route }) {
                         _pressed={{
                           bg: "orange.600:alpha.20",
                           _icon: {
-                            name: "emoji-flirt",
+                            name: "playcircleo",
                           },
                           _ios: {
                             _icon: {
@@ -160,7 +161,7 @@ export default function LevelFilter({ navigation, route }) {
                         _pressed={{
                           bg: "orange.600:alpha.20",
                           _icon: {
-                            name: "emoji-flirt",
+                            name: "lock",
                           },
                           _ios: {
                             _icon: {
@@ -196,7 +197,17 @@ const styles = StyleSheet.create({
     paddingLeft: 19,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingRight: 20,
+    paddingRight: 30,
     // marginTop: -10,
+  },
+  textTitle: {
+    paddingRight: 30,
+    fontSize: 16,
+  },
+  iconContent: {
+    bottom: 5,
+    right: 5,
+    position: "absolute",
+    alignItems: "flex-end",
   },
 });
