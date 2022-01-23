@@ -36,17 +36,23 @@ beforeAll(async () =>{
   Level.bulkCreate([
     {
       name: "Easy",
+      thumbnail:
+       "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
       createdAt: new Date(),
       updateedAt: new Date()
       
     },
     {
       name: "Medium",
+      thumbnail:
+      "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
       createdAt: new Date(),
       updateedAt: new Date()
     },
     {
         name: "Hard",
+        thumbnail:
+        "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
         createdAt: new Date(),
         updateedAt: new Date()
     }
@@ -66,8 +72,8 @@ describe("GET /api/user-profiles", () => {
   request(app)
     .post("/api/users/login")
     .send({
-    email: "ariesastra@mail.com",
-    password: "password",
+      email: "ariesastra@mail.com",
+      password: "password",
     })
     .then((resp) =>{
         
@@ -134,7 +140,7 @@ describe("GET /api/user-profiles", () => {
       .then((resp) => {
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
+        expect(resp.body).toHaveProperty("error")
         // expect(resp.body.message).toBe('Invalid token')
         done()
       })
@@ -186,8 +192,8 @@ describe("GET /api/user-profiles", () => {
       .then((resp) => {
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("message")
-        expect(resp.body.message).toBe('Invalid token')
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Invalid token')
         done()
       })
       .catch((err) => {
@@ -213,7 +219,7 @@ describe("GET /api/user-profiles", () => {
         const result = res.body;
         expect(res.status).toBe(400);
         expect(result).toEqual(expect.any(Object))
-        expect(result).toHaveProperty('message', 'Please fill all the blank!');
+        expect(result).toHaveProperty('error', 'Please fill all the blank!');
         done()
       })
       .catch((err) => {
@@ -229,7 +235,7 @@ describe("GET /api/user-profiles", () => {
         const result = res.body;
         expect(res.status).toBe(400);
         expect(result).toEqual(expect.any(Object))
-        expect(result).toHaveProperty('message', 'Please fill all the blank!');
+        expect(result).toHaveProperty('error', 'Please fill all the blank!');
         done()
       })
       .catch((err) => {

@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import {
   FormControl,
   Button,
-  Input,
   Stack,
   CheckIcon,
   WarningOutlineIcon,
@@ -14,15 +13,20 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  useToast,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  ScrollView,
 } from "native-base";
-export const Example = () => {
+import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarMacro";
+
+export const Example = ({ navigation }) => {
+  const toast = useToast();
   const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
-  console.log({ data, loading, error });
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
@@ -52,6 +56,12 @@ export const Example = () => {
         },
       });
       console.log(sendMacro);
+      toast.show({
+        title: "Your daily calorie needs",
+        status: "success",
+        description: `${sendMacro.data.postMacro.calorie} calories`,
+        placement: "top",
+      });
     } catch (err) {
       console.log({ err });
     }
@@ -63,6 +73,7 @@ export const Example = () => {
         md: "25%",
       }}
     >
+      <AppBar></AppBar>
       <FormControl isRequired onSadmubmit={onSubmitMacro}>
         <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>
           calculate your daily food needs
@@ -245,15 +256,16 @@ export const Example = () => {
           Submit
         </Button>
       </FormControl>
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 };
 
-export default function Macro() {
+export default function Macro({ navigation }) {
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
-        <Example />
+        <Example navigation={navigation} />
       </Center>
     </NativeBaseProvider>
   );

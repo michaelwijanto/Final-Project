@@ -1,3 +1,5 @@
+import TabBar from "../components/TabBar";
+import AppBar from "../components/NavBar/NavBarLog";
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -14,20 +16,35 @@ import {
   Modal,
   FormControl,
   useToast,
-  Input,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  ScrollView,
 } from "native-base";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { POST_USER_LOG } from "../../mutations";
-export const Example = () => {
+// export const Example = () => {
+//   const toast = useToast();
+//   const [customNotif, setCustomNotif] = useState({
+//     customLoading: false,
+//     customError: null,
+//   });
+//   const [showModal, setShowModal] = useState(false);
+//   const [formLog, setFormLog] = useState({
+//     height: 0,
+//     weight: 0,
+//   });
+//   const { loading, data, error } = useQuery(GET_USER_LOGS, {
+//     variables: {
+//       accessToken:
+//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
+//     }})
+// }
+export default function Log({ navigation }) {
   const toast = useToast();
   const [customNotif, setCustomNotif] = useState({
     customLoading: false,
@@ -42,9 +59,7 @@ export const Example = () => {
     variables: {
       accessToken:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
-    },
-  });
-  // console.log({ loading, data, error });
+    }})
   const [postUserLog, {}] = useMutation(POST_USER_LOG);
   const onSubmitLog = async (e) => {
     try {
@@ -79,11 +94,13 @@ export const Example = () => {
   if (customNotif.customError) return <Text>Error Add Log</Text>;
   return (
     <Box
+      flex={1}
       w={{
         base: "100%",
         md: "25%",
       }}
     >
+      <AppBar />
       <FlatList
         data={data.getUserLogs}
         renderItem={({ item }) => (
@@ -202,16 +219,17 @@ export const Example = () => {
           </Modal.Content>
         </Modal>
       </Box>
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
-};
-
-export default function Log() {
-  return (
-    <NativeBaseProvider>
-      <Center px="3">
-        <Example flex={1} />
-      </Center>
-    </NativeBaseProvider>
-  );
 }
+
+// export default function Log() {
+//   return (
+//     <NativeBaseProvider>
+//       <Center px="3">
+//         <Example flex={1} />
+//       </Center>
+//     </NativeBaseProvider>
+//   );
+// }

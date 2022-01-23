@@ -1,33 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import {
-  Box,
-  Heading,
-  Image,
-  useColorMode,
-  ChevronRightIcon,
-  StatusBar,
-  HStack,
-  IconButton,
-  Text,
-  Icon,
-  Center,
-  ScrollView,
-} from "native-base";
-import SwitchMode from "../components/SwitchMode";
-import AppBar from "../components/AppBar";
+import { Box, Image, Text, ScrollView } from "native-base";
+import AppBar from "../components/NavBar/NavBarHome";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
 
 export default function Home({ navigation }) {
-  
   return (
     <Box
       style={styles.container}
@@ -37,8 +17,8 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
+      <AppBar style={styles.appBarStyle} />
       <ScrollView style={styles.top}>
-        <AppBar />
         <Box width="100%">
           <Image
             style={styles.imageBanner}
@@ -77,7 +57,7 @@ export default function Home({ navigation }) {
           </Box>
         </Box>
       </ScrollView>
-      {/* <TabBar></TabBar> */}
+      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
@@ -88,6 +68,10 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 1,
+  },
+  appBarStyle: {
+    top: 0,
+    position: "absolute",
   },
   imageBanner: {
     width: "100%",

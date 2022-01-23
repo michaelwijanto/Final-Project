@@ -58,4 +58,17 @@ export const GET_USER_LOGS = gql`
       createdAt
     }
   }
+`
+export const GET_CONTENT_DETAIL = gql`
+  query GetContentById($accessToken: String, $contentId: ID) {
+    getContentById(access_token: $accessToken, ContentId: $contentId) {
+      id
+      youtubeUrl
+      description
+      likes
+      title
+      imgThumbnail
+      statusLike
+    }
+  }
 `;
