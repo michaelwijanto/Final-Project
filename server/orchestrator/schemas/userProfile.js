@@ -28,7 +28,7 @@ const typeDefs = gql`
     activityLevel: String
     LevelId: ID
     UserId: ID
-    updatedAt: String
+    createdAt: String
   }
 
   type ResponUserProfile {
@@ -40,6 +40,7 @@ const typeDefs = gql`
     getUserProfile(
       access_token: String
     ): ResponUserProfile
+    
   }
 
   type Mutation {
@@ -59,28 +60,35 @@ const resolvers = {
   Query: {
     getUserProfile: async (_, args) => {
       try {
-        const {access_token} = args
-        const {data: user} = await axios.get("http://localhost:3000/api/user-profiles", {headers: {access_token}});
+        const { access_token } = args;
+        const { data: user } = await axios.get(
+          "http://localhost:3000/api/user-profiles",
+          { headers: { access_token } }
+        );
         console.log(user);
-        return user
+        return user;
       } catch (err) {
-        console.log({err});
-        return err
+        console.log({ err });
+        return err;
       }
-    }
+    },
   },
   Mutation: {
     postUserProfile: async (_, args) => {
       try {
-        const {access_token} = args
-        const {data} = await axios.post("http://localhost:3000/api/user-profiles", args, {headers: {access_token}});
+        const { access_token } = args;
+        const { data } = await axios.post(
+          "http://localhost:3000/api/user-profiles",
+          args,
+          { headers: { access_token } }
+        );
         console.log(data);
-        return data
+        return data;
       } catch (err) {
-        console.log({err});
-        return err
+        console.log({ err });
+        return err;
       }
-    }
+    },
   },
 };
 

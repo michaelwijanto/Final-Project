@@ -27,8 +27,7 @@ import {
 } from "@expo/vector-icons";
 
 export default function Home({ navigation }) {
-  const [selected, setSelected] = React.useState(1);
-
+  
   return (
     <Box
       style={styles.container}

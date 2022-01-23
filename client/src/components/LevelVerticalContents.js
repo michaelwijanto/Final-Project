@@ -7,15 +7,19 @@ import {
   Text,
   Stack,
   ChevronRightIcon,
-  Button
+  Button,
 } from "native-base";
 
-// import { useQuery } from "@apollo/client";
-// import { GET_MOVIES } from "../../queries";
+import { useQuery } from "@apollo/client";
+import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 // import LoadingPage from "../components/loadingPage";
 
-export default function LevelHorizontal({ navigation }) {
+export default function LevelFilter({ navigation, route }) {
+  const { id } = route.params;
+  const { levelName } = route.params;
+
+  console.log(id, levelName, "<<<<<<<<<<");
   const array = [
     {
       id: 1,
@@ -36,29 +40,48 @@ export default function LevelHorizontal({ navigation }) {
         "https://previews.123rf.com/images/teddy2007b/teddy2007b1809/teddy2007b180900005/107915546-fitness-banner-for-design.jpg",
     },
   ];
-  //   const { loading, error, data } = useQuery(GET_MOVIES);
+  const { loading, error, data } = useQuery(GET_CONTENT_CARD, {
+    variables: {
+      accessToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+    },
+  });
 
-  //   if (loading) return <LoadingPage></LoadingPage>;
-  //   if (error) return <ErrorPage></ErrorPage>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error...</Text>;
+
+  console.log(data.getContents);
+
+  let newData = [];
+
+  data.getContents.map((el) => {
+    if (el.LevelId == id) {
+      newData.push(el);
+    }
+  });
+
+  // console.log(newData);
+
   return (
     <FlatList
-      data={array}
+      data={newData}
       renderItem={({ item }) => {
         return (
           <Pressable
           // onPress={() =>
           //   navigation.navigate("Detail", {
           //     id: item.id,
-          //     rating: item.rating,
           //   })
           // }
           >
             <Box
               w="380"
-              h="300"
+              h="230"
               rounded="lg"
               overflow="hidden"
               marginTop="3"
+              marginBottom="1"
+              marginLeft="3"
               _dark={{
                 borderColor: "gray.800",
                 backgroundColor: "gray.800",
@@ -72,7 +95,8 @@ export default function LevelHorizontal({ navigation }) {
               }}
               marginRight="5"
               borderColor="gray.300"
-              borderWidth="1"
+              // borderColor="black"
+              borderWidth="2"
             >
               <Box h="150" w="500">
                 <AspectRatio>
@@ -82,15 +106,13 @@ export default function LevelHorizontal({ navigation }) {
                     // maxW="100%"
                     // borderColor="white"
                     borderWidth="1"
-                    rounded="2xl"
                     source={{
-                      uri: item.imgUrl,
+                      uri: item.imgThumbnail,
                     }}
                     alt="image"
                   />
                 </AspectRatio>
               </Box>
-
               <Stack p="1">
                 <Stack>
                   <Heading
@@ -98,38 +120,15 @@ export default function LevelHorizontal({ navigation }) {
                     ml="-1"
                     paddingLeft="5"
                     justifyContent="center"
+                    marginBottom="-7"
                   >
-                    {item.nama}
+                    {levelName}
                   </Heading>
                 </Stack>
-                  <Stack style={{
-                flexDirection:"row",
-                
-                padding:3,
-                marginTop: 20
-            }}>
-              <Stack style={{
-                backgroundColor: "orange",
-                width: 100,
-                height:40,
-                borderRadius: 8,
-                alignItems: "center",
-                
-                
-               
-            }}> 
-
-            <Text style={{
-                marginTop:5,
-                 fontWeight: 'bold',
-                fontSize: 18,
-                color: 'white',
-                alignItems:"flex-start",
-                
-            }}>button</Text>
               </Stack>
-            </Stack> 
-              </Stack>
+              <Box style={styles.titleContent}>
+                <Heading>{item.title}</Heading>
+              </Box>
             </Box>
           </Pressable>
         );
@@ -162,5 +161,9 @@ const styles = StyleSheet.create({
     color: "#010203",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  titleContent: {
+    paddingLeft: 30,
+    marginTop: -10,
   },
 });
