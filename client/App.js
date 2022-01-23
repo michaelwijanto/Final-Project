@@ -37,12 +37,12 @@ function App() {
               }}
             /> */}
             {/* <Stack.Screen
-          name="Contents"
-          component={Contents}
-          options={{
-            headerShown: true,
-          }}
-        /> */}
+              name="Contents"
+              component={Contents}
+              options={{
+                headerShown: true,
+              }}
+            /> */}
             {/* <Stack.Screen
             name="Level"
             component={LevelContent}
@@ -50,18 +50,18 @@ function App() {
               headerShown: true,
             }}
           /> */}
-            {/* <Stack.Screen
+            <Stack.Screen
             name="Log"
             component={Log}
             options={{
               headerShown: true,
             }}
-          /> */}
-            {/* <Stack.Screen
+          />
+            <Stack.Screen
               name="Macro"
               component={Macro}
               options={{ headerShown: true }}
-            /> */}
+            />
             {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
@@ -69,13 +69,13 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-            <Stack.Screen
+            {/* <Stack.Screen
               name="LevelFilter"
               component={LevelFilter}
               options={{
                 headerShown: true,
               }}
-            />
+            /> */}
             {/* <Stack.Screen
               name="SignUp"
               component={SignUp}
@@ -90,13 +90,13 @@ function App() {
                 headerShown: true,
               }}
             /> */}
-            <Stack.Screen
+            {/* <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
               options={{
                 headerShown: true,
               }}
-            />
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

@@ -120,7 +120,6 @@ export default function LevelFilter({ navigation, route }) {
                     ml="-1"
                     paddingLeft="5"
                     justifyContent="center"
-                    marginBottom="-7"
                   >
                     {levelName}
                   </Heading>
@@ -164,6 +163,6 @@ const styles = StyleSheet.create({
   },
   titleContent: {
     paddingLeft: 30,
-    marginTop: -10,
+    // marginTop: -10,
   },
 });

@@ -25,14 +25,14 @@ const server = new ApolloServer({
   typeDefs: [
     userTypeDefs,
     macroTypeDefs,
-    // userProfileTypeDefs,
+    userProfileTypeDefs,
     contentTypeDefs,
     userContentTypeDefs,
   ],
   resolvers: [
     userResolvers,
     macroResolvers,
-    // userProfileResolvers,
+    userProfileResolvers,
     contentResolvers,
     userContentResolvers
   ],

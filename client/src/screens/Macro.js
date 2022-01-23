@@ -14,50 +14,48 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "native-base";
 export const Example = () => {
-  const [postSignIn, { data, loading, error }] = useMutation(POST_MACRO);
-  console.log({data, loading, error});
+  const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
+  console.log({ data, loading, error });
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
     height: 0,
     weight: 0,
     activitylevel: 0,
-    goal: 0,
+    goal: "",
   });
 
   useEffect(() => {
-    console.log({data});
-  }, [data])
-  
-  useEffect(() => {
     console.log(formMacro);
-  }, [formMacro])
+  }, [formMacro]);
 
-  const onSubmitMacro = () => {
-    // e.preventDefault();
-    console.log("SUBMIT");
-    console.log({ formMacro });
-    postSignIn({
-      variables: {
-        age: formMacro.age, 
-        gender: formMacro.gender, 
-        height: formMacro.height, 
-        weight: formMacro.weight, 
-        activitylevel: formMacro.activitylevel, 
-        goal: formMacro.goal
-      }
-    })
-    .then((res) => {
-      console.log({res});
-    })
-    .catch((err) => {
-      console.log({err});
-    })
+  const onSubmitMacro = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("SUBMIT");
+      console.log({ formMacro });
+      const sendMacro = await postMacro({
+        variables: {
+          age: +formMacro.age,
+          gender: formMacro.gender,
+          height: +formMacro.height,
+          weight: +formMacro.weight,
+          activitylevel: formMacro.activitylevel,
+          goal: formMacro.goal,
+        },
+      });
+      console.log(sendMacro);
+    } catch (err) {
+      console.log({ err });
+    }
   };
-  
-  if(data) return <Text>{JSON.stringify(data)}</Text>
   return (
     <Box
       w={{
@@ -66,14 +64,15 @@ export const Example = () => {
       }}
     >
       <FormControl isRequired onSadmubmit={onSubmitMacro}>
-        <Text style={{textAlign: "center", fontSize: 20, marginBottom: 10}}>
+        <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>
           calculate your daily food needs
         </Text>
         <Stack mx="4">
           <FormControl.Label>Gender</FormControl.Label>
           <Select
-            name="gender"
-            onValueChange={(itemValue) => setFormMacro({ ...formMacro, gender: itemValue })}
+            onValueChange={(itemValue) =>
+              setFormMacro({ ...formMacro, gender: itemValue })
+            }
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -85,31 +84,48 @@ export const Example = () => {
             <Select.Item label="Male" value="male" key={1} />
             <Select.Item label="Female" value="female" key={2} />
           </Select>
+          <FormControl.HelperText>Select your gender.</FormControl.HelperText>
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
             Gender required.
           </FormControl.ErrorMessage>
         </Stack>
         <Stack mx="4">
           <FormControl.Label>Age</FormControl.Label>
-          <Input
-            name="age"
-            onChangeText={val => setFormMacro({ ...formMacro, age: val })}
-            type="number"
-            placeholder="Input your age..."
-          />
+          <NumberInput
+            min={0}
+            max={80}
+            onChange={(val) => setFormMacro({ ...formMacro, age: val })}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <FormControl.HelperText>
+            It cannot be negative or bigger than 80.
+          </FormControl.HelperText>
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
             Age required
           </FormControl.ErrorMessage>
         </Stack>
-        
+
         <Stack mx="4">
           <FormControl.Label>Height</FormControl.Label>
-          <Input
-            name="height"
-            onChangeText={val => setFormMacro({ ...formMacro, height: val })}
-            type="number"
-            placeholder="Input your gender..."
-          />
+          <NumberInput
+            min={130}
+            max={230}
+            onChange={(val) => setFormMacro({ ...formMacro, height: val })}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <FormControl.HelperText>
+            It cannot be smaller than 130 or bigger than 230.
+          </FormControl.HelperText>
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
             Height required.
           </FormControl.ErrorMessage>
@@ -117,12 +133,20 @@ export const Example = () => {
 
         <Stack mx="4">
           <FormControl.Label>Weight</FormControl.Label>
-          <Input
-            name="weight"
-            onChangeText={val => setFormMacro({ ...formMacro, weight: val })}
-            type="number"
-            placeholder="Input your weight..."
-          />
+          <NumberInput
+            min={40}
+            max={160}
+            onChange={(val) => setFormMacro({ ...formMacro, weight: val })}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <FormControl.HelperText>
+            It cannot be smaller than 40 or bigger than 160.
+          </FormControl.HelperText>
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
             Weight required.
           </FormControl.ErrorMessage>
@@ -130,8 +154,9 @@ export const Example = () => {
         <Stack mx="4">
           <FormControl.Label>Activity Level</FormControl.Label>
           <Select
-            name="activitylevel"
-            onValueChange={(itemValue) => setFormMacro({ ...formMacro, activitylevel: itemValue })}
+            onValueChange={(itemValue) =>
+              setFormMacro({ ...formMacro, activitylevel: itemValue })
+            }
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -175,8 +200,9 @@ export const Example = () => {
         <Stack mx="4">
           <FormControl.Label>Goal</FormControl.Label>
           <Select
-            name="goal"
-            onValueChange={(itemValue) => setFormMacro({ ...formMacro, goal: itemValue })}
+            onValueChange={(itemValue) =>
+              setFormMacro({ ...formMacro, goal: itemValue })
+            }
             minWidth="200"
             accessibilityLabel="Choose Service"
             placeholder="Choose Service"
@@ -185,11 +211,7 @@ export const Example = () => {
               endIcon: <CheckIcon size={5} />,
             }}
           >
-            <Select.Item
-              label="maintain weight"
-              value={1}
-              key="maintain"
-            />
+            <Select.Item label="maintain weight" value={1} key="maintain" />
             <Select.Item label="Mild weight loss" value="mildlose" key={2} />
             <Select.Item label="Weight loss" value="weightlose" key={3} />
             <Select.Item
@@ -197,22 +219,15 @@ export const Example = () => {
               value="extremelose"
               key={4}
             />
-            <Select.Item
-              label="Mild weight gain"
-              value="mildgain"
-              key={5}
-            />
-            <Select.Item
-              label="Weight gain"
-              value="weightgain"
-              key={6}
-            />
+            <Select.Item label="Mild weight gain" value="mildgain" key={5} />
+            <Select.Item label="Weight gain" value="weightgain" key={6} />
             <Select.Item
               label="extremegain"
               value="Extreme weight gain"
               key={7}
             />
           </Select>
+          <FormControl.HelperText>Select your goal.</FormControl.HelperText>
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
             Goals required.
           </FormControl.ErrorMessage>
