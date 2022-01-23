@@ -10,11 +10,12 @@ import client from "./config/apolloClient";
 
 // Components
 import Home from "./src/screens/Home";
-import CoachDetail from "./src/components/CoachDetail"
+import CoachDetail from "./src/components/CoachDetail";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
+import LevelFilter from "./src/components/LevelVerticalContents";
 import VideoScreen from "./src/components/VideoScreen";
-import Profile from './src/screens/Profile'
+import Profile from "./src/screens/Profile";
 import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
 import SignIn from "./src/screens/SignIn";
@@ -68,10 +69,13 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-            {/* <Stack.Screen
-              name="Level"
-              component={LevelContent}
-            /> */}
+            <Stack.Screen
+              name="LevelFilter"
+              component={LevelFilter}
+              options={{
+                headerShown: true,
+              }}
+            />
             {/* <Stack.Screen
               name="SignUp"
               component={SignUp}
@@ -79,20 +83,20 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-             <Stack.Screen
+            {/* <Stack.Screen
               name="Media player"
               component={VideoScreen}
               options={{
                 headerShown: true,
               }}
-            />
-            {/* <Stack.Screen
+            /> */}
+            <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
               options={{
                 headerShown: true,
               }}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

@@ -11,12 +11,19 @@ const typeDefs = gql`
     likes: Int
     statusLike: String
     title: String
+    imgThumbnail: String
+  }
+
+  type Level {
+    id: ID
+    name: String
     thumbnail: String
   }
 
   type Query {
     getContents(access_token: String): [Content]
     getContentById(access_token: String, ContentId: ID): Content
+    getLevel: [Level]
   }
 
   type MacroValue {
@@ -35,6 +42,17 @@ const typeDefs = gql`
 `;
 const resolvers = {
   Query: {
+    getLevel: async () => {
+      try {
+        const { data: levels } = await axios.get(
+          "http://localhost:3000/api/users/level"
+        );
+        return levels;
+      } catch (err) {
+        return err;
+      }
+    },
+
     getContents: async (_, args) => {
       try {
         const { access_token } = args;
@@ -84,12 +102,14 @@ const resolvers = {
         const { access_token, ContentId, statusLike } = args;
         const { data } = await axios.patch(
           `http://localhost:3000/api/contents/${ContentId}`,
-          {statusLike},
+          { statusLike },
           { headers: { access_token } }
         );
         await redis.del("contents");
         console.log(data);
-        return {message: `Content like status has been updated to ${data.statusLike}`};
+        return {
+          message: `Content like status has been updated to ${data.statusLike}`,
+        };
       } catch (err) {
         console.log({ err });
         return err;
