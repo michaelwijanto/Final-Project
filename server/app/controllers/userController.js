@@ -79,10 +79,13 @@ class UserController {
         fullName: user.fullName,
         role: user.role,
         isRegister: user.isRegister,
+        isActivated: user.isActivated,
       };
       const token = sign(payload);
       res.status(200).json({
         access_token: token,
+        isRegister: user.isRegister,
+        isActivated: user.isActivated,
       });
     } catch (err) {
       next(err);
@@ -139,7 +142,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -149,7 +152,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -162,7 +165,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }
