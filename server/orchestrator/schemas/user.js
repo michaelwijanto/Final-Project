@@ -35,7 +35,6 @@ const typeDefs = gql`
   type AccessToken {
     access_token: String
     isRegister: String
-    isActivated: String
     error: String
   }
 
@@ -106,7 +105,9 @@ const resolvers = {
   Mutation: {
     signUpUser: async (_, args) => {
       try {
+        console.log({args});
         const { data: user } = await axios.post("http://localhost:3000/api/users/register", args);
+        console.log({user});
         await redis.del("users");
         return { message: "Sign Up Succesful" };
       } catch (err) {

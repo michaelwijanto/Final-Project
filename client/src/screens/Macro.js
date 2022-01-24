@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { POST_MACRO } from "../../mutations/";
+import { POST_MACRO } from "../../mutations/index";
 import { useState, useEffect } from "react";
 import {
   FormControl,
@@ -45,10 +45,10 @@ export const Example = ({ navigation }) => {
       console.log({ formMacro });
       const sendMacro = await postMacro({
         variables: {
-          age: +formMacro.age,
+          age: formMacro.age,
           gender: formMacro.gender,
-          height: +formMacro.height,
-          weight: +formMacro.weight,
+          height: formMacro.height,
+          weight: formMacro.weight,
           activitylevel: formMacro.activitylevel,
           goal: formMacro.goal,
         },
@@ -66,10 +66,10 @@ export const Example = ({ navigation }) => {
   };
   return (
     <Box
-    // w={{
-    //   base: "90%",
-    //   md: "25%",
-    // }}
+    w={{
+      base: "90%",
+      md: "25%",
+    }}
     >
       <ScrollView>
         <FormControl isRequired onSadmubmit={onSubmitMacro}>
@@ -191,28 +191,23 @@ export const Example = ({ navigation }) => {
                 endIcon: <CheckIcon size={5} />,
               }}
             >
-              <Select.Item label="BMR" value={1} key={1} />
+              <Select.Item label="BMR" value={"maintain"} key={1} />
               <Select.Item
                 label="Sedentary: little or no exercise"
-                value={2}
+                value={"mildlose"}
                 key={2}
               />
-              <Select.Item label="Exercise 1-3 times/week" value={3} key={3} />
-              <Select.Item label="Exercise 4-5 times/week" value={4} key={4} />
+              <Select.Item label="Exercise 1-3 times/week" value={"weightlose"} key={3} />
+              <Select.Item label="Exercise 4-5 times/week" value={"mildgain"} key={4} />
               <Select.Item
                 label="Daily exercise or intense exercise 3-4 times/week"
-                value={5}
+                value={"weightgain"}
                 key={5}
               />
               <Select.Item
                 label="Intense exercise 6-7 times/week"
-                value={6}
+                value={"extremegain"}
                 key={6}
-              />
-              <Select.Item
-                label="Very intense exercise daily, or physical job"
-                value={7}
-                key={7}
               />
             </Select>
             <FormControl.HelperText marginBottom="5">

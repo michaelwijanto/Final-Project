@@ -22,6 +22,7 @@ class UserController {
       isActivated: "false",
     };
 
+    console.log({newUser});
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -46,6 +47,7 @@ class UserController {
 
     try {
       let created = await User.create(newUser);
+      console.log("SINI");
       res.status(201).json({
         id: created.id,
         fullName: created.fullName,
@@ -82,8 +84,7 @@ class UserController {
       const token = sign(payload);
       res.status(200).json({
         access_token: token,
-        isRegister: user.isRegister,
-        isActivated: user.isActivated,
+        isRegister: user.isRegister
       });
     } catch (err) {
       next(err);
