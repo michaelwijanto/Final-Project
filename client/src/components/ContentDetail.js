@@ -24,7 +24,6 @@ export default function ContentDetail({ navigation, route }) {
 
   return (
     <View>
-      <AppBar navigation={navigation} />
       <YoutubePlayer height={250} videoId={data.getContentById.youtubeUrl} />
       <View>
         <View style={styles.containerTitle}>

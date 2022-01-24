@@ -9,6 +9,7 @@ const typeDefs = gql`
     fullName: String
     isRegister: String
     role: String
+    isActivated: String
   }
 
   type Coach {
@@ -20,12 +21,12 @@ const typeDefs = gql`
   }
 
   type Message {
-    message: String,
+    message: String
     error: [String]
   }
 
   type AccessToken {
-    access_token: String,
+    access_token: String
     error: String
   }
 
@@ -38,6 +39,7 @@ const typeDefs = gql`
   type Mutation {
     signUpUser(email: String, password: String, fullName: String): Message
     signInUser(email: String, password: String): AccessToken
+    activateUser(pin: String): Message
   }
 `;
 
@@ -45,9 +47,7 @@ const resolvers = {
   Query: {
     getCoaches: async () => {
       try {
-        const { data: coaches } = await axios.get(
-          "http://localhost:3000/api/users/coach"
-        );
+        const { data: coaches } = await axios.get("http://localhost:3000/api/users/coach");
         return coaches;
       } catch (err) {
         return err;
@@ -57,9 +57,7 @@ const resolvers = {
     getCoachDetail: async (_, args) => {
       try {
         const { id } = args;
-        const { data: coach } = await axios.get(
-          `http://localhost:3000/api/users/coach/${id}`
-        );
+        const { data: coach } = await axios.get(`http://localhost:3000/api/users/coach/${id}`);
         return coach;
       } catch (err) {
         return err;
@@ -75,10 +73,9 @@ const resolvers = {
           return JSON.parse(usersCache);
         } else {
           console.log("blum ada");
-          const { data: users } = await axios.get(
-            "http://localhost:3000/api/users/",
-            { headers: { access_token: args.access_token } }
-          );
+          const { data: users } = await axios.get("http://localhost:3000/api/users/", {
+            headers: { access_token: args.access_token },
+          });
           await redis.set("users", JSON.stringify(users));
           return users;
         }
@@ -91,28 +88,31 @@ const resolvers = {
   Mutation: {
     signUpUser: async (_, args) => {
       try {
-        const { data: user } = await axios.post(
-          "http://localhost:3000/api/users/register",
-          args
-        );
+        const { data: user } = await axios.post("http://localhost:3000/api/users/register", args);
         await redis.del("users");
         return { message: "Sign Up Succesful" };
       } catch (err) {
-        return err.response.data
+        return err.response.data;
       }
     },
     signInUser: async (_, args) => {
       try {
         console.log(args, "<<<<<< args value");
-        const { data } = await axios.post(
-          "http://localhost:3000/api/users/login",
-          args
-        );
+        const { data } = await axios.post("http://localhost:3000/api/users/login", args);
         console.log(data);
         return data;
       } catch (err) {
         console.log(err.response.data);
         return err.response.data;
+      }
+    },
+    activateUser: async (_, args) => {
+      try {
+        const { data } = await axios.patch("http://localhost:3000/api/users/", args);
+        console.log(data);
+        return data;
+      } catch (err) {
+        err.response.data;
       }
     },
   },

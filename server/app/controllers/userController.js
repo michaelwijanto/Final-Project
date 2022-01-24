@@ -72,11 +72,11 @@ class UserController {
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
 
-      if (user.isActivated === "false") throw { name: "PlsActivate" };
-
       if (!user || !compare(password, user.password)) {
         throw { name: "Invalid" };
       }
+
+      if (user.isActivated === "false") throw { name: "PlsActivate" };
 
       const payload = {
         id: user.id,
