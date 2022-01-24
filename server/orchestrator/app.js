@@ -22,7 +22,13 @@ const {
 } = require("./schemas/userContent");
 
 const server = new ApolloServer({
-  typeDefs: [userTypeDefs, macroTypeDefs, userProfileTypeDefs, contentTypeDefs, userContentTypeDefs],
+  typeDefs: [
+    userTypeDefs,
+    macroTypeDefs,
+    userProfileTypeDefs,
+    contentTypeDefs,
+    userContentTypeDefs,
+  ],
   resolvers: [
     userResolvers,
     macroResolvers,

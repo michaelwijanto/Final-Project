@@ -16,13 +16,18 @@ const typeDefs = gql`
     highprotein: MacroValue
   }
 
+  type ResponseMacro {
+    success: Macro
+    errorr: [String]
+  }
+
   type Mutation {
     postMacro(
       age: Int
       gender: String
       height: Int
       weight: Int
-      activitylevel: String
+      activitylevel: Int
       goal: String
     ): Macro
   }

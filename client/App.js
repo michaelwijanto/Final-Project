@@ -2,7 +2,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NativeBaseProvider, Box } from "native-base";
+import { NativeBaseProvider } from "native-base";
 
 // Apollo Client
 import { ApolloProvider } from "@apollo/client";
@@ -10,7 +10,8 @@ import client from "./config/apolloClient";
 
 // Components
 import Home from "./src/screens/Home";
-import CoachDetail from "./src/components/CoachDetail";
+import CoachDetail from "./src/components/CoachDetailHome";
+import CoachDetailContent from "./src/components/CoachDetailContent";
 import Contents from "./src/screens/Content";
 import LevelContent from "./src/components/LevelContent";
 import LevelFilter from "./src/components/LevelVerticalContents";
@@ -30,17 +31,24 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
+              name="SignIn"
+              component={SignIn}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
               name="Home"
               component={Home}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Contents"
               component={Contents}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
@@ -54,17 +62,12 @@ function App() {
               name="Log"
               component={Log}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Macro"
               component={Macro}
-              options={{ headerShown: true }}
-            />
-            <Stack.Screen
-              name="SignIn"
-              component={SignIn}
               options={{
                 headerShown: false,
               }}
@@ -73,7 +76,7 @@ function App() {
               name="LevelFilter"
               component={LevelFilter}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
@@ -87,21 +90,28 @@ function App() {
               name="Content Detail"
               component={ContentDetail}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="CoachDetail"
               component={CoachDetail}
               options={{
-                headerShown: true,
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="CoachDetailContent"
+              component={CoachDetailContent}
+              options={{
+                headerShown: false,
               }}
             />
             <Stack.Screen
               name="Profile"
               component={Profile}
               options={{
-                headerShown: true,
+                headerShown: false,
               }}
             />
           </Stack.Navigator>

@@ -46,6 +46,19 @@ export const GET_CONTENT_CARD = gql`
   }
 `;
 
+export const GET_USER_LOGS = gql`
+  query GetUserLogs($accessToken: String) {
+    getUserLogs(access_token: $accessToken) {
+      id
+      height
+      weight
+      activityLevel
+      LevelId
+      UserId
+      createdAt
+    }
+  }
+`
 export const GET_CONTENT_DETAIL = gql`
   query GetContentById($accessToken: String, $contentId: ID) {
     getContentById(access_token: $accessToken, ContentId: $contentId) {

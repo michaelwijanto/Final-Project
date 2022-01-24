@@ -1,53 +1,48 @@
-const { Log, UserProfile } = require('../models/index')
+const { Log, UserProfile } = require("../models/index");
 
 class LogController {
-  static async postLog (req, res, next) {
+  static async postLog(req, res, next) {
     try {
-      const {
-        height,
-        weight,
-        activityLevel
-      } = req.body
-      const {
-        id: UserId,
-      } = req.user
-
-      const userProfile = await UserProfile.findOne({
+      const { height, weight } = req.body;
+      const { id: UserId } = req.user;
+      console.log({height, weight, UserId});
+      const beforeLog = await Log.findOne({
         where: {
-          UserId
-        }
-      })
-      
+          UserId,
+        },
+        order: [["id", "DESC"]],
+        limit: 1
+      });
+
+      console.log(beforeLog);
       const log = await Log.create({
         height,
         weight,
-        activityLevel,
+        activityLevel: beforeLog.activityLevel,
         UserId,
-        LevelId: userProfile.LevelId,
-      })
-      res.status(201).json(log)
+        LevelId: beforeLog.LevelId,
+      });
+      res.status(201).json(log);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
-  static async getLog (req, res, next) {
+  static async getLog(req, res, next) {
     try {
-      const {
-        id: UserId
-      } = req.user
+      const { id: UserId } = req.user;
 
       const logData = await Log.findAll({
         where: {
-          UserId
-        }
-      })
+          UserId,
+        },
+      });
       console.log(UserId, logData);
-      res.status(200).json(logData)
+      res.status(200).json(logData);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
 
-module.exports = LogController
+module.exports = LogController;

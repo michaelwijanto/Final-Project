@@ -15,27 +15,27 @@ export default function TabBar({ navigation }) {
 
   const toHome = () => {
     setSelected(0);
-    navigation.navigate("Home");
+    navigation.push("Home");
   };
 
   const toContent = () => {
     setSelected(1);
-    navigation.navigate("Contents");
+    navigation.push("Contents");
   };
 
   const toLog = () => {
     setSelected(2);
-    navigation.navigate("Log");
+    navigation.push("Log");
   };
 
   const toMacro = () => {
     setSelected(3);
-    navigation.navigate("Macro");
+    navigation.push("Macro");
   };
 
   const toProfile = () => {
     setSelected(3);
-    navigation.navigate("Profile");
+    navigation.push("Profile");
   };
 
   return (
