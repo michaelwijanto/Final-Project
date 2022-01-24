@@ -11,10 +11,10 @@ import client from "./config/apolloClient";
 
 // Components
 import Ionicons from "react-native-vector-icons/Ionicons";
-// import HomeStackScreen from "./src/StackScreen/HomeStack";
-// import ContentStackScreen from "./src/StackScreen/ContentStack";
-import LogStackScreen from "./src/StackScreen/LogStack";
-// import MacroStackScreen from "./src/StackScreen/MacroStack";
+import HomeStackScreen from "./src/StackScreen/HomeStack";
+import ContentStackScreen from "./src/StackScreen/ContentStack";
+// import LogStackScreen from "./src/StackScreen/LogStack";
+import MacroStackScreen from "./src/StackScreen/MacroStack";
 import ProfileStackScreen from "./src/StackScreen/ProfileStack";
 // import SignIn from "./src/screens/SignIn";
 // import SignUp from "./src/screens/SignUp";
@@ -84,10 +84,10 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-            {/* <Tab.Screen name="Home" component={HomeStackScreen} /> */}
-            {/* <Tab.Screen name="Contents" component={ContentStackScreen} /> */}
-            <Tab.Screen name="Log" component={LogStackScreen} />
-            {/* <Tab.Screen name="Macro" component={MacroStackScreen} /> */}
+            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen name="Contents" component={ContentStackScreen} />
+            {/* <Tab.Screen name="Log" component={LogStackScreen} /> */}
+            <Tab.Screen name="Macro" component={MacroStackScreen} />
             <Tab.Screen name="Profile" component={ProfileStackScreen} />
           </Tab.Navigator>
         </NavigationContainer>
