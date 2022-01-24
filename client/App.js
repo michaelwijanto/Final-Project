@@ -24,10 +24,12 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App() {
+  
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>
         <NavigationContainer>
+
           <Tab.Navigator
             screenOptions={({ route }) => ({
               headerShown: false,
