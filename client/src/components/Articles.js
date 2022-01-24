@@ -17,29 +17,31 @@ import {
 } from "native-base";
 import axios from "axios";
 
+
 export default function Articles({ navigation }) {
   const [data, setData] = useState();
 
-  const options = {
-    method: "GET",
-    url: "https://newsdata2.p.rapidapi.com/news",
-    params: { category: "health", language: "en" },
-    headers: {
-      "x-rapidapi-host": "newsdata2.p.rapidapi.com",
-      "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
-    },
-  };
-
-  axios
-    .request(options)
-    .then(function (response) {
-      setData(response.data.results);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
-  // useEffect(() => {}, [data]);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "https://newsdata2.p.rapidapi.com/news",
+      params: { category: "health", language: "en" },
+      headers: {
+        "x-rapidapi-host": "newsdata2.p.rapidapi.com",
+        "x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
+      },
+    };
+  
+    axios
+      .request(options)
+      .then(function (response) {
+        setData(response.data.results);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+  
   if (!data) return <Text>Loading...</Text>;
 
   // const supportedURL = data.link; // andre ada masalah disini
@@ -54,6 +56,7 @@ export default function Articles({ navigation }) {
   //   }
   // };
 
+  
   return (
     <Box>
       {data.map((item, index) => {
