@@ -1,15 +1,11 @@
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   Box,
   Heading,
-  AspectRatio,
   Image,
   Text,
-  Stack,
-  ChevronRightIcon,
-  Avatar,
 } from "native-base";
-import AppBar from "./NavBar/NavBarCoach";
+
 
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";

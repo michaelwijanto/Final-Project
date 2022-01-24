@@ -1,13 +1,12 @@
 import React from "react";
 
 import { StyleSheet, View } from "react-native";
-import { Container, ListItem, List, Text, Content, Box } from "native-base";
+import { Text, Box } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_DETAIL } from "../../queries";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 import { Ionicons } from "@expo/vector-icons";
-import AppBar from "./NavBar/NavBarContentDetail";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;

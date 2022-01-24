@@ -43,6 +43,9 @@ export default function CoachDetail({ navigation, route }) {
         <Box style={styles.bioCoach}>
           <Text style={styles.textCoach}>{data.getCoachDetail.bio}</Text>
         </Box>
+        <Box style={styles.name}>
+
+        </Box>
       </Box>
     </Box>
   );
