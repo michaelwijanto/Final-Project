@@ -6,7 +6,6 @@ import {
   Image,
   Text,
   Stack,
-  ChevronRightIcon,
   Avatar,
 } from "native-base";
 

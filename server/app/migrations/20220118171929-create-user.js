@@ -21,14 +21,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      activatePin: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      isActive: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       role: {
         allowNull: false,
         type: Sequelize.STRING

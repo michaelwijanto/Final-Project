@@ -1,16 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
-import { Box, Image, Text, ScrollView } from "native-base";
+import {
+  Box,
+  Image,
+  Text,
+  ScrollView,
+  Alert,
+  VStack,
+  HStack,
+  useToast,
+  IconButton,
+  CloseIcon,
+} from "native-base";
 
 // Components
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
+  const toast = useToast()
+  // const [showBMI, setShowBMI] = useState(null);
+  useEffect( async () => {
+    const hasilBMI = await AsyncStorage.getItem("@hasilBMI")
+    if (hasilBMI) {
+      console.log("ADA BMI");
+      // toast.show({title: "Your BMI", description: hasilBMI, placement: "top"})
+      // setShowBMI(hasilBMI);
+    }
+  }, [])
   useEffect(() => {
     getStorage();
   }, []);
@@ -37,6 +58,40 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
+      {/* {showBMI && <Alert w="100%" status="info" colorScheme="info">
+      <VStack space={2} flexShrink={1} w="100%">
+        <HStack
+          flexShrink={1}
+          space={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <HStack flexShrink={1} space={2} alignItems="center">
+            <Alert.Icon />
+            <Text fontSize="md" fontWeight="medium" color="coolGray.800">
+              Your BMI!
+            </Text>
+          </HStack>
+          <IconButton
+            variant="unstyled"
+            onPress={async () => {
+              console.log("CLOSE");
+              await AsyncStorage.removeItem("@hasilBMI")
+              showBMI(false)
+            }}
+            icon={<CloseIcon size="3" color="coolGray.600" />}
+          />
+        </HStack>
+        <Box
+          pl="6"
+          _text={{
+            color: "coolGray.600",
+          }}
+        >
+          {showBMI}
+        </Box>
+      </VStack>
+    </Alert>} */}
       <ScrollView style={styles.top}>
         <Box width="100%">
           <Image
@@ -71,7 +126,9 @@ export default function Home({ navigation }) {
             <Text style={styles.textPrograms}>Articles</Text>
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
-          <Box style={styles.programsCard}>{/* <Articles /> */}</Box>
+          <Box style={styles.programsCard}>
+            <Articles />
+          </Box>
         </Box>
       </ScrollView>
     </Box>

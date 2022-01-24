@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useMutation } from "@apollo/client";
-import { POST_USER_PROFILE } from "../../mutations/";
+import { POST_USER_PROFILE } from "../../mutations";
 import { useState, useEffect } from "react";
 import {
   FormControl,
@@ -21,7 +21,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "native-base";
-// import AppBar from "../components/NavBar/NavBarMacro";
 import DatePicker from "react-native-datepicker";
 export const Example = ({ navigation }) => {
   const toast = useToast();
@@ -38,9 +37,6 @@ export const Example = ({ navigation }) => {
     phoneNumber: "",
     dateBirth: new Date(),
   });
-  useEffect(() => {
-    console.log(formUserProfile);
-  }, [formUserProfile]);
 
   const onSubmitUserProfile = async (e) => {
     try {
@@ -90,7 +86,7 @@ export const Example = ({ navigation }) => {
         placement: "top",
       });
       setTimeout(() => {
-        navigation.navigate("Home")
+        navigation.navigate("ContentContainer")
       }, 2000);
     } catch (err) {
       console.log({ err });
