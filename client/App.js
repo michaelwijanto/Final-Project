@@ -18,6 +18,7 @@ import MacroStackScreen from "./src/StackScreen/MacroStack";
 import ProfileStackScreen from "./src/StackScreen/ProfileStack";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
+import Activate from "./src/screens/Activate";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -71,6 +72,13 @@ function App() {
             {/* <Stack.Screen
               name="SignUp"
               component={SignUp}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Activate"
+              component={Activate}
               options={{
                 headerShown: false,
               }}
