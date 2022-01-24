@@ -71,8 +71,6 @@ class UserController {
       }
       if (user.isActivated === "false") throw { name: "PlsActivate" };
 
-      if (user.isActivated === "false") throw { name: "PlsActivate" };
-
       const payload = {
         id: user.id,
         email: user.email,

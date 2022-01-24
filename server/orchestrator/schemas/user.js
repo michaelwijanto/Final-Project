@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server");
 const redis = require("../redis");
 const axios = require("axios");
+const { get } = require("../redis");
 
 const typeDefs = gql`
   type User {
@@ -20,6 +21,12 @@ const typeDefs = gql`
     bio: String
   }
 
+  type Level {
+    id: ID
+    name: String
+    thumbnail: String
+  }
+
   type Message {
     message: String
     error: [String]
@@ -36,6 +43,7 @@ const typeDefs = gql`
     getUsers(access_token: String): [User]
     getCoaches: [Coach]
     getCoachDetail(id: ID): Coach
+    getLevels: [Level]
   }
 
   type Mutation {
@@ -83,6 +91,14 @@ const resolvers = {
         }
       } catch (err) {
         console.log({ err });
+        return err;
+      }
+    },
+    getLevels: async (_, args) => {
+      try {
+        const { data: levels } = await axios.get("http://localhost:3000/api/users/level");
+        return levels;
+      } catch (err) {
         return err;
       }
     },
