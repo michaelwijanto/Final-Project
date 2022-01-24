@@ -16,8 +16,6 @@ import { GET_LEVEL } from "../../queries";
 
 export default function LevelHorizontal({ navigation }) {
   const { loading, error, data } = useQuery(GET_LEVEL);
-  
-  
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
@@ -30,9 +28,13 @@ export default function LevelHorizontal({ navigation }) {
         return (
           <Pressable
             onPress={() =>
-              navigation.navigate("LevelFilter", {
-                id: item.id,
-                levelName: item.name,
+              navigation.navigate("Contents", {
+                screen: "LevelFilter",
+                params: {
+                  id: item.id,
+                  levelName: item.name,
+                },
+                initial: false,
               })
             }
           >

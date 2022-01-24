@@ -1,5 +1,3 @@
-import TabBar from "../components/TabBar";
-import AppBar from "../components/NavBar/NavBarLog";
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -42,7 +40,8 @@ export default function Log({ navigation }) {
     variables: {
       accessToken:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
-    }})
+    },
+  });
   const [postUserLog, {}] = useMutation(POST_USER_LOG);
   const onSubmitLog = async (e) => {
     try {
@@ -83,7 +82,6 @@ export default function Log({ navigation }) {
         md: "25%",
       }}
     >
-      <AppBar />
       <FlatList
         data={data.getUserLogs}
         renderItem={({ item }) => (
@@ -151,7 +149,7 @@ export default function Log({ navigation }) {
         )}
         keyExtractor={(item) => item.id}
       />
-      <Box style={{position: "absolute", bottom: 75, alignSelf: "center"}}>
+      <Box style={{ position: "absolute", bottom: 15, alignSelf: "center" }}>
         <Button onPress={() => setShowModal(true)}>
           <MaterialIcons name="add" size={24} color="black" />
         </Button>
@@ -202,7 +200,6 @@ export default function Log({ navigation }) {
           </Modal.Content>
         </Modal>
       </Box>
-      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
