@@ -123,7 +123,7 @@ const resolvers = {
           { headers: { access_token } }
         );
         console.log(data);
-        return {message: ["Your latest body development has been added"]};
+        return {message: "Your latest body development has been added"};
       } catch (err) {
         console.log({ err });
         return {error: err.response.data.error};

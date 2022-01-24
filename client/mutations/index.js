@@ -19,39 +19,54 @@ export const SIGN_IN = gql`
 `;
 
 export const POST_MACRO = gql`
-  mutation PostMacro($age: Int, $gender: String, $height: Int, $weight: Int, $activitylevel: Int, $goal: String) {
-    postMacro(age: $age, gender: $gender, height: $height, weight: $weight, activitylevel: $activitylevel, goal: $goal) {
-      calorie
-      balanced {
-        protein
-        fat
-        carbs
-      }
-      lowfat {
-        protein
-        fat
-        carbs
-      }
-      lowcarbs {
-        protein
-        fat
-        carbs
-      }
-      highprotein {
-        protein
-        fat
-        carbs
-      }
+mutation PostMacro(
+  $age: Int
+  $gender: String
+  $height: Int
+  $weight: Int
+  $activitylevel: Int
+  $goal: String
+) {
+  postMacro(
+    age: $age
+    gender: $gender
+    height: $height
+    weight: $weight
+    activitylevel: $activitylevel
+    goal: $goal
+  ) {
+    calorie
+    balanced {
+      protein
+      fat
+      carbs
+    }
+    lowfat {
+      protein
+      fat
+      carbs
+    }
+    lowcarbs {
+      protein
+      fat
+      carbs
+    }
+    highprotein {
+      protein
+      fat
+      carbs
     }
   }
-`;
+}
+
+`
+
 
 export const POST_USER_LOG = gql`
-  mutation PostUserLog($accessToken: String, $height: Int, $weight: Int) {
-    postUserLog(access_token: $accessToken, height: $height, weight: $weight) {
-      message
-      error
-    }
+mutation PostUserLog($accessToken: String, $height: Int, $weight: Int) {
+  postUserLog(access_token: $accessToken, height: $height, weight: $weight) {
+    message
+    error
   }
 }
 `;
