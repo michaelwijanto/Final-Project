@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const { User,Coach } = require("../models");
+const { User, Coach } = require("../models");
 const { sign } = require("../helpers/jwt");
 
 beforeAll(async () => {
@@ -31,8 +31,8 @@ beforeAll(async () => {
 });
 
 beforeEach(() => {
-  jest.restoreAllMocks()
-})
+  jest.restoreAllMocks();
+});
 
 describe("POST /api/users/register", () => {
   const userTest = {
@@ -327,10 +327,12 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        access_token = result.access_token  
+        access_token = result.access_token;
         expect(response.status).toBe(200);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("access_token", expect.any(String));
+        expect(result).toHaveProperty("isRegister", expect.any(String));
+        expect(result).toHaveProperty("isActivated", expect.any(String));
         done();
       })
       .catch((err) => {
@@ -398,7 +400,7 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result, ">>>>>>>>>>>>>>>>>> wronf email")
+        console.log(result, ">>>>>>>>>>>>>>>>>> wronf email");
         expect(response.status).toBe(401);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("error", "Invalid email/password");
@@ -411,91 +413,84 @@ describe("POST /api/users/login", () => {
 });
 
 // GET USERS
-test("[GET/api/users success] - should be return object with status code 200", (done) =>{
-    request(app)
-     .get("/api/users")
-     .set("access_token",access_token)
-     .then((resp) =>{
-       
-        
-         expect(resp.status).toBe(200)
-         expect(resp.body).toEqual(expect.any(Object))
-         expect(resp.body[0]).toHaveProperty("email")
-         expect(resp.body[0]).toHaveProperty("fullName")
-         expect(resp.body[0]).toHaveProperty("role")
-         expect(resp.body[0]).toHaveProperty("pin")
-         expect(resp.body[0]).toHaveProperty("isRegister")
-         expect(resp.body[0]).toHaveProperty("isActivated")
-         
-         done()
-     })
-     .catch((err) =>{
-         console.log(err.data, '<<<<<<<<<<<<<<<<< error')
-     })
-})
-
-test("[GET/api/users ERROR]  - should be return object with status code 500", (done) =>{
-    jest.spyOn(User, 'findAll').mockRejectedValue('Error')
-    request(app)
+test("[GET/api/users success] - should be return object with status code 200", (done) => {
+  request(app)
     .get("/api/users")
-    .set("access_token",access_token)
-    .then((resp) =>{
-        expect(resp.status).toBe(500)
-        expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("error")
-        expect(resp.body.error).toBe('Internal server error')
-        
-        
-        done()
-    })
-    .catch((err) =>{
-        console.log(err)
-    })
-})
+    .set("access_token", access_token)
+    .then((resp) => {
+      expect(resp.status).toBe(200);
+      expect(resp.body).toEqual(expect.any(Object));
+      expect(resp.body[0]).toHaveProperty("email");
+      expect(resp.body[0]).toHaveProperty("fullName");
+      expect(resp.body[0]).toHaveProperty("role");
+      expect(resp.body[0]).toHaveProperty("pin");
+      expect(resp.body[0]).toHaveProperty("isRegister");
+      expect(resp.body[0]).toHaveProperty("isActivated");
 
-test("[GET/api/users ERROR]  - should be return object with status code 401", (done) =>{
-    request(app)
+      done();
+    })
+    .catch((err) => {
+      console.log(err.data, "<<<<<<<<<<<<<<<<< error");
+    });
+});
+
+test("[GET/api/users ERROR]  - should be return object with status code 500", (done) => {
+  jest.spyOn(User, "findAll").mockRejectedValue("Error");
+  request(app)
     .get("/api/users")
-    .then((resp) =>{
-        
-        expect(resp.status).toBe(401)
-        expect(resp.body).toEqual(expect.any(Object))
-        expect(resp.body).toHaveProperty("error")
-        expect(resp.body.error).toBe('Invalid token')
-        
-        
-        done()
+    .set("access_token", access_token)
+    .then((resp) => {
+      expect(resp.status).toBe(500);
+      expect(resp.body).toEqual(expect.any(Object));
+      expect(resp.body).toHaveProperty("error");
+      expect(resp.body.error).toBe("Internal server error");
+
+      done();
     })
-    .catch((err) =>{
-        console.log(err)
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+test("[GET/api/users ERROR]  - should be return object with status code 401", (done) => {
+  request(app)
+    .get("/api/users")
+    .then((resp) => {
+      expect(resp.status).toBe(401);
+      expect(resp.body).toEqual(expect.any(Object));
+      expect(resp.body).toHaveProperty("error");
+      expect(resp.body.error).toBe("Invalid token");
+
+      done();
     })
-}) 
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 // // // PATCH User
-test("[PATCH/api/users  success] - should be return object with status code 200", (done) =>{
-    request(app)
+test("[PATCH/api/users  success] - should be return object with status code 200", (done) => {
+  request(app)
     .patch("/api/users ")
     .send({
-        pin:"123456"
-     })
-    .then((resp) =>{
-        console.log(resp.body, '>>>>>>>>>>>>>>>>>>')
-        expect(resp.status).toBe(200)
-        expect(resp.body).toEqual(expect.any(Object))
-        // expect(resp.body).toHaveProperty("title")
-        // expect(resp.body).toHaveProperty("description")
-        // expect(resp.body).toHaveProperty("youtubeUrl")
-        // expect(resp.body).toHaveProperty("likes")
-        // expect(resp.body).toHaveProperty("statusLike")
-      
-        
-        
-        done()
+      pin: "123456",
     })
-    .catch((err) =>{
-        console.log(err)
-     })
-})
+    .then((resp) => {
+      console.log(resp.body, ">>>>>>>>>>>>>>>>>>");
+      expect(resp.status).toBe(200);
+      expect(resp.body).toEqual(expect.any(Object));
+      // expect(resp.body).toHaveProperty("title")
+      // expect(resp.body).toHaveProperty("description")
+      // expect(resp.body).toHaveProperty("youtubeUrl")
+      // expect(resp.body).toHaveProperty("likes")
+      // expect(resp.body).toHaveProperty("statusLike")
+
+      done();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 // test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
 //     request(app)
@@ -505,20 +500,19 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
 //         statusLike: "not like",
 //      })
 //     .then((resp) =>{
-        
+
 //         expect(resp.status).toBe(401)
 //         expect(resp.body).toEqual(expect.any(Object))
 //         expect(resp.body).toHaveProperty("error")
 //         expect(resp.body.error).toBe('Content Not Found')
-        
-        
+
 //         done()
 //     })
 //     .catch((err) =>{
 //         console.log(err)
 //      })
 // })
-    
+
 // test("[PATCH/api/contents/:id ERROR] - should be return object with status code 400", (done) =>{
 //     request(app)
 //     .patch("/api/contents/1")
@@ -530,9 +524,7 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
 //         expect(resp.status).toBe(400)
 //         expect(resp.body).toEqual(expect.any(Object))
 //         expect(resp.body).toHaveProperty("error")
-       
-        
-        
+
 //         done()
 //     })
 //     .catch((err) =>{
@@ -540,7 +532,6 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
 //     })
 // })
 
-    
 // test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
 //         request(app)
 //         .patch("/api/contents/1")
@@ -552,11 +543,10 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
 //             expect(resp.body).toEqual(expect.any(Object))
 //             expect(resp.body).toHaveProperty("error")
 //             expect(resp.body.error).toBe('Invalid token')
-            
-            
+
 //             done()
 //         })
 //         .catch((err) =>{
 //             console.log(err)
 //         })
-// }) 
+// })
