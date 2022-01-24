@@ -55,6 +55,7 @@ const resolvers = {
             }
           } else result[i] = Math.floor(result[i])
         }
+        console.log({result});
         return result
       } catch (err) {
         console.log({err});
