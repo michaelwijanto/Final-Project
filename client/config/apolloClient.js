@@ -18,6 +18,12 @@ const client = new ApolloClient({
 //   cache: new InMemoryCache(),
 // });
 
+// Arie
+// const client = new ApolloClient({
+//   uri: "http://192.168.1.7:4000/",
+//   cache: new InMemoryCache(),
+// });
+
 // Whisnu
 // const client = new ApolloClient({
 //   uri: "http://192.168.218.140:4000",

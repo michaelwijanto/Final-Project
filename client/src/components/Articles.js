@@ -42,24 +42,27 @@ export default function Articles({ navigation }) {
   // useEffect(() => {}, [data]);
   if (!data) return <Text>Loading...</Text>;
 
-  const supportedURL = data.link; // andre ada masalah disini
-  const unsupportedURL = "slack://open?team=123456";
-  const handlePress = () => {
-    const supported = Linking.canOpenURL(supportedURL);
-
-    if (supported) {
-      Linking.openURL(supportedURL);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${unsupportedURL}`);
-    }
-  };
+  // const supportedURL = data.link; // andre ada masalah disini
+  // const unsupportedURL = "slack://open?team=123456";
+  // const handlePress = () => {
+  //   const supported = Linking.canOpenURL(supportedURL);
+  // };
+  //   if (supported) {
+  //     Linking.openURL(supportedURL);
+  //   } else {
+  //     Alert.alert(`Don't know how to open this URL: ${unsupportedURL}`);
+  //   }
+  // };
 
   return (
-    <ScrollView>
+    <Box>
       {data.map((item, index) => {
         if (index < 5) {
           return (
-            <Pressable onPress={() => handlePress()} key={index}>
+            <Pressable
+              // onPress={() => handlePress()}
+              key={index}
+            >
               <Box
                 w="380"
                 h="230"
@@ -115,7 +118,7 @@ export default function Articles({ navigation }) {
           );
         }
       })}
-    </ScrollView>
+    </Box>
   );
 }
 

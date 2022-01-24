@@ -7,7 +7,6 @@ import { useQuery } from "@apollo/client";
 import { GET_CONTENT_DETAIL } from "../../queries";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 import { Ionicons } from "@expo/vector-icons";
-import AppBar from "./NavBar/NavBarContentDetail";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
@@ -24,7 +23,6 @@ export default function ContentDetail({ navigation, route }) {
 
   return (
     <View>
-      <AppBar navigation={navigation} />
       <YoutubePlayer height={250} videoId={data.getContentById.youtubeUrl} />
       <View>
         <View style={styles.containerTitle}>
