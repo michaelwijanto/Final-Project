@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
-  NativeBaseProvider,
   Box,
   Text,
   Icon,
@@ -10,34 +9,52 @@ import {
 } from "native-base";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
-export default function TabBar({ navigation }) {
+export default function TabBar({ navigation, route }) {
   const [selected, setSelected] = React.useState(0);
+
+  useEffect(() => {
+
+  }, [])
 
   const toHome = () => {
     setSelected(0);
-    navigation.push("Home");
+    navigation.navigate("Home", {
+      params: {
+        nav: 0
+      }
+    });
   };
 
   const toContent = () => {
     setSelected(1);
-    navigation.push("Contents");
+    navigation.navigate("Contents", {
+      params: {
+        nav: 1
+      }
+    });
   };
 
   const toLog = () => {
     setSelected(2);
-    navigation.push("Log");
+    navigation.push("Log", {
+      nav: 2
+    });
   };
 
   const toMacro = () => {
     setSelected(3);
-    navigation.push("Macro");
+    navigation.push("Macro", {
+      nav: 3
+    }); 
   };
 
   const toProfile = () => {
-    setSelected(3);
-    navigation.push("Profile");
+    setSelected(4);
+    navigation.push("Profile", {
+      nav: 4
+    });
   };
-
+  
   return (
     <Box>
       <HStack bg="#b9d0df" alignItems="center" safeAreaBottom shadow={6}>
@@ -46,7 +63,7 @@ export default function TabBar({ navigation }) {
           opacity={selected === 0 ? 1 : 0.5}
           py="3"
           flex={1}
-          onPress={() => toHome(0)}
+          onPress={(e) => toHome(e)}
         >
           <Center>
             <Icon
@@ -69,7 +86,7 @@ export default function TabBar({ navigation }) {
           opacity={selected === 1 ? 1 : 0.5}
           py="2"
           flex={1}
-          onPress={() => toContent(1)}
+          onPress={(e) => toContent(e)}
         >
           <Center>
             <Icon

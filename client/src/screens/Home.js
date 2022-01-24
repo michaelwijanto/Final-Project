@@ -1,6 +1,11 @@
-import React from "react";
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Native Base
 import { Box, Image, Text, ScrollView } from "native-base";
+
+// Components
 import AppBar from "../components/NavBar/NavBarHome";
 import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
@@ -8,6 +13,24 @@ import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
 export default function Home({ navigation }) {
+
+  useEffect(() => {
+    getStorage()
+  }, [])
+
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@access_token')
+      if(value !== null) {
+        // value previously stored
+        // console.log(value);
+      }
+    } catch(e) {
+      // error reading value
+      console.error(e);
+    }
+  }
+
   return (
     <Box
       style={styles.container}
@@ -53,7 +76,7 @@ export default function Home({ navigation }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <Articles />
+            {/* <Articles /> */}
           </Box>
         </Box>
       </ScrollView>

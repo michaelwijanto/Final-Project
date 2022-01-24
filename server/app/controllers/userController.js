@@ -6,7 +6,22 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    console.log({ email, password, fullName });
+    console.log(email);
+    let temp = "";
+    for (let i = 0; i < 6; i++) {
+      temp += Math.floor(Math.random() * 10);
+    }
+
+    let newUser = {
+      email,
+      password,
+      fullName,
+      role: "user",
+      isRegister: "false",
+      pin: temp,
+      isActivated: "false",
+    };
+
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -14,15 +29,17 @@ class UserController {
         pass: "ToKoMovieH8!",
       },
     });
-    let pin = ""
-    for (let i = 1; i <= 6; i++){
-      pin += `${Math.floor(Math.random() * 10)}`
-    }
+
     let notif = {
       from: "tokomovieh8@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Activation Pin", // Subject line
-      text: `Dont share your Active8 Activation Pin to anyone ${pin}`,
+      subject: "Activate your email", // Subject line
+      text: `Welcome to Active8! We are glad to have you be our member.
+    But before you can do that, you need to activate your account to use our service.
+    Please enter this pin ${temp} on the prompted screen on your phone
+    Hope to see you soon!
+    
+    Active8`,
     };
 
     transporter.sendMail(notif, (err, data) => {
@@ -33,16 +50,6 @@ class UserController {
       }
     });
 
-    let newUser = {
-      email,
-      password,
-      fullName,
-      role: "user",
-      isRegister: "false",
-      activatePin: pin,
-      isActive: "false"
-    };
-    
     try {
       let created = await User.create(newUser);
       res.status(201).json({
@@ -51,6 +58,8 @@ class UserController {
         email: created.email,
         role: created.role,
         isRegister: created.isRegister,
+        pin: created.pin,
+        isActivated: created.isActivated,
       });
     } catch (err) {
       next(err);
@@ -62,6 +71,9 @@ class UserController {
       const { email, password } = req.body;
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
+
+      if (user.isActivated === "false") throw { name: "PlsActivate" };
+
       if (!user || !compare(password, user.password)) {
         throw { name: "Invalid" };
       }
@@ -97,42 +109,30 @@ class UserController {
 
   static async patchUser(req, res, next) {
     try {
-      let { isRegister } = req.body;
-      const { id } = req.params;
-      const patchedUser = await User.update(
-        {
-          isRegister,
+      let { pin: inputtedPin } = req.body;
+      // const { id } = req.params;
+      const findUser = await User.findOne({
+        where: {
+          pin: inputtedPin,
         },
-        {
-          where: {
-            id,
-          },
-          returning: true,
-        }
-      );
-      res.status(200).json({message: "Success activated is Register User"})
-    } catch (err) {
-      next(err);
-    }
-  }
+      });
+      if (!findUser) throw { name: "USER_NOT_FOUND" };
 
-  static async patchActivatePin(req, res, next) {
-    try {
-      const { pin } = req.params;
-      console.log({pin});
-      const activatedUser = await User.update(
+      // if (findUser.pin.split(";")[1] === inputtedPin) {
+      await User.update(
         {
-          isActive: "true",
-          activatePin: "used"
+          isActivated: "true",
+          pin: "used",
         },
         {
           where: {
-            activatePin: `${pin}`
+            pin: inputtedPin,
           },
           returning: true,
         }
       );
-      res.status(200).json({message: "Success activated is Active User"})
+      // }
+      res.status(200).json({ message: "Your account has been activated" });
     } catch (err) {
       next(err);
     }

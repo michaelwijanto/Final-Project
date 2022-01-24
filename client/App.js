@@ -21,6 +21,7 @@ import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
+import UserProfile from "./src/screens/UserProfile"
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,20 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* <Stack.Screen
+              name="SignIn"
+              component={SignIn}
+              options={{
+                headerShown: false,
+              }}
+            /> */}
+              <Stack.Screen
+                name="UserProfile"
+                component={UserProfile}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            <Stack.Screen
               name="Home"
               component={Home}
               options={{
@@ -50,24 +65,17 @@ function App() {
               options={{
                 headerShown: true,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="Log"
               component={Log}
               options={{
                 headerShown: false,
               }}
-            /> */}
+            />
             <Stack.Screen
               name="Macro"
               component={Macro}
-              options={{
-                headerShown: false,
-              }}
-            />
-            {/* <Stack.Screen
-              name="SignIn"
-              component={SignIn}
               options={{
                 headerShown: false,
               }}
@@ -113,7 +121,7 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

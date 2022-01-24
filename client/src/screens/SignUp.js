@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from "@apollo/client";
-
 import {
   Box,
   Text,
@@ -13,9 +12,6 @@ import {
   VStack,
   Center,
   NativeBaseProvider,
-  IconButton,
-  CloseIcon,
-  useToast
 } from "native-base";
 
 import { REGISTER } from  '../../mutations';
@@ -28,7 +24,6 @@ export default function SignUp({ navigation }){
   })
   const [newError, setNewError] = useState([])
   const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
-  const toast = useToast()
   const submitRegister = async (e) => {
     try {
       e.preventDefault()
@@ -40,19 +35,16 @@ export default function SignUp({ navigation }){
           password: formRegister.password
         }
       })
-      if (!signUp.data.signUpUser.message) {
+
+      if (signUp.data.signUpUser.error) {
         const errors = signUp.data.signUpUser.error
         setNewError(errors)
-
-        // newError.forEach((error) => {
-        //   toast.show({
-        //     title: error,
-        //     placement: 'top-right',
-        //     backgroundColor: 'red.700'
-        //   })
-        // })
       } else {
-        navigation.navigate('SignIn')
+        const success = signUp.data.signUpUser.message
+        navigation.navigate('SignIn', {
+          message: success,
+          status: 'success'
+        })
       }
     } catch (error) {
       console.log(error);
@@ -64,7 +56,7 @@ export default function SignUp({ navigation }){
       <Center flex={1} px="3">
         <Box safeArea p="2" py="8" w="90%" maxW="290">
           <Heading
-            size="lg"
+            size="2xl"
             fontWeight="600"
             color="coolGray.800"
             _dark={{
@@ -167,5 +159,6 @@ export default function SignUp({ navigation }){
         </Box>
       </Center>
     </NativeBaseProvider>
+
   );
 };

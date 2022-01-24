@@ -1,4 +1,3 @@
-import SwitchMode from "../SwitchMode";
 import { AntDesign } from "@expo/vector-icons";
 
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
@@ -43,9 +42,7 @@ export default function AppBar({ navigation }) {
             Active8
           </Text>
         </HStack>
-        <HStack space="2">
-          {/* <SwitchMode></SwitchMode> */}
-        </HStack>
+        <HStack space="2">{/* <SwitchMode></SwitchMode> */}</HStack>
       </HStack>
     </Box>
   );

@@ -100,13 +100,15 @@ const resolvers = {
     postUserProfile: async (_, args) => {
       try {
         const { access_token } = args;
+        console.log({args});
         const { data } = await axios.post(
           "http://localhost:3000/api/user-profiles",
           args,
           { headers: { access_token } }
         );
-        console.log(data);
-        return {message: [data.message]};
+        // console.log(data);
+        console.log({message: [data.message]});
+        return {message: data.message};
       } catch (err) {
         console.log({ err });
         return {error: [err.response.data.error]};

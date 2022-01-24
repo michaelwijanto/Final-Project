@@ -20,12 +20,13 @@ const typeDefs = gql`
   }
 
   type Message {
-    message: [String],
+    message: String,
     error: [String]
   }
 
   type AccessToken {
-    access_token: String
+    access_token: String,
+    error: String
   }
 
   type Query {
@@ -90,21 +91,19 @@ const resolvers = {
   Mutation: {
     signUpUser: async (_, args) => {
       try {
-        console.log(args, "<<<<<< args value");
         const { data: user } = await axios.post(
           "http://localhost:3000/api/users/register",
           args
         );
-        console.log({ user });
         await redis.del("users");
         return { message: "Sign Up Succesful" };
       } catch (err) {
-        console.log(err.response.data);
         return err.response.data
       }
     },
     signInUser: async (_, args) => {
       try {
+        console.log(args, "<<<<<< args value");
         const { data } = await axios.post(
           "http://localhost:3000/api/users/login",
           args
@@ -112,8 +111,8 @@ const resolvers = {
         console.log(data);
         return data;
       } catch (err) {
-        console.log({ err });
-        return err;
+        console.log(err.response.data);
+        return err.response.data;
       }
     },
   },
