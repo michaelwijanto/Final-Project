@@ -28,7 +28,7 @@ export default function CoachDetail({ navigation, route }) {
   if (error) return <Text>Error...</Text>;
   return (
     <Box style={styles.container}>
-      <AppBar navigation={navigation} coachName={coachName} />
+      {/* <AppBar navigation={navigation} coachName={coachName} /> */}
       <Box style={styles.top}>
         <Image
           style={styles.imageBanner}

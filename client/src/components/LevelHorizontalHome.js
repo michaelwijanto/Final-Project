@@ -28,9 +28,13 @@ export default function LevelHorizontal({ navigation }) {
         return (
           <Pressable
             onPress={() =>
-              navigation.navigate("LevelFilter", {
-                id: item.id,
-                levelName: item.name,
+              navigation.navigate("Contents", {
+                screen: "LevelFilter",
+                params: {
+                  id: item.id,
+                  levelName: item.name,
+                },
+                initial: false,
               })
             }
           >

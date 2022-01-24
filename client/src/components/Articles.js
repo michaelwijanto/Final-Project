@@ -42,11 +42,11 @@ export default function Articles({ navigation }) {
   // useEffect(() => {}, [data]);
   if (!data) return <Text>Loading...</Text>;
 
-  // const supportedURL = data.link;
+  // const supportedURL = data.link; // andre ada masalah disini
   // const unsupportedURL = "slack://open?team=123456";
   // const handlePress = () => {
   //   const supported = Linking.canOpenURL(supportedURL);
-
+  // };
   //   if (supported) {
   //     Linking.openURL(supportedURL);
   //   } else {
