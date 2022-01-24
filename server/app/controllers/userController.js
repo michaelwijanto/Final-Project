@@ -43,13 +43,7 @@ class UserController {
     Active8`,
     };
 
-    transporter.sendMail(notif, (err, data) => {
-      if (err) {
-        console.log(`Email not send`);
-      } else {
-        console.log(`Email has been sent`);
-      }
-    });
+    transporter.sendMail(notif, (err, data) => {});
 
     try {
       let created = await User.create(newUser);
@@ -77,6 +71,7 @@ class UserController {
       if (!user || !compare(password, user.password)) {
         throw { name: "Invalid" };
       }
+      if (user.isActivated === "false") throw { name: "PlsActivate" };
 
       if (user.isActivated === "false") throw { name: "PlsActivate" };
 
@@ -86,10 +81,12 @@ class UserController {
         fullName: user.fullName,
         role: user.role,
         isRegister: user.isRegister,
+        isActivated: user.isActivated,
       };
       const token = sign(payload);
       res.status(200).json({
         access_token: token,
+        isRegister: user.isRegister
       });
     } catch (err) {
       next(err);
@@ -145,7 +142,9 @@ class UserController {
       const result = await Coach.findAll();
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async getLevels(req, res, next) {
@@ -153,7 +152,9 @@ class UserController {
       const result = await Level.findAll();
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async getCoachDetail(req, res, next) {
@@ -164,7 +165,9 @@ class UserController {
       });
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

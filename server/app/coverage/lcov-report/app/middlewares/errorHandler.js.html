@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52% </span>
+                <span class="strong">76% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/25</span>
+                <span class='fraction'>19/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/11</span>
+                <span class='fraction'>8/11</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/24</span>
+                <span class='fraction'>18/24</span>
             </div>
         
             
@@ -101,13 +101,13 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -115,30 +115,30 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const errorHandler = (err, req, res, next) =&gt; {
   console.log({ err });
   switch (err.name) {
@@ -152,21 +152,21 @@
     case "Required":
       res.status(400).json({ error: "Email or Password is required" });
       break;
-<span class="branch-4 cbranch-no" title="branch not covered" >    case "Invalid":</span>
-<span class="cstat-no" title="statement not covered" >      res.status(401).json({ error: "Invalid email/password" });</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+    case "Invalid":
+      res.status(401).json({ error: "Invalid email/password" });
+      break;
     case "JsonWebTokenError":
       res.status(401).json({ error: "Invalid token" });
       break;
 <span class="branch-6 cbranch-no" title="branch not covered" >    case "USER_NOT_FOUND":</span>
 <span class="cstat-no" title="statement not covered" >      res.status(401).json({ error: "Invalid token" });</span>
 <span class="cstat-no" title="statement not covered" >      break;</span>
-<span class="branch-7 cbranch-no" title="branch not covered" >    case "Content_Not_Found":</span>
-<span class="cstat-no" title="statement not covered" >      res.status(401).json({ error: "Content Not Found" });</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
-<span class="branch-8 cbranch-no" title="branch not covered" >    case "Bad_Request":</span>
-<span class="cstat-no" title="statement not covered" >      res.status(400).json({ error: "Please fill all the blank!" });</span>
-<span class="cstat-no" title="statement not covered" >      break;</span>
+    case "Content_Not_Found":
+      res.status(401).json({ error: "Content Not Found" });
+      break;
+    case "Bad_Request":
+      res.status(400).json({ error: "Please fill all the blank!" });
+      break;
 <span class="branch-9 cbranch-no" title="branch not covered" >    case "PlsActivate":</span>
 <span class="cstat-no" title="statement not covered" >      res.status(400).json({ error: "Please activate your account!" });</span>
 <span class="cstat-no" title="statement not covered" >      break;</span>
@@ -184,7 +184,7 @@ module.exports = errorHandler;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Jan 24 2022 10:20:03 GMT+0700 (Western Indonesia Time)
+                at Tue Jan 25 2022 00:16:39 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

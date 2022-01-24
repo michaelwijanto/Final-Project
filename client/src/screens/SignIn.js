@@ -26,7 +26,7 @@ import { SIGN_IN } from "../../mutations";
 
 export default function SignIn({ navigation, route }) {
   const toast = useToast();
-  const [successActivate, showSuccessActivate] = useState(null);
+  // const [successActivate, showSuccessActivate] = useState(null);
   useEffect(() => {
     if (route.params?.message) {
       toast.show({
@@ -34,7 +34,6 @@ export default function SignIn({ navigation, route }) {
         status: "success",
         placement: "top"
       })
-      showSuccessActivate(route.params.message);
     }
   }, []);
 
@@ -70,9 +69,10 @@ export default function SignIn({ navigation, route }) {
         } else {
           setIsLogin(true);
           console.log({ res });
-          const access_token = res.data?.signInUser.access_token;
-          storeData(access_token);
-          navigation.navigate("UserProfileStack");
+          const {access_token, isRegister} = res.data?.signInUser;
+          storeData("@access_token", access_token);
+          if(isRegister === "true") navigation.navigate("ContentContainer");
+          else navigation.navigate("UserProfileStack");
         }
       })
       .catch((err) => {
@@ -89,14 +89,13 @@ export default function SignIn({ navigation, route }) {
     // Invoking Local Storage
     getStorage();
     setLoading(false);
-    // removeStorage('@access_token')
-    // removeStorage('@hasilBMI')
+    removeStorage('@access_token')
   }, []);
 
   // Local Storage
-  const storeData = async (value) => {
+  const storeData = async (name, value) => {
     try {
-      await AsyncStorage.setItem("@access_token", value);
+      await AsyncStorage.setItem(name, value);
       setLoading(false);
     } catch (e) {
       // saving error

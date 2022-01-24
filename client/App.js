@@ -2,8 +2,9 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NativeBaseProvider, Text } from "native-base";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NativeBaseProvider } from "native-base";
+// import { StripeProvider } from "@stripe/stripe-react-native";
 
 // Apollo Client
 import { ApolloProvider } from "@apollo/client";
@@ -15,9 +16,10 @@ import SignUp from "./src/screens/SignUp";
 import UserProfileStack from "./src/StackScreen/UserProfileStack";
 import Activate from "./src/screens/Activate";
 import ContentContainer from "./src/appChilds/ContentContainer";
+// import Payment from "./src/screens/Payment";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
 function App() {
   return (
