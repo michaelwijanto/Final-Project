@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 // Native Base
-import { 
+import {
   Box,
   Text,
   ScrollView,
@@ -14,11 +14,8 @@ import {
 } from "native-base";
 
 // Components
-import AppBar from "../components/NavBar/NavBarHome";
-import TabBar from "../components/TabBar";
 
-export default function Home({ navigation }) {
-
+export default function Profile({ navigation }) {
   return (
     <Box
       style={styles.container}
@@ -28,7 +25,6 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
-      <AppBar style={styles.appBarStyle} />
       <ScrollView style={styles.top}>
         <Box width="100%">
           <HStack space={2}>
@@ -43,12 +39,8 @@ export default function Home({ navigation }) {
               RB
             </Avatar>
             <VStack style={styles.section1}>
-              <Text style={styles.fullName}>
-                Arie Sastra Hadiprawira
-              </Text>
-              <Text style={styles.email}>
-                ariesastra@mail.com
-              </Text>
+              <Text style={styles.fullName}>Arie Sastra Hadiprawira</Text>
+              <Text style={styles.email}>ariesastra@mail.com</Text>
               <HStack mt={2}>
                 <Badge variant="solid" mr={2}>
                   Easy
@@ -60,13 +52,12 @@ export default function Home({ navigation }) {
             </VStack>
           </HStack>
           <HStack style={styles.section2}>
-              <Button w="100%" size="lg" colorScheme="gray">
-                Subscribe Now
-              </Button>
+            <Button w="100%" size="lg" colorScheme="gray">
+              Subscribe Now
+            </Button>
           </HStack>
         </Box>
       </ScrollView>
-      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
@@ -85,21 +76,21 @@ const styles = StyleSheet.create({
   },
   section1: {
     marginVertical: 25,
-    marginLeft: 5
+    marginLeft: 5,
   },
   fullName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 18,
   },
   email: {
     fontSize: 16,
-    marginTop: 5
+    marginTop: 5,
   },
   section2: {
-    marginTop: 15
+    marginTop: 15,
   },
   goal: {
     fontSize: 18,
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
 });

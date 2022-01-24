@@ -2,6 +2,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NativeBaseProvider } from "native-base";
 
 // Apollo Client
@@ -9,112 +10,77 @@ import { ApolloProvider } from "@apollo/client";
 import client from "./config/apolloClient";
 
 // Components
-import Home from "./src/screens/Home";
-import CoachDetail from "./src/components/CoachDetailHome";
-import CoachDetailContent from "./src/components/CoachDetailContent";
-import Contents from "./src/screens/Content";
-import LevelContent from "./src/components/LevelContent";
-import LevelFilter from "./src/components/LevelVerticalContents";
-import ContentDetail from "./src/components/ContentDetail";
-import Profile from "./src/screens/Profile";
-import Log from "./src/screens/Log";
-import Macro from "./src/screens/Macro";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import HomeStackScreen from "./src/StackScreen/HomeStack";
+import ContentStackScreen from "./src/StackScreen/ContentStack";
+import LogStackScreen from "./src/StackScreen/LogStack";
+import MacroStackScreen from "./src/StackScreen/MacroStack";
+import ProfileStackScreen from "./src/StackScreen/ProfileStack";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function App() {
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
+          <Tab.Navigator
+            // screenOptions={{
+            //   headerShown: false,
+            //   tabBarStyle: {
+            //     backgroundColor: "#b9d0df", //color you want to change
+            //   },
+            // }}
+            screenOptions={({ route }) => ({
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: "#b9d0df", //color you want to change
+              },
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
+
+                if (route.name === "Home") {
+                  iconName = focused ? "home" : "home-outline";
+                } else if (route.name === "Contents") {
+                  iconName = focused ? "barbell" : "barbell-outline";
+                } else if (route.name === "Log") {
+                  iconName = focused ? "calendar" : "calendar-outline";
+                } else if (route.name === "Macro") {
+                  iconName = focused ? "fast-food" : "fast-food-outline";
+                } else if (route.name === "Profile") {
+                  iconName = focused ? "person" : "person-outline";
+                }
+
+                // You can return any component that you like here!
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+              tabBarActiveTintColor: "tomato",
+              tabBarInactiveTintColor: "gray",
+            })}
+          >
+            {/* <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
                 headerShown: false,
               }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Contents"
-              component={Contents}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Level"
-              component={LevelContent}
-              options={{
-                headerShown: true,
-              }}
-            />
-            <Stack.Screen
-              name="Log"
-              component={Log}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Macro"
-              component={Macro}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="LevelFilter"
-              component={LevelFilter}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            />
-            <Stack.Screen
-              name="Content Detail"
-              component={ContentDetail}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="CoachDetail"
-              component={CoachDetail}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="CoachDetailContent"
-              component={CoachDetailContent}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Profile"
-              component={Profile}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
+            /> */}
+            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen name="Contents" component={ContentStackScreen} />
+            <Tab.Screen name="Log" component={LogStackScreen} />
+            <Tab.Screen name="Macro" component={MacroStackScreen} />
+            <Tab.Screen name="Profile" component={ProfileStackScreen} />
+          </Tab.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
     </ApolloProvider>

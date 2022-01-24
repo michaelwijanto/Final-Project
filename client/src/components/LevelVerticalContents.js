@@ -11,7 +11,6 @@ import {
   Icon,
 } from "native-base";
 
-import AppBar from "./NavBar/NavBarLevelFilter";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
@@ -44,7 +43,6 @@ export default function LevelFilter({ navigation, route }) {
 
   return (
     <Box>
-      <AppBar navigation={navigation} levelName={levelName} />
       <FlatList
         data={newData}
         renderItem={({ item }) => {
