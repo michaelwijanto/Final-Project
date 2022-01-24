@@ -46,7 +46,7 @@ export default function AppBar({ navigation }) {
             }
           />
           <Text color="#003049" fontSize="20" fontWeight="bold">
-            Log
+            Profile
           </Text>
         </HStack>
         <HStack space="2">{/* <SwitchMode></SwitchMode> */}</HStack>

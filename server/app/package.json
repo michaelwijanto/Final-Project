@@ -9,7 +9,7 @@
     "db:create": "NODE_ENV=test npx sequelize-cli db:create",
     "start": "node bin/www",
     "dev": "nodemon bin/www",
-    "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand --verbose"
+    "test": "jest --watchAll --detectOpenHandles --forceExit --runInBand --verbose --coverage"
   },
   "keywords": [],
   "author": "",

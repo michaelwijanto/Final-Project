@@ -12,9 +12,6 @@ import {
   VStack,
   Center,
   NativeBaseProvider,
-  IconButton,
-  CloseIcon,
-  useToast
 } from "native-base";
 
 import { REGISTER } from  '../../mutations';

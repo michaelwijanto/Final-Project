@@ -6,30 +6,11 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "tokomovieh8@gmail.com",
-        pass: "ToKoMovieH8!",
-      },
-    });
-    let notif = {
-      from: "tokomovieh8@gmail.com", // sender address
-      to: email, // list of receivers
-      subject: "Succesfull Buy  ✔", // Subject line
-      text: `Hello ${email}, Thank you for buy our stuff!
-        This is your invoice
-        You have bought these stuff :
-      `,
-    };
-
-    transporter.sendMail(notif, (err, data) => {
-      if (err) {
-        console.log(`Email not send`);
-      } else {
-        console.log(`Email has been sent`);
-      }
-    });
+    console.log(email);
+    let temp = "";
+    for (let i = 0; i < 6; i++) {
+      temp += Math.floor(Math.random() * 10);
+    }
 
     let newUser = {
       email,
@@ -37,8 +18,32 @@ class UserController {
       fullName,
       role: "user",
       isRegister: "false",
+      pin: temp,
+      isActivated: "false",
     };
+
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "tokomovieh8@gmail.com",
+        pass: "ToKoMovieH8!",
+      },
+    });
+
+    let notif = {
+      from: "tokomovieh8@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "Activate your email", // Subject line
+      text: `Welcome to Active8! We are glad to have you be our member.
+    But before you can do that, you need to activate your account to use our service.
+    Please enter this pin ${temp} on the prompted screen on your phone
+    Hope to see you soon!
     
+    Active8`,
+    };
+
+    transporter.sendMail(notif, (err, data) => {});
+
     try {
       let created = await User.create(newUser);
       res.status(201).json({
@@ -47,6 +52,8 @@ class UserController {
         email: created.email,
         role: created.role,
         isRegister: created.isRegister,
+        pin: created.pin,
+        isActivated: created.isActivated,
       });
     } catch (err) {
       next(err);
@@ -58,9 +65,12 @@ class UserController {
       const { email, password } = req.body;
       if (!email || !password) throw { name: "Required" };
       const user = await User.findOne({ where: { email } });
+
+      
       if (!user || !compare(password, user.password)) {
         throw { name: "Invalid" };
       }
+      if (user.isActivated === "false") throw { name: "PlsActivate" };
 
       const payload = {
         id: user.id,
@@ -93,19 +103,30 @@ class UserController {
 
   static async patchUser(req, res, next) {
     try {
-      let { isRegister } = req.body;
-      const { id } = req.params;
-      const patchedUser = await User.update(
+      let { pin: inputtedPin } = req.body;
+      // const { id } = req.params;
+      const findUser = await User.findOne({
+        where: {
+          pin: inputtedPin,
+        },
+      });
+      if (!findUser) throw { name: "USER_NOT_FOUND" };
+
+      // if (findUser.pin.split(";")[1] === inputtedPin) {
+      await User.update(
         {
-          isRegister,
+          isActivated: "true",
+          pin: "used",
         },
         {
           where: {
-            id,
+            pin: inputtedPin,
           },
           returning: true,
         }
       );
+      // }
+      res.status(200).json({ message: "Your account has been activated" });
     } catch (err) {
       next(err);
     }
@@ -116,7 +137,9 @@ class UserController {
       const result = await Coach.findAll();
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err)
+    }
   }
 
   static async getLevels(req, res, next) {
@@ -124,7 +147,9 @@ class UserController {
       const result = await Level.findAll();
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err)
+    }
   }
 
   static async getCoachDetail(req, res, next) {
@@ -135,7 +160,9 @@ class UserController {
       });
 
       res.status(200).json(result);
-    } catch (err) {}
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
