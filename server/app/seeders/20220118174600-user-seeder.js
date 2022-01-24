@@ -11,6 +11,8 @@ module.exports = {
         fullName: "Arie Sastra",
         role: "admin",
         isRegister: "false",
+        activatePin: "636774",
+        isActive: "true",
         createdAt : new Date(),
         updatedAt: new Date()
       },
@@ -20,6 +22,8 @@ module.exports = {
         fullName: "Andre Gregorius",
         role: "admin",
         isRegister: "false",
+        activatePin: "884454",
+        isActive: "true",
         createdAt : new Date(),
         updatedAt: new Date()
       },
@@ -29,6 +33,8 @@ module.exports = {
         fullName: "Tondiki",
         role: "admin",
         isRegister: "false",
+        activatePin: "097251",
+        isActive: "true",
         createdAt : new Date(),
         updatedAt: new Date()
       }

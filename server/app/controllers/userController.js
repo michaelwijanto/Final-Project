@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
+    console.log({ email, password, fullName });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -13,14 +14,15 @@ class UserController {
         pass: "ToKoMovieH8!",
       },
     });
+    let pin = ""
+    for (let i = 1; i <= 6; i++){
+      pin += `${Math.floor(Math.random() * 10)}`
+    }
     let notif = {
       from: "tokomovieh8@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Succesfull Buy  ✔", // Subject line
-      text: `Hello ${email}, Thank you for buy our stuff!
-        This is your invoice
-        You have bought these stuff :
-      `,
+      subject: "Activation Pin", // Subject line
+      text: `Dont share your Active8 Activation Pin to anyone ${pin}`,
     };
 
     transporter.sendMail(notif, (err, data) => {
@@ -37,6 +39,8 @@ class UserController {
       fullName,
       role: "user",
       isRegister: "false",
+      activatePin: pin,
+      isActive: "false"
     };
     
     try {
@@ -106,6 +110,29 @@ class UserController {
           returning: true,
         }
       );
+      res.status(200).json({message: "Success activated is Register User"})
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async patchActivatePin(req, res, next) {
+    try {
+      const { pin } = req.params;
+      console.log({pin});
+      const activatedUser = await User.update(
+        {
+          isActive: "true",
+          activatePin: "used"
+        },
+        {
+          where: {
+            activatePin: `${pin}`
+          },
+          returning: true,
+        }
+      );
+      res.status(200).json({message: "Success activated is Active User"})
     } catch (err) {
       next(err);
     }
