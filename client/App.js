@@ -30,16 +30,10 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Tab.Navigator
-            // screenOptions={{
-            //   headerShown: false,
-            //   tabBarStyle: {
-            //     backgroundColor: "#b9d0df", //color you want to change
-            //   },
-            // }}
             screenOptions={({ route }) => ({
               headerShown: false,
               tabBarStyle: {
-                backgroundColor: "#b9d0df", //color you want to change
+                backgroundColor: "#b9d0df",
               },
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
@@ -56,7 +50,6 @@ function App() {
                   iconName = focused ? "person" : "person-outline";
                 }
 
-                // You can return any component that you like here!
                 return <Ionicons name={iconName} size={size} color={color} />;
               },
               tabBarActiveTintColor: "tomato",
