@@ -1,15 +1,12 @@
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   Box,
   Heading,
-  AspectRatio,
   Image,
   Text,
-  Stack,
-  ChevronRightIcon,
-  Avatar,
+  HStack,
+  Button
 } from "native-base";
-import AppBar from "./NavBar/NavBarCoach";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
@@ -24,11 +21,13 @@ export default function CoachDetail({ navigation, route }) {
       getCoachDetailId: id,
     },
   });
+
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
+
+  console.log(coachName);
   return (
     <Box style={styles.container}>
-      <AppBar navigation={navigation} coachName={coachName} />
       <Box style={styles.top}>
         <Image
           style={styles.imageBanner}
@@ -44,6 +43,17 @@ export default function CoachDetail({ navigation, route }) {
         </Box>
         <Box style={styles.bioCoach}>
           <Text style={styles.textCoach}>{data.getCoachDetail.bio}</Text>
+          <Button
+            w="100%"
+            size="lg"
+            colorScheme="gray"
+            mt={10}
+            onPress={() => navigation.navigate('CoachChat', {
+              coachName: coachName
+            })}
+          >
+            Start Chat Now
+          </Button>
         </Box>
       </Box>
     </Box>
@@ -78,5 +88,9 @@ const styles = StyleSheet.create({
   textCoach: {
     textAlign: "justify",
     fontSize: 16,
+  },
+  chatButton: {
+    position: "absolute",
+    bottom: 100
   },
 });

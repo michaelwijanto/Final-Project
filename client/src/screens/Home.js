@@ -1,35 +1,32 @@
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
 import { Box, Image, Text, ScrollView } from "native-base";
 
 // Components
-import AppBar from "../components/NavBar/NavBarHome";
-import TabBar from "../components/TabBar";
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
 export default function Home({ navigation }) {
-
   useEffect(() => {
-    getStorage()
-  }, [])
+    getStorage();
+  }, []);
 
   const getStorage = async () => {
     try {
-      const value = await AsyncStorage.getItem('@access_token')
-      if(value !== null) {
+      const value = await AsyncStorage.getItem("@access_token");
+      if (value !== null) {
         // value previously stored
         // console.log(value);
       }
-    } catch(e) {
+    } catch (e) {
       // error reading value
       console.error(e);
     }
-  }
+  };
 
   return (
     <Box
@@ -40,7 +37,6 @@ export default function Home({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
-      <AppBar style={styles.appBarStyle} />
       <ScrollView style={styles.top}>
         <Box width="100%">
           <Image
@@ -76,11 +72,10 @@ export default function Home({ navigation }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            {/* <Articles /> */}
+            <Articles />
           </Box>
         </Box>
       </ScrollView>
-      <TabBar navigation={navigation}></TabBar>
     </Box>
   );
 }
