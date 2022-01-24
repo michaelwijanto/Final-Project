@@ -21,6 +21,7 @@ import Log from "./src/screens/Log";
 import Macro from "./src/screens/Macro";
 import SignIn from "./src/screens/SignIn";
 import SignUp from "./src/screens/SignUp";
+import Activate from "./src/screens/Activate";
 
 const Stack = createNativeStackNavigator();
 
@@ -110,6 +111,13 @@ function App() {
             <Stack.Screen
               name="Profile"
               component={Profile}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Activate"
+              component={Activate}
               options={{
                 headerShown: false,
               }}

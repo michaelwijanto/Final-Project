@@ -1,55 +1,43 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import {
-  Box,
-  Text,
-  Heading,
-  FormControl,
-  Input,
-  Alert,
-  Button,
-  HStack,
-  VStack,
-  Center,
-  NativeBaseProvider,
-} from "native-base";
+import { Box, Text, Heading, FormControl, Input, Alert, Button, HStack, VStack, Center, NativeBaseProvider } from "native-base";
 
-import { REGISTER } from  '../../mutations';
+import { REGISTER } from "../../mutations";
 
-export default function SignUp({ navigation }){
+export default function SignUp({ navigation }) {
   const [formRegister, setRegister] = useState({
-    fullName: '',
-    email: '',
-    password: ''
-  })
-  const [newError, setNewError] = useState([])
-  const [SignUpUser, { data, loading, error}] = useMutation(REGISTER)
+    fullName: "",
+    email: "",
+    password: "",
+  });
+  const [newError, setNewError] = useState([]);
+  const [SignUpUser, { data, loading, error }] = useMutation(REGISTER);
   const submitRegister = async (e) => {
     try {
-      e.preventDefault()
+      e.preventDefault();
       console.log(formRegister);
       const signUp = await SignUpUser({
         variables: {
           fullName: formRegister.fullName,
           email: formRegister.email,
-          password: formRegister.password
-        }
-      })
+          password: formRegister.password,
+        },
+      });
 
       if (signUp.data.signUpUser.error) {
-        const errors = signUp.data.signUpUser.error
-        setNewError(errors)
+        const errors = signUp.data.signUpUser.error;
+        setNewError(errors);
       } else {
-        const success = signUp.data.signUpUser.message
-        navigation.navigate('SignIn', {
+        const success = signUp.data.signUpUser.message;
+        navigation.navigate("Activate", {
           message: success,
-          status: 'success'
-        })
+          status: "success",
+        });
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <NativeBaseProvider>
@@ -79,14 +67,14 @@ export default function SignUp({ navigation }){
             Sign Up to Active8!
           </Heading>
           <VStack space={3} mt="5">
-            {
-              newError && newError.map((item, i) => (
+            {newError &&
+              newError.map((item, i) => (
                 <Alert w="100%" status="error" key={i}>
                   <VStack space={2} flexShrink={1} w="100%">
                     <HStack flexShrink={1} space={2} justifyContent="space-between">
                       <HStack space={2} flexShrink={1}>
                         <Alert.Icon mt="1" />
-                        <Text fontSize="md" textAlign='center' color="coolGray.800">
+                        <Text fontSize="md" textAlign="center" color="coolGray.800">
                           {item}
                         </Text>
                       </HStack>
@@ -97,24 +85,23 @@ export default function SignUp({ navigation }){
                     </HStack>
                   </VStack>
                 </Alert>
-              ))
-            }
+              ))}
             <FormControl>
               <FormControl.Label>Full Name</FormControl.Label>
               <Input
                 type="text"
                 name="fullName"
                 placeholder="input full name..."
-                onChangeText={value => setRegister({...formRegister, fullName: value})}
+                onChangeText={(value) => setRegister({ ...formRegister, fullName: value })}
               />
             </FormControl>
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
-              <Input 
+              <Input
                 type="text"
                 name="email"
                 placeholder="input email..."
-                onChangeText={value => setRegister({...formRegister, email: value})}
+                onChangeText={(value) => setRegister({ ...formRegister, email: value })}
               />
             </FormControl>
             <FormControl>
@@ -122,16 +109,12 @@ export default function SignUp({ navigation }){
               <Input
                 type="password"
                 name="password"
-                onChangeText={value => setRegister({...formRegister, password: value})}
+                onChangeText={(value) => setRegister({ ...formRegister, password: value })}
                 placeholder="input password..."
               />
             </FormControl>
 
-            <Button
-              mt="2"
-              colorScheme="indigo"
-              onPress={e => submitRegister(e)}
-            >  
+            <Button mt="2" colorScheme="indigo" onPress={(e) => submitRegister(e)}>
               Sign Up
             </Button>
             <HStack mt="6" justifyContent="center">
@@ -159,6 +142,5 @@ export default function SignUp({ navigation }){
         </Box>
       </Center>
     </NativeBaseProvider>
-
   );
-};
+}
