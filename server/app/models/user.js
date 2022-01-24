@@ -55,6 +55,13 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: "Is Register Required" },
         },
       },
+      pin: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Pin Required" },
+        },
+      },
     },
     {
       sequelize,
