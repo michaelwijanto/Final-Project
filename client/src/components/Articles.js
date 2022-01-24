@@ -17,6 +17,7 @@ import {
 } from "native-base";
 import axios from "axios";
 
+
 export default function Articles({ navigation }) {
   const [data, setData] = useState();
 
@@ -55,6 +56,7 @@ export default function Articles({ navigation }) {
   //   }
   // };
 
+  
   return (
     <Box>
       {data.map((item, index) => {
