@@ -64,8 +64,15 @@ beforeAll(async () =>{
     fullName: "Arie Sastra",
     role: "admin",
     isRegister: "false",
+    pin: "123456",
+    isActivated: "true",
   })
 })
+
+beforeEach(() => {
+    jest.restoreAllMocks()
+  })
+
 
 describe("GET /api/user-profiles", () => {
   test("[POST/api/users/login success] - should be return object with status code 200", (done) =>{
@@ -243,3 +250,82 @@ describe("GET /api/user-profiles", () => {
       });
   });
 });
+
+
+// // // PATCH CONTENT
+test("[PATCH/api/user-profiles/updateSubs success] - should be return object with status code 200", (done) =>{
+    request(app)
+    .patch("/api/user-profiles/updateSubs")
+    .set("access_token",access_token)
+    .then((resp) =>{
+        console.log(resp.body)
+        expect(resp.status).toBe(200)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("message")
+        expect(resp.body.message).toBe('Thank you for your subsciption')
+      
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+     })
+})
+
+   
+    
+test("[PATCH/api/user-profiles/updateSubs ERROR] - should be return object with status code 401", (done) =>{
+        request(app)
+        .patch("/api/user-profiles/updateSubs")
+        .then((resp) =>{
+            expect(resp.status).toBe(401)
+            expect(resp.body).toEqual(expect.any(Object))
+            expect(resp.body).toHaveProperty("error")
+            expect(resp.body.error).toBe('Invalid token')
+            
+            
+            done()
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
+}) 
+
+test("[GET/api/user-profiles ERROR]  - should be return object with status code 500", (done) =>{
+    jest.spyOn(UserProfile, 'findOne').mockRejectedValue('Error')
+    request(app)
+    .get("/api/user-profiles")
+    .set("access_token",access_token)
+    .then((resp) =>{
+        expect(resp.status).toBe(500)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Internal server error')
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+}) 
+
+test("[GET/api/user-profiles ERROR]  - should be return object with status code 500", (done) =>{
+    jest.spyOn(Log, 'findAll').mockRejectedValue('Error')
+    request(app)
+    .get("/api/user-profiles")
+    .set("access_token",access_token)
+    .then((resp) =>{
+        expect(resp.status).toBe(500)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Internal server error')
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+}) 

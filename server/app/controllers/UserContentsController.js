@@ -91,12 +91,13 @@ class UserContentsController{
     try {
       const { id: ContentId } = req.params
       const { id: UserId } = req.user
-
+      
       const findContent = await UserContent.findOne({
         where: {
           ContentId
         }
       })
+      
       if (!findContent) throw {name: `Content_Not_Found` }
       // Ambil Level
       const levelUser = await UserProfile.findOne({
@@ -106,15 +107,16 @@ class UserContentsController{
       })
       
       // Ambil Total Content Base current user level
-      console.log(levelUser);
+      
       const LevelId = levelUser.LevelId
       const content = await Content.findAll({
         where: {
           LevelId
         }
       })
+      // if (!content) throw {name: `Content_Not_Found` }
       const lastContentId = content[content.length-1].id
-      console.log(content, lastContentId);
+      
       let message;
       let code;
 
@@ -196,7 +198,7 @@ class UserContentsController{
             );
 
             // Post Log History
-            console.log(getLog, 'masuk');
+           
             await Log.create({
               height: getLog.height,
               weight: getLog.weight,
