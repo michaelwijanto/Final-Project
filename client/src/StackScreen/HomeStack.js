@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/Home";
 import CoachDetail from "../components/CoachDetailHome";
+import CoachChat from '../components/CoachChat'
 
 const HomeStack = createNativeStackNavigator();
 
@@ -26,6 +27,14 @@ function HomeStackScreen() {
         component={CoachDetail}
         options={({ route, navigation }) => ({
           title: `Coach ${route.params.coachName}`,
+        })}
+      />
+      <HomeStack.Screen
+        name="CoachChat"
+        component={CoachChat}
+        options={({ route, navigation }) => ({
+          tabBarVisible: true,
+          title: `Chat with ${route.params.coachName}`,
         })}
       />
     </HomeStack.Navigator>

@@ -29,12 +29,6 @@ function App() {
       <NativeBaseProvider>
         <NavigationContainer>
           <Tab.Navigator
-            // screenOptions={{
-            //   headerShown: false,
-            //   tabBarStyle: {
-            //     backgroundColor: "#b9d0df", //color you want to change
-            //   },
-            // }}
             screenOptions={({ route }) => ({
               headerShown: false,
               tabBarStyle: {
@@ -68,15 +62,15 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="Activate"
               component={Activate}
               options={{

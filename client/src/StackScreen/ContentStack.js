@@ -3,7 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ContentScreen from "../screens/Content";
 import LevelFilter from "../components/LevelVerticalContents";
 import ContentDetail from "../components/ContentDetail";
-import CoachDetail from "../components/CoachDetailContent";
+import CoachDetail from "../components/CoachDetailHome";
+import CoachChat from "../components/CoachChat";
 
 const ContentStack = createNativeStackNavigator();
 
@@ -43,6 +44,14 @@ function ContentStackScreen() {
         component={CoachDetail}
         options={({ route, navigation }) => ({
           title: `Coach ${route.params.coachName}`,
+        })}
+      />
+      <ContentStack.Screen
+        name="CoachChat"
+        component={CoachChat}
+        
+        options={({ route, navigation }) => ({
+          title: `Chat with ${route.params.coachName}`,
         })}
       />
     </ContentStack.Navigator>

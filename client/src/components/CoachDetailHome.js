@@ -4,6 +4,8 @@ import {
   Heading,
   Image,
   Text,
+  HStack,
+  Button
 } from "native-base";
 
 
@@ -20,8 +22,11 @@ export default function CoachDetail({ navigation, route }) {
       getCoachDetailId: id,
     },
   });
+
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
+
+  console.log(coachName);
   return (
     <Box style={styles.container}>
       {/* <AppBar navigation={navigation} coachName={coachName} /> */}
@@ -40,6 +45,17 @@ export default function CoachDetail({ navigation, route }) {
         </Box>
         <Box style={styles.bioCoach}>
           <Text style={styles.textCoach}>{data.getCoachDetail.bio}</Text>
+          <Button
+            w="100%"
+            size="lg"
+            colorScheme="gray"
+            mt={10}
+            onPress={() => navigation.navigate('CoachChat', {
+              coachName: coachName
+            })}
+          >
+            Start Chat Now
+          </Button>
         </Box>
       </Box>
     </Box>
@@ -74,5 +90,9 @@ const styles = StyleSheet.create({
   textCoach: {
     textAlign: "justify",
     fontSize: 16,
+  },
+  chatButton: {
+    position: "absolute",
+    bottom: 100
   },
 });
