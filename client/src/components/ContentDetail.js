@@ -6,6 +6,7 @@ import { IconButton, Icon, Text, Box, Pressable } from "native-base";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_DETAIL } from "../../queries";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
+
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 // import Toggle from "react-native-toggle-element";

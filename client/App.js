@@ -61,15 +61,15 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="Activate"
               component={Activate}
               options={{

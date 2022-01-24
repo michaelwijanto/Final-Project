@@ -263,15 +263,13 @@ export const Example = ({ navigation }) => {
             </FormControl.ErrorMessage>
           </Stack>
           <Button
-            size="sm"
+            size="lg"
             variant={"solid"}
-            _text={{
-              color: "#1F2937",
-            }}
             style={{ marginTop: 10 }}
             px="3"
             onPress={onSubmitMacro}
             marginBottom="5"
+            backgroundColor="gray.500"
           >
             Submit
           </Button>
