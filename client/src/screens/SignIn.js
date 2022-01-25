@@ -54,7 +54,7 @@ export default function SignIn({ navigation, route }) {
 
   const submitLogin = (e) => {
     e.preventDefault();
-    console.log(signIn);
+    
     signInUser({
       variables: {
         email: signIn.email,
@@ -62,7 +62,6 @@ export default function SignIn({ navigation, route }) {
       },
     })
       .then((res) => {
-        console.log({ res });
         if (res.data?.signInUser?.error) {
           const errors = res.data.signInUser.error;
           setNewError({
@@ -75,10 +74,12 @@ export default function SignIn({ navigation, route }) {
             setIsLogin(false)
           }, 2000);
         } else {
-          console.log({ res });
+          console.log('Masuk Else');
           const { access_token, isRegister } = res.data?.signInUser;
+          console.log(isRegister);
           storeData("@access_token", access_token);
-          if (isRegister === "true") navigation.navigate("ContentContainer");
+          storeData('@isRegister', isRegister)
+          if (isRegister) navigation.navigate("ContentContainer");
           else navigation.navigate("UserProfileStack");
         }
       })
@@ -115,9 +116,11 @@ export default function SignIn({ navigation, route }) {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
         // value previously stored
-        // console.log(value);
+        const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-        navigation.navigate("UserProfileStack");
+        console.log(registerStat);
+        if ( registerStat ) navigation.navigate("ContentContainer")
+        else navigation.navigate("UserProfileStack");
       }
     } catch (e) {
       // error reading value
