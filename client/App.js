@@ -31,6 +31,7 @@ function App() {
           <Tab.Navigator
             screenOptions={({ route }) => ({
               headerShown: false,
+              tabBarHideOnKeyboard: true,
               tabBarStyle: {
                 backgroundColor: "#b9d0df", //color you want to change
               },
@@ -53,7 +54,7 @@ function App() {
                 return <Ionicons name={iconName} size={size} color={color} />;
               },
               tabBarActiveTintColor: "tomato",
-              tabBarInactiveTintColor: "gray",
+              tabBarInactiveTintColor: "black",
             })}
           >
             {/* <Stack.Screen
@@ -77,7 +78,10 @@ function App() {
                 headerShown: false,
               }}
             /> */}
-            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen
+              name="Home"
+              component={HomeStackScreen}
+            />
             <Tab.Screen name="Contents" component={ContentStackScreen} />
             <Tab.Screen name="Log" component={LogStackScreen} />
             <Tab.Screen name="Macro" component={MacroStackScreen} />
