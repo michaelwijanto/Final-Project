@@ -41,12 +41,16 @@ export default function Log({ navigation }) {
   useEffect(async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"))
   }, [])
+  console.log({accessToken});
   const { loading, data, error } = useQuery(GET_USER_LOGS, {
     variables: {
       accessToken: accessToken
     },
   })
-  const [postUserLog, {}] = useMutation(POST_USER_LOG);
+  console.log({ loading, data, error });
+  const [postUserLog, {}] = useMutation(POST_USER_LOG, {
+    refetchQueries: [GET_USER_LOGS]
+  });
   const onSubmitLog = async (e) => {
     try {
       e.preventDefault();

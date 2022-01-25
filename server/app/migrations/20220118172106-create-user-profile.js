@@ -42,6 +42,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      bmi: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      health: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      healthy_bmi_range: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

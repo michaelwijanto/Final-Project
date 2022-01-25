@@ -16,10 +16,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      activityLevel: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       LevelId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -33,6 +29,14 @@ module.exports = {
         references: { model: "Users", key: "id" },
         onUpdate: "cascade",
         onDelete: "cascade",
+      },
+      bmi: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      health: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

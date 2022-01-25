@@ -1,4 +1,7 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   Box,
   Heading,
@@ -21,10 +24,31 @@ export default function LevelFilter({ navigation, route }) {
   const { id } = route.params;
   const { levelName } = route.params;
 
+  const [access_token, setAccessToken] = useState("");
+
+  // Buat narik Access Token
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      // console.log(value);
+      if (value !== null) {
+        // value previously stored
+
+        setAccessToken(value);
+      }
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getStorage();
+  }, []);
+
   const { loading, error, data } = useQuery(GET_CONTENT_CARD, {
     variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+      accessToken: access_token,
     },
   });
 
@@ -102,8 +126,45 @@ export default function LevelFilter({ navigation, route }) {
                 <Text style={styles.textTitle}>{item.title}</Text>
               </Box>
               <Box style={styles.iconContent}>
-                {(() => {
-                  if (subscription == "false") {
+              {(() => {
+                if(item.LevelId == 1){
+                  return (
+                    <IconButton
+                      paddingTop="-5"
+                      icon={<Icon as={AntDesign} name="playcircleo" />}
+                      borderRadius="full"
+                      _icon={{
+                        color: "orange.500",
+                        size: "md",
+                      }}
+                      _hover={{
+                        bg: "orange.600:alpha.20",
+                      }}
+                      _pressed={{
+                        bg: "orange.600:alpha.20",
+                        _icon: {
+                          name: "playcircleo",
+                        },
+                        _ios: {
+                          _icon: {
+                            size: "lg",
+                          },
+                        },
+                      }}
+                      _ios={{
+                        _icon: {
+                          size: "lg",
+                        },
+                      }}
+                      onPress={() =>
+                        navigation.navigate("Content Detail", {
+                          id: item.id,
+                        })
+                      }
+                    />
+                  );
+                }else {
+                  if (subscription == "true") {
                     return (
                       <IconButton
                         paddingTop="-5"
@@ -168,15 +229,13 @@ export default function LevelFilter({ navigation, route }) {
                             size: "lg",
                           },
                         }}
-                        onPress={() =>
-                          navigation.navigate("Content Detail", {
-                            id: item.id,
-                          })
-                        }
+                         onPress={() => alert('PLEASE SUBSCRIPTION, GO TO PROFILE !!!')}
                       />
                     );
                   }
-                })()}
+
+                }
+              })()}
               </Box>
             </Box>
           );

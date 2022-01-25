@@ -1,26 +1,42 @@
 const { Log, UserProfile } = require("../models/index");
+const axios = require("axios")
 
 class LogController {
   static async postLog(req, res, next) {
     try {
       const { height, weight } = req.body;
       const { id: UserId } = req.user;
-      console.log({height, weight, UserId});
-      const beforeLog = await Log.findOne({
-        where: {
-          UserId,
-        },
-        order: [["id", "DESC"]],
-        limit: 1
-      });
+      const profile = await UserProfile.findOne({where: {UserId}})
+      let today = new Date();
+      let age = today.getFullYear() - profile.dateBirth.getFullYear();
+      console.log({POSTLOG: {height, weight, UserId, age}});
 
-      console.log(beforeLog);
+      const {data: callBMI} = await axios({
+        method: "GET",
+        url: "https://fitness-calculator.p.rapidapi.com/bmi",
+        params: { age, weight, height },
+        headers: {
+          "x-rapidapi-host": "fitness-calculator.p.rapidapi.com",
+          "x-rapidapi-key":
+            "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
+        },
+      });
+      console.log(callBMI.data.bmi, "<<<<<<<<<<");
+      const updateProfile = await UserProfile.update({
+        bmi: callBMI.data.bmi,
+        health: callBMI.data.health,
+        healthy_bmi_range: callBMI.data.healthy_bmi_range
+      }, {
+        where: {UserId}
+      })
+      console.log(updateProfile, "<<<<<<<<<<<<");
       const log = await Log.create({
         height,
         weight,
-        activityLevel: beforeLog.activityLevel,
         UserId,
-        LevelId: beforeLog.LevelId,
+        LevelId: profile.LevelId,
+        bmi: callBMI.data.bmi,
+        health: callBMI.data.health,
       });
       res.status(201).json(log);
     } catch (error) {

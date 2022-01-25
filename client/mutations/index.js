@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const REGISTER = gql`
-  mutation SignUpUser($fullName: String, $email: String, $password: String) {
-    signUpUser(fullName: $fullName, email: $email, password: $password) {
+  mutation SignUpUser($email: String, $password: String, $fullName: String) {
+    signUpUser(email: $email, password: $password, fullName: $fullName) {
       message
       error
     }
@@ -102,6 +102,33 @@ export const ACTIVATE = gql`
     activateUser(pin: $pin) {
       message
       error
+    }
+  }
+`;
+
+export const POST_USER_CONTENT = gql`
+  mutation PostUserContent($accessToken: String, $contentId: ID) {
+    postUserContent(access_token: $accessToken, ContentId: $contentId) {
+      ContentId
+      isLike
+      status
+      UserId
+    }
+  }
+`;
+
+export const UPDATE_STATUS_USER_CONTENT = gql`
+  mutation PutUserContent($accessToken: String, $contentId: ID) {
+    putUserContent(access_token: $accessToken, ContentId: $contentId) {
+      message
+    }
+  }
+`;
+
+export const PATCH_LIKE = gql`
+  mutation PatchLike($accessToken: String, $contentId: ID) {
+    patchLike(access_token: $accessToken, ContentId: $contentId) {
+      message
     }
   }
 `;

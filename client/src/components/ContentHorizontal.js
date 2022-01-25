@@ -1,4 +1,7 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   Box,
   Heading,
@@ -16,10 +19,31 @@ import { GET_CONTENT_CARD } from "../../queries";
 // import LoadingPage from "../components/loadingPage";
 
 export default function ContentHorizontal({ navigation }) {
+  const [access_token, setAccessToken] = useState("");
+
+  // Buat narik Access Token
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      console.log(value);
+      if (value !== null) {
+        // value previously stored
+
+        setAccessToken(value);
+      }
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getStorage();
+  }, []);
+
   const { loading, error, data } = useQuery(GET_CONTENT_CARD, {
     variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+      accessToken: access_token,
     },
   });
 
@@ -28,10 +52,8 @@ export default function ContentHorizontal({ navigation }) {
 
   const subscription = "false";
 
-  const handleOnContent = (id) => {
-    
-  };
-  
+  const handleOnContent = (id) => {};
+
   return (
     <FlatList
       horizontal
@@ -80,7 +102,7 @@ export default function ContentHorizontal({ navigation }) {
             </Box>
             <Box style={styles.iconContent}>
               {(() => {
-                if (subscription == "false") {
+                if(item.LevelId == 1){
                   return (
                     <IconButton
                       paddingTop="-5"
@@ -116,42 +138,77 @@ export default function ContentHorizontal({ navigation }) {
                       }
                     />
                   );
-                } else {
-                  return (
-                    <IconButton
-                      paddingTop="-5"
-                      icon={<Icon as={MaterialIcons} name="lock" />}
-                      borderRadius="full"
-                      _icon={{
-                        color: "orange.500",
-                        size: "md",
-                      }}
-                      _hover={{
-                        bg: "orange.600:alpha.20",
-                      }}
-                      _pressed={{
-                        bg: "orange.600:alpha.20",
-                        _icon: {
-                          name: "lock",
-                        },
-                        _ios: {
+                }else {
+                  if (subscription == "true") {
+                    return (
+                      <IconButton
+                        paddingTop="-5"
+                        icon={<Icon as={AntDesign} name="playcircleo" />}
+                        borderRadius="full"
+                        _icon={{
+                          color: "orange.500",
+                          size: "md",
+                        }}
+                        _hover={{
+                          bg: "orange.600:alpha.20",
+                        }}
+                        _pressed={{
+                          bg: "orange.600:alpha.20",
+                          _icon: {
+                            name: "playcircleo",
+                          },
+                          _ios: {
+                            _icon: {
+                              size: "lg",
+                            },
+                          },
+                        }}
+                        _ios={{
                           _icon: {
                             size: "lg",
                           },
-                        },
-                      }}
-                      _ios={{
-                        _icon: {
-                          size: "lg",
-                        },
-                      }}
-                      onPress={() =>
-                        navigation.navigate("Content Detail", {
-                          id: item.id,
-                        })
-                      }
-                    />
-                  );
+                        }}
+                        onPress={() =>
+                          navigation.navigate("Content Detail", {
+                            id: item.id,
+                          })
+                        }
+                      />
+                    );
+                  } else {
+                    return (
+                      <IconButton
+                        paddingTop="-5"
+                        icon={<Icon as={MaterialIcons} name="lock" />}
+                        borderRadius="full"
+                        _icon={{
+                          color: "orange.500",
+                          size: "md",
+                        }}
+                        _hover={{
+                          bg: "orange.600:alpha.20",
+                        }}
+                        _pressed={{
+                          bg: "orange.600:alpha.20",
+                          _icon: {
+                            name: "lock",
+                          },
+                          _ios: {
+                            _icon: {
+                              size: "lg",
+                            },
+                          },
+                        }}
+                        _ios={{
+                          _icon: {
+                            size: "lg",
+                          },
+                        }}
+                         onPress={() => alert('PLEASE SUBSCRIPTION, GO TO PROFILE !!!')}
+                      />
+                    );
+                  }
+
                 }
               })()}
             </Box>

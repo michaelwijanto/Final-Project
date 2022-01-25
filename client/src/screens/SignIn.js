@@ -35,10 +35,10 @@ export default function SignIn({ navigation, route }) {
         title: "Success Activated Your Account",
         status: "success",
         placement: "top",
-        description: "You can sign in to Active8 now"
+        description: "You can sign in to Active8 now",
       });
     }
-  }, []);
+  }, [route.params]);
 
   const [signInUser, {}] = useMutation(SIGN_IN);
   const [signIn, setSignIn] = useState({
@@ -54,7 +54,7 @@ export default function SignIn({ navigation, route }) {
 
   const submitLogin = (e) => {
     e.preventDefault();
-    
+
     signInUser({
       variables: {
         email: signIn.email,
@@ -69,12 +69,12 @@ export default function SignIn({ navigation, route }) {
             message: errors,
           });
           console.log("SALAH");
-          setIsLogin(true)
+          setIsLogin(true);
           setTimeout(() => {
             setIsLogin(false)
-          }, 2000);
+          }, 3000);
         } else {
-          console.log('Masuk Else');
+          console.log("Masuk Else");
           const { access_token, isRegister } = res.data?.signInUser;
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
@@ -103,7 +103,7 @@ export default function SignIn({ navigation, route }) {
     // Invoking Local Storage
     getStorage();
     setLoading(false);
-    removeStorage("@access_token");
+    // removeStorage("@access_token");
   }, []);
 
   // Local Storage
@@ -140,15 +140,15 @@ export default function SignIn({ navigation, route }) {
     }
   };
 
-  const removeStorage = async (key) => {
-    try {
-      await AsyncStorage.removeItem(key);
-      setLoading(false);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  };
+  // const removeStorage = async (key) => {
+  //   try {
+  //     await AsyncStorage.removeItem(key);
+  //     setLoading(false);
+  //     return true;
+  //   } catch (exception) {
+  //     return false;
+  //   }
+  // };
   // console.log(loading);
 
   return (
