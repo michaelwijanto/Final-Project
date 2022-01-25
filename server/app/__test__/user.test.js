@@ -327,12 +327,13 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
+        console.log(result, '>>>>>>>>>>>>>>>>>>.salah login')
         access_token = result.access_token;
         expect(response.status).toBe(200);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("access_token", expect.any(String));
         expect(result).toHaveProperty("isRegister", expect.any(String));
-        expect(result).toHaveProperty("isActivated", expect.any(String));
+       
         done();
       })
       .catch((err) => {
@@ -492,26 +493,25 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
     });
 });
 
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
-//     request(app)
-//     .patch("/api/contents/60")
-//     .set("access_token",access_token)
-//     .send({
-//         statusLike: "not like",
-//      })
-//     .then((resp) =>{
+test("[PATCH/api/users  ERROR] - should be return object with status code 200", (done) => {
+  request(app)
+    .patch("/api/users ")
+    .send({
+      pin: "",
+    })
+    .then((resp) => {
+      console.log(resp.body, ">>>>>>>>>>>>>>>>>> pinnnnn");
+      expect(resp.status).toBe(401);
+      expect(resp.body).toEqual(expect.any(Object));
+      expect(resp.body).toHaveProperty("error")
+      expect(resp.body.error).toBe('Invalid token')
 
-//         expect(resp.status).toBe(401)
-//         expect(resp.body).toEqual(expect.any(Object))
-//         expect(resp.body).toHaveProperty("error")
-//         expect(resp.body.error).toBe('Content Not Found')
-
-//         done()
-//     })
-//     .catch((err) =>{
-//         console.log(err)
-//      })
-// })
+      done();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 // test("[PATCH/api/contents/:id ERROR] - should be return object with status code 400", (done) =>{
 //     request(app)

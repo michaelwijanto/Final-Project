@@ -25,7 +25,7 @@ function UserProfileStack() {
         component={LandingPage}
         options={{
           title: "LandingPage",
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
