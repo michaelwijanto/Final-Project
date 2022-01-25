@@ -18,6 +18,7 @@ export default function Profile({ navigation }) {
 
   const handlePayment = (price) => {
     console.log(+price);
+    
   };
   
   return (

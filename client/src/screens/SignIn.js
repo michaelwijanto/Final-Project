@@ -76,11 +76,17 @@ export default function SignIn({ navigation, route }) {
         } else {
           console.log('Masuk Else');
           const { access_token, isRegister } = res.data?.signInUser;
-          console.log(isRegister);
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-          if (isRegister) navigation.navigate("ContentContainer");
-          else navigation.navigate("UserProfileStack");
+
+          if ( isRegister === "true" ){
+            console.log('register true');
+            navigation.navigate("ContentContainer")
+          }
+          else {
+            console.log('register false');
+            navigation.navigate("UserProfileStack")
+          }
         }
       })
       .catch((err) => {
@@ -118,9 +124,15 @@ export default function SignIn({ navigation, route }) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-        console.log(registerStat);
-        if ( registerStat ) navigation.navigate("ContentContainer")
-        else navigation.navigate("UserProfileStack");
+        
+        if ( registerStat === "true" ){
+          console.log('register true');
+          navigation.navigate("ContentContainer")
+        }
+        else {
+          console.log('register false');
+          navigation.navigate("UserProfileStack")
+        }
       }
     } catch (e) {
       // error reading value

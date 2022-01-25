@@ -1,24 +1,36 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
-import { Text } from 'native-base'
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback
+} from 'react'
+import {
+  Text
+} from 'react-native'
+// GiftedChat
+import {
+  GiftedChat
+} from 'react-native-gifted-chat'
+// Firebase Firestore
+import {
+  collection,
+  addDoc,
+  orderBy,
+  query,
+  onSnapshot
+} from 'firebase/firestore'
+import { db } from '../../firebase'
 // Apollo Client
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../../queries';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Firebase Firestore
-import {
-  doc,
-  setDoc
-} from 'firebase/firestore'
-import { db } from '../../firebase';
 
 export default function CoachChat({
   route
 }) {
   const { coachName, coachImage, id } = route.params
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([])
   const [accessToken, setAccessToken] = useState('')
   
   const getStorage = async () => {
@@ -35,58 +47,68 @@ export default function CoachChat({
     }
   };
 
+  useEffect(() => {
+    getStorage()
+  }, [])
+
   const { loading, error, data } = useQuery(GET_USER, {
     variables: {
       accessToken
     },
   });
+
   
   let user = {}
   if (!loading) {
-    user = data.getUserProfile.UserProfile
+    user = data?.getUserProfile.UserProfile
+    console.log(user, accessToken);
   }
   
-  useEffect(() => {
-    getStorage()
-    
-    setMessages([
-      {
-        _id: 0,
-        text: `Hallo, Saya ${coachName}, bagaimana progress latihan mu ?`,
-        createdAt: new Date(),
-        user: {
-          _id: id,
-          name: coachName,
-          avatar: coachImage,
-        },
-      },
-    ])
+  useLayoutEffect(() => {
+    const collectionRef = collection(db, 'chats')
+    const setQuery = query(collectionRef, orderBy('createdAt', 'desc'))
+
+    const unsubscribe = onSnapshot(setQuery, snapshot => {
+      console.log('snapshop')
+      setMessages(
+        snapshot.docs.map(doc => ({
+          _id: doc.id,
+          createdAt: doc.data().createdAt.toDate(),
+          text: doc.data().text,
+          user: doc.data().user
+        }))
+      )
+    })
+    return () => unsubscribe()
+
+    // using @react-native-firebase
+    // return db.onSnapshot(querySnapshot => {
+    //   console.log('snapshot');
+    //   setMessages(
+    //     querySnapshot.map(doc => ({
+    //         _id: doc.id,
+    //         createdAt: doc.data().createdAt.toDate(),
+    //         text: doc.data().text,
+    //         user: doc.data().user
+    //       }))
+    //     )
+    // })
   }, [])
 
-  const onSend = useCallback(
-    async (messages = []) => {
-      setMessages(
-        previousMessages => GiftedChat.append(previousMessages, messages)
-      )
-      const {
-        _id,
-        text,
-        createdAt,
-        user
-      } = messages[0]
-      
-      // insert messages to firestrore
-      try {
-        const docChat = await setDoc(doc(db, "chats"), {
-          _id,
-          text,
-          createdAt,
-          user
-        });
-        console.log(docChat);
-      } catch (error) {
-        console.log(error);  
-      }
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(
+      previousMessages, messages)
+    )
+    const { _id, createdAt, text, user } = messages[0]
+    addDoc(collection(db, 'chats'), {
+      _id,
+      createdAt,
+      text,
+      user
+    })
+
+    // useing @react-native-firebase
+    // db.add({_id, createdAt, text, user})
   }, [])
 
   return (
@@ -96,12 +118,15 @@ export default function CoachChat({
         <Text>loading...</Text> : (
           <GiftedChat
             messages={messages}
-            showAvatarForEveryMessage={true}
             onSend={messages => onSend(messages)}
             user={{
-              _id: user.id,
-              email: user.User.email,
+              _id: user?.id,
+              avatar: 'https://i.pravatar.cc/300',
             }}
+            messagesContainerStyle={{
+              backgroundColor: '#fff'
+            }}
+            showAvatarForEveryMessage={true}
           />
         )
       }
