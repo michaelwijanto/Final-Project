@@ -71,6 +71,30 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Goals Required" },
         },
       },
+      bmi: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "BMI Required" },
+          notEmpty: { msg: "BMI Required" },
+        },
+      },
+      health: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Health Required" },
+          notEmpty: { msg: "Health Required" },
+        },
+      },
+      healthy_bmi_range: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Healthy BMI Range Required" },
+          notEmpty: { msg: "Healthy BMI Range Required" },
+        },
+      },
     },
     {
       sequelize,

@@ -1,19 +1,19 @@
 import { gql } from "@apollo/client";
 
 export const GET_USER = gql`
-query GetUsers($accessToken: String) {
-  getUserProfile(access_token: $accessToken) {
-    UserProfile {
-      id
-      UserId
-      User {
-        email
-        fullName
+  query GetUsers($accessToken: String) {
+    getUserProfile(access_token: $accessToken) {
+      UserProfile {
         id
+        UserId
+        User {
+          email
+          fullName
+          id
+        }
       }
     }
   }
-}
 `;
 
 export const GET_COACHES = gql`
@@ -68,7 +68,8 @@ export const GET_USER_LOGS = gql`
       id
       height
       weight
-      activityLevel
+      bmi
+      health
       LevelId
       UserId
       createdAt

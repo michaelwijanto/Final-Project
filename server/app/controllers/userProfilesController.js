@@ -79,6 +79,18 @@ class userProfilesController {
         LevelId = 3;
       }
 
+      console.log({
+        UserId,
+        phoneNumber,
+        subscription: "false",
+        gender,
+        dateBirth: birthDate,
+        goals,
+        LevelId,
+        bmi: callBMI.data.data.bmi,
+        health: callBMI.data.data.health,
+        healthy_bmi_range: callBMI.data.data.healthy_bmi_range,
+      });
       const postUserProfile = await UserProfile.create(
         {
           UserId,
@@ -88,6 +100,9 @@ class userProfilesController {
           dateBirth: birthDate,
           goals,
           LevelId,
+          bmi: callBMI.data.data.bmi,
+          health: callBMI.data.data.health,
+          healthy_bmi_range: callBMI.data.data.healthy_bmi_range,
         },
         { transaction: t }
       );
@@ -97,7 +112,8 @@ class userProfilesController {
         {
           height,
           weight,
-          activityLevel,
+          bmi: postUserProfile.bmi,
+          health: postUserProfile.health,
           UserId,
           LevelId,
         },

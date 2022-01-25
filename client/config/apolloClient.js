@@ -20,7 +20,7 @@ const client = new ApolloClient({
 
 // Arie
 // const client = new ApolloClient({
-//   uri: "http://192.168.1.2:4000/",
+//   uri: "http://192.168.1.7:4000/",
 //   cache: new InMemoryCache(),
 // });
 
@@ -29,6 +29,7 @@ const client = new ApolloClient({
 //   uri: "http://10.236.226.114:4000",
 //   cache: new InMemoryCache(),
 // });
+
 // Arie
 // const client = new ApolloClient({
 //   uri: "http://192.168.1.7:4000/",
@@ -45,7 +46,6 @@ const client = new ApolloClient({
 //   uri: "https://rome-service-orchestrator.herokuapp.com",
 //   cache: new InMemoryCache(),
 // });
-
 //
 
 export default client;
