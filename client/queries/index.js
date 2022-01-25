@@ -100,3 +100,27 @@ export const GET_USER_CONTENT_ID = gql`
     }
   }
 `;
+
+export const GET_USER_PROFILE = gql`
+query GetUserProfile($accessToken: String) {
+  getUserProfile(access_token: $accessToken) {
+    UserProfile {
+      phoneNumber
+      subscription
+      gender
+      dateBirth
+      bmi
+      health
+      goals
+      healthy_bmi_range
+      Level {
+        name
+      }
+      User {
+        fullName
+        email
+      }
+    }
+  }
+}
+`;
