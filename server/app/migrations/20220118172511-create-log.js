@@ -16,10 +16,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      activityLevel: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       LevelId: {
         allowNull: false,
         type: Sequelize.INTEGER,

@@ -79,7 +79,7 @@ export default function SignIn({ navigation, route }) {
           console.log(isRegister);
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-          if (isRegister) navigation.navigate("ContentContainer");
+          if (isRegister === "true") navigation.navigate("ContentContainer");
           else navigation.navigate("UserProfileStack");
         }
       })
