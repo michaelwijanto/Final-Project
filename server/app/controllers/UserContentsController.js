@@ -1,160 +1,183 @@
-const {
-  UserContent,
-  User,
-  Content,
-  UserProfile,
-  Log
-} = require('../models')
+const { UserContent, User, Content, UserProfile, Log } = require("../models");
 
-class UserContentsController{
+class UserContentsController {
   static async postUserContent(req, res, next) {
     try {
-      const {id: UserId} = req.user 
-      const {
-        ContentId,
-        isLike = false,
-        status = 'started'
-      } = req.body
+      // console.log();
+      const { id: UserId } = req.user;
+      const { ContentId, isLike = false, status = "started" } = req.body;
 
-      const userContent = await UserContent.create({
-        UserId,
-        ContentId,
-        isLike,
-        status
-      })
+      const findUserContent = await UserContent.findAll({
+        where: {
+          UserId,
+        },
+      });
 
-      res.status(201).json(userContent)
+      if (findUserContent.find((el) => el.ContentId == ContentId) !== undefined)
+        res.status(200).json({ message: "UserContent has been added" });
+      else {
+        const userContent = await UserContent.create({
+          UserId,
+          ContentId,
+          isLike,
+          status,
+        });
+
+        res.status(201).json(userContent);
+      }
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   static async getUserContent(req, res, next) {
     try {
       const userContent = await UserContent.findAll({
-        include: [{
-          model: User,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt']
-          }
-        }, 
-        {
-          model: Content,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt']
-          }
-        }],
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+          {
+            model: Content,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        ],
         attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        }
-      })
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
 
-      res.status(200).json(userContent)
+      res.status(200).json(userContent);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   static async getUserContentDetail(req, res, next) {
     try {
-      const { id } = req.params
-      const userContentDetail = await UserContent.findOne({
-        include: [{
-          model: User,
-          attributes: {
-            exclude: ['createdAt', 'updatedAt']
-          }
-        }, 
+      const { id } = req.params;
+      const { id: UserId } = req.user;
+      const userContentDetail = await UserContent.findOne(
         {
-          model: Content,
+          include: [
+            {
+              model: User,
+              attributes: {
+                exclude: ["createdAt", "updatedAt"],
+              },
+            },
+            {
+              model: Content,
+              attributes: {
+                exclude: ["createdAt", "updatedAt"],
+              },
+            },
+          ],
           attributes: {
-            exclude: ['createdAt', 'updatedAt']
-          }
-        }],
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
+            exclude: ["createdAt", "updatedAt"],
+          },
+          where: {
+            UserId,
+            ContentId: id,
+          },
         }
-      }, 
-      {
-        where: {
-          id
-        }
-      })
+        // {
+        //   where: {
+        //     ContentId: id,
+        //   },
+        // }
+      );
 
-      res.status(200).json(userContentDetail)
+      if (!userContentDetail) {
+        console.log("ga dapet");
+      }
+
+      console.log("sebelum send");
+      res.status(200).json(userContentDetail);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   static async putUserContent(req, res, next) {
     try {
-      const { id: ContentId } = req.params
-      const { id: UserId } = req.user
-      
+      const { id: ContentId } = req.params;
+      const { id: UserId } = req.user;
+
       const findContent = await UserContent.findOne({
         where: {
-          ContentId
-        }
-      })
-      
-      if (!findContent) throw {name: `Content_Not_Found` }
+          ContentId,
+        },
+      });
+
+      if (!findContent) throw { name: `Content_Not_Found` };
       // Ambil Level
       const levelUser = await UserProfile.findOne({
         where: {
-          UserId
-        }
-      })
-      
+          UserId,
+        },
+      });
+
       // Ambil Total Content Base current user level
-      
-      const LevelId = levelUser.LevelId
+      // console.log(levelUser);
+      const LevelId = levelUser.LevelId;
       const content = await Content.findAll({
         where: {
-          LevelId
-        }
-      })
-      // if (!content) throw {name: `Content_Not_Found` }
-      const lastContentId = content[content.length-1].id
-      
+          LevelId,
+        },
+      });
+      const lastContentId = content[content.length - 1].id;
       let message;
       let code;
 
       // compare content base User content
-      if (lastContentId !== findContent.id) {
+      if (lastContentId !== findContent.ContentId) {
         // Update content
-        await UserContent.update({
-          status : 'finish'
-        }, {
-          where: {
-            ContentId
+        await UserContent.update(
+          {
+            status: "finish",
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
           }
-        })
+        );
         code = 200;
         message = `Congrats! You finished! Go to the next exercise..`;
       } else {
         // Update Status User Content
-        await UserContent.update({
-          status : 'finish'
-        }, {
-          where: {
-            ContentId
+        await UserContent.update(
+          {
+            status: "finish",
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
           }
-        })
+        );
 
         // Find Level
         const findLevel = await UserProfile.findOne({
           where: {
-            UserId
+            UserId,
           },
         });
 
         // Condition
         const getLog = await Log.findOne({
           where: {
-            UserId
-          }
-        })
+            UserId,
+          },
+        });
 
         if (findLevel.LevelId === 3) {
           code = 200;
@@ -173,7 +196,7 @@ class UserContentsController{
                 returning: true,
               }
             );
-            
+
             // Post Log History
             await Log.create({
               height: getLog.height,
@@ -181,7 +204,7 @@ class UserContentsController{
               activityLevel: getLog.activityLevel,
               UserId,
               LevelId: 3,
-            })
+            });
 
             code = 200;
             message = `Congrats, You did It! You level up to Hard Level!`;
@@ -198,26 +221,73 @@ class UserContentsController{
             );
 
             // Post Log History
-           
+            console.log(getLog, "masuk");
             await Log.create({
               height: getLog.height,
               weight: getLog.weight,
               activityLevel: getLog.activityLevel,
               UserId,
               LevelId: 2,
-            })
+            });
 
             code = 200;
             message = `Congrats, You did It! You level up to Medium Level!`;
           }
         }
       }
-         
+
       res.status(code).json({ message });
     } catch (error) {
-      next(error)
+      next(error);
+    }
+  }
+
+  static async patchLike(req, res, next) {
+    try {
+      const { id: UserId } = req.user;
+      const { id: ContentId } = req.params;
+
+      const findUserContent = await UserContent.findOne({
+        where: {
+          UserId,
+          ContentId,
+        },
+      });
+
+      if (!findUserContent) throw { name: "Content_Not_Found" };
+
+      console.log(findUserContent.isLike, "<<<<<< USER CONTENT");
+      if (findUserContent.isLike) {
+        const userContent = await UserContent.update(
+          {
+            isLike: false,
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
+          }
+        );
+        res.status(200).json({ message: "Liked this excercise!" });
+      } else {
+        const userContent = await UserContent.update(
+          {
+            isLike: true,
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
+          }
+        );
+        res.status(200).json({ message: "Liked this excercise!" });
+      }
+    } catch (err) {
+      next(err);
     }
   }
 }
 
-module.exports = UserContentsController
+module.exports = UserContentsController;

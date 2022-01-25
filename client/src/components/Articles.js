@@ -5,16 +5,9 @@ import {
   Pressable,
   Linking,
   ScrollView,
-} from "react-native";
-import {
-  Box,
-  Heading,
-  AspectRatio,
   Image,
-  Text,
-  Stack,
-  ChevronRightIcon,
-} from "native-base";
+} from "react-native";
+import { Box, Heading, AspectRatio, Text, Stack } from "native-base";
 import axios from "axios";
 
 
@@ -33,7 +26,7 @@ export default function Articles({ navigation }) {
         "x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
       },
     };
-  
+
     axios
       .request(options)
       .then(function (response) {
@@ -43,7 +36,7 @@ export default function Articles({ navigation }) {
         console.error(error);
       });
   }, []);
-  
+
   if (!data) return <Text>Loading...</Text>;
 
   // const supportedURL = data.link; // andre ada masalah disini

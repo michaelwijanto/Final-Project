@@ -35,10 +35,10 @@ export default function SignIn({ navigation, route }) {
         title: "Success Activated Your Account",
         status: "success",
         placement: "top",
-        description: "You can sign in to Active8 now"
+        description: "You can sign in to Active8 now",
       });
     }
-  }, []);
+  }, [route.params]);
 
   const [signInUser, {}] = useMutation(SIGN_IN);
   const [signIn, setSignIn] = useState({
@@ -54,7 +54,7 @@ export default function SignIn({ navigation, route }) {
 
   const submitLogin = (e) => {
     e.preventDefault();
-    
+
     signInUser({
       variables: {
         email: signIn.email,
@@ -69,17 +69,17 @@ export default function SignIn({ navigation, route }) {
             message: errors,
           });
           console.log("SALAH");
-          setIsLogin(true)
+          setIsLogin(true);
           setTimeout(() => {
             setIsLogin(false)
-          }, 2000);
+          }, 3000);
         } else {
-          console.log('Masuk Else');
+          console.log("Masuk Else");
           const { access_token, isRegister } = res.data?.signInUser;
           console.log(isRegister);
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-          if (isRegister) navigation.navigate("ContentContainer");
+          if (isRegister === "true") navigation.navigate("ContentContainer");
           else navigation.navigate("UserProfileStack");
         }
       })
@@ -119,7 +119,7 @@ export default function SignIn({ navigation, route }) {
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
         console.log(registerStat);
-        if ( registerStat ) navigation.navigate("ContentContainer")
+        if (registerStat) navigation.navigate("ContentContainer");
         else navigation.navigate("UserProfileStack");
       }
     } catch (e) {
