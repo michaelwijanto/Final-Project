@@ -31,9 +31,9 @@ export default function ContentDetail({ navigation, route }) {
     console.log(selected);
   }, [selected]);
 
-  useEffect(() => {
-    console.log(status);
-  }, [status]);
+  // useEffect(() => {
+  //   console.log(status);
+  // }, [status]);
 
   const { loading, error, data } = useQuery(GET_CONTENT_DETAIL, {
     variables: {
@@ -42,24 +42,24 @@ export default function ContentDetail({ navigation, route }) {
       contentId: id,
     },
   });
-  const {
-    loading: loadingContent,
-    error: errorContent,
-    data: ContentData,
-  } = useQuery(GET_USER_CONTENT_ID, {
-    variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
-      contentId: id,
-    },
-  });
+  // const {
+  //   loading: loadingContent,
+  //   error: errorContent,
+  //   data: ContentData,
+  // } = useQuery(GET_USER_CONTENT_ID, {
+  //   variables: {
+  //     accessToken:
+  //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+  //     contentId: id,
+  //   },
+  // });
 
   const [newDataUserContent, setNewDataUserContent] = useState();
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
-  if (loadingContent) return <Text>Loading...</Text>;
-  if (errorContent) return <Text>Error...</Text>;
+  // if (loadingContent) return <Text>Loading...</Text>;
+  // if (errorContent) return <Text>Error...</Text>;
 
   const handleFinish = async (e) => {
     e.preventDefault();
@@ -132,7 +132,7 @@ export default function ContentDetail({ navigation, route }) {
         <Text style={styles.titleDescription}>Description</Text>
 
         <Text style={styles.description}>
-          description
+        {data.getContentById.description}
         </Text>
       </View>
     </View>
