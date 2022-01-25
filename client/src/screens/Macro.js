@@ -20,13 +20,15 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   ScrollView,
+  Modal,
+  HStack,
+  VStack,
 } from "native-base";
 
 export const Example = ({ navigation }) => {
   const toast = useToast();
-  const [postMacro, {}] = useMutation(POST_MACRO);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null)
+  const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
+  const [showModal, setShowModal] = useState(false);
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
@@ -36,6 +38,13 @@ export const Example = ({ navigation }) => {
     goal: "",
   });
 
+  const [resultMacro, setResultMacro] = useState({
+    calorie: 0,
+    carbs: 0,
+    fat: 0,
+    protein: 0,
+  });
+
   useEffect(() => {
     console.log(formMacro);
   }, [formMacro]);
@@ -43,34 +52,35 @@ export const Example = ({ navigation }) => {
   const onSubmitMacro = async (e) => {
     try {
       e.preventDefault();
-      setLoading(true)
       console.log("SUBMIT");
-      console.log( formMacro );
+      console.log({ formMacro });
       const sendMacro = await postMacro({
-        variables: formMacro
+        variables: formMacro,
       });
       console.log(sendMacro);
-      toast.show({
-        title: "Your daily calorie needs",
-        status: "success",
-        description: `${sendMacro.data.postMacro.calorie} calories`,
-        placement: "top",
+      setResultMacro({
+        calorie: sendMacro.data.postMacro.calorie,
+        carbs: sendMacro.data.postMacro.balanced.carbs,
+        fat: sendMacro.data.postMacro.balanced.fat,
+        protein: sendMacro.data.postMacro.balanced.protein,
       });
+      setShowModal(true);
+      // toast.show({
+      //   title: "Your daily calorie needs",
+      //   status: "success",
+      //   description: `${sendMacro.data.postMacro.calorie} calories`,
+      //   placement: "top",
+      // });
     } catch (err) {
       console.log({ err });
-      setError("Error Post Macro")
-    } finally {
-      setLoading(false)
     }
   };
-  if(loading) return <Text>Loading...</Text>
-  if(error) return <Text>{error}</Text>
   return (
     <Box
-    w={{
-      base: "90%",
-      md: "25%",
-    }}
+      w={{
+        base: "90%",
+        md: "25%",
+      }}
     >
       <ScrollView>
         <FormControl isRequired onSadmubmit={onSubmitMacro}>
@@ -87,12 +97,10 @@ export const Example = ({ navigation }) => {
           <Stack mx="4">
             <FormControl.Label>Gender</FormControl.Label>
             <Select
-              onValueChange={(itemValue) =>
-                setFormMacro({ ...formMacro, gender: itemValue })
-              }
+              onValueChange={(itemValue) => setFormMacro({ ...formMacro, gender: itemValue })}
               minWidth="200"
               accessibilityLabel="Choose Service"
-              placeholder="Choose Service"
+              placeholder="Choose Gender"
               _selectedItem={{
                 bg: "teal.600",
                 endIcon: <CheckIcon size={5} />,
@@ -101,89 +109,51 @@ export const Example = ({ navigation }) => {
               <Select.Item label="Male" value="male" key={1} />
               <Select.Item label="Female" value="female" key={2} />
             </Select>
-            <FormControl.HelperText marginBottom="5">
-              Select your gender.
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
-              Gender required.
-            </FormControl.ErrorMessage>
+            <FormControl.HelperText marginBottom="5">Select your gender.</FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Gender required.</FormControl.ErrorMessage>
           </Stack>
           <Stack mx="4">
             <FormControl.Label>Age</FormControl.Label>
-            <NumberInput
-              min={0}
-              max={80}
-              onChange={(val) => setFormMacro({ ...formMacro, age: val })}
-            >
+            <NumberInput min={0} max={80} onChange={(val) => setFormMacro({ ...formMacro, age: val })}>
               <NumberInputField />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <FormControl.HelperText marginBottom="5">
-              It cannot be negative or bigger than 80.
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
-              Age required
-            </FormControl.ErrorMessage>
+            <FormControl.HelperText marginBottom="5">It cannot be negative or bigger than 80.</FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Age required</FormControl.ErrorMessage>
           </Stack>
 
           <Stack mx="4">
             <FormControl.Label>Height</FormControl.Label>
-            <NumberInput
-              min={130}
-              max={230}
-              onChange={(val) => setFormMacro({ ...formMacro, height: val })}
-            >
+            <NumberInput min={130} max={230} onChange={(val) => setFormMacro({ ...formMacro, height: val })}>
               <NumberInputField />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <FormControl.HelperText marginBottom="5">
-              It cannot be smaller than 130 or bigger than 230.
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
-              Height required.
-            </FormControl.ErrorMessage>
+            <FormControl.HelperText marginBottom="5">It cannot be smaller than 130 or bigger than 230.</FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Height required.</FormControl.ErrorMessage>
           </Stack>
 
           <Stack mx="4">
             <FormControl.Label>Weight</FormControl.Label>
-            <NumberInput
-              min={40}
-              max={160}
-              onChange={(val) => setFormMacro({ ...formMacro, weight: val })}
-            >
+            <NumberInput min={40} max={160} onChange={(val) => setFormMacro({ ...formMacro, weight: val })}>
               <NumberInputField />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <FormControl.HelperText marginBottom="5">
-              It cannot be smaller than 40 or bigger than 160.
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
-              Weight required.
-            </FormControl.ErrorMessage>
+            <FormControl.HelperText marginBottom="5">It cannot be smaller than 40 or bigger than 160.</FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Weight required.</FormControl.ErrorMessage>
           </Stack>
           <Stack mx="4">
             <FormControl.Label>Activity Level</FormControl.Label>
             <Select
-              onValueChange={(itemValue) =>
-                setFormMacro({ ...formMacro, activitylevel: itemValue })
-              }
+              onValueChange={(itemValue) => setFormMacro({ ...formMacro, activitylevel: itemValue })}
               minWidth="200"
               accessibilityLabel="Choose Service"
               placeholder="Choose Intensity"
@@ -193,30 +163,14 @@ export const Example = ({ navigation }) => {
               }}
             >
               <Select.Item label="BMR" value={1} key={1} />
-              <Select.Item
-                label="Sedentary: little or no exercise"
-                value={2}
-                key={2}
-              />
+              <Select.Item label="Sedentary: little or no exercise" value={2} key={2} />
               <Select.Item label="Exercise 1-3 times/week" value={3} key={3} />
               <Select.Item label="Exercise 4-5 times/week" value={4} key={4} />
-              <Select.Item
-                label="Daily exercise or intense exercise 3-4 times/week"
-                value={5}
-                key={5}
-              />
-              <Select.Item
-                label="Intense exercise 6-7 times/week"
-                value={6}
-                key={6}
-              />
+              <Select.Item label="Daily exercise or intense exercise 3-4 times/week" value={5} key={5} />
+              <Select.Item label="Intense exercise 6-7 times/week" value={6} key={6} />
             </Select>
-            <FormControl.HelperText marginBottom="5">
-              How much u train a week
-            </FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
+            <FormControl.HelperText marginBottom="5">How much u train a week</FormControl.HelperText>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
               Activity Level required.
             </FormControl.ErrorMessage>
           </Stack>
@@ -224,9 +178,7 @@ export const Example = ({ navigation }) => {
           <Stack mx="4">
             <FormControl.Label>Goal</FormControl.Label>
             <Select
-              onValueChange={(itemValue) =>
-                setFormMacro({ ...formMacro, goal: itemValue })
-              }
+              onValueChange={(itemValue) => setFormMacro({ ...formMacro, goal: itemValue })}
               minWidth="200"
               accessibilityLabel="What is your goal?"
               placeholder="What is your goal?"
@@ -238,25 +190,13 @@ export const Example = ({ navigation }) => {
               <Select.Item label="maintain weight" value={1} key="maintain" />
               <Select.Item label="Mild weight loss" value="mildlose" key={2} />
               <Select.Item label="Weight loss" value="weightlose" key={3} />
-              <Select.Item
-                label="Extreme weight loss"
-                value="extremelose"
-                key={4}
-              />
+              <Select.Item label="Extreme weight loss" value="extremelose" key={4} />
               <Select.Item label="Mild weight gain" value="mildgain" key={5} />
               <Select.Item label="Weight gain" value="weightgain" key={6} />
-              <Select.Item
-                label="extremegain"
-                value="Extreme weight gain"
-                key={7}
-              />
+              <Select.Item label="extremegain" value="Extreme weight gain" key={7} />
             </Select>
             <FormControl.HelperText>Select your goal.</FormControl.HelperText>
-            <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
-            >
-              Goals required.
-            </FormControl.ErrorMessage>
+            <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Goals required.</FormControl.ErrorMessage>
           </Stack>
           <Button
             size="lg"
@@ -265,11 +205,50 @@ export const Example = ({ navigation }) => {
             px="3"
             onPress={onSubmitMacro}
             marginBottom="5"
-            backgroundColor="gray.500"
+            colorScheme="gray"
           >
             Submit
           </Button>
         </FormControl>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Content maxWidth="260px">
+            <Modal.Header>Result</Modal.Header>
+            <Modal.Body>
+              <VStack space={5}>
+                <HStack alignItems="center" justifyContent="space-between">
+                  <Text fontWeight="medium">Total Daily Calorie Intake</Text>
+                  <Text color="blueGray.400">{resultMacro.calorie}</Text>
+                </HStack>
+                <HStack alignItems="center">
+                  <Text fontWeight="medium">With a balance diet you need:</Text>
+                </HStack>
+                <HStack alignItems="center" justifyContent="space-between">
+                  <Text fontSize="xs">Carbs</Text>
+                  <Text color="blueGray.400" fontSize="xs">
+                    {resultMacro.carbs}
+                  </Text>
+                </HStack>
+                <HStack alignItems="center" justifyContent="space-between">
+                  <Text fontSize="xs">Fat</Text>
+                  <Text color="blueGray.400" fontSize="xs">
+                    {resultMacro.fat}
+                  </Text>
+                </HStack>
+                <HStack alignItems="center" justifyContent="space-between">
+                  <Text fontSize="xs">Protein</Text>
+                  <Text color="blueGray.400" fontSize="xs">
+                    {resultMacro.protein}
+                  </Text>
+                </HStack>
+              </VStack>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button flex={1} onPress={() => setShowModal(false)} colorScheme="gray">
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
       </ScrollView>
     </Box>
   );
