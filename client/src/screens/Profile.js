@@ -32,7 +32,6 @@ export default function Profile({ navigation }) {
   };
 
   const [accessToken, setAccessToken] = useState(null);
-  const [profile, setProfile] = useState(null);
   useEffect(async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, []);
@@ -62,7 +61,7 @@ export default function Profile({ navigation }) {
             alignSelf="center"
             size="2xl"
             source={{
-              uri: "https://pbs.twimg.com/profile_images/1320985200663293952/lE_Kg6vr_400x400.jpg",
+              uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
             }}
           >
             RB
