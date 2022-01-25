@@ -14,29 +14,12 @@ import { GET_LEVEL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 // import LoadingPage from "../components/loadingPage";
 
-export default function LevelHorizontal({ navigation }) {
+export default function MacroCard({ navigation }) {
   const { loading, error, data } = useQuery(GET_LEVEL);
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
-  return (
-    <FlatList
-      horizontal
-      data={data.getLevel}
-      renderItem={({ item }) => {
         return (
-          <Pressable
-            onPress={() =>
-              navigation.navigate("Contents", {
-                screen: "LevelFilter",
-                params: {
-                  id: item.id,
-                  levelName: item.name,
-                },
-                initial: false,
-              })
-            }
-          >
             <Box
               w="380"
               h="220"
@@ -58,44 +41,24 @@ export default function LevelHorizontal({ navigation }) {
               borderColor="gray.300"
               borderWidth="1"
             >
-              <Badge colorScheme="info">{item.name}</Badge>
-              <Box h="150" w="500">
+              <Box h="100%" w="500" >
                 <AspectRatio>
                   <Image
-                    h="150"
+                    h="210"
                     w="400"
+                    marginLeft="-2"
                     // maxW="100%"
                     // borderColor="white"
                     borderWidth="1"
                     rounded="2xl"
                     source={{
-                      uri: item.thumbnail,
+                      uri: "https://ik.imagekit.io/ebq3r9zrvle/H8/20944767_RhbrcTRbpSN.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1643142686515",
                     }}
                     alt="image"
                   />
                 </AspectRatio>
               </Box>
-
-              
-              <Stack p="1">
-                <Stack>
-                  
-                  <Heading
-                    size="sm"
-                    ml="-1"
-                    paddingLeft="5"
-                    justifyContent="center"
-                    padding="3"
-                  >
-                    {item.description}
-                  </Heading>
-                </Stack>
-              </Stack>
             </Box>
-          </Pressable>
-        );
-      }}
-    ></FlatList>
   );
 }
 

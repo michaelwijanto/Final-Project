@@ -251,7 +251,7 @@ export default function SignIn({ navigation, route }) {
               </FormControl>
               <Button
                 mt="2"
-                colorScheme="indigo"
+                colorScheme="lightBlue"
                 style={{ marginTop: 25 }}
                 onPress={(e) => submitLogin(e)}
               >

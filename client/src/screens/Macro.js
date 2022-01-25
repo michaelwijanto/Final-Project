@@ -205,7 +205,7 @@ export const Example = ({ navigation }) => {
             px="3"
             onPress={onSubmitMacro}
             marginBottom="5"
-            colorScheme="gray"
+            colorScheme="lightBlue"
           >
             Submit
           </Button>
