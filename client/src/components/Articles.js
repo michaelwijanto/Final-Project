@@ -10,20 +10,17 @@ import {
 import { Box, Heading, AspectRatio, Text, Stack } from "native-base";
 import axios from "axios";
 
-
 export default function Articles({ navigation }) {
   const [data, setData] = useState();
-
- 
 
   useEffect(() => {
     const options = {
       method: "GET",
       url: "https://newsdata2.p.rapidapi.com/news",
-      params: { category: "health",country: 'us', language: "en" },
+      params: { category: "health", country: "us", language: "en" },
       headers: {
         "x-rapidapi-host": "newsdata2.p.rapidapi.com",
-        "x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
+        "x-rapidapi-key": "fc6ce6795fmsh6181380377953b1p106e09jsna2904c46d6d2",
       },
     };
 
@@ -51,13 +48,11 @@ export default function Articles({ navigation }) {
   //   }
   // };
 
-  
   return (
     <Box>
       {data.map((item, index) => {
         if (index < 15) {
-          
-          if(item.image_url){
+          if (item.image_url) {
             return (
               <Pressable
                 // onPress={() => handlePress()}
@@ -99,7 +94,7 @@ export default function Articles({ navigation }) {
                       />
                     </AspectRatio>
                   </Box>
-  
+
                   <Stack p="1">
                     <Stack>
                       <Heading
