@@ -115,7 +115,7 @@ export default function SignIn({ navigation, route }) {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
         // value previously stored
-        // console.log(value);
+        console.log(value);
         setLoading(false);
         navigation.navigate("UserProfileStack");
       }
