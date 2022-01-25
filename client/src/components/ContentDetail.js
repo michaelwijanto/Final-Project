@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { StyleSheet, View, ScrollView } from "react-native";
 import {
@@ -13,18 +14,92 @@ import {
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTENT_DETAIL, GET_USER_CONTENT_ID } from "../../queries";
-import { POST_USER_CONTENT, UPDATE_STATUS_USER_CONTENT } from "../../mutations";
+import {
+  POST_USER_CONTENT,
+  UPDATE_STATUS_USER_CONTENT,
+  PATCH_LIKE,
+} from "../../mutations";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-// import Toggle from "react-native-toggle-element";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
   const [selected, setSelected] = useState(0);
   const [flaggingData, setFlaggingData] = useState(false);
-  // const [toggleValue, setToggleValue] = useState(false);
+  const [accesstoken, setAccessToken] = useState("");
+
+  // Buat narik Access Token
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      if (value !== null) {
+        setAccessToken(value);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const {
+    loading: loadingContent,
+    error: errorContent,
+    data: ContentData,
+  } = useQuery(GET_USER_CONTENT_ID, {
+    variables: {
+      accessToken: accesstoken,
+      contentId: id,
+    },
+  });
+
+  // if (loadingContent) return <Text>Loading...</Text>;
+  // if (errorContent) return <Text>Error...</Text>;
+
+  useEffect(() => {
+    getStorage();
+    getLike();
+  }, []);
+  // Sampe sini
+
+  const getLike = async () => {
+    try {
+      const accesstoken = await AsyncStorage.getItem("@access_token");
+      if (!ContentData) {
+        setFlaggingData(true);
+        if (!flaggingData) {
+          await PostUserContent({
+            variables: {
+              accessToken: accesstoken,
+              contentId: id,
+            },
+          });
+          status = "started";
+          if (ContentData.getUserContentById.isLike) {
+            // console.log(ContentData.getUserContentById.isLike, "<<<<<<<< LIKE");
+            setSelected(1);
+          } else {
+            setSelected(0);
+          }
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // useEffect(async () => {
+  //   // console.log(ContentData.getUserContentById.isLike, "<<<<<<<<<<<");
+  //   if (ContentData) {
+  //     if (ContentData?.getUserContentById.isLike == true) {
+  //       setSelected(1);
+  //     } else {
+  //       console.log("masuk");
+  //       setSelected(0);
+  //     }
+  //   }
+  // }, [ContentData]);
+
+  console.log({ selected });
 
   const [
     PostUserContent,
@@ -37,6 +112,8 @@ export default function ContentDetail({ navigation, route }) {
     refetchQueries: [GET_USER_CONTENT_ID],
   });
 
+  status = "started";
+
   const [
     PutUserContent,
     {
@@ -48,48 +125,21 @@ export default function ContentDetail({ navigation, route }) {
     refetchQueries: [GET_USER_CONTENT_ID],
   });
 
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
+  const [
+    PatchLike,
+    { data: dataPatchLike, loading: loadingPatchLike, error: errorPatchLike },
+  ] = useMutation(PATCH_LIKE, {
+    refetchQueries: [GET_USER_CONTENT_ID],
+  });
 
   const { loading, error, data } = useQuery(GET_CONTENT_DETAIL, {
     variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
-      contentId: id,
-    },
-  });
-  const {
-    loading: loadingContent,
-    error: errorContent,
-    data: ContentData,
-  } = useQuery(GET_USER_CONTENT_ID, {
-    variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+      accessToken: accesstoken,
       contentId: id,
     },
   });
 
   let status;
-
-  useEffect(() => {
-    if (!ContentData) {
-      setFlaggingData(true);
-      if (!flaggingData) {
-        console.log("masuk");
-        PostUserContent({
-          variables: {
-            accessToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
-            contentId: id,
-          },
-        });
-        status = "started";
-      }
-    }
-  }, [ContentData]);
-  status = "started";
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
@@ -98,10 +148,9 @@ export default function ContentDetail({ navigation, route }) {
     e.preventDefault();
     // console.log(ContentData.getUserContentById.status);
     if (ContentData.getUserContentById.status == "started") {
-      const putStatusContent = await PutUserContent({
+      await PutUserContent({
         variables: {
-          accessToken:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+          accessToken: accesstoken,
           contentId: id,
         },
       });
@@ -110,18 +159,32 @@ export default function ContentDetail({ navigation, route }) {
   };
 
   if (ContentData.getUserContentById) {
-    console.log("masukk");
+    // console.log("masukk di bawah");
     status = ContentData.getUserContentById.status;
   }
 
-  const handleLike = (e) => {
+  const handleLike = async (e) => {
     e.preventDefault();
     if (selected == 0) {
+      await PatchLike({
+        variables: {
+          accessToken: accesstoken,
+          contentId: id,
+        },
+      });
       setSelected(1);
     } else {
+      await PatchLike({
+        variables: {
+          accessToken: accesstoken,
+          contentId: id,
+        },
+      });
       setSelected(0);
     }
   };
+
+  // console.log(ContentData);
 
   return (
     <Box height="100%">
@@ -161,7 +224,7 @@ export default function ContentDetail({ navigation, route }) {
                   )}
                 </Pressable>
               </Text>
-              <Text style={styles.textLike}>{data.getContentById.likes}</Text>
+              {/* <Text style={styles.textLike}>{data.getContentById.likes}</Text> */}
             </Box>
 
             <Text style={styles.titleDescription}>Description</Text>
@@ -205,7 +268,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingRight: 15,
+    paddingRight: 20,
     // bottom: 100,
     // right: 20,
     // position: "absolute",
@@ -223,6 +286,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 15,
     alignSelf: "center",
+    width: "80%",
   },
   buttonFinish: {
     marginTop: 10,

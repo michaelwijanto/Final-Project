@@ -124,3 +124,11 @@ export const UPDATE_STATUS_USER_CONTENT = gql`
     }
   }
 `;
+
+export const PATCH_LIKE = gql`
+  mutation PatchLike($accessToken: String, $contentId: ID) {
+    patchLike(access_token: $accessToken, ContentId: $contentId) {
+      message
+    }
+  }
+`;

@@ -3,6 +3,7 @@ const { UserContent, User, Content, UserProfile, Log } = require("../models");
 class UserContentsController {
   static async postUserContent(req, res, next) {
     try {
+      // console.log();
       const { id: UserId } = req.user;
       const { ContentId, isLike = false, status = "started" } = req.body;
 
@@ -238,6 +239,53 @@ class UserContentsController {
       res.status(code).json({ message });
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async patchLike(req, res, next) {
+    try {
+      const { id: UserId } = req.user;
+      const { id: ContentId } = req.params;
+
+      const findUserContent = await UserContent.findOne({
+        where: {
+          UserId,
+          ContentId,
+        },
+      });
+
+      if (!findUserContent) throw { name: "Content_Not_Found" };
+
+      console.log(findUserContent.isLike, "<<<<<< USER CONTENT");
+      if (findUserContent.isLike) {
+        const userContent = await UserContent.update(
+          {
+            isLike: false,
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
+          }
+        );
+        res.status(200).json({ message: "Liked this excercise!" });
+      } else {
+        const userContent = await UserContent.update(
+          {
+            isLike: true,
+          },
+          {
+            where: {
+              UserId,
+              ContentId,
+            },
+          }
+        );
+        res.status(200).json({ message: "Liked this excercise!" });
+      }
+    } catch (err) {
+      next(err);
     }
   }
 }

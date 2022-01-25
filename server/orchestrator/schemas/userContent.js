@@ -19,6 +19,7 @@ const typeDefs = gql`
   type Mutation {
     postUserContent(access_token: String, ContentId: ID): UserContent
     putUserContent(access_token: String, ContentId: ID): Message
+    patchLike(access_token: String, ContentId: ID): Message
   }
 `;
 const resolvers = {
@@ -100,6 +101,21 @@ const resolvers = {
         await redis.del("userContent");
         console.log(data);
         return { message: "Successful update UserContent" };
+      } catch (err) {
+        console.log({ err });
+        return err;
+      }
+    },
+
+    patchLike: async (_, args) => {
+      try {
+        const { access_token, ContentId } = args;
+        const { data } = await axios.patch(
+          `http://localhost:3000/api/user-contents/${ContentId}`,
+          null,
+          { headers: { access_token } }
+        );
+        return { message: "Liked this excercise!" };
       } catch (err) {
         console.log({ err });
         return err;
