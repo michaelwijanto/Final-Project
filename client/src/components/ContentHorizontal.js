@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import {
   Box,
@@ -141,11 +142,11 @@ export default function ContentHorizontal({ navigation }) {
                           size: "lg",
                         },
                       }}
-                      onPress={() =>
-                        navigation.navigate("Content Detail", {
-                          id: item.id,
-                        })
-                      }
+                      // onPress={() =>
+                      //   navigation.navigate("Content Detail", {
+                      //     id: item.id,
+                      //   })
+                      // }
                     />
                   );
                 }

@@ -1,4 +1,6 @@
 const { User, UserProfile, Log, Level } = require("../models");
+const Stripe = require("stripe");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const axios = require("axios");
 const { sequelize } = require("../models");
 
@@ -49,7 +51,7 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-      
+
       if (
         callBMI.data.data.health == "Severe Thinness" ||
         callBMI.data.data.health == "Moderate Thinness" ||
@@ -117,6 +119,66 @@ class userProfilesController {
       await t.rollback();
       next(err);
     }
+  }
+
+  //PAYMENT
+  static async paymentStripe(req, res, next) {
+    try {
+      // Getting data from client
+      let { subscription } = req.body;
+      // Simple validation
+      if (!subscription)
+        return res.status(400).json({ message: "Invalid data" });
+
+      // Initiate payment
+      const paymentIntent = await stripe.paymentIntents.create({
+        currency: "USD",
+        payment_method_types: ["card"],
+        metadata: { subscription },
+      });
+      // Extracting the client secret
+      const clientSecret = paymentIntent.client_secret;
+      // Sending the client secret as response
+      res.json({ message: "Payment initiated", clientSecret });
+    } catch (err) {
+      // Catch any error and send error 500 to client
+      console.error(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  static async stripe(req, res, next) {
+    const sig = req.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      // Check if the event is sent from Stripe or a third party
+      // And parse the event
+      event = await stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      // Handle what happens if the event is not from Stripe
+      console.log(err);
+      return res.status(400).json({ message: err.message });
+    }
+    // Event when a payment is initiated
+    if (event.type === "payment_intent.created") {
+      console.log(
+        `${event.data.object.metadata.subscription} payment initated!`
+      );
+    }
+    // Event when a payment is succeeded
+    if (event.type === "payment_intent.succeeded") {
+      // fulfilment
+      console.log(
+        `${event.data.object.metadata.subscription} payment succeeded!`
+      );
+    }
+    res.json({ ok: true });
   }
 
   static async updateSubscription(req, res, next) {

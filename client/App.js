@@ -1,5 +1,5 @@
 // // In App.js in a new project
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -24,12 +24,10 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App() {
-  
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>
         <NavigationContainer>
-
           <Tab.Navigator
             screenOptions={({ route }) => ({
               headerShown: false,
@@ -63,15 +61,15 @@ function App() {
               options={{
                 headerShown: false,
               }}
-            /> */}
-            {/* <Stack.Screen
+            />
+            <Stack.Screen
               name="SignUp"
               component={SignUp}
               options={{
                 headerShown: false,
               }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
               name="Activate"
               component={Activate}
               options={{

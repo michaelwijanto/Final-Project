@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class UserContent extends Model {
     /**
@@ -11,35 +9,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      UserContent.belongsTo(models.User)
-      UserContent.belongsTo(models.Content)
+      UserContent.belongsTo(models.User);
+      UserContent.belongsTo(models.Content);
     }
   }
-  UserContent.init({
-    UserId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {msg: "User Id Required"}
-      }
+  UserContent.init(
+    {
+      UserId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: { msg: "User Id Required" },
+        },
+      },
+      ContentId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: { msg: "Content Id Required" },
+        },
+      },
+      status: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notNull: { msg: "Status Required" },
+        },
+      },
+      isLike: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+      },
     },
-    ContentId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      validate: {
-        notNull: {msg: "Content Id Required"}
-      }
-    },
-    status: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Status Required"}
-      }
-    },
-  }, {
-    sequelize,
-    modelName: 'UserContent',
-  });
+    {
+      sequelize,
+      modelName: "UserContent",
+    }
+  );
   return UserContent;
 };

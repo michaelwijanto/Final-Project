@@ -58,7 +58,7 @@ export const GET_USER_LOGS = gql`
       createdAt
     }
   }
-`
+`;
 export const GET_CONTENT_DETAIL = gql`
   query GetContentById($accessToken: String, $contentId: ID) {
     getContentById(access_token: $accessToken, ContentId: $contentId) {
@@ -69,6 +69,17 @@ export const GET_CONTENT_DETAIL = gql`
       title
       imgThumbnail
       statusLike
+    }
+  }
+`;
+
+export const GET_USER_CONTENT_ID = gql`
+  query GetUserContentById($accessToken: String, $contentId: ID) {
+    getUserContentById(access_token: $accessToken, ContentId: $contentId) {
+      UserId
+      ContentId
+      isLike
+      status
     }
   }
 `;

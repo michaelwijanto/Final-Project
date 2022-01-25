@@ -20,9 +20,10 @@ export default function Articles({ navigation }) {
       params: { category: "health", language: "en" },
       headers: {
         "x-rapidapi-host": "newsdata2.p.rapidapi.com",
-        " x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
+        "x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
       },
     };
+
     axios
       .request(options)
       .then(function (response) {
@@ -32,6 +33,7 @@ export default function Articles({ navigation }) {
         console.error(error);
       });
   }, []);
+
   if (!data) return <Text>Loading...</Text>;
 
   // const supportedURL = data.link; // andre ada masalah disini

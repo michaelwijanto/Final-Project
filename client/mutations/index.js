@@ -19,8 +19,22 @@ export const SIGN_IN = gql`
 `;
 
 export const POST_MACRO = gql`
-  mutation PostMacro($age: Int, $gender: String, $height: Int, $weight: Int, $activitylevel: Int, $goal: String) {
-    postMacro(age: $age, gender: $gender, height: $height, weight: $weight, activitylevel: $activitylevel, goal: $goal) {
+  mutation PostMacro(
+    $age: Int
+    $gender: String
+    $height: Int
+    $weight: Int
+    $activitylevel: Int
+    $goal: String
+  ) {
+    postMacro(
+      age: $age
+      gender: $gender
+      height: $height
+      weight: $weight
+      activitylevel: $activitylevel
+      goal: $goal
+    ) {
       calorie
       balanced {
         protein
@@ -60,6 +74,25 @@ export const ACTIVATE = gql`
     activateUser(pin: $pin) {
       message
       error
+    }
+  }
+`;
+
+export const POST_USER_CONTENT = gql`
+  mutation PostUserContent($accessToken: String, $contentId: ID) {
+    postUserContent(access_token: $accessToken, ContentId: $contentId) {
+      ContentId
+      isLike
+      status
+      UserId
+    }
+  }
+`;
+
+export const UPDATE_STATUS_USER_CONTENT = gql`
+  mutation PutUserContent($accessToken: String, $contentId: ID) {
+    putUserContent(access_token: $accessToken, ContentId: $contentId) {
+      message
     }
   }
 `;
