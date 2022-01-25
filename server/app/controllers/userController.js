@@ -1,5 +1,5 @@
 const { compare } = require("../helpers/bcrypt");
-const { User, Coach, Level } = require("../models/index");
+const { User, Coach, Level, UserProfile } = require("../models/index");
 const { sign } = require("../helpers/jwt");
 const nodemailer = require("nodemailer");
 
@@ -72,9 +72,6 @@ class UserController {
         throw { name: "Invalid" };
       }
       if (user.isActivated === "false") throw { name: "PlsActivate" };
-
-      if (user.isActivated === "false") throw { name: "PlsActivate" };
-
       const payload = {
         id: user.id,
         email: user.email,
@@ -84,9 +81,14 @@ class UserController {
         isActivated: user.isActivated,
       };
       const token = sign(payload);
+      let subscription;
+      const profile = await UserProfile.findOne({where: {UserId: user.id}})
+      if(!profile || profile.subscription === "false") subscription = "false"
+      subscription = "true"
       res.status(200).json({
         access_token: token,
-        isRegister: user.isRegister
+        isRegister: user.isRegister,
+        subscription
       });
     } catch (err) {
       next(err);
