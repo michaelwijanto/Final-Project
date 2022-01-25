@@ -8,7 +8,6 @@ import {
   Button
 } from "native-base";
 
-
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
@@ -29,7 +28,6 @@ export default function CoachDetail({ navigation, route }) {
   console.log(coachName);
   return (
     <Box style={styles.container}>
-      {/* <AppBar navigation={navigation} coachName={coachName} /> */}
       <Box style={styles.top}>
         <Image
           style={styles.imageBanner}

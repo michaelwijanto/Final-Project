@@ -8,7 +8,6 @@ const authenticate = async (req, res, next) => {
     if (!User.findOne({ where: { id: payload.id } })) {
       throw { name: "USER_NOT_FOUND" };
     }
-
     req.user = {
       ...payload,
     };
