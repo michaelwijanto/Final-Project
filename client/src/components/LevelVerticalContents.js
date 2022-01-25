@@ -126,8 +126,45 @@ export default function LevelFilter({ navigation, route }) {
                 <Text style={styles.textTitle}>{item.title}</Text>
               </Box>
               <Box style={styles.iconContent}>
-                {(() => {
-                  if (subscription == "false") {
+              {(() => {
+                if(item.LevelId == 1){
+                  return (
+                    <IconButton
+                      paddingTop="-5"
+                      icon={<Icon as={AntDesign} name="playcircleo" />}
+                      borderRadius="full"
+                      _icon={{
+                        color: "orange.500",
+                        size: "md",
+                      }}
+                      _hover={{
+                        bg: "orange.600:alpha.20",
+                      }}
+                      _pressed={{
+                        bg: "orange.600:alpha.20",
+                        _icon: {
+                          name: "playcircleo",
+                        },
+                        _ios: {
+                          _icon: {
+                            size: "lg",
+                          },
+                        },
+                      }}
+                      _ios={{
+                        _icon: {
+                          size: "lg",
+                        },
+                      }}
+                      onPress={() =>
+                        navigation.navigate("Content Detail", {
+                          id: item.id,
+                        })
+                      }
+                    />
+                  );
+                }else {
+                  if (subscription == "true") {
                     return (
                       <IconButton
                         paddingTop="-5"
@@ -192,15 +229,13 @@ export default function LevelFilter({ navigation, route }) {
                             size: "lg",
                           },
                         }}
-                        onPress={() =>
-                          navigation.navigate("Content Detail", {
-                            id: item.id,
-                          })
-                        }
+                         onPress={() => alert('PLEASE SUBSCRIPTION, GO TO PROFILE !!!')}
                       />
                     );
                   }
-                })()}
+
+                }
+              })()}
               </Box>
             </Box>
           );

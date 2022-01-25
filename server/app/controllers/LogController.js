@@ -1,4 +1,5 @@
 const { Log, UserProfile } = require("../models/index");
+const axios = require("axios")
 
 class LogController {
   static async postLog(req, res, next) {
@@ -6,8 +7,9 @@ class LogController {
       const { height, weight } = req.body;
       const { id: UserId } = req.user;
       const profile = await UserProfile.findOne({where: {UserId}})
+      let today = new Date();
       let age = today.getFullYear() - profile.dateBirth.getFullYear();
-      console.log({height, weight, UserId, age});
+      console.log({POSTLOG: {height, weight, UserId, age}});
 
       const {data: callBMI} = await axios({
         method: "GET",
@@ -19,19 +21,22 @@ class LogController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
+      console.log(callBMI.data.bmi, "<<<<<<<<<<");
       const updateProfile = await UserProfile.update({
         bmi: callBMI.data.bmi,
         health: callBMI.data.health,
         healthy_bmi_range: callBMI.data.healthy_bmi_range
+      }, {
+        where: {UserId}
       })
-      console.log({updateProfile});
+      console.log(updateProfile, "<<<<<<<<<<<<");
       const log = await Log.create({
         height,
         weight,
         UserId,
-        LevelId: updateProfile.LevelId,
-        bmi: updateProfile.bmi,
-        health: updateProfile.health,
+        LevelId: profile.LevelId,
+        bmi: callBMI.data.bmi,
+        health: callBMI.data.health,
       });
       res.status(201).json(log);
     } catch (error) {

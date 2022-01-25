@@ -523,7 +523,7 @@ test("[PUT/api/contents/:id ERROR] - should be return object with status code 40
 })   
 
 // // // PATCH CONTENT
-test("[PATCH/api/contents/:id success] - should be return object with status code 200", (done) =>{
+test("[PATCH/api/contents/:id success] - status like should be return object with status code 200", (done) =>{
     request(app)
     .patch("/api/contents/1")
     .set("access_token",access_token)
@@ -548,6 +548,34 @@ test("[PATCH/api/contents/:id success] - should be return object with status cod
         console.log(err)
      })
 })
+
+test("[PATCH/api/contents/:id success] - status not like should be return object with status code 200", (done) =>{
+    request(app)
+    .patch("/api/contents/1")
+    .set("access_token",access_token)
+    .send({
+        statusLike: "not like",
+     })
+    .then((resp) =>{
+        
+        expect(resp.status).toBe(200)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("title")
+        expect(resp.body).toHaveProperty("description")
+        expect(resp.body).toHaveProperty("youtubeUrl")
+        expect(resp.body).toHaveProperty("likes")
+        expect(resp.body).toHaveProperty("statusLike")
+      
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+     })
+})
+
+
 
 test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
     request(app)

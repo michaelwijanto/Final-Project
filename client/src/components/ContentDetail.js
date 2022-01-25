@@ -132,6 +132,10 @@ export default function ContentDetail({ navigation, route }) {
     refetchQueries: [GET_USER_CONTENT_ID],
   });
 
+  // useEffect(() => {
+  //   console.log(status);
+  // }, [status]);
+
   const { loading, error, data } = useQuery(GET_CONTENT_DETAIL, {
     variables: {
       accessToken: accesstoken,
@@ -143,6 +147,8 @@ export default function ContentDetail({ navigation, route }) {
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
+  // if (loadingContent) return <Text>Loading...</Text>;
+  // if (errorContent) return <Text>Error...</Text>;
 
   const handleFinish = async (e) => {
     e.preventDefault();

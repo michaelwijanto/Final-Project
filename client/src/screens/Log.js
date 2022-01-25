@@ -48,7 +48,9 @@ export default function Log({ navigation }) {
     },
   })
   console.log({ loading, data, error });
-  const [postUserLog, {}] = useMutation(POST_USER_LOG);
+  const [postUserLog, {}] = useMutation(POST_USER_LOG, {
+    refetchQueries: [GET_USER_LOGS]
+  });
   const onSubmitLog = async (e) => {
     try {
       e.preventDefault();
