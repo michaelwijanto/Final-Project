@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useMutation } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -23,17 +23,20 @@ import {
 
 // Component
 import { SIGN_IN } from "../../mutations";
+import { TouchableOpacity } from "react-native";
 
 export default function SignIn({ navigation, route }) {
   const toast = useToast();
   // const [successActivate, showSuccessActivate] = useState(null);
   useEffect(() => {
     if (route.params?.message) {
+      console.log("MASUK");
       toast.show({
         title: "Success Activated Your Account",
         status: "success",
-        placement: "top"
-      })
+        placement: "top",
+        description: "You can sign in to Active8 now"
+      });
     }
   }, []);
 
@@ -66,12 +69,16 @@ export default function SignIn({ navigation, route }) {
             ...newError,
             message: errors,
           });
+          console.log("SALAH");
+          setIsLogin(true)
+          setTimeout(() => {
+            setIsLogin(false)
+          }, 2000);
         } else {
-          setIsLogin(true);
           console.log({ res });
-          const {access_token, isRegister} = res.data?.signInUser;
+          const { access_token, isRegister } = res.data?.signInUser;
           storeData("@access_token", access_token);
-          if(isRegister === "true") navigation.navigate("ContentContainer");
+          if (isRegister === "true") navigation.navigate("ContentContainer");
           else navigation.navigate("UserProfileStack");
         }
       })
@@ -89,7 +96,7 @@ export default function SignIn({ navigation, route }) {
     // Invoking Local Storage
     getStorage();
     setLoading(false);
-    removeStorage('@access_token')
+    removeStorage("@access_token");
   }, []);
 
   // Local Storage
@@ -141,41 +148,6 @@ export default function SignIn({ navigation, route }) {
           </HStack>
         ) : (
           <Box safeArea p="2" py="8" w="90%" maxW="290">
-            {/* {successActivate && (
-              <Alert w="100%" status="info" colorScheme="info">
-                <VStack space={2} flexShrink={1} w="100%">
-                  <HStack
-                    flexShrink={1}
-                    space={2}
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <HStack flexShrink={1} space={2} alignItems="center">
-                      <Alert.Icon />
-                      <Text
-                        fontSize="md"
-                        fontWeight="medium"
-                        color="coolGray.800"
-                      >
-                        Success Activated Your Account
-                      </Text>
-                    </HStack>
-                    <IconButton
-                      variant="unstyled"
-                      icon={<CloseIcon size="3" color="coolGray.600" />}
-                    />
-                  </HStack>
-                  <Box
-                    pl="6"
-                    _text={{
-                      color: "coolGray.600",
-                    }}
-                  >
-                    You can sign in to Active8 now!
-                  </Box>
-                </VStack>
-              </Alert>
-            )} */}
             <Heading
               size="2xl"
               fontWeight="600"
@@ -219,35 +191,38 @@ export default function SignIn({ navigation, route }) {
                           {newError.message}
                         </Text>
                       </HStack>
-                      {/* <IconButton
-                            variant="unstyled"
-                            icon={<CloseIcon size="3" color="coolGray.600" />}
-                          /> */}
+                      {/* <TouchableOpacity onPress={() => console.log("CLICKED")}>
+                        <IconButton
+                          variant="unstyled"
+                          icon={<CloseIcon size="3" color="coolGray.600" />}
+                        />
+                      </TouchableOpacity> */}
                     </HStack>
                   </VStack>
                 </Alert>
               ) : (
                 route.params && (
-                  <Alert w="100%" status={route.params.status}>
-                    <VStack space={2} flexShrink={1} w="100%">
-                      <HStack
-                        flexShrink={1}
-                        space={2}
-                        justifyContent="space-between"
-                      >
-                        <HStack space={2} flexShrink={1}>
-                          <Alert.Icon mt="1" />
-                          <Text
-                            fontSize="md"
-                            textAlign="center"
-                            color="coolGray.800"
-                          >
-                            {route.params.message}
-                          </Text>
-                        </HStack>
-                      </HStack>
-                    </VStack>
-                  </Alert>
+                  <Fragment></Fragment>
+                  // <Alert w="100%" status={route.params.status}>
+                  //   <VStack space={2} flexShrink={1} w="100%">
+                  //     <HStack
+                  //       flexShrink={1}
+                  //       space={2}
+                  //       justifyContent="space-between"
+                  //     >
+                  //       <HStack space={2} flexShrink={1}>
+                  //         <Alert.Icon mt="1" />
+                  //         <Text
+                  //           fontSize="md"
+                  //           textAlign="center"
+                  //           color="coolGray.800"
+                  //         >
+                  //           {route.params.message}
+                  //         </Text>
+                  //       </HStack>
+                  //     </HStack>
+                  //   </VStack>
+                  // </Alert>
                 )
               )}
               <FormControl>
