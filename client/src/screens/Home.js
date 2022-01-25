@@ -13,7 +13,7 @@ import {
   HStack,
   useToast,
   IconButton,
-  CloseIcon,
+  Pressable,
 } from "native-base";
 
 // Components
@@ -22,7 +22,7 @@ import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
 export default function Home({ navigation, route }) {
-  const toast = useToast()
+  const toast = useToast();
   useEffect(() => {
     getStorage();
   }, []);
@@ -50,16 +50,22 @@ export default function Home({ navigation, route }) {
       _light={{ backgroundColor: "#F5F8FA" }}
     >
       <ScrollView style={styles.top}>
-        <Box width="100%">
-          <Image
-            style={styles.imageBanner}
-            source={{
-              uri: "https://t3.ftcdn.net/jpg/04/08/48/48/360_F_408484833_ZOWxFI9nWYOcBveh2FWIJ1F6z60PsQ1I.jpg",
-            }}
-            alt="Alternate Text"
-            // size="xl"
-          />
-        </Box>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("SubcribePage");
+          }}
+        >
+          <Box width="100%">
+            <Image
+              style={styles.imageBanner}
+              source={{
+                uri: "https://t3.ftcdn.net/jpg/04/08/48/48/360_F_408484833_ZOWxFI9nWYOcBveh2FWIJ1F6z60PsQ1I.jpg",
+              }}
+              alt="Alternate Text"
+              // size="xl"
+            />
+          </Box>
+        </Pressable>
         <Box style={styles.boxPrograms}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Programs</Text>
@@ -83,9 +89,7 @@ export default function Home({ navigation, route }) {
             <Text style={styles.textPrograms}>Articles</Text>
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
-          <Box style={styles.programsCard}>
-            {/* <Articles /> */}
-          </Box>
+          <Box style={styles.programsCard}>{/* <Articles /> */}</Box>
         </Box>
       </ScrollView>
     </Box>

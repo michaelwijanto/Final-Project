@@ -19,6 +19,7 @@ import {
 export default function Profile({ navigation }) {
   const handlePayment = (price) => {
     console.log(+price);
+    navigation.navigate("SubcribePage");
   };
 
   return (

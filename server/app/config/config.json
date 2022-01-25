@@ -1,11 +1,7 @@
 {
   "development": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "postgres",
-=======
-    "password": "admin123",
->>>>>>> bb785a0bda7a29db2ddbbb13c22bc8a68603de1a
     "database": "Active8",
     "host": "localhost",
     "dialect": "postgres"
