@@ -15,6 +15,7 @@ import SignUp from "./src/screens/SignUp";
 import UserProfileStack from "./src/StackScreen/UserProfileStack";
 import Activate from "./src/screens/Activate";
 import ContentContainer from "./src/appChilds/ContentContainer";
+import SubcriptionLandingPage from "./src/screens/SubscriptionLandingPage";
 // import Payment from "./src/screens/Payment";
 
 const Stack = createNativeStackNavigator();
@@ -25,8 +26,8 @@ function App() {
     <ApolloProvider client={client}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -61,8 +62,18 @@ function App() {
                 headerShown: false,
               }}
             />
+            <Stack.Screen
+              name="SubcribePage"
+              component={SubcriptionLandingPage}
+              options={{
+                headerShown: true,
+                title: "Get FIT with Active8!",
+                headerStyle: {
+                  backgroundColor: "#b9d0df",
+                },
+              }}
+            />
           </Stack.Navigator>
-          
         </NavigationContainer>
       </NativeBaseProvider>
     </ApolloProvider>

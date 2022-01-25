@@ -46,6 +46,7 @@ export const GET_LEVEL = gql`
       id
       name
       thumbnail
+      description
     }
   }
 `;

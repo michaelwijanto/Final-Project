@@ -8,9 +8,16 @@ import ContentHorizontal from "../components/ContentHorizontal";
 
 export default function AboutScreen({ navigation }) {
   return (
-    <Box style={styles.container}>
+    <Box
+      style={styles.container}
+      _dark={{
+        borderColor: "coolGray.900",
+        backgroundColor: "#1C2F3C",
+      }}
+      _light={{ backgroundColor: "#F5F8FA" }}
+    >
       <ScrollView>
-        <View style={styles.container2}>
+        <View marginTop="2" style={styles.container2}>
           <View
             style={{
               flexDirection: "row",
@@ -19,11 +26,11 @@ export default function AboutScreen({ navigation }) {
           >
             <Text
               style={{
-                marginTop: 10,
-                fontWeight: "bold",
-                fontSize: 25,
-                color: "grey",
+                // marginTop: 10,
+                fontSize: 22,
+                color: "#1C2F3C",
                 alignItems: "flex-start",
+                paddingLeft: 10,
               }}
             >
               Levels
@@ -41,25 +48,12 @@ export default function AboutScreen({ navigation }) {
           >
             <Text
               style={{
-                marginTop: 10,
-                fontWeight: "bold",
-                fontSize: 25,
-                color: "grey",
-                alignItems: "flex-start",
+                paddingLeft: 10,
+                fontSize: 22,
+                color: "#1C2F3C",
               }}
             >
               Programs
-            </Text>
-            <Text
-              style={{
-                marginTop: 10,
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "grey",
-                alignItems: "flex-start",
-              }}
-            >
-              View all
             </Text>
           </View>
           <Box style={styles.programsCard}>
@@ -77,26 +71,15 @@ export default function AboutScreen({ navigation }) {
           >
             <Text
               style={{
-                marginTop: 10,
-                fontWeight: "bold",
-                fontSize: 25,
-                color: "grey",
+                paddingLeft: 10,
+                fontSize: 22,
+                color: "#1C2F3C",
                 alignItems: "flex-start",
               }}
             >
               Coaches
             </Text>
-            <Text
-              style={{
-                marginTop: 10,
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "grey",
-                alignItems: "flex-start",
-              }}
-            >
-              View all
-            </Text>
+            
           </View>
           <Box style={styles.programsCard}>
             <CoachHorizontal navigation={navigation} />
@@ -122,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     padding: 10,
-    marginTop: 20,
+    marginTop: 15,
     paddingBottom: 20,
   },
   imagetop: {

@@ -20,6 +20,7 @@ function HomeStackScreen() {
         component={HomeScreen}
         options={{
           title: "Active8",
+          headerTitleAlign: "center",
         }}
       />
       <HomeStack.Screen

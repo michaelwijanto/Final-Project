@@ -10,6 +10,8 @@ import {
   Text,
   IconButton,
   Icon,
+  Modal,
+  Button,
 } from "native-base";
 
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -20,6 +22,7 @@ import { GET_CONTENT_CARD } from "../../queries";
 
 export default function ContentHorizontal({ navigation }) {
   const [access_token, setAccessToken] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   // Buat narik Access Token
   const getStorage = async () => {
@@ -53,6 +56,11 @@ export default function ContentHorizontal({ navigation }) {
   const subscription = "false";
 
   const handleOnContent = (id) => {};
+
+  const handleSubs = () => {
+    navigation.navigate("SubcribePage");
+    setShowModal(false);
+  };
 
   return (
     <FlatList
@@ -102,7 +110,7 @@ export default function ContentHorizontal({ navigation }) {
             </Box>
             <Box style={styles.iconContent}>
               {(() => {
-                if(item.LevelId == 1){
+                if (item.LevelId == 1) {
                   return (
                     <IconButton
                       paddingTop="-5"
@@ -138,7 +146,7 @@ export default function ContentHorizontal({ navigation }) {
                       }
                     />
                   );
-                }else {
+                } else {
                   if (subscription == "true") {
                     return (
                       <IconButton
@@ -177,38 +185,56 @@ export default function ContentHorizontal({ navigation }) {
                     );
                   } else {
                     return (
-                      <IconButton
-                        paddingTop="-5"
-                        icon={<Icon as={MaterialIcons} name="lock" />}
-                        borderRadius="full"
-                        _icon={{
-                          color: "orange.500",
-                          size: "md",
-                        }}
-                        _hover={{
-                          bg: "orange.600:alpha.20",
-                        }}
-                        _pressed={{
-                          bg: "orange.600:alpha.20",
-                          _icon: {
-                            name: "lock",
-                          },
-                          _ios: {
+                      <>
+                        <IconButton
+                          paddingTop="-5"
+                          icon={<Icon as={MaterialIcons} name="lock" />}
+                          borderRadius="full"
+                          _icon={{
+                            color: "gray.500",
+                            size: "md",
+                          }}
+                          _hover={{
+                            bg: "orange.600:alpha.20",
+                          }}
+                          _pressed={{
+                            bg: "orange.600:alpha.20",
+                            _icon: {
+                              name: "lock",
+                            },
+                            _ios: {
+                              _icon: {
+                                size: "lg",
+                              },
+                            },
+                          }}
+                          _ios={{
                             _icon: {
                               size: "lg",
                             },
-                          },
-                        }}
-                        _ios={{
-                          _icon: {
-                            size: "lg",
-                          },
-                        }}
-                         onPress={() => alert('PLEASE SUBSCRIPTION, GO TO PROFILE !!!')}
-                      />
+                          }}
+                          onPress={() => setShowModal(true)}
+                        ></IconButton>
+                        <Modal
+                          isOpen={showModal}
+                          onClose={() => setShowModal(false)}
+                        >
+                          <Modal.Content maxWidth="300px" maxHeight="200px">
+                            <Modal.CloseButton />
+                            <Modal.Header>
+                              Subscribe to continue
+                              <Button
+                                marginTop="2"
+                                onPress={() => handleSubs(false)}
+                              >
+                                Join
+                              </Button>
+                            </Modal.Header>
+                          </Modal.Content>
+                        </Modal>
+                      </>
                     );
                   }
-
                 }
               })()}
             </Box>

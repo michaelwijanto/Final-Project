@@ -157,8 +157,8 @@ export default function Log({ navigation }) {
         keyExtractor={(item) => item.id}
       />
       <Box style={{ position: "absolute", bottom: 15, alignSelf: "center" }}>
-        <Button onPress={() => setShowModal(true)}>
-          <MaterialIcons name="add" size={24} color="black" />
+        <Button colorScheme="lightBlue" onPress={() => setShowModal(true)}>
+          <MaterialIcons name="add" size={24} color="white" />
         </Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="400px">
