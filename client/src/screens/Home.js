@@ -3,18 +3,7 @@ import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
-import {
-  Box,
-  Image,
-  Text,
-  ScrollView,
-  Alert,
-  VStack,
-  HStack,
-  useToast,
-  IconButton,
-  CloseIcon,
-} from "native-base";
+import { Box, Image, Text, ScrollView, Alert, VStack, HStack, useToast, IconButton, CloseIcon } from "native-base";
 
 // Components
 import LevelHorizontal from "../components/LevelHorizontalHome";
@@ -22,16 +11,16 @@ import CoachHorizontal from "../components/CoachHorizontalHome";
 import Articles from "../components/Articles";
 
 export default function Home({ navigation, route }) {
-  const toast = useToast()
+  const toast = useToast();
   // const [showBMI, setShowBMI] = useState(null);
-  useEffect( async () => {
-    const hasilBMI = await AsyncStorage.getItem("@hasilBMI")
+  useEffect(async () => {
+    const hasilBMI = await AsyncStorage.getItem("@hasilBMI");
     if (hasilBMI) {
       console.log("ADA BMI");
       // toast.show({title: "Your BMI", description: hasilBMI, placement: "top"})
       // setShowBMI(hasilBMI);
     }
-  }, [])
+  }, []);
   useEffect(() => {
     getStorage();
   }, []);
