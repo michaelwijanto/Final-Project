@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import { StyleSheet, View } from "react-native";
-import { IconButton, Icon, Text, Box, Pressable } from "native-base";
-
+import { Text, Box, Pressable } from "native-base";
+import { useMutation } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_DETAIL } from "../../queries";
-import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
+import YoutubePlayer from "react-native-youtube-iframe";
+import { PATCH_LIKE } from "../../mutations";
+import { GET_USER_CONTENT_ID } from "../../queries"; 
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -15,10 +17,23 @@ export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
   const [selected, setSelected] = useState(0);
   // const [toggleValue, setToggleValue] = useState(false);
+  const [status, setStatus] = useState("started");
+  // const [
+  //   PostUserContent,
+  //   {
+  //     data: dataPostUserContent,
+  //     loading: loadingPostUserContent,
+  //     error: errorPostUserContent,
+  //   },
+  // ] = useMutation(POST_USER_CONTENT);
 
   useEffect(() => {
     console.log(selected);
   }, [selected]);
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
 
   const { loading, error, data } = useQuery(GET_CONTENT_DETAIL, {
     variables: {
@@ -27,18 +42,64 @@ export default function ContentDetail({ navigation, route }) {
       contentId: id,
     },
   });
+  const {
+    loading: loadingContent,
+    error: errorContent,
+    data: ContentData,
+  } = useQuery(GET_USER_CONTENT_ID, {
+    variables: {
+      accessToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+      contentId: id,
+    },
+  });
+
+  const [newDataUserContent, setNewDataUserContent] = useState();
+
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
+  if (loadingContent) return <Text>Loading...</Text>;
+  if (errorContent) return <Text>Error...</Text>;
 
-  const handleOnPress = (e) => {
+  const handleFinish = async (e) => {
+    e.preventDefault();
+    // if (ContentData.getUserContentById == null) {
+    //   setNewDataUserContent("set");
+    //   console.log(id, "masuk pertama");
+    //   if (!newDataUserContent) {
+    //     console.log("masuk baru");
+    //     const postContentToUser = await PostUserContent({
+    //       variables: {
+    //         accessToken:
+    //           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhcmllc2FzdHJhQG1haWwuY29tIiwiZnVsbE5hbWUiOiJBcmllIFNhc3RyYSIsInJvbGUiOiJhZG1pbiIsImlzUmVnaXN0ZXIiOiJmYWxzZSIsImlhdCI6MTY0MjkyMzU0NH0.7SQe4pqsA5JqGjbxfyF0y7Rf9t6dgx_VrxNbh76igxQ",
+    //         contentId: id,
+    //       },
+    //     });
+
+    //     console.log(postContentToUser);
+    //   } else {
+    //     console.log("udah ada di use effect abis if content");
+    //   }
+    // } else {
+    //   console.log("udah ada");
+    // }
+
+    // try {
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
+
+  // const status = "start";
+
+  const handleLike = (e) => {
     e.preventDefault();
     if (selected == 0) {
-      setSelected(1);
+      if (get) setSelected(1);
     } else {
       setSelected(0);
     }
   };
-
   return (
     <View>
       <YoutubePlayer height={250} videoId={data.getContentById.youtubeUrl} />
@@ -48,7 +109,7 @@ export default function ContentDetail({ navigation, route }) {
         </View>
         <Box style={styles.containerLike}>
           <Text style={styles.like}>
-            <Pressable onPress={(e) => handleOnPress(e)}>
+            <Pressable onPress={(e) => handleOnPress(e)} >
               {selected ? (
                 <Ionicons
                   style={styles.buttonLike}
@@ -71,7 +132,7 @@ export default function ContentDetail({ navigation, route }) {
         <Text style={styles.titleDescription}>Description</Text>
 
         <Text style={styles.description}>
-          {data.getContentById.description}
+          description
         </Text>
       </View>
     </View>

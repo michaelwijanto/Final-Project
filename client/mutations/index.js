@@ -63,3 +63,12 @@ export const ACTIVATE = gql`
     }
   }
 `;
+
+export const PATCH_LIKE = gql`
+mutation PatchLikeContent($accessToken: String, $statusLike: String, $contentId: ID) {
+  patchLikeContent(access_token: $accessToken, statusLike: $statusLike, ContentId: $contentId) {
+    message
+    error
+  }
+}
+`;

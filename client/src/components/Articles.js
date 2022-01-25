@@ -61,64 +61,67 @@ export default function Articles({ navigation }) {
     <Box>
       {data.map((item, index) => {
         if (index < 5) {
-          return (
-            <Pressable
-              // onPress={() => handlePress()}
-              key={index}
-            >
-              <Box
-                w="380"
-                h="230"
-                rounded="lg"
-                overflow="hidden"
-                marginTop="3"
-                _dark={{
-                  borderColor: "gray.800",
-                  backgroundColor: "gray.800",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "primary.50",
-                }}
-                marginRight="5"
-                borderColor="gray.300"
-                borderWidth="1"
-              >
-                <Box h="150" w="500">
-                  <AspectRatio>
-                    <Image
-                      h="150"
-                      w="400"
-                      // maxW="100%"
-                      // borderColor="white"
-                      borderWidth="1"
-                      source={{
-                        uri: item.image_url,
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
+          
 
-                <Stack p="1">
-                  <Stack>
-                    <Heading
-                      size="sm"
-                      ml="-1"
-                      paddingLeft="5"
-                      justifyContent="center"
-                      marginTop="4"
-                    >
-                      {item.title}
-                    </Heading>
+            return (
+              <Pressable
+                // onPress={() => handlePress()}
+                key={index}
+              >
+                <Box
+                  w="380"
+                  h="230"
+                  rounded="lg"
+                  overflow="hidden"
+                  marginTop="3"
+                  _dark={{
+                    borderColor: "gray.800",
+                    backgroundColor: "gray.800",
+                  }}
+                  _web={{
+                    shadow: 2,
+                    borderWidth: 0,
+                  }}
+                  _light={{
+                    backgroundColor: "primary.50",
+                  }}
+                  marginRight="5"
+                  borderColor="gray.300"
+                  borderWidth="1"
+                >
+                  <Box h="150" w="500">
+                    <AspectRatio>
+                      <Image
+                        h="150"
+                        w="400"
+                        // maxW="100%"
+                        // borderColor="white"
+                        borderWidth="1"
+                        source={{
+                          uri: item.image_url,
+                        }}
+                        alt="image"
+                      />
+                    </AspectRatio>
+                  </Box>
+  
+                  <Stack p="1">
+                    <Stack>
+                      <Heading
+                        size="sm"
+                        ml="-1"
+                        paddingLeft="5"
+                        justifyContent="center"
+                        marginTop="4"
+                      >
+                        {item.title}
+                      </Heading>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Box>
-            </Pressable>
-          );
+                </Box>
+              </Pressable>
+            );
+        
         }
       })}
     </Box>
