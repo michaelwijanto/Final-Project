@@ -84,7 +84,7 @@ export default function Home({ navigation, route }) {
             <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
-            <Articles />
+            {/* <Articles /> */}
           </Box>
         </Box>
       </ScrollView>

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
+// import { StripeProvider } from "@stripe/stripe-react-native";
+// const SERVER_URL_METRO = "http://192.168.1.2:3000";
 
 // Native Base
 import {
@@ -11,15 +13,14 @@ import {
   Badge,
   Button,
   Center,
-  ScrollView
+  ScrollView,
 } from "native-base";
 
 export default function Profile({ navigation }) {
-
   const handlePayment = (price) => {
     console.log(+price);
   };
-  
+
   return (
     <Box
       style={styles.container}
@@ -57,10 +58,8 @@ export default function Profile({ navigation }) {
       </Box>
       <ScrollView style={styles.section2}>
         <Center>
-          <Text style={styles.price}>
-            Rp. 199,000
-          </Text>
-          <Button 
+          <Text style={styles.price}>Rp. 199,000</Text>
+          <Button
             w="100%"
             size="lg"
             colorScheme="gray"
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   top: {
     marginTop: 25,
     marginHorizontal: 25,
-    justifyContent:'center'
+    justifyContent: "center",
   },
   appBarStyle: {
     top: 0,
@@ -102,17 +101,17 @@ const styles = StyleSheet.create({
   section2: {
     height: 450,
     marginHorizontal: 25,
-    marginTop: 20,    
-    flex: 1
+    marginTop: 20,
+    flex: 1,
   },
   center: {
     marginVertical: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   price: {
     height: 100,
     fontSize: 35,
     fontWeight: "bold",
-    padding: 35
+    padding: 35,
   },
 });
