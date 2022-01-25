@@ -153,6 +153,7 @@ class UserController {
     try {
       const result = await Level.findAll();
 
+      console.log(result);
       res.status(200).json(result);
     } catch (err) {
       next(err);

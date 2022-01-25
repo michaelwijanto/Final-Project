@@ -19,6 +19,8 @@ import {
 // Components
 import LevelHorizontal from "../components/LevelHorizontalHome";
 import CoachHorizontal from "../components/CoachHorizontalHome";
+import LogCard from "../components/LogCardHome";
+import MacroCard from "../components/MacroCardHome";
 import Articles from "../components/Articles";
 
 export default function Home({ navigation, route }) {
@@ -69,27 +71,49 @@ export default function Home({ navigation, route }) {
         <Box style={styles.boxPrograms}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Programs</Text>
-            <Text style={styles.textViewAll}>View all</Text>
+            <Pressable onPress={() => navigation.navigate("Contents")}>
+              <Text style={styles.textViewAll}>View all</Text>
+            </Pressable>
           </Box>
           <Box style={styles.programsCard}>
             <LevelHorizontal navigation={navigation} />
           </Box>
         </Box>
-        <Box style={styles.boxCoach}>
+        {/* <Box style={styles.boxCoach}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Coaches</Text>
-            <Text style={styles.textViewAll}>View all</Text>
           </Box>
           <Box style={styles.programsCard}>
             <CoachHorizontal navigation={navigation} />
+          </Box>
+        </Box> */}
+        <Box style={styles.boxCoach} paddingBottom="5">
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>Track Your Progress</Text>
+          </Box>
+          <Box style={styles.programsCard}>
+            <Pressable onPress={() => navigation.navigate("Log")}>
+              <LogCard navigation={navigation} />
+            </Pressable>
+          </Box>
+        </Box>
+        <Box style={styles.boxCoach} paddingBottom="5">
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>Maintain Your Calorie</Text>
+          </Box>
+          <Box style={styles.programsCard}>
+            <Pressable onPress={() => navigation.navigate("Macro")}>
+              <MacroCard navigation={navigation} />
+            </Pressable>
           </Box>
         </Box>
         <Box style={styles.boxArticle}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Articles</Text>
-            <Text style={styles.textViewAll}>View all</Text>
           </Box>
-          <Box style={styles.programsCard}>{/* <Articles /> */}</Box>
+          <Box style={styles.programsCard}>
+             {/* <Articles />  */}
+            </Box>
         </Box>
       </ScrollView>
     </Box>

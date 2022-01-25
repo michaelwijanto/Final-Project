@@ -63,7 +63,7 @@ export default function Profile({ navigation }) {
           <Button
             w="100%"
             size="lg"
-            colorScheme="gray"
+            colorScheme="lightBlue"
             onPress={() => handlePayment(199000)}
           >
             Subscribe Now

@@ -18,6 +18,7 @@ function LogStackScreen() {
         component={LogScreen}
         options={{
           title: "Log",
+          headerTitleAlign: "center",
         }}
       />
     </LogStack.Navigator>
