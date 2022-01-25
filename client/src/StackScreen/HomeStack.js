@@ -33,7 +33,6 @@ function HomeStackScreen() {
         name="CoachChat"
         component={CoachChat}
         options={({ route, navigation }) => ({
-          tabBarVisible: true,
           title: `Chat with ${route.params.coachName}`,
         })}
       />

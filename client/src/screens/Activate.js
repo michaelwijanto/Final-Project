@@ -1,13 +1,22 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ACTIVATE } from "../../mutations";
-import { Box, Text, Heading, FormControl, Input, Alert, Button, HStack, VStack, Center, NativeBaseProvider } from "native-base";
+import { useToast, Box, Text, Heading, FormControl, Input, Alert, Button, HStack, VStack, Center, NativeBaseProvider } from "native-base";
 
 export default function Activate({ navigation }) {
   const [pin, setPin] = useState("");
   const [ActivateUser, { data, loading, error }] = useMutation(ACTIVATE);
   const [newError, setNewError] = useState([]);
-
+  const toast = useToast()
+  useEffect(() => {
+    toast.show({
+      title: "Activate Your Account",
+      status: "info",
+      description: "Your activation pin has been sent to your email",
+      placement: "top"
+    })
+  }, []);
+  
   const submitPin = async (e) => {
     try {
       e.preventDefault();
@@ -19,13 +28,15 @@ export default function Activate({ navigation }) {
       });
 
       if (activate.data.activateUser.error) {
+        console.log("FAILED");
         const errors = activate.data.activateUser.error;
         setNewError(errors);
       } else {
+        console.log("SUCCESS");
         const success = activate.data.activateUser.message;
         navigation.navigate("SignIn", {
-          message: success,
-          status: "success",
+          message: true,
+          status: "success"
         });
       }
     } catch (err) {

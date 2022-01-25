@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -36,12 +37,15 @@ export default function Log({ navigation }) {
     height: 0,
     weight: 0,
   });
+  const [accessToken, setAccessToken] = useState(null)
+  useEffect(async () => {
+    setAccessToken(await AsyncStorage.getItem("@access_token"))
+  }, [])
   const { loading, data, error } = useQuery(GET_USER_LOGS, {
     variables: {
-      accessToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
+      accessToken: accessToken
     },
-  });
+  })
   const [postUserLog, {}] = useMutation(POST_USER_LOG);
   const onSubmitLog = async (e) => {
     try {
@@ -50,8 +54,7 @@ export default function Log({ navigation }) {
       console.log({ formLog });
       const createLog = await postUserLog({
         variables: {
-          accessToken:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ0b25kaWtpQG1haWwuY29tIiwiZnVsbE5hbWUiOiJUb25kaWtpIiwicm9sZSI6ImFkbWluIiwiaXNSZWdpc3RlciI6ImZhbHNlIiwiaWF0IjoxNjQyOTQ2OTcxfQ.drjd-3H9z6JeDXVyQgm1m_P195mfCYBrT2IARq8tOcg",
+          accessToken,
           height: formLog.height,
           weight: formLog.weight,
         },

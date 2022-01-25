@@ -22,6 +22,7 @@ class UserController {
       isActivated: "false",
     };
 
+    console.log({newUser});
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -46,6 +47,7 @@ class UserController {
 
     try {
       let created = await User.create(newUser);
+      console.log("SINI");
       res.status(201).json({
         id: created.id,
         fullName: created.fullName,
@@ -79,10 +81,12 @@ class UserController {
         fullName: user.fullName,
         role: user.role,
         isRegister: user.isRegister,
+        isActivated: user.isActivated,
       };
       const token = sign(payload);
       res.status(200).json({
         access_token: token,
+        isRegister: user.isRegister
       });
     } catch (err) {
       next(err);
@@ -139,7 +143,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -149,7 +153,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
@@ -162,7 +166,7 @@ class UserController {
 
       res.status(200).json(result);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }
