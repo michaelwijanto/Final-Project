@@ -25,7 +25,7 @@ class userProfilesController {
         gender,
         dateBirth,
         goals,
-        UserId
+        UserId,
       });
 
       if (
@@ -50,7 +50,7 @@ class userProfilesController {
       let birthDate = new Date(year, month, day);
       let age = today.getFullYear() - birthDate.getFullYear();
 
-      console.log({age});
+      console.log({ age });
       let callBMI = await axios({
         method: "GET",
         url: "https://fitness-calculator.p.rapidapi.com/bmi",
@@ -61,7 +61,7 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-      console.log({callBMI});
+      console.log({ callBMI });
       if (
         callBMI.data.data.health == "Severe Thinness" ||
         callBMI.data.data.health == "Moderate Thinness" ||
@@ -86,6 +86,9 @@ class userProfilesController {
           dateBirth: birthDate,
           goals,
           LevelId,
+          bmi: callBMI.data.data.bmi,
+          health: callBMI.data.data.health,
+          healthy_bmi_range: callBMI.data.data.healthy_bmi_range,
         },
         { transaction: t }
       );
@@ -95,7 +98,8 @@ class userProfilesController {
         {
           height,
           weight,
-          activityLevel,
+          bmi: postUserProfile.bmi,
+          health: postUserProfile.health,
           UserId,
           LevelId,
         },

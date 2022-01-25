@@ -48,3 +48,18 @@ saya nambahin constrain UserContent di Model user
 
 [v] Setup Orchestrator GQL
 [v] CRUD menyesuaikan Express Server
+
+
+
+### REVISI
+
+# Migrations
+- UserProfile:
+  (+) bmi,
+  (+) health,
+  (+) healthy_bmi_range
+
+- Log:
+  (-) activityLevel:
+  (+) bmi,
+  (+) health,

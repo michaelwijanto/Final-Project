@@ -34,6 +34,14 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade",
       },
+      bmi: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      health: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
