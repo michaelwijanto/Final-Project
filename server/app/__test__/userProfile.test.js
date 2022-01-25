@@ -273,7 +273,24 @@ test("[PATCH/api/user-profiles/updateSubs success] - should be return object wit
      })
 })
 
-   
+// test("[PATCH/api/user-profiles/updateSubs ERROR]  - should be return object with status code 500", (done) =>{
+//   jest.spyOn(UserProfile, 'update').mockRejectedValue('Error')
+//   request(app)
+//   .get("/api/user-profiles/updateSubs")
+//   .set("access_token",access_token)
+//   .then((resp) =>{
+//       expect(resp.status).toBe(500)
+//       expect(resp.body).toEqual(expect.any(Object))
+//       expect(resp.body).toHaveProperty("error")
+//       expect(resp.body.error).toBe('Internal server error')
+      
+      
+//       done()
+//   })
+//   .catch((err) =>{
+//       console.log(err)
+//   })
+// })  
     
 test("[PATCH/api/user-profiles/updateSubs ERROR] - should be return object with status code 401", (done) =>{
         request(app)
