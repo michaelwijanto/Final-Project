@@ -49,7 +49,9 @@ export default function CoachDetail({ navigation, route }) {
             colorScheme="gray"
             mt={10}
             onPress={() => navigation.navigate('CoachChat', {
-              coachName: coachName
+              coachName: coachName,
+              coachImage: data.getCoachDetail.imgCoach,
+              id: data.getCoachDetail.id
             })}
           >
             Start Chat Now
