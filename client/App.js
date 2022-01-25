@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NativeBaseProvider } from "native-base";
-// import { StripeProvider } from "@stripe/stripe-react-native";
 
 // Apollo Client
 import { ApolloProvider } from "@apollo/client";
