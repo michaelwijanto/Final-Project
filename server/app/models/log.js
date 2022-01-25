@@ -30,13 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {msg: "Weight Required"}
       }
     },
-    activityLevel: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: {
-        notNull: {msg: "Activity Level Required"}
-      }
-    },
     LevelId: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -50,6 +43,22 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {msg: "User Id Required"}
       }
+    },
+    bmi: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: { msg: "BMI Required" },
+        notEmpty: { msg: "BMI Required" },
+      },
+    },
+    health: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notNull: { msg: "Health Required" },
+        notEmpty: { msg: "Health Required" },
+      },
     },
   }, {
     sequelize,

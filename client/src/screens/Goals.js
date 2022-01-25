@@ -65,7 +65,7 @@ export default function Goals({ navigation, route }){
       });
       console.log("DI SINI");
       console.log({ sendUserProfile });
-      await AsyncStorage.setItem("@hasilBMI", sendUserProfile.data.postUserProfile.message);
+      // await AsyncStorage.setItem("@hasilBMI", sendUserProfile.data.postUserProfile.message);
       navigation.navigate("ContentContainer")
     } catch (err) {
       console.log({ err });
@@ -111,7 +111,7 @@ export default function Goals({ navigation, route }){
                   endIcon: <CheckIcon size={5} />,
                 }}
               >
-                <Select.Item label="maintain weight" value={1} key="maintain" />
+                <Select.Item label="maintain weight" value="main" key={1} />
                 <Select.Item
                   label="Mild weight loss"
                   value="mildlose"

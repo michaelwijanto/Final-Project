@@ -15,6 +15,9 @@ const typeDefs = gql`
     dateBirth: String
     LevelId: String
     goals: String
+    bmi: String
+    health: String
+    healthy_bmi_range: String
     createdAt: String
     updatedAt: String
     Level: Level
@@ -25,7 +28,8 @@ const typeDefs = gql`
     id: ID
     height: String
     weight: String
-    activityLevel: String
+    bmi: String
+    health: String
     LevelId: ID
     UserId: ID
     createdAt: String

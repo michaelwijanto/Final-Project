@@ -24,7 +24,9 @@ import {
 
 export const Example = ({ navigation }) => {
   const toast = useToast();
-  const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
+  const [postMacro, {}] = useMutation(POST_MACRO);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null)
   const [formMacro, setFormMacro] = useState({
     gender: "",
     age: 0,
@@ -41,17 +43,11 @@ export const Example = ({ navigation }) => {
   const onSubmitMacro = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true)
       console.log("SUBMIT");
-      console.log({ formMacro });
+      console.log( formMacro );
       const sendMacro = await postMacro({
-        variables: {
-          age: formMacro.age,
-          gender: formMacro.gender,
-          height: formMacro.height,
-          weight: formMacro.weight,
-          activitylevel: formMacro.activitylevel,
-          goal: formMacro.goal,
-        },
+        variables: formMacro
       });
       console.log(sendMacro);
       toast.show({
@@ -62,8 +58,13 @@ export const Example = ({ navigation }) => {
       });
     } catch (err) {
       console.log({ err });
+      setError("Error Post Macro")
+    } finally {
+      setLoading(false)
     }
   };
+  if(loading) return <Text>Loading...</Text>
+  if(error) return <Text>{error}</Text>
   return (
     <Box
     w={{
@@ -191,22 +192,22 @@ export const Example = ({ navigation }) => {
                 endIcon: <CheckIcon size={5} />,
               }}
             >
-              <Select.Item label="BMR" value={"maintain"} key={1} />
+              <Select.Item label="BMR" value={1} key={1} />
               <Select.Item
                 label="Sedentary: little or no exercise"
-                value={"mildlose"}
+                value={2}
                 key={2}
               />
-              <Select.Item label="Exercise 1-3 times/week" value={"weightlose"} key={3} />
-              <Select.Item label="Exercise 4-5 times/week" value={"mildgain"} key={4} />
+              <Select.Item label="Exercise 1-3 times/week" value={3} key={3} />
+              <Select.Item label="Exercise 4-5 times/week" value={4} key={4} />
               <Select.Item
                 label="Daily exercise or intense exercise 3-4 times/week"
-                value={"weightgain"}
+                value={5}
                 key={5}
               />
               <Select.Item
                 label="Intense exercise 6-7 times/week"
-                value={"extremegain"}
+                value={6}
                 key={6}
               />
             </Select>

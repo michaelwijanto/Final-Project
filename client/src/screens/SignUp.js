@@ -16,6 +16,7 @@ export default function SignUp({ navigation }) {
   const submitRegister = async (e) => {
     try {
       e.preventDefault();
+      console.log("SUBMIT");
       console.log(formRegister);
       const signUp = await SignUpUser({
         variables: {

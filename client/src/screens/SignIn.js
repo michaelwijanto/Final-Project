@@ -38,7 +38,7 @@ export default function SignIn({ navigation, route }) {
         description: "You can sign in to Active8 now"
       });
     }
-  }, []);
+  }, [route.params]);
 
   const [signInUser, {}] = useMutation(SIGN_IN);
   const [signIn, setSignIn] = useState({
@@ -72,14 +72,14 @@ export default function SignIn({ navigation, route }) {
           setIsLogin(true)
           setTimeout(() => {
             setIsLogin(false)
-          }, 2000);
+          }, 3000);
         } else {
           console.log('Masuk Else');
           const { access_token, isRegister } = res.data?.signInUser;
           console.log(isRegister);
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-          if (isRegister) navigation.navigate("ContentContainer");
+          if (isRegister === "true") navigation.navigate("ContentContainer");
           else navigation.navigate("UserProfileStack");
         }
       })
