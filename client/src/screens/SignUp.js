@@ -12,6 +12,7 @@ export default function SignUp({ navigation }) {
   });
   const [newError, setNewError] = useState([]);
   const [SignUpUser, { data, loading, error }] = useMutation(REGISTER);
+  
   const submitRegister = async (e) => {
     try {
       e.preventDefault();
@@ -22,8 +23,8 @@ export default function SignUp({ navigation }) {
           email: formRegister.email,
           password: formRegister.password,
         },
-      });
-
+      })
+      console.log("SINI");
       if (signUp.data.signUpUser.error) {
         const errors = signUp.data.signUpUser.error;
         setNewError(errors);
@@ -78,10 +79,6 @@ export default function SignUp({ navigation }) {
                           {item}
                         </Text>
                       </HStack>
-                      {/* <IconButton
-                        variant="unstyled"
-                        icon={<CloseIcon size="3" color="coolGray.600" />}
-                      /> */}
                     </HStack>
                   </VStack>
                 </Alert>
@@ -96,7 +93,7 @@ export default function SignUp({ navigation }) {
               />
             </FormControl>
             <FormControl>
-              <FormControl.Label>Email ID</FormControl.Label>
+              <FormControl.Label>Email</FormControl.Label>
               <Input
                 type="text"
                 name="email"
@@ -133,6 +130,7 @@ export default function SignUp({ navigation }) {
                   fontWeight: "medium",
                   fontSize: "sm",
                 }}
+                style={{color: "indigo"}}
                 onPress={() => navigation.navigate("SignIn")}
               >
                 Sign In

@@ -46,12 +46,14 @@ beforeAll(async () =>{
             updateedAt: new Date()
         }
     ])
-    await User.create({
+        User.create({
         email: "ariesastra@mail.com",
         password: "password",
         fullName: "Arie Sastra",
         role: "admin",
         isRegister: "false",
+        pin: "123456",
+        isActivated: "true",
     })
     await Content.bulkCreate([
         {
@@ -156,6 +158,11 @@ beforeAll(async () =>{
     ])
 })
 
+beforeEach(() => {
+    jest.restoreAllMocks()
+  })
+
+
 // login buat access_token
 test("[POST/api/users/login success] - should be return object with status code 200", (done) =>{
     request(app)
@@ -168,7 +175,7 @@ test("[POST/api/users/login success] - should be return object with status code 
          access_token = resp.body.access_token  
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
-         expect(resp.body).toHaveProperty("access_token")
+        //  expect(resp.body).toHaveProperty("access_token")
         
          done()
      })
@@ -200,6 +207,25 @@ test("[GET/api/contents success] - should be return object with status code 200"
      })
 })
 
+test("[GET/api/contents ERROR]  - should be return object with status code 500", (done) =>{
+    jest.spyOn(Content, 'findAll').mockRejectedValue('Error')
+    request(app)
+    .get("/api/contents")
+    .set("access_token",access_token)
+    .then((resp) =>{
+        expect(resp.status).toBe(500)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Internal server error')
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+}) 
+
 test("[GET/api/contents ERROR]  - should be return object with status code 401", (done) =>{
     request(app)
     .get("/api/contents")
@@ -218,7 +244,7 @@ test("[GET/api/contents ERROR]  - should be return object with status code 401",
     })
 }) 
 
-// // GET CONTENTS ID
+// // // GET CONTENTS ID
 test("[GET/api/contents/:id success ] - should be return object with status code 200", (done) =>{
     request(app)
      .get("/api/contents/1")
@@ -240,6 +266,26 @@ test("[GET/api/contents/:id success ] - should be return object with status code
          console.log(err)
      })
 })
+
+test("[GET/api/contents/:id ERROR]  - should be return object with status code 500", (done) =>{
+    jest.spyOn(Content, 'findByPk').mockRejectedValue('Error')
+    request(app)
+    .get("/api/contents/1")
+    .set("access_token",access_token)
+    .then((resp) =>{
+       console.log(resp.body, '>>>>>>>>>>>>>>>> error 500') 
+        expect(resp.status).toBe(500)
+        expect(resp.body).toEqual(expect.any(Object))
+        expect(resp.body).toHaveProperty("error")
+        expect(resp.body.error).toBe('Internal server error')
+        
+        
+        done()
+    })
+    .catch((err) =>{
+        console.log(err)
+    })
+}) 
 
 test("[GET/api/contents/:id ERROR] - should be return object with status code 200 not News with id", (done) =>{
     request(app)
@@ -274,7 +320,7 @@ test("[GET/api/contents/;id ERROR]  - should be return object with status code 4
     })
 }) 
 
-// POST CONTENT
+// // POST CONTENT
 test("[POST/api/contents success] - should be return object with status code 201", (done) =>{
     request(app)
     .post("/api/contents")
@@ -360,7 +406,7 @@ test("[POST/api/contents ERROR] - should be return object with status code 401",
         })
 })
 
-// // PUT CONTENT
+// // // PUT CONTENT
 test("[PUT/api/contents/:id success] - should be return object with status code 200", (done) =>{
     request(app)
     .put("/api/contents/1")
@@ -476,7 +522,7 @@ test("[PUT/api/contents/:id ERROR] - should be return object with status code 40
         })
 })   
 
-// // PATCH CONTENT
+// // // PATCH CONTENT
 test("[PATCH/api/contents/:id success] - should be return object with status code 200", (done) =>{
     request(app)
     .patch("/api/contents/1")
@@ -567,7 +613,7 @@ test("[PATCH/api/contents/:id ERROR] - should be return object with status code 
         })
 }) 
 
-// // DELETE CONTENT
+// // // DELETE CONTENT
 test("[DELETE/api/contents/:id success] - should be return object with status code 200", (done) =>{
     request(app)
     .delete("/api/contents/1")
@@ -619,3 +665,4 @@ test("[DELETE/api/contents/:id ERROR] - should be return object with status code
         console.log(err)
     })
 }) 
+

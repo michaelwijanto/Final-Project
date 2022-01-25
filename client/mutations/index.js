@@ -10,9 +10,10 @@ export const REGISTER = gql`
 `;
 
 export const SIGN_IN = gql`
-  mutation SignIn($email: String, $password: String) {
+  mutation SignInUser($email: String, $password: String) {
     signInUser(email: $email, password: $password) {
       access_token
+      isRegister
       error
     }
   }
@@ -63,6 +64,33 @@ export const POST_MACRO = gql`
 export const POST_USER_LOG = gql`
   mutation PostUserLog($accessToken: String, $height: Int, $weight: Int) {
     postUserLog(access_token: $accessToken, height: $height, weight: $weight) {
+      message
+      error
+    }
+  }
+`;
+
+export const POST_USER_PROFILE = gql`
+  mutation PostUserProfile(
+    $accessToken: String
+    $height: Int
+    $weight: Int
+    $activityLevel: Int
+    $phoneNumber: String
+    $gender: String
+    $dateBirth: String
+    $goals: String
+  ) {
+    postUserProfile(
+      access_token: $accessToken
+      height: $height
+      weight: $weight
+      activityLevel: $activityLevel
+      phoneNumber: $phoneNumber
+      gender: $gender
+      dateBirth: $dateBirth
+      goals: $goals
+    ) {
       message
       error
     }

@@ -31,6 +31,7 @@ export default function CoachHorizontal({ navigation }) {
               navigation.navigate("CoachDetail", {
                 id: item.id,
                 coachName: item.name,
+                coachImage: item.imgCoach
               })
             }
           >

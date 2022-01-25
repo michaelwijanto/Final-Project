@@ -29,6 +29,10 @@ export default function ContentHorizontal({ navigation }) {
 
   const subscription = "false";
 
+  const handleOnContent = (id) => {
+    
+  };
+  
   return (
     <FlatList
       horizontal
