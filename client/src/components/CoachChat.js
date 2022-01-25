@@ -51,7 +51,7 @@ export default function CoachChat({
     
     setMessages([
       {
-        _id: 1,
+        _id: 0,
         text: `Hallo, Saya ${coachName}, bagaimana progress latihan mu ?`,
         createdAt: new Date(),
         user: {
@@ -77,7 +77,7 @@ export default function CoachChat({
       
       // insert messages to firestrore
       try {
-        const docChat = await setDoc(doc(db, "chats", _id), {
+        const docChat = await setDoc(doc(db, "chats"), {
           _id,
           text,
           createdAt,
