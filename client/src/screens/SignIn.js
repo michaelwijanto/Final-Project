@@ -128,15 +128,15 @@ export default function SignIn({ navigation, route }) {
     }
   };
 
-  const removeStorage = async (key) => {
-    try {
-      await AsyncStorage.removeItem(key);
-      setLoading(false);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  };
+  // const removeStorage = async (key) => {
+  //   try {
+  //     await AsyncStorage.removeItem(key);
+  //     setLoading(false);
+  //     return true;
+  //   } catch (exception) {
+  //     return false;
+  //   }
+  // };
   // console.log(loading);
 
   return (
