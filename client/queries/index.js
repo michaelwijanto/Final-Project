@@ -1,5 +1,21 @@
 import { gql } from "@apollo/client";
 
+export const GET_USER = gql`
+  query GetUsers($accessToken: String) {
+    getUserProfile(access_token: $accessToken) {
+      UserProfile {
+        id
+        UserId
+        User {
+          email
+          fullName
+          id
+        }
+      }
+    }
+  }
+`;
+
 export const GET_COACHES = gql`
   query GetCoaches {
     getCoaches {
@@ -52,13 +68,14 @@ export const GET_USER_LOGS = gql`
       id
       height
       weight
-      activityLevel
+      bmi
+      health
       LevelId
       UserId
       createdAt
     }
   }
-`
+`;
 export const GET_CONTENT_DETAIL = gql`
   query GetContentById($accessToken: String, $contentId: ID) {
     getContentById(access_token: $accessToken, ContentId: $contentId) {
@@ -69,6 +86,17 @@ export const GET_CONTENT_DETAIL = gql`
       title
       imgThumbnail
       statusLike
+    }
+  }
+`;
+
+export const GET_USER_CONTENT_ID = gql`
+  query GetUserContentById($accessToken: String, $contentId: ID) {
+    getUserContentById(access_token: $accessToken, ContentId: $contentId) {
+      UserId
+      ContentId
+      isLike
+      status
     }
   }
 `;

@@ -28,12 +28,15 @@ export default function Activate({ navigation }) {
       });
 
       if (activate.data.activateUser.error) {
+        console.log("FAILED");
         const errors = activate.data.activateUser.error;
         setNewError(errors);
       } else {
+        console.log("SUCCESS");
         const success = activate.data.activateUser.message;
         navigation.navigate("SignIn", {
-          message: true
+          message: true,
+          status: "success"
         });
       }
     } catch (err) {
