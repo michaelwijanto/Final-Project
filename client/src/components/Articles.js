@@ -5,16 +5,9 @@ import {
   Pressable,
   Linking,
   ScrollView,
-} from "react-native";
-import {
-  Box,
-  Heading,
-  AspectRatio,
   Image,
-  Text,
-  Stack,
-  ChevronRightIcon,
-} from "native-base";
+} from "react-native";
+import { Box, Heading, AspectRatio, Text, Stack } from "native-base";
 import axios from "axios";
 
 
@@ -31,7 +24,7 @@ export default function Articles({ navigation }) {
         "x-rapidapi-key": "7f9a163cd3mshd2e69347424aac6p166373jsn498e658c3860",
       },
     };
-  
+
     axios
       .request(options)
       .then(function (response) {
@@ -41,7 +34,7 @@ export default function Articles({ navigation }) {
         console.error(error);
       });
   }, []);
-  
+
   if (!data) return <Text>Loading...</Text>;
 
   // const supportedURL = data.link; // andre ada masalah disini
@@ -62,62 +55,60 @@ export default function Articles({ navigation }) {
       {data.map((item, index) => {
         if (index < 5) {
           return (
-            <Pressable
-              // onPress={() => handlePress()}
+            // <Pressable
+            // // onPress={() => handlePress()}
+            // >
+            <Box
               key={index}
+              w="380"
+              h="230"
+              rounded="lg"
+              overflow="hidden"
+              marginTop="3"
+              _dark={{
+                borderColor: "gray.800",
+                backgroundColor: "gray.800",
+              }}
+              _web={{
+                shadow: 2,
+                borderWidth: 0,
+              }}
+              _light={{
+                backgroundColor: "primary.50",
+              }}
+              marginRight="5"
+              borderColor="gray.300"
+              borderWidth="1"
             >
-              <Box
-                w="380"
-                h="230"
-                rounded="lg"
-                overflow="hidden"
-                marginTop="3"
-                _dark={{
-                  borderColor: "gray.800",
-                  backgroundColor: "gray.800",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "primary.50",
-                }}
-                marginRight="5"
-                borderColor="gray.300"
-                borderWidth="1"
-              >
-                <Box h="150" w="500">
-                  <AspectRatio>
-                    <Image
-                      h="150"
-                      w="400"
-                      // maxW="100%"
-                      // borderColor="white"
-                      borderWidth="1"
-                      source={{
-                        uri: item.image_url,
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
-
-                <Stack p="1">
-                  <Stack>
-                    <Heading
-                      size="sm"
-                      ml="-1"
-                      paddingLeft="5"
-                      justifyContent="center"
-                      marginTop="4"
-                    >
-                      {item.title}
-                    </Heading>
-                  </Stack>
-                </Stack>
+              <Box h="150" w="500">
+                <Image
+                  h="150"
+                  w="400"
+                  // maxW="100%"
+                  // borderColor="white"
+                  borderWidth="1"
+                  source={{
+                    uri: item.image_url,
+                  }}
+                  alt="image"
+                />
               </Box>
-            </Pressable>
+
+              <Stack p="1">
+                <Stack>
+                  <Heading
+                    size="sm"
+                    ml="-1"
+                    paddingLeft="5"
+                    justifyContent="center"
+                    marginTop="4"
+                  >
+                    {item.title}
+                  </Heading>
+                </Stack>
+              </Stack>
+            </Box>
+            // </Pressable>
           );
         }
       })}

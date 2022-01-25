@@ -13,18 +13,13 @@ const typeDefs = gql`
 
   type Query {
     getUserContents(access_token: String): [UserContent]
-    getUserContentById(access_token: String, UserContentId: ID): UserContent
+    getUserContentById(access_token: String, ContentId: ID): UserContent
   }
 
   type Mutation {
-    postUserContent(
-      access_token: String
-      ContentId: ID
-    ): Message
-    putUserContent(
-      access_token: String
-      ContentId: ID
-    ): Message
+    postUserContent(access_token: String, ContentId: ID): UserContent
+    putUserContent(access_token: String, ContentId: ID): Message
+    patchLike(access_token: String, ContentId: ID): Message
   }
 `;
 const resolvers = {
@@ -51,19 +46,24 @@ const resolvers = {
     },
     getUserContentById: async (_, args) => {
       try {
-        const { access_token, UserContentId } = args;
-        const userContentCache = await redis.get("userContent");
-        if (userContentCache) {
-          return JSON.parse(userContentCache);
-        } else {
-          const { data: userContent } = await axios.get(
-            `http://localhost:3000/api/user-contents/${UserContentId}`,
-            { headers: { access_token } }
-          );
-          console.log(userContent);
-          await redis.set("userContent", JSON.stringify(userContent));
-          return userContent;
-        }
+        const { access_token, ContentId } = args;
+        // const userContentCache = await redis.get("userContent");
+        // if (userContentCache) {
+        //   return JSON.parse(userContentCache);
+        // } else {
+        //   const { data: userContent } = await axios.get(
+        //     `http://localhost:3000/api/user-contents/${ContentId}`,
+        //     { headers: { access_token } }
+        //   );
+        //   console.log(userContent);
+        //   await redis.set("userContent", JSON.stringify(userContent));
+        //   return userContent;
+        // }
+        const { data: userContent } = await axios.get(
+          `http://localhost:3000/api/user-contents/${ContentId}`,
+          { headers: { access_token } }
+        );
+        return userContent;
       } catch (err) {
         console.log({ err });
         return err;
@@ -76,13 +76,14 @@ const resolvers = {
         const { access_token, ContentId } = args;
         const { data } = await axios.post(
           `http://localhost:3000/api/user-contents/`,
-          {ContentId},
+          { ContentId },
           { headers: { access_token } }
         );
         await redis.del("userContents");
         await redis.del("userContent");
         console.log(data);
-        return {message: "Successful create UserContent"};
+        // return { message: "Successful create UserContent" };
+        return data;
       } catch (err) {
         console.log({ err });
         return err;
@@ -99,7 +100,22 @@ const resolvers = {
         await redis.del("userContents");
         await redis.del("userContent");
         console.log(data);
-        return {message: "Successful update UserContent"};
+        return { message: "Successful update UserContent" };
+      } catch (err) {
+        console.log({ err });
+        return err;
+      }
+    },
+
+    patchLike: async (_, args) => {
+      try {
+        const { access_token, ContentId } = args;
+        const { data } = await axios.patch(
+          `http://localhost:3000/api/user-contents/${ContentId}`,
+          null,
+          { headers: { access_token } }
+        );
+        return { message: "Liked this excercise!" };
       } catch (err) {
         console.log({ err });
         return err;

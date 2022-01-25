@@ -89,3 +89,14 @@ export const GET_CONTENT_DETAIL = gql`
     }
   }
 `;
+
+export const GET_USER_CONTENT_ID = gql`
+  query GetUserContentById($accessToken: String, $contentId: ID) {
+    getUserContentById(access_token: $accessToken, ContentId: $contentId) {
+      UserId
+      ContentId
+      isLike
+      status
+    }
+  }
+`;

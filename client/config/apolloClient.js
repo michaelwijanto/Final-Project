@@ -1,14 +1,20 @@
 import { ApolloClient, from, InMemoryCache } from "@apollo/client";
 
-// Tondiki
+// Andre;
 const client = new ApolloClient({
-  uri: "http://192.168.8.104:4000/",
+  uri: "http://192.168.1.2:4000",
   cache: new InMemoryCache(),
 });
 
-//Andre
+// Tondiki
 // const client = new ApolloClient({
-//   uri: "http://192.168.1.1:4000/",
+//   uri: "http://192.168.8.104:4000/",
+//   cache: new InMemoryCache(),
+// });
+
+// Arie
+// const client = new ApolloClient({
+//   uri: "http://192.168.1.2:4000/",
 //   cache: new InMemoryCache(),
 // });
 

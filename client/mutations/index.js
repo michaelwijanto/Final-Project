@@ -105,3 +105,30 @@ export const ACTIVATE = gql`
     }
   }
 `;
+
+export const POST_USER_CONTENT = gql`
+  mutation PostUserContent($accessToken: String, $contentId: ID) {
+    postUserContent(access_token: $accessToken, ContentId: $contentId) {
+      ContentId
+      isLike
+      status
+      UserId
+    }
+  }
+`;
+
+export const UPDATE_STATUS_USER_CONTENT = gql`
+  mutation PutUserContent($accessToken: String, $contentId: ID) {
+    putUserContent(access_token: $accessToken, ContentId: $contentId) {
+      message
+    }
+  }
+`;
+
+export const PATCH_LIKE = gql`
+  mutation PatchLike($accessToken: String, $contentId: ID) {
+    patchLike(access_token: $accessToken, ContentId: $contentId) {
+      message
+    }
+  }
+`;
