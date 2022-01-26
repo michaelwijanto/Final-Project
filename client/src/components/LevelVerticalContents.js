@@ -2,25 +2,13 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import {
-  Box,
-  Heading,
-  AspectRatio,
-  Image,
-  Text,
-  Stack,
-  ChevronRightIcon,
-  IconButton,
-  Icon,
-  Modal,
-  Button,
-} from "native-base";
+import { Box, Heading, AspectRatio, Image, Text, Stack, ChevronRightIcon, IconButton, Icon, Modal, Button } from "native-base";
 
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
-// import LoadingPage from "../components/loadingPage";
+import LoadingPage from "./LoadingPage";
 
 export default function LevelFilter({ navigation, route }) {
   const { id } = route.params;
@@ -33,7 +21,7 @@ export default function LevelFilter({ navigation, route }) {
   useEffect(async () => {
     setSubscription(await AsyncStorage.getItem("@subscription"));
   }, []);
-  console.log({SUBSCRIPTION: subscription})
+  console.log({ SUBSCRIPTION: subscription });
 
   // Buat narik Access Token
   const getStorage = async () => {
@@ -61,7 +49,7 @@ export default function LevelFilter({ navigation, route }) {
     },
   });
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage></LoadingPage>;
   if (error) return <Text>Error...</Text>;
 
   let newData = [];
@@ -124,12 +112,7 @@ export default function LevelFilter({ navigation, route }) {
               </Box>
               <Stack p="1">
                 <Stack>
-                  <Heading
-                    size="sm"
-                    ml="-1"
-                    paddingLeft="5"
-                    justifyContent="center"
-                  >
+                  <Heading size="sm" ml="-1" paddingLeft="5" justifyContent="center">
                     {levelName}
                   </Heading>
                 </Stack>
@@ -244,18 +227,12 @@ export default function LevelFilter({ navigation, route }) {
                             }}
                             onPress={() => setShowModal(true)}
                           ></IconButton>
-                          <Modal
-                            isOpen={showModal}
-                            onClose={() => setShowModal(false)}
-                          >
+                          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                             <Modal.Content maxWidth="300px" maxHeight="200px">
                               <Modal.CloseButton />
                               <Modal.Header>
                                 Subscribe to continue
-                                <Button
-                                  marginTop="2"
-                                  onPress={() => handleSubs(false)}
-                                >
+                                <Button marginTop="2" onPress={() => handleSubs(false)}>
                                   Join
                                 </Button>
                               </Modal.Header>

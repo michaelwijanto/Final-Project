@@ -2,23 +2,11 @@ import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { StyleSheet, View, ScrollView } from "react-native";
-import {
-  IconButton,
-  Icon,
-  Text,
-  Box,
-  Pressable,
-  Button,
-  Badge,
-} from "native-base";
+import { IconButton, Icon, Text, Box, Pressable, Button, Badge } from "native-base";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTENT_DETAIL, GET_USER_CONTENT_ID } from "../../queries";
-import {
-  POST_USER_CONTENT,
-  UPDATE_STATUS_USER_CONTENT,
-  PATCH_LIKE,
-} from "../../mutations";
+import { POST_USER_CONTENT, UPDATE_STATUS_USER_CONTENT, PATCH_LIKE } from "../../mutations";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
@@ -100,34 +88,21 @@ export default function ContentDetail({ navigation, route }) {
 
   console.log({ selected });
 
-  const [
-    PostUserContent,
-    {
-      data: dataPostUserContent,
-      loading: loadingPostUserContent,
-      error: errorPostUserContent,
-    },
-  ] = useMutation(POST_USER_CONTENT, {
-    refetchQueries: [GET_USER_CONTENT_ID],
-  });
+  const [PostUserContent, { data: dataPostUserContent, loading: loadingPostUserContent, error: errorPostUserContent }] =
+    useMutation(POST_USER_CONTENT, {
+      refetchQueries: [GET_USER_CONTENT_ID],
+    });
 
   status = "started";
 
-  const [
-    PutUserContent,
+  const [PutUserContent, { data: dataPutUserContent, loading: loadingPutUserContent, error: errorPutUserContent }] = useMutation(
+    UPDATE_STATUS_USER_CONTENT,
     {
-      data: dataPutUserContent,
-      loading: loadingPutUserContent,
-      error: errorPutUserContent,
-    },
-  ] = useMutation(UPDATE_STATUS_USER_CONTENT, {
-    refetchQueries: [GET_USER_CONTENT_ID],
-  });
+      refetchQueries: [GET_USER_CONTENT_ID],
+    }
+  );
 
-  const [
-    PatchLike,
-    { data: dataPatchLike, loading: loadingPatchLike, error: errorPatchLike },
-  ] = useMutation(PATCH_LIKE, {
+  const [PatchLike, { data: dataPatchLike, loading: loadingPatchLike, error: errorPatchLike }] = useMutation(PATCH_LIKE, {
     refetchQueries: [GET_USER_CONTENT_ID],
   });
 
@@ -144,7 +119,7 @@ export default function ContentDetail({ navigation, route }) {
 
   let status;
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
   // if (loadingContent) return <Text>Loading...</Text>;
   // if (errorContent) return <Text>Error...</Text>;
@@ -207,10 +182,7 @@ export default function ContentDetail({ navigation, route }) {
     <Box height="100%">
       <ScrollView>
         <View>
-          <YoutubePlayer
-            height={250}
-            videoId={data.getContentById.youtubeUrl}
-          />
+          <YoutubePlayer height={250} videoId={data.getContentById.youtubeUrl} />
           <View>
             {status == "finish" ? (
               <Badge
@@ -233,18 +205,14 @@ export default function ContentDetail({ navigation, route }) {
             </View>
             <Box style={styles.containerLike}>
               <Text style={styles.like}>
-                <Pressable onPress={(e) => handleLike(e)}>
-                  {handleIconLike()}
-                </Pressable>
+                <Pressable onPress={(e) => handleLike(e)}>{handleIconLike()}</Pressable>
               </Text>
               {/* <Text style={styles.textLike}>{data.getContentById.likes}</Text> */}
             </Box>
 
             <Text style={styles.titleDescription}>Description</Text>
 
-            <Text style={styles.description}>
-              {data.getContentById.description}
-            </Text>
+            <Text style={styles.description}>{data.getContentById.description}</Text>
           </View>
         </View>
       </ScrollView>
