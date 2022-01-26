@@ -125,9 +125,7 @@ export default function SignIn({ navigation, route }) {
       if (value !== null) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
-        console.log(registerStat);
         setLoading(false);
-        
         if ( registerStat === "true" ){
           navigation.navigate("ContentContainer")
         }

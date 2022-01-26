@@ -33,11 +33,14 @@ export default function PaymentWebview({
             variables: {
               accessToken
             }
-          }).then((res) => {
-            console.log(res);
-            navigation.navigate('ProfileScreen', {
-              status: 'successPayment'
-            })
+          }).then(async (res) => {
+            try {
+              navigation.navigate('ProfileScreen', {
+                status: 'successPayment'
+              })
+            } catch (error) {
+              console.error(error);
+            }
           }).catch(err => {
             console.error(err);
             navigation.navigate('ProfileScreen', {
