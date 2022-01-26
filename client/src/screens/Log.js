@@ -21,6 +21,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "native-base";
+import LoadingPage from "../components/LoadingPage";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -67,14 +68,22 @@ export default function Log({ navigation }) {
           weight: formLog.weight,
         },
       });
-      console.log({ createLog });
+      console.log("ABIS CREATE");
+      console.log( createLog, "INIIIIIIII" );
+      if(createLog?.data?.postUserLog?.error) throw {name: "error create user log"}
       toast.show({
-        title: "Success update body Log",
+        title: "Success",
         status: "success",
-        description: createLog.data.postUserLog.message[0],
+        description: "Your latest body development has been added",
       });
     } catch (err) {
+      console.log("MASUK ERROR");
       console.log({ err });
+      toast.show({
+        title: "Please fill all update body Log",
+        status: "error",
+        description: createLog.data.postUserLog.message[0],
+      });
       setCustomNotif({ ...customNotif, customError: err });
     } finally {
       setCustomNotif({ ...customNotif, customLoading: false });
@@ -82,7 +91,7 @@ export default function Log({ navigation }) {
     }
   };
 
-  if (loading || customNotif.customLoading) return <Text>Loading...</Text>;
+  if (loading || customNotif.customLoading) return <Center px="3"><LoadingPage /></Center>;
   if (error) return <Text>Error Fetching Logs</Text>;
   if (customNotif.customError) return <Text>Error Add Log</Text>;
   return (
@@ -110,7 +119,7 @@ export default function Log({ navigation }) {
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
-                <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
+                  <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -123,7 +132,7 @@ export default function Log({ navigation }) {
                   </Text>
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
-                <FontAwesome name="dashboard" size={24} color="blue" />
+                  <FontAwesome name="dashboard" size={24} color="blue" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -209,6 +218,7 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+              <Text  style={{marginBottom: 10, fontSize: 12}}>130cm - 230cm</Text>
               <FormControl.Label>Weight</FormControl.Label>
               <NumberInput
                 min={40}
@@ -221,6 +231,7 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+              <Text style={{fontSize: 12}}>40kg - 160kg</Text>
             </Modal.Body>
             <Modal.Footer>
               <Button.Group space={2}>

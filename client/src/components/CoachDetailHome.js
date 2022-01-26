@@ -1,17 +1,10 @@
 import { StyleSheet } from "react-native";
-import {
-  Box,
-  Heading,
-  Image,
-  Text,
-  HStack,
-  Button
-} from "native-base";
+import { Box, Heading, Image, Text, HStack, Button } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
-// import LoadingPage from "../components/loadingPage";
+import LoadingPage from "./LoadingPage";
 
 export default function CoachDetail({ navigation, route }) {
   const { id } = route.params;
@@ -22,7 +15,7 @@ export default function CoachDetail({ navigation, route }) {
     },
   });
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
 
   console.log(coachName);
@@ -48,11 +41,13 @@ export default function CoachDetail({ navigation, route }) {
             size="lg"
             colorScheme="gray"
             mt={10}
-            onPress={() => navigation.navigate('CoachChat', {
-              coachName: coachName,
-              coachImage: data.getCoachDetail.imgCoach,
-              id: data.getCoachDetail.id
-            })}
+            onPress={() =>
+              navigation.navigate("CoachChat", {
+                coachName: coachName,
+                coachImage: data.getCoachDetail.imgCoach,
+                id: data.getCoachDetail.id,
+              })
+            }
           >
             Start Chat Now
           </Button>
@@ -93,6 +88,6 @@ const styles = StyleSheet.create({
   },
   chatButton: {
     position: "absolute",
-    bottom: 100
+    bottom: 100,
   },
 });

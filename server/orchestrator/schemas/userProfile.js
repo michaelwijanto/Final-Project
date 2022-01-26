@@ -110,11 +110,12 @@ const resolvers = {
       try {
         const { access_token } = args;
         const { data } = await axios.post("http://localhost:3000/api/log-history", args, { headers: { access_token } });
-        console.log(data);
+        console.log({newLog: data});
         return {message: "Your latest body development has been added"};
       } catch (err) {
         console.log({ err });
-        return { error: err.response.data.error };
+        console.log("MASUK ERROR");
+        return { error: ["Error create post user log"] };
       }
     },
     patchUserProfile: async (_, args) => {

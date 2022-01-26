@@ -1,23 +1,15 @@
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import {
-  Box,
-  Heading,
-  AspectRatio,
-  Image,
-  Text,
-  Stack,
-  Avatar,
-} from "native-base";
+import { Box, Heading, AspectRatio, Image, Text, Stack, Avatar } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACHES } from "../../queries";
 // import ErrorPage from "../components/errorPage";
-// import LoadingPage from "../components/loadingPage";
+import LoadingPage from "./LoadingPage";
 
 export default function CoachHorizontal({ navigation }) {
   const { loading, error, data } = useQuery(GET_COACHES);
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
   return (
     <FlatList

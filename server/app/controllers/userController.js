@@ -22,7 +22,7 @@ class UserController {
       isActivated: "false",
     };
 
-    console.log({newUser});
+    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
