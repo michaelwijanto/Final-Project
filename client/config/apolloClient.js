@@ -8,7 +8,12 @@ import { ApolloClient, from, InMemoryCache } from "@apollo/client";
 
 // Tondiki
 const client = new ApolloClient({
+<<<<<<< HEAD
+  uri: "http://192.168.1.7:4000/",//indihome
+  // uri: "http://192.168.47.124:4000/",//telkomsel
+=======
   uri: "http://192.168.8.104:4000/",
+>>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19
   cache: new InMemoryCache(),
 });
 
