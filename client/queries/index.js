@@ -100,3 +100,12 @@ export const GET_USER_CONTENT_ID = gql`
     }
   }
 `;
+
+export const GET_TRANSACTION_TOKEN = gql`
+  query TransactionToken($accessToken: String) {
+    transactionToken(access_token: $accessToken) {
+      token
+      error
+    }
+  }
+`;

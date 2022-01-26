@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-// import { StripeProvider } from "@stripe/stripe-react-native";
-// const SERVER_URL_METRO = "http://192.168.1.2:3000";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
 import {
@@ -16,10 +15,39 @@ import {
   ScrollView,
 } from "native-base";
 
+import { useQuery } from "@apollo/client";
+import { GET_TRANSACTION_TOKEN } from "../../queries";
+
 export default function Profile({ navigation }) {
+  const [accessToken, setAccessToken] = useState('')
+  const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
+    variables: {
+      accessToken
+    }
+  })
+
+  useEffect(() => {
+    getStorage()
+  }, [])
+
   const handlePayment = (price) => {
-    console.log(+price);
-    
+    console.log(price);
+    navigation.navigate('PaymentScreen', {
+      token: data.transactionToken.token
+    })    
+  };
+
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      if (value !== null) {
+        // value previously stored
+        setAccessToken(value)
+      }
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
   };
 
   return (
@@ -64,7 +92,7 @@ export default function Profile({ navigation }) {
             w="100%"
             size="lg"
             colorScheme="gray"
-            onPress={() => handlePayment(199000)}
+            onPress={() => handlePayment()}
           >
             Subscribe Now
           </Button>
