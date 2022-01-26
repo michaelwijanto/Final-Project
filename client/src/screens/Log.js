@@ -23,12 +23,7 @@ import {
 } from "native-base";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
-import {
-  MaterialCommunityIcons,
-  FontAwesome5,
-  FontAwesome,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { POST_USER_LOG } from "../../mutations";
 export default function Log({ navigation }) {
   const toast = useToast();
@@ -110,7 +105,7 @@ export default function Log({ navigation }) {
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
-                <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
+                  <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -123,7 +118,7 @@ export default function Log({ navigation }) {
                   </Text>
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
-                <FontAwesome name="dashboard" size={24} color="blue" />
+                  <FontAwesome name="dashboard" size={24} color="blue" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -148,11 +143,7 @@ export default function Log({ navigation }) {
                   >
                     {item.height}
                   </Text>
-                  <MaterialCommunityIcons
-                    name="human-male-height"
-                    size={24}
-                    color="blue"
-                  />
+                  <MaterialCommunityIcons name="human-male-height" size={24} color="blue" />
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
                   <Text
@@ -165,11 +156,7 @@ export default function Log({ navigation }) {
                   >
                     {item.weight}
                   </Text>
-                  <MaterialCommunityIcons
-                    name="weight-kilogram"
-                    size={24}
-                    color="blue"
-                  />
+                  <MaterialCommunityIcons name="weight-kilogram" size={24} color="blue" />
                 </Box>
               </VStack>
             </HStack>
@@ -198,11 +185,7 @@ export default function Log({ navigation }) {
             <Modal.Header>Update your body development!</Modal.Header>
             <Modal.Body>
               <FormControl.Label>Height</FormControl.Label>
-              <NumberInput
-                min={130}
-                max={230}
-                onChange={(val) => setFormLog({ ...formLog, height: val })}
-              >
+              <NumberInput min={130} max={230} onChange={(val) => setFormLog({ ...formLog, height: val })}>
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -210,11 +193,7 @@ export default function Log({ navigation }) {
                 </NumberInputStepper>
               </NumberInput>
               <FormControl.Label>Weight</FormControl.Label>
-              <NumberInput
-                min={40}
-                max={160}
-                onChange={(val) => setFormLog({ ...formLog, weight: val })}
-              >
+              <NumberInput min={40} max={160} onChange={(val) => setFormLog({ ...formLog, weight: val })}>
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
