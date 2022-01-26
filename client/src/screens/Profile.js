@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 // import { StripeProvider } from "@stripe/stripe-react-native";
 // const SERVER_URL_METRO = "http://192.168.1.2:3000";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // Native Base
 import {
   Box,
@@ -15,12 +15,36 @@ import {
   Center,
   ScrollView,
 } from "native-base";
+import { useQuery } from "@apollo/client";
+import { GET_USER_PROFILE } from "../../queries";
+import {
+  MaterialCommunityIcons,
+  FontAwesome5,
+  FontAwesome,
+  MaterialIcons,
+  Octicons
+} from "@expo/vector-icons";
 
 export default function Profile({ navigation }) {
   const handlePayment = (price) => {
     console.log(+price);
+    navigation.navigate("SubcribePage");
   };
 
+  const [accessToken, setAccessToken] = useState(null);
+  useEffect(async () => {
+    setAccessToken(await AsyncStorage.getItem("@access_token"));
+  }, []);
+  console.log({ accessToken });
+  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
+    variables: {
+      accessToken: accessToken,
+    },
+  });
+
+  console.log({loading, data, error});
+  if(loading) return <Text>Loading...</Text>
+  if(error) return <Text>Error Fetching User Profile</Text>
   return (
     <Box
       style={styles.container}
@@ -37,20 +61,20 @@ export default function Profile({ navigation }) {
             alignSelf="center"
             size="2xl"
             source={{
-              uri: "https://pbs.twimg.com/profile_images/1320985200663293952/lE_Kg6vr_400x400.jpg",
+              uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
             }}
           >
             RB
           </Avatar>
           <VStack style={styles.section1}>
-            <Text style={styles.fullName}>Arie Sastra Hadiprawira</Text>
-            <Text style={styles.email}>ariesastra@mail.com</Text>
+            <Text style={styles.fullName}>{data.getUserProfile.UserProfile.User.fullName}</Text>
+            <Text style={styles.email}>{data.getUserProfile.UserProfile.User.email}</Text>
             <HStack mt={2}>
               <Badge variant="solid" mr={2}>
-                Easy
+                {data.getUserProfile.UserProfile.Level.name}
               </Badge>
               <Badge variant="subtle" colorScheme="info">
-                Six Pack
+                {data.getUserProfile.UserProfile.goals}
               </Badge>
             </HStack>
           </VStack>
@@ -62,7 +86,7 @@ export default function Profile({ navigation }) {
           <Button
             w="100%"
             size="lg"
-            colorScheme="gray"
+            colorScheme="lightBlue"
             onPress={() => handlePayment(199000)}
           >
             Subscribe Now
@@ -74,16 +98,16 @@ export default function Profile({ navigation }) {
           </Box>
           <Box style={styles.programsCard}>
           <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}>💪 BMI</Text>
-          <Text style={styles.textViewAll}>20.06</Text>
+          <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
+          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.bmi}</Text>
           </Box>
           <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}>❤ HEALTH</Text>
-          <Text style={styles.textViewAll}>Normal</Text>
+          <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
+          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.health}</Text>
           </Box>
           <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}>👣HEALTHY BMI RANGE</Text>
-          <Text style={styles.textViewAll}>18.5 - 25</Text>
+          <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
+          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.healthy_bmi_range}</Text>
           </Box>
           </Box>
         </Box>
@@ -147,9 +171,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 3,
     paddingLeft: 10,
+    marginLeft: 98,
     fontSize: 20,
     color: "#1C2F3C",
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
   },
   textViewAll: {
     paddingTop: 12,

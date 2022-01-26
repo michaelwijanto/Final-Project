@@ -112,7 +112,7 @@ export default function SignUp({ navigation }) {
               />
             </FormControl>
 
-            <Button mt="2" colorScheme="indigo" onPress={(e) => submitRegister(e)}>
+            <Button mt="2" colorScheme="lightBlue" onPress={(e) => submitRegister(e)}>
               Sign Up
             </Button>
             <HStack mt="6" justifyContent="center">

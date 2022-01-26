@@ -27,7 +27,6 @@ import { TouchableOpacity } from "react-native";
 
 export default function SignIn({ navigation, route }) {
   const toast = useToast();
-  // const [successActivate, showSuccessActivate] = useState(null);
   useEffect(() => {
     if (route.params?.message) {
       console.log("MASUK");
@@ -76,11 +75,17 @@ export default function SignIn({ navigation, route }) {
         } else {
           console.log("Masuk Else");
           const { access_token, isRegister } = res.data?.signInUser;
-          console.log(isRegister);
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-          if (isRegister === "true") navigation.navigate("ContentContainer");
-          else navigation.navigate("UserProfileStack");
+
+          if ( isRegister === "true" ){
+            console.log('register true');
+            navigation.navigate("ContentContainer")
+          }
+          else {
+            console.log('register false');
+            navigation.navigate("UserProfileStack")
+          }
         }
       })
       .catch((err) => {
@@ -97,7 +102,6 @@ export default function SignIn({ navigation, route }) {
     // Invoking Local Storage
     getStorage();
     setLoading(false);
-    // removeStorage("@access_token");
   }, []);
 
   // Local Storage
@@ -118,26 +122,21 @@ export default function SignIn({ navigation, route }) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-        console.log(registerStat);
-        if (registerStat) navigation.navigate("ContentContainer");
-        else navigation.navigate("UserProfileStack");
+        
+        if ( registerStat === "true" ){
+          console.log('register true');
+          navigation.navigate("ContentContainer")
+        }
+        else {
+          console.log('register false');
+          navigation.navigate("UserProfileStack")
+        }
       }
     } catch (e) {
       // error reading value
       console.error(e);
     }
   };
-
-  // const removeStorage = async (key) => {
-  //   try {
-  //     await AsyncStorage.removeItem(key);
-  //     setLoading(false);
-  //     return true;
-  //   } catch (exception) {
-  //     return false;
-  //   }
-  // };
-  // console.log(loading);
 
   return (
     <NativeBaseProvider>
@@ -252,7 +251,7 @@ export default function SignIn({ navigation, route }) {
               </FormControl>
               <Button
                 mt="2"
-                colorScheme="indigo"
+                colorScheme="lightBlue"
                 style={{ marginTop: 25 }}
                 onPress={(e) => submitLogin(e)}
               >

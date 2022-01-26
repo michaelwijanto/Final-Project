@@ -15,4 +15,6 @@ config
 .DS_Store
 app.js
 config/apolloClient.js
-screens/_Profile.js
+screens/_*.js
+components/_*.js
+.env
