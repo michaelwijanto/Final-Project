@@ -30,7 +30,17 @@ export default function Weight({ navigation, route }) {
           <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>How much do you weight?</Text>
           <FormControl>
             <Stack mx="4">
-              <NumberInput value={weight} min={40} max={160} onChange={(val) => setWeight(val)}>
+              <NumberInput
+                value={weight}
+                min={40}
+                max={160}
+                onChange={(val) => {
+                  if (isNaN(val)) setWeight(0);
+                  else {
+                    setWeight(val);
+                  }
+                }}
+              >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
