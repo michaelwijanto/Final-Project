@@ -73,6 +73,7 @@ export default function SignIn({ navigation, route }) {
             setIsLogin(false)
           }, 3000);
         } else {
+          console.log({SIGNIN: res.data.signInUser});
           console.log("Masuk Else");
           const { access_token, isRegister } = res.data?.signInUser;
           storeData("@access_token", access_token);
@@ -95,6 +96,7 @@ export default function SignIn({ navigation, route }) {
 
   // Alert Message
   useEffect(async () => {
+    // await AsyncStorage.clear();
     if (route.params) {
       console.log(route.params);
       setIsLogin(false);
