@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Alert,
-  Pressable,
-  Linking,
-  ScrollView,
-  Image,
-} from "react-native";
+import { StyleSheet, Alert, Pressable, Linking, ScrollView, Image } from "react-native";
 import { Box, Heading, AspectRatio, Text, Stack } from "native-base";
 import axios from "axios";
+import LoadingPage from "./LoadingPage";
 
 export default function Articles({ navigation }) {
   const [data, setData] = useState();
@@ -34,7 +28,7 @@ export default function Articles({ navigation }) {
       });
   }, []);
 
-  if (!data) return <Text>Loading...</Text>;
+  if (!data) return <LoadingPage></LoadingPage>;
 
   // const supportedURL = data.link; // andre ada masalah disini
   // const unsupportedURL = "slack://open?team=123456";
@@ -97,13 +91,7 @@ export default function Articles({ navigation }) {
 
                   <Stack p="1">
                     <Stack>
-                      <Heading
-                        size="sm"
-                        ml="-1"
-                        paddingLeft="5"
-                        justifyContent="center"
-                        marginTop="4"
-                      >
+                      <Heading size="sm" ml="-1" paddingLeft="5" justifyContent="center" marginTop="4">
                         {item.title}
                       </Heading>
                     </Stack>

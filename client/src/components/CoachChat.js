@@ -12,14 +12,14 @@ import {
   GiftedChat
 } from 'react-native-gifted-chat'
 // Firebase Firestore
-import {
-  collection,
-  addDoc,
-  orderBy,
-  query,
-  onSnapshot
-} from 'firebase/firestore'
-import { db } from '../../firebase'
+// import {
+//   collection,
+//   addDoc,
+//   orderBy,
+//   query,
+//   onSnapshot
+// } from 'firebase/firestore'
+// import { db } from '../../firebase'
 // Apollo Client
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../../queries';
@@ -65,21 +65,21 @@ export default function CoachChat({
   }
   
   useLayoutEffect(() => {
-    const collectionRef = collection(db, 'chats')
-    const setQuery = query(collectionRef, orderBy('createdAt', 'desc'))
+    // const collectionRef = collection(db, 'chats')
+    // const setQuery = query(collectionRef, orderBy('createdAt', 'desc'))
 
-    const unsubscribe = onSnapshot(setQuery, snapshot => {
-      console.log('snapshop')
-      setMessages(
-        snapshot.docs.map(doc => ({
-          _id: doc.id,
-          createdAt: doc.data().createdAt.toDate(),
-          text: doc.data().text,
-          user: doc.data().user
-        }))
-      )
-    })
-    return () => unsubscribe()
+    // const unsubscribe = onSnapshot(setQuery, snapshot => {
+    //   console.log('snapshop')
+    //   setMessages(
+    //     snapshot.docs.map(doc => ({
+    //       _id: doc.id,
+    //       createdAt: doc.data().createdAt.toDate(),
+    //       text: doc.data().text,
+    //       user: doc.data().user
+    //     }))
+    //   )
+    // })
+    // return () => unsubscribe()
 
     // using @react-native-firebase
     // return db.onSnapshot(querySnapshot => {
@@ -100,12 +100,12 @@ export default function CoachChat({
       previousMessages, messages)
     )
     const { _id, createdAt, text, user } = messages[0]
-    addDoc(collection(db, 'chats'), {
-      _id,
-      createdAt,
-      text,
-      user
-    })
+    // addDoc(collection(db, 'chats'), {
+    //   _id,
+    //   createdAt,
+    //   text,
+    //   user
+    // })
 
     // useing @react-native-firebase
     // db.add({_id, createdAt, text, user})

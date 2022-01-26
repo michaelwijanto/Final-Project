@@ -269,12 +269,30 @@ describe("USER CONTENT TEST", _ => {
         .then(res => {
           const result = res.body;
           expect.status = 201;
-         
+          console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ini post')
           expect(result).toEqual(expect.any(Object));
           expect(result).toHaveProperty("id");
           expect(result).toHaveProperty("UserId");
           expect(result).toHaveProperty("ContentId");
           expect(result).toHaveProperty("status");
+          done();
+        })
+        .catch(error => {
+          done(error);
+        });
+    });
+
+    test('/PUT - User Content',
+    (done) => {
+      request(app)
+        .put("/api/user-contents/1")
+        .set({access_token})
+        .then(res => {
+          const result = res.body; 
+         console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> put 1')
+          expect(res.status).toBe(200)
+          expect(result).toEqual(expect.any(Object));
+          expect(result).toHaveProperty("message");
           done();
         })
         .catch(error => {
@@ -289,7 +307,12 @@ describe("USER CONTENT TEST", _ => {
       .then((resp) =>{
           expect(resp.status).toBe(200)
           expect(resp.body).toEqual(expect.any(Object))
-         
+          // expect(resp.body).toHaveProperty("title")
+          // expect(resp.body).toHaveProperty("description")
+          // expect(resp.body).toHaveProperty("youtubeUrl")
+          // expect(resp.body).toHaveProperty("likes")
+          // expect(resp.body).toHaveProperty("statusLike")
+        
           
           
           done()
@@ -298,7 +321,7 @@ describe("USER CONTENT TEST", _ => {
           console.log(err)
        })
     })
-
+   
     test('/POST - User Contents - Valid Input',
     (done) => {
       request(app)
@@ -315,6 +338,24 @@ describe("USER CONTENT TEST", _ => {
           expect(result).toHaveProperty("UserId");
           expect(result).toHaveProperty("ContentId");
           expect(result).toHaveProperty("status");
+          done();
+        })
+        .catch(error => {
+          done(error);
+        });
+    });
+
+    test('/PUT - User Content',
+    (done) => {
+      request(app)
+        .put("/api/user-contents/2")
+        .set({access_token})
+        .then(res => {
+          const result = res.body; 
+          console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> put 2')
+          expect(res.status).toBe(200)
+          expect(result).toEqual(expect.any(Object));
+          expect(result).toHaveProperty("message");
           done();
         })
         .catch(error => {
@@ -344,138 +385,25 @@ describe("USER CONTENT TEST", _ => {
           done(error);
         });
     });
-    test('/POST - User Contents - Valid Input',
+
+    test('/PUT - User Content',
     (done) => {
       request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "4"
-        })
+        .put("/api/user-contents/3")
+        .set({access_token})
         .then(res => {
-          const result = res.body;
-          expect.status = 201;
+          const result = res.body; 
+          console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> put 3')
+          expect(res.status).toBe(200)
           expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
+          expect(result).toHaveProperty("message");
           done();
         })
         .catch(error => {
           done(error);
         });
     });
-    test('/POST - User Contents - Valid Input',
-    (done) => {
-      request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "5"
-        })
-        .then(res => {
-          const result = res.body;
-          expect.status = 201;
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/POST - User Contents - Valid Input',
-    (done) => {
-      request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "6"
-        })
-        .then(res => {
-          const result = res.body;
-          expect.status = 201;
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/POST - User Contents - Valid Input',
-    (done) => {
-      request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "7"
-        })
-        .then(res => {
-          const result = res.body;
-          expect.status = 201;
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/POST - User Contents - Valid Input',
-    (done) => {
-      request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "8"
-        })
-        .then(res => {
-          const result = res.body;
-          expect.status = 201;
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/POST - User Contents - Valid Input',
-    (done) => {
-      request(app)
-        .post("/api/user-contents")
-        .set({ access_token })
-        .send({
-          ContentId: "9"
-        })
-        .then(res => {
-          const result = res.body;
-          expect.status = 201;
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("id");
-          expect(result).toHaveProperty("UserId");
-          expect(result).toHaveProperty("ContentId");
-          expect(result).toHaveProperty("status");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
+
 
   test('/POST - User Contents - Empty Input',
     (done) => {
@@ -644,7 +572,7 @@ describe("USER CONTENT TEST", _ => {
         .set({access_token})
         .then(res => {
           const result = res.body; 
-         
+         console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> put 1')
           expect(res.status).toBe(200)
           expect(result).toEqual(expect.any(Object));
           expect(result).toHaveProperty("message");
@@ -662,7 +590,7 @@ describe("USER CONTENT TEST", _ => {
         .set({access_token})
         .then(res => {
           const result = res.body; 
-        
+          console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> put 2')
           expect(res.status).toBe(200)
           expect(result).toEqual(expect.any(Object));
           expect(result).toHaveProperty("message");
@@ -673,126 +601,6 @@ describe("USER CONTENT TEST", _ => {
         });
     });
 
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/3")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-        
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/4")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-       
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/5")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-      
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/6")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-        
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/7")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-       
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/8")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-        
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
-    test('/PUT - User Content',
-    (done) => {
-      request(app)
-        .put("/api/user-contents/9")
-        .set({access_token})
-        .then(res => {
-          const result = res.body; 
-        
-          expect(res.status).toBe(200)
-          expect(result).toEqual(expect.any(Object));
-          expect(result).toHaveProperty("message");
-          done();
-        })
-        .catch(error => {
-          done(error);
-        });
-    });
 
     
   test('/PUT - User Content Not Found',
@@ -875,92 +683,3 @@ test("[GET/api/user-contents/:id ERROR]  - should be return object with status c
     })
 })
 
-
-// PATCH
-// test("[PATCH/api/user-contents/:id success] - status not like should be return object with status code 200", (done) =>{
-//   request(app)
-//   .patch("/api/user-contents/1")
-//   .set("access_token",access_token)
-//   .then((resp) =>{
-//       expect(resp.status).toBe(200)
-//       expect(resp.body).toEqual(expect.any(Object))
-//       // expect(resp.body).toHaveProperty("title")
-//       // expect(resp.body).toHaveProperty("description")
-//       // expect(resp.body).toHaveProperty("youtubeUrl")
-//       // expect(resp.body).toHaveProperty("likes")
-//       // expect(resp.body).toHaveProperty("statusLike")
-    
-      
-      
-//       done()
-//   })
-//   .catch((err) =>{
-//       console.log(err)
-//    })
-// })
-
-
-
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
-//   request(app)
-//   .patch("/api/contents/60")
-//   .set("access_token",access_token)
-//   .send({
-//       statusLike: "not like",
-//    })
-//   .then((resp) =>{
-      
-//       expect(resp.status).toBe(401)
-//       expect(resp.body).toEqual(expect.any(Object))
-//       expect(resp.body).toHaveProperty("error")
-//       expect(resp.body.error).toBe('Content Not Found')
-      
-      
-//       done()
-//   })
-//   .catch((err) =>{
-//       console.log(err)
-//    })
-// })
-  
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 400", (done) =>{
-//   request(app)
-//   .patch("/api/contents/1")
-//   .set("access_token",access_token)
-//   .send({
-//       statusLike: "",
-//    })
-//   .then((resp) =>{
-//       expect(resp.status).toBe(400)
-//       expect(resp.body).toEqual(expect.any(Object))
-//       expect(resp.body).toHaveProperty("error")
-     
-      
-      
-//       done()
-//   })
-//   .catch((err) =>{
-//       console.log(err)
-//   })
-// })
-
-  
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
-//       request(app)
-//       .patch("/api/contents/1")
-//       .send({
-//           statusLike: "",
-//        })
-//       .then((resp) =>{
-//           expect(resp.status).toBe(401)
-//           expect(resp.body).toEqual(expect.any(Object))
-//           expect(resp.body).toHaveProperty("error")
-//           expect(resp.body.error).toBe('Invalid token')
-          
-          
-//           done()
-//       })
-//       .catch((err) =>{
-//           console.log(err)
-//       })
-// }) 
