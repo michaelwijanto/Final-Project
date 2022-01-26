@@ -4,12 +4,13 @@ import { Box, Heading, AspectRatio, Image, Text, Stack, Badge } from "native-bas
 import { useQuery } from "@apollo/client";
 import { GET_LEVEL } from "../../queries";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 // import ErrorPage from "../components/errorPage";
 export default function LevelHorizontal({ navigation }) {
   const { loading, error, data } = useQuery(GET_LEVEL);
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
   return (
     <FlatList
       horizontal

@@ -2,69 +2,56 @@ import React, { Fragment, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Native Base
-import { Box, Text, Avatar, HStack, VStack, Badge, Button, Center, ScrollView } from "native-base";
-import { GET_USER_PROFILE } from "../../queries";
-import { MaterialCommunityIcons, FontAwesome5, FontAwesome, MaterialIcons, Octicons } from "@expo/vector-icons";
-
+// Apollo Client
 import { useQuery } from "@apollo/client";
-import { GET_TRANSACTION_TOKEN } from "../../queries";
+import { GET_USER_PROFILE } from "../../queries";
+
+// Native Base
+import {
+  Box,
+  Text,
+  Avatar,
+  HStack,
+  VStack,
+  Badge,
+  Button,
+  Center,
+  ScrollView,
+} from "native-base";
+
+import {
+  FontAwesome5,
+  FontAwesome 
+} from "@expo/vector-icons";
+
 import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
 
 export default function Profile({ navigation }) {
-  const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
-    variables: {
-      accessToken,
-    },
-  });
-
   const [subscription, setSubscription] = useState(null);
-  useEffect(async () => {
-    setSubscription(await AsyncStorage.getItem("@subscription"));
-  }, []);
-
-  useEffect(() => {
-    getStorage();
-  }, []);
-
-  const handlePayment = (price) => {
-    console.log(price);
-    navigation.navigate("PaymentScreen", {
-      token: data.transactionToken.token,
-    });
-  };
-
-  const getStorage = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@access_token");
-      if (value !== null) {
-        // value previously stored
-        setAccessToken(value);
-      }
-    } catch (e) {
-      // error reading value
-      console.error(e);
-    }
-  };
-
-  const [accessToken, setAccessToken] = useState(null);
-  useEffect(async () => {
-    setAccessToken(await AsyncStorage.getItem("@access_token"));
-  }, []);
-  console.log({ accessToken });
+  const [accessToken, setAccessToken] = useState('')
+  
   const {
     loading: loadingProfile,
     data: profile,
     error: errorProfile,
   } = useQuery(GET_USER_PROFILE, {
     variables: {
-      accessToken: accessToken,
+      accessToken
     },
   });
-  console.log({ subscription });
-  console.log({ loadingProfile, profile, errorProfile });
+
+  useEffect( async () => {
+    setAccessToken(await AsyncStorage.getItem("@access_token"));
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+
+  const handlePayment = () => {
+    navigation.navigate('SubcribePage')
+  };
+
   if (loadingProfile) return <LoadingPage></LoadingPage>;
-  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
+  if (errorProfile) return <ErrorPage />;
   return (
     <Box
       style={styles.container}

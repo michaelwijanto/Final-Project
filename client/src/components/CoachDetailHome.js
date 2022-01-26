@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function CoachDetail({ navigation, route }) {
   const { id } = route.params;
@@ -16,7 +17,7 @@ export default function CoachDetail({ navigation, route }) {
   });
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
 
   console.log(coachName);
   return (

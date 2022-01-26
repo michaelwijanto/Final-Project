@@ -133,3 +133,11 @@ export const PATCH_LIKE = gql`
     }
   }
 `;
+
+export const SUCCESS_PAYMENT = gql`
+  mutation SuccessPayment($accessToken: String) {
+    successPayment(access_token: $accessToken) {
+      status
+    }
+  }
+`;

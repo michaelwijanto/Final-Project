@@ -5,12 +5,13 @@ import { useQuery } from "@apollo/client";
 import { GET_COACHES } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function CoachHorizontal({ navigation }) {
   const { loading, error, data } = useQuery(GET_COACHES);
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
   return (
     <FlatList
       horizontal

@@ -24,6 +24,8 @@ import {
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
+import ErrorPage from "./ErrorPage";
+import LoadingPage from "./LoadingPage";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
@@ -148,7 +150,7 @@ export default function ContentDetail({ navigation, route }) {
   let status;
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
   // if (loadingContent) return <Text>Loading...</Text>;
   // if (errorContent) return <Text>Error...</Text>;
 
