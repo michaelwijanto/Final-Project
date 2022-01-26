@@ -3,28 +3,13 @@ import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
-import {
-  Box,
-  Text,
-  Avatar,
-  HStack,
-  VStack,
-  Badge,
-  Button,
-  Center,
-  ScrollView,
-} from "native-base";
+import { Box, Text, Avatar, HStack, VStack, Badge, Button, Center, ScrollView } from "native-base";
 import { GET_USER_PROFILE } from "../../queries";
-import {
-  MaterialCommunityIcons,
-  FontAwesome5,
-  FontAwesome,
-  MaterialIcons,
-  Octicons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5, FontAwesome, MaterialIcons, Octicons } from "@expo/vector-icons";
 
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTION_TOKEN } from "../../queries";
+import LoadingPage from "../components/LoadingPage";
 
 export default function Profile({ navigation }) {
   const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
@@ -76,9 +61,9 @@ export default function Profile({ navigation }) {
       accessToken: accessToken,
     },
   });
-  console.log({subscription});
+  console.log({ subscription });
   console.log({ loadingProfile, profile, errorProfile });
-  if (loadingProfile) return <Text>Loading...</Text>;
+  if (loadingProfile) return <LoadingPage></LoadingPage>;
   if (errorProfile) return <Text>Error Fetching User Profile</Text>;
   return (
     <Box
@@ -102,12 +87,8 @@ export default function Profile({ navigation }) {
             RB
           </Avatar>
           <VStack style={styles.section1}>
-            <Text style={styles.fullName}>
-              {profile.getUserProfile.UserProfile.User.fullName}
-            </Text>
-            <Text style={styles.email}>
-              {profile.getUserProfile.UserProfile.User.email}
-            </Text>
+            <Text style={styles.fullName}>{profile.getUserProfile.UserProfile.User.fullName}</Text>
+            <Text style={styles.email}>{profile.getUserProfile.UserProfile.User.email}</Text>
             <HStack mt={2}>
               <Badge variant="solid" mr={2}>
                 {profile.getUserProfile.UserProfile.Level.name}
@@ -124,18 +105,15 @@ export default function Profile({ navigation }) {
           {subscription === "false" ? (
             <Fragment>
               <Text style={styles.price}>Rp. 199,000</Text>
-              <Button
-                w="100%"
-                size="lg"
-                colorScheme="lightBlue"
-                onPress={() => handlePayment()}
-              >
+              <Button w="100%" size="lg" colorScheme="lightBlue" onPress={() => handlePayment()}>
                 Subscribe Now
               </Button>
             </Fragment>
           ) : (
             <Fragment>
-              <Text style={styles.price}>PRO <FontAwesome5 name="crown" size={35} color="#FFE162" /></Text>
+              <Text style={styles.price}>
+                PRO <FontAwesome5 name="crown" size={35} color="#FFE162" />
+              </Text>
               <Button
                 w="100%"
                 size="lg"
@@ -156,26 +134,19 @@ export default function Profile({ navigation }) {
               <Text style={styles.textViewAll}>
                 <FontAwesome name="dashboard" size={18} color="blue" /> BMI
               </Text>
-              <Text style={styles.textViewAll}>
-                {profile.getUserProfile.UserProfile.bmi}
-              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.bmi}</Text>
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
                 <FontAwesome5 name="heartbeat" size={18} color="#DA1212" /> HEALTH
               </Text>
-              <Text style={styles.textViewAll}>
-                {profile.getUserProfile.UserProfile.health}
-              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.health}</Text>
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-              <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI
-                RANGE
+                <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI RANGE
               </Text>
-              <Text style={styles.textViewAll}>
-                {profile.getUserProfile.UserProfile.healthy_bmi_range}
-              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.healthy_bmi_range}</Text>
             </Box>
           </Box>
         </Box>

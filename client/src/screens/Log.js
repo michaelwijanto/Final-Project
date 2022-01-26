@@ -110,7 +110,7 @@ export default function Log({ navigation }) {
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
-                <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
+                  <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -123,7 +123,7 @@ export default function Log({ navigation }) {
                   </Text>
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
-                <FontAwesome name="dashboard" size={24} color="blue" />
+                  <FontAwesome name="dashboard" size={24} color="blue" />
                   <Text
                     _dark={{
                       color: "warmGray.50",

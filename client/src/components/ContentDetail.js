@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoadingPage from "../components/LoadingPage";
 
 import { StyleSheet, View, ScrollView } from "react-native";
 import {
@@ -146,7 +147,7 @@ export default function ContentDetail({ navigation, route }) {
 
   let status;
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
   // if (loadingContent) return <Text>Loading...</Text>;
   // if (errorContent) return <Text>Error...</Text>;
@@ -308,8 +309,10 @@ const styles = StyleSheet.create({
   boxButtonFinish: {
     position: "absolute",
     bottom: 15,
+    // top: "58%",
+    right: 15,
     alignSelf: "center",
-    width: "80%",
+    // width: "80%",
   },
   buttonFinish: {
     marginTop: 10,

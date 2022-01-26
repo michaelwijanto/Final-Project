@@ -2,6 +2,8 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { POST_USER_PROFILE } from "../../mutations";
 import { useState } from "react";
+import LoadingPage from "../components/LoadingPage";
+
 import {
   FormControl,
   Button,
@@ -14,8 +16,8 @@ import {
   Select,
   Text,
 } from "native-base";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-export default function Goals({ navigation, route }){
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export default function Goals({ navigation, route }) {
   const [postUserProfile, {}] = useMutation(POST_USER_PROFILE);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -66,7 +68,7 @@ export default function Goals({ navigation, route }){
       console.log("DI SINI");
       console.log({ sendUserProfile });
       // await AsyncStorage.setItem("@hasilBMI", sendUserProfile.data.postUserProfile.message);
-      navigation.navigate("ContentContainer")
+      navigation.navigate("ContentContainer");
     } catch (err) {
       console.log({ err });
       if (err.name === "Bad request") {
@@ -83,7 +85,7 @@ export default function Goals({ navigation, route }){
       setLoading(false);
     }
   };
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>{error}</Text>;
   return (
     <NativeBaseProvider>
@@ -158,4 +160,4 @@ export default function Goals({ navigation, route }){
       </Center>
     </NativeBaseProvider>
   );
-};
+}

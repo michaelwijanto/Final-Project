@@ -4,12 +4,12 @@ import { Box, Text, Button } from "native-base";
 import { useQuery } from "@apollo/client";
 import { GET_LEVEL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
-// import LoadingPage from "../components/loadingPage";
+import LoadingPage from "./LoadingPage";
 
 export default function LevelButton({ navigation }) {
   const { loading, error, data } = useQuery(GET_LEVEL);
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
 
   return (

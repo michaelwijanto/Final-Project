@@ -98,7 +98,7 @@ export default function SignIn({ navigation, route }) {
 
   // Alert Message
   useEffect(async () => {
-    await AsyncStorage.clear();
+    // await AsyncStorage.clear();
     if (route.params) {
       console.log(route.params);
       setIsLogin(false);
