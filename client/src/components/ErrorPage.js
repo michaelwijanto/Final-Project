@@ -1,4 +1,4 @@
-import { VStack, HStack, Heading } from "native-base";
+import { VStack, HStack, Heading, Text } from "native-base";
 import { EvilIcons } from "@expo/vector-icons";
 
 export default function ErrorPage() {
