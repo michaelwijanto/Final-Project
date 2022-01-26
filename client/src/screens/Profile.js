@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Apollo Client
 import { useQuery } from "@apollo/client";
-import { GET_USER_PROFILE, GET_TRANSACTION_TOKEN } from "../../queries";
+import {
+  GET_USER_PROFILE, 
+  // GET_TRANSACTION_TOKEN
+} from "../../queries";
 
 // Native Base
 import {
@@ -18,43 +23,50 @@ import {
 } from "native-base";
 
 import {
-  MaterialCommunityIcons,
   FontAwesome5,
   FontAwesome,
-  MaterialIcons,
   Octicons
 } from "@expo/vector-icons";
 
 export default function Profile({ navigation }) {
   const [accessToken, setAccessToken] = useState('')
-  const { error: errorTransaction, data: tokenTransaction } = useQuery(GET_TRANSACTION_TOKEN, {
-    variables: {
-      accessToken
+  
+  useEffect( async () => {
+    getStorage()
+  }, [])
+
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      if (value !== null) {
+        // value previously stored
+        setAccessToken(value);
+      }
+    } catch (e) {
+      // error reading value
+      console.error(e);
     }
-  })
+  };
+
+  // const { error: errorTransaction, data: tokenTransaction } = useQuery(GET_TRANSACTION_TOKEN, {
+  //   variables: {
+  //     accessToken
+  //   }
+  // })
   const { loading, data, error } = useQuery(GET_USER_PROFILE, {
     variables: {
       accessToken
     },
   });
 
-  useEffect( async () => {
-    setAccessToken(await AsyncStorage.getItem("@access_token"));
-  }, [])
-
-  const handlePayment = (price) => {
-    console.log(price);
-    navigation.navigate('PaymentScreen', {
-      token: data.transactionToken.token
+  const handlePayment = () => {
+    navigation.navigate('SubcribePage', {
+      // token: tokenTransaction?.transactionToken.token
     })    
   };
 
-  console.log({ accessToken });
-
-
-  console.log({loading, data, error});
-  if(loading) return <Text>Loading...</Text>
   if(error) return <Text>Error Fetching User Profile</Text>
+
   return (
     <Box
       style={styles.container}
@@ -64,64 +76,72 @@ export default function Profile({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
-      <Box style={styles.top}>
-        <HStack space={2}>
-          <Avatar
-            bg="purple.600"
-            alignSelf="center"
-            size="2xl"
-            source={{
-              uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
-            }}
-          >
-            RB
-          </Avatar>
-          <VStack style={styles.section1}>
-            <Text style={styles.fullName}>{data.getUserProfile.UserProfile.User.fullName}</Text>
-            <Text style={styles.email}>{data.getUserProfile.UserProfile.User.email}</Text>
-            <HStack mt={2}>
-              <Badge variant="solid" mr={2}>
-                {data.getUserProfile.UserProfile.Level.name}
-              </Badge>
-              <Badge variant="subtle" colorScheme="info">
-                {data.getUserProfile.UserProfile.goals}
-              </Badge>
+    {
+      loading ? (
+        <Text>loading...</Text>
+      ) : (
+        <>
+          <Box style={styles.top}>
+            <HStack space={2}>
+              <Avatar
+                bg="purple.600"
+                alignSelf="center"
+                size="2xl"
+                source={{
+                  uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
+                }}
+              >
+                RB
+              </Avatar>
+              <VStack style={styles.section1}>
+                <Text style={styles.fullName}>{data?.getUserProfile?.UserProfile?.User?.fullName}</Text>
+                <Text style={styles.email}>{data?.getUserProfile?.UserProfile?.User?.email}</Text>
+                <HStack mt={2}>
+                  <Badge variant="solid" mr={2}>
+                    {data?.getUserProfile?.UserProfile?.Level?.name}
+                  </Badge>
+                  <Badge variant="subtle" colorScheme="info">
+                    {data?.getUserProfile?.UserProfile?.goals}
+                  </Badge>
+                </HStack>
+              </VStack>
             </HStack>
-          </VStack>
-        </HStack>
-      </Box>
-      <ScrollView style={styles.section2}>
-        <Center>
-          <Text style={styles.price}>Rp. 199,000</Text>
-          <Button
-            w="100%"
-            size="lg"
-            colorScheme="gray"
-            onPress={() => handlePayment()}
-          >
-            Subscribe Now
-          </Button>
-        </Center>
-        <Box style={styles.boxPrograms}>
-          <Box style={styles.textBoxPrograms}>
-            <Text style={styles.textPrograms}>YOUR STATS</Text>
           </Box>
-          <Box style={styles.programsCard}>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.bmi}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.health}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.healthy_bmi_range}</Text>
-          </Box>
-          </Box>
-        </Box>
-      </ScrollView>
+          <ScrollView style={styles.section2}>
+            <Center>
+              <Text style={styles.price}>Rp. 199,000</Text>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="gray"
+                onPress={() => handlePayment()}
+              >
+                Subscribe Now
+              </Button>
+            </Center>
+            <Box style={styles.boxPrograms}>
+              <Box style={styles.textBoxPrograms}>
+                <Text style={styles.textPrograms}>YOUR STATS</Text>
+              </Box>
+              <Box style={styles.programsCard}>
+              <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
+              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.bmi}</Text>
+              </Box>
+              <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
+              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.health}</Text>
+              </Box>
+              <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
+              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.healthy_bmi_range}</Text>
+              </Box>
+              </Box>
+            </Box>
+          </ScrollView>
+        </>   
+      )
+    }
     </Box>
   );
 }
