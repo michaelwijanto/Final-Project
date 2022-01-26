@@ -22,7 +22,6 @@ import {
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
