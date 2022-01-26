@@ -110,48 +110,48 @@ export default function Log({ navigation }) {
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
-                <FontAwesome5 name="heartbeat" size={24} color="black" />
+                <FontAwesome5 name="heartbeat" size={24} color="#DA1212" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
                     }}
                     color="coolGray.800"
                     bold
-                    style={{ marginLeft: 5 }}
+                    style={{ marginLeft: 5, color: "grey", fontSize: 16 }}
                   >
                     {item.health}
                   </Text>
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
-                <FontAwesome name="dashboard" size={24} color="black" />
+                <FontAwesome name="dashboard" size={24} color="blue" />
                   <Text
                     _dark={{
                       color: "warmGray.50",
                     }}
                     color="coolGray.800"
                     bold
-                    style={{ marginLeft: 5 }}
+                    style={{ marginLeft: 5, color: "grey", fontSize: 16 }}
                   >
                     {item.bmi}
                   </Text>
                 </Box>
               </VStack>
               <VStack>
-                <Box style={{ flexDirection: "row" }}>
+                <Box style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text
                     _dark={{
                       color: "warmGray.50",
                     }}
                     color="coolGray.800"
                     bold
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 2, color: "grey", fontSize: 16 }}
                   >
                     {item.height}
                   </Text>
                   <MaterialCommunityIcons
                     name="human-male-height"
                     size={24}
-                    color="black"
+                    color="blue"
                   />
                 </Box>
                 <Box style={{ flexDirection: "row", marginTop: 5 }}>
@@ -161,14 +161,14 @@ export default function Log({ navigation }) {
                     }}
                     color="coolGray.800"
                     bold
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 2, color: "grey", fontSize: 16 }}
                   >
                     {item.weight}
                   </Text>
                   <MaterialCommunityIcons
                     name="weight-kilogram"
                     size={24}
-                    color="black"
+                    color="blue"
                   />
                 </Box>
               </VStack>

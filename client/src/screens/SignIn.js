@@ -53,7 +53,7 @@ export default function SignIn({ navigation, route }) {
 
   const submitLogin = (e) => {
     e.preventDefault();
-
+    console.log("SUBMIT");
     signInUser({
       variables: {
         email: signIn.email,
@@ -61,6 +61,7 @@ export default function SignIn({ navigation, route }) {
       },
     })
       .then((res) => {
+        console.log("RES");
         if (res.data?.signInUser?.error) {
           const errors = res.data.signInUser.error;
           setNewError({
@@ -75,12 +76,12 @@ export default function SignIn({ navigation, route }) {
         } else {
           console.log({SIGNIN: res.data.signInUser});
           console.log("Masuk Else");
-          const { access_token, isRegister } = res.data?.signInUser;
+          const { access_token, isRegister, subscription } = res.data?.signInUser;
           storeData("@access_token", access_token);
           storeData('@isRegister', isRegister)
-
+          storeData("@subscription", subscription)
           if ( isRegister === "true" ){
-            console.log('register true');
+            console.log('register true', );
             navigation.navigate("ContentContainer")
           }
           else {
@@ -90,6 +91,7 @@ export default function SignIn({ navigation, route }) {
         }
       })
       .catch((err) => {
+        console.log("ERR");
         console.log({ err });
       });
   };

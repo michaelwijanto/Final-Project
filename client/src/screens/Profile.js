@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-// import { StripeProvider } from "@stripe/stripe-react-native";
-// const SERVER_URL_METRO = "http://192.168.1.2:3000";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // Native Base
 import {
   Box,
@@ -15,20 +14,52 @@ import {
   Center,
   ScrollView,
 } from "native-base";
-import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../queries";
 import {
   MaterialCommunityIcons,
   FontAwesome5,
   FontAwesome,
   MaterialIcons,
-  Octicons
+  Octicons,
 } from "@expo/vector-icons";
 
+import { useQuery } from "@apollo/client";
+import { GET_TRANSACTION_TOKEN } from "../../queries";
+
 export default function Profile({ navigation }) {
+  const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
+    variables: {
+      accessToken,
+    },
+  });
+
+  const [subscription, setSubscription] = useState(null);
+  useEffect(async () => {
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+
+  useEffect(() => {
+    getStorage();
+  }, []);
+
   const handlePayment = (price) => {
-    console.log(+price);
-    navigation.navigate("SubcribePage");
+    console.log(price);
+    navigation.navigate("PaymentScreen", {
+      token: data.transactionToken.token,
+    });
+  };
+
+  const getStorage = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@access_token");
+      if (value !== null) {
+        // value previously stored
+        setAccessToken(value);
+      }
+    } catch (e) {
+      // error reading value
+      console.error(e);
+    }
   };
 
   const [accessToken, setAccessToken] = useState(null);
@@ -36,15 +67,19 @@ export default function Profile({ navigation }) {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, []);
   console.log({ accessToken });
-  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
+  const {
+    loading: loadingProfile,
+    data: profile,
+    error: errorProfile,
+  } = useQuery(GET_USER_PROFILE, {
     variables: {
       accessToken: accessToken,
     },
   });
-
-  console.log({loading, data, error});
-  if(loading) return <Text>Loading...</Text>
-  if(error) return <Text>Error Fetching User Profile</Text>
+  console.log({subscription});
+  console.log({ loadingProfile, profile, errorProfile });
+  if (loadingProfile) return <Text>Loading...</Text>;
+  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
   return (
     <Box
       style={styles.container}
@@ -67,14 +102,18 @@ export default function Profile({ navigation }) {
             RB
           </Avatar>
           <VStack style={styles.section1}>
-            <Text style={styles.fullName}>{data.getUserProfile.UserProfile.User.fullName}</Text>
-            <Text style={styles.email}>{data.getUserProfile.UserProfile.User.email}</Text>
+            <Text style={styles.fullName}>
+              {profile.getUserProfile.UserProfile.User.fullName}
+            </Text>
+            <Text style={styles.email}>
+              {profile.getUserProfile.UserProfile.User.email}
+            </Text>
             <HStack mt={2}>
               <Badge variant="solid" mr={2}>
-                {data.getUserProfile.UserProfile.Level.name}
+                {profile.getUserProfile.UserProfile.Level.name}
               </Badge>
               <Badge variant="subtle" colorScheme="info">
-                {data.getUserProfile.UserProfile.goals}
+                {profile.getUserProfile.UserProfile.goals}
               </Badge>
             </HStack>
           </VStack>
@@ -82,33 +121,62 @@ export default function Profile({ navigation }) {
       </Box>
       <ScrollView style={styles.section2}>
         <Center>
-          <Text style={styles.price}>Rp. 199,000</Text>
-          <Button
-            w="100%"
-            size="lg"
-            colorScheme="lightBlue"
-            onPress={() => handlePayment(199000)}
-          >
-            Subscribe Now
-          </Button>
+          {subscription === "false" ? (
+            <Fragment>
+              <Text style={styles.price}>Rp. 199,000</Text>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="lightBlue"
+                onPress={() => handlePayment()}
+              >
+                Subscribe Now
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Text style={styles.price}>PRO <FontAwesome5 name="crown" size={35} color="#FFE162" /></Text>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="gray"
+                // onPress={() => handlePayment()}
+              >
+                Unsubscribe
+              </Button>
+            </Fragment>
+          )}
         </Center>
         <Box style={styles.boxPrograms}>
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>YOUR STATS</Text>
           </Box>
           <Box style={styles.programsCard}>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.bmi}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.health}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.healthy_bmi_range}</Text>
-          </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome name="dashboard" size={18} color="blue" /> BMI
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.bmi}
+              </Text>
+            </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome5 name="heartbeat" size={18} color="#DA1212" /> HEALTH
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.health}
+              </Text>
+            </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+              <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI
+                RANGE
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.healthy_bmi_range}
+              </Text>
+            </Box>
           </Box>
         </Box>
       </ScrollView>
@@ -174,7 +242,7 @@ const styles = StyleSheet.create({
     marginLeft: 98,
     fontSize: 20,
     color: "#1C2F3C",
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
   },
   textViewAll: {
     paddingTop: 12,
@@ -184,8 +252,8 @@ const styles = StyleSheet.create({
   programsCard: {
     paddingLeft: 18,
   },
-  programsCardFlex:{
+  programsCardFlex: {
     flexDirection: "row",
     justifyContent: "space-between",
-  }
+  },
 });
