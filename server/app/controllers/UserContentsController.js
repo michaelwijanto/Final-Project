@@ -255,8 +255,8 @@ class UserContentsController {
       });
 
       if (!findUserContent) throw { name: "Content_Not_Found" };
+      console.log(findUserContent, "<<<<<< USER CONTENT");
 
-      console.log(findUserContent.isLike, "<<<<<< USER CONTENT");
       if (findUserContent.isLike) {
         const userContent = await UserContent.update(
           {

@@ -192,6 +192,18 @@ export default function ContentDetail({ navigation, route }) {
 
   // console.log(ContentData);
 
+  const handleIconLike = () => {
+    if (ContentData) {
+      if (ContentData?.getUserContentById?.isLike == "true") {
+        return <Ionicons name="heart" size={26} color="red" />;
+      } else {
+        return <Ionicons name="heart-outline" size={26} color="red" />;
+      }
+    } else {
+      return <Ionicons name="heart-outline" size={26} color="red" />;
+    }
+  };
+
   return (
     <Box height="100%">
       <ScrollView>
@@ -223,11 +235,7 @@ export default function ContentDetail({ navigation, route }) {
             <Box style={styles.containerLike}>
               <Text style={styles.like}>
                 <Pressable onPress={(e) => handleLike(e)}>
-                  {selected ? (
-                    <Ionicons name="heart" size={26} color="red" />
-                  ) : (
-                    <Ionicons name="heart-outline" size={26} color="red" />
-                  )}
+                  {handleIconLike()}
                 </Pressable>
               </Text>
               {/* <Text style={styles.textLike}>{data.getContentById.likes}</Text> */}
