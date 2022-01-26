@@ -30,7 +30,18 @@ export default function Height({ navigation, route }) {
           <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>How tall are you?</Text>
           <FormControl>
             <Stack mx="4">
-              <NumberInput value={height} min={130} max={230} step={5} onChange={(val) => setHeight(val)}>
+              <NumberInput
+                value={height}
+                min={130}
+                max={230}
+                step={5}
+                onChange={(val) => {
+                  if (isNaN(val)) setHeight(0);
+                  else {
+                    setHeight(val);
+                  }
+                }}
+              >
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
