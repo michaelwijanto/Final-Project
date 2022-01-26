@@ -3,30 +3,31 @@ const app = require('../app')
 const {User,Content,Level} = require('../models/index')
 
 beforeAll(async () =>{
-    await Content.destroy({
+     Content.destroy({
         where: {},
         truncate: true,
         cascade: true,
         restartIdentity: true,
     })
-    await User.destroy({
+     User.destroy({
         where: {},
         truncate: true,
         cascade: true,
         restartIdentity: true,
     })
-    await Level.destroy({
+     Level.destroy({
         where: {},
         truncate: true,
         cascade: true,
         restartIdentity: true,
     })
 
-     Level.bulkCreate([
+      Level.bulkCreate([
         {
             name: "Easy",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            description:"Easy",  
             createdAt: new Date(),
             updateedAt: new Date()
             
@@ -34,28 +35,30 @@ beforeAll(async () =>{
         {
             name: "Medium",
             thumbnail:
-          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            description:"Medium",
             createdAt: new Date(),
             updateedAt: new Date()
         },
         {
             name: "Hard",
             thumbnail:
-          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            description:"Hard", 
             createdAt: new Date(),
             updateedAt: new Date()
         }
     ])
-        User.create({
+    await User.create({
         email: "ariesastra@mail.com",
         password: "password",
         fullName: "Arie Sastra",
         role: "admin",
-        isRegister: "false",
+        isRegister: "true",
         pin: "123456",
         isActivated: "true",
     })
-    await Content.bulkCreate([
+     Content.bulkCreate([
         {
             title: "Program untuk pemula 1",
             description: "T7 Hari Bakar Lemak dengan Senam Aerobik! Cuma 15 Menit dan Cocok untuk Pemula",

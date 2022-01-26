@@ -38,7 +38,8 @@ beforeAll(async () =>{
       name: "Easy",
       thumbnail:
        "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-      createdAt: new Date(),
+       description:"Medium",
+       createdAt: new Date(),
       updateedAt: new Date()
       
     },
@@ -46,6 +47,7 @@ beforeAll(async () =>{
       name: "Medium",
       thumbnail:
       "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+      description:"Medium",
       createdAt: new Date(),
       updateedAt: new Date()
     },
@@ -53,6 +55,7 @@ beforeAll(async () =>{
         name: "Hard",
         thumbnail:
         "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+        description:"Medium",
         createdAt: new Date(),
         updateedAt: new Date()
     }

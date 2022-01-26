@@ -5,7 +5,7 @@ const { UserContent, Content, User,UserProfile,Log,Level } = require('../models'
 
 let access_token = ''
 
-beforeAll(() => {
+beforeAll(async() => {
   User.destroy({
     where: {},
     truncate: true,
@@ -44,7 +44,8 @@ beforeAll(() => {
             name: "Easy",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"easy",  
+          createdAt: new Date(),
             updateedAt: new Date()
             
         },
@@ -52,18 +53,20 @@ beforeAll(() => {
             name: "Medium",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Medium", 
+          createdAt: new Date(),
             updateedAt: new Date()
         },
         {
             name: "Hard",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Hard", 
+          createdAt: new Date(),
             updateedAt: new Date()
         }
     ])
-  User.create({
+   User.create({
     email: "ariesastra@mail.com",
     password: "password",
     fullName: "Arie Sastra",

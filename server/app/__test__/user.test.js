@@ -14,7 +14,6 @@ beforeAll(async () => {
     email: "testemail@email.com",
     password: "password",
     fullName: "tester",
-    address: "temp address",
     role: "user",
     isRegister: "true",
     pin: "123456",
@@ -39,7 +38,6 @@ describe("POST /api/users/register", () => {
     email: "new@email.com",
     password: "password",
     fullName: "test name",
-    address: "alamat rumah",
   };
   test("should successfully register with status code 201", (done) => {
     request(app)
