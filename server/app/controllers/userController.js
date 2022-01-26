@@ -26,13 +26,13 @@ class UserController {
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "tokomovieh8@gmail.com",
-        pass: "ToKoMovieH8!",
+        user: "activewithactive8@gmail.com",
+        pass: "activeactive888",
       },
     });
 
     let notif = {
-      from: "tokomovieh8@gmail.com", // sender address
+      from: "activewithactive8@gmail.com", // sender address
       to: email, // list of receivers
       subject: "Activate your email", // Subject line
       text: `Welcome to Active8! We are glad to have you be our member.
@@ -43,7 +43,13 @@ class UserController {
     Active8`,
     };
 
-    transporter.sendMail(notif, (err, data) => {});
+    transporter.sendMail(notif, (err, data) => {
+      if(err) {
+        console.log(err, "ERROR NODE MAILER");
+        console.log("EMAIL NOT SEND");
+      }
+      else console.log("EMAIL SEND");
+    });
 
     try {
       let created = await User.create(newUser);
