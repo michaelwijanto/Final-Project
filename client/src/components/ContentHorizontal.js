@@ -23,6 +23,11 @@ import { GET_CONTENT_CARD } from "../../queries";
 export default function ContentHorizontal({ navigation }) {
   const [access_token, setAccessToken] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [subscription, setSubscription] = useState(null);
+  useEffect(async () => {
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+  console.log({SUBSCRIPTION: subscription});
 
   // Buat narik Access Token
   const getStorage = async () => {
@@ -52,8 +57,6 @@ export default function ContentHorizontal({ navigation }) {
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error...</Text>;
-
-  const subscription = "false";
 
   const handleOnContent = (id) => {};
 

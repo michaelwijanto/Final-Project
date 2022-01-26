@@ -29,6 +29,12 @@ export default function LevelFilter({ navigation, route }) {
   const [access_token, setAccessToken] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  const [subscription, setSubscription] = useState(null);
+  useEffect(async () => {
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+  console.log({SUBSCRIPTION: subscription})
+
   // Buat narik Access Token
   const getStorage = async () => {
     try {
@@ -67,8 +73,6 @@ export default function LevelFilter({ navigation, route }) {
     navigation.navigate("SubcribePage");
     setShowModal(false);
   };
-
-  const subscription = "false";
 
   return (
     <Box>

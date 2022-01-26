@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -32,6 +32,11 @@ export default function Profile({ navigation }) {
       accessToken,
     },
   });
+
+  const [subscription, setSubscription] = useState(null);
+  useEffect(async () => {
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
 
   useEffect(() => {
     getStorage();
@@ -71,7 +76,7 @@ export default function Profile({ navigation }) {
       accessToken: accessToken,
     },
   });
-
+  console.log({subscription});
   console.log({ loadingProfile, profile, errorProfile });
   if (loadingProfile) return <Text>Loading...</Text>;
   if (errorProfile) return <Text>Error Fetching User Profile</Text>;
@@ -116,15 +121,31 @@ export default function Profile({ navigation }) {
       </Box>
       <ScrollView style={styles.section2}>
         <Center>
-          <Text style={styles.price}>Rp. 199,000</Text>
-          <Button
-            w="100%"
-            size="lg"
-            colorScheme="gray"
-            onPress={() => handlePayment()}
-          >
-            Subscribe Now
-          </Button>
+          {subscription === "false" ? (
+            <Fragment>
+              <Text style={styles.price}>Rp. 199,000</Text>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="lightBlue"
+                onPress={() => handlePayment()}
+              >
+                Subscribe Now
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Text style={styles.price}>PRO <FontAwesome5 name="crown" size={35} color="#FFE162" /></Text>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="gray"
+                // onPress={() => handlePayment()}
+              >
+                Unsubscribe
+              </Button>
+            </Fragment>
+          )}
         </Center>
         <Box style={styles.boxPrograms}>
           <Box style={styles.textBoxPrograms}>
@@ -133,7 +154,7 @@ export default function Profile({ navigation }) {
           <Box style={styles.programsCard}>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-                <FontAwesome name="dashboard" size={18} color="black" /> BMI
+                <FontAwesome name="dashboard" size={18} color="blue" /> BMI
               </Text>
               <Text style={styles.textViewAll}>
                 {profile.getUserProfile.UserProfile.bmi}
@@ -141,7 +162,7 @@ export default function Profile({ navigation }) {
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-                <FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH
+                <FontAwesome5 name="heartbeat" size={18} color="#DA1212" /> HEALTH
               </Text>
               <Text style={styles.textViewAll}>
                 {profile.getUserProfile.UserProfile.health}
@@ -149,7 +170,7 @@ export default function Profile({ navigation }) {
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-                <Octicons name="dash" size={18} color="black" /> HEALTHY BMI
+              <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI
                 RANGE
               </Text>
               <Text style={styles.textViewAll}>

@@ -14,6 +14,7 @@ export const SIGN_IN = gql`
     signInUser(email: $email, password: $password) {
       access_token
       isRegister
+      subscription
       error
     }
   }
