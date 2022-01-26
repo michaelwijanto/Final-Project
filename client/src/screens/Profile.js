@@ -27,7 +27,10 @@ import {
 import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "../components/ErrorPage";
 
-export default function Profile({ navigation }) {
+export default function Profile({ 
+  navigation,
+  route
+}) {
   const [subscription, setSubscription] = useState(null);
   const [accessToken, setAccessToken] = useState('')
   
@@ -41,14 +44,32 @@ export default function Profile({ navigation }) {
     },
   });
 
+  // Check status transaction, if true, then reset token subscription
+  if (route.params?.status) {
+    const status = route.params.status
+    console.log(status);
+    if ( status === "successPayment" ) {
+      AsyncStorage.removeItem('@subscription')
+        .then( async res => {
+          await AsyncStorage.setItem("@subscription", 'true')
+          setSubscription('true')
+        })
+        .catch(err => console.error(err))
+    }
+  }
+
   useEffect( async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
     setSubscription(await AsyncStorage.getItem("@subscription"));
   }, []);
 
+  // Handle Payment
   const handlePayment = () => {
     navigation.navigate('SubcribePage')
   };
+
+  // Handle Unsubscribe
+  const handleUnsubscribe = () => {}
 
   if (loadingProfile) return <LoadingPage></LoadingPage>;
   if (errorProfile) return <ErrorPage />;
@@ -105,7 +126,7 @@ export default function Profile({ navigation }) {
                 w="100%"
                 size="lg"
                 colorScheme="gray"
-                // onPress={() => handlePayment()}
+                onPress={() => handleUnsubscribe()}
               >
                 Unsubscribe
               </Button>
