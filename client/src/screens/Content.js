@@ -6,7 +6,7 @@ import CoachHorizontal from "../components/CoachHorizontalContent";
 import LevelButton from "../components/LevelButton";
 import ContentHorizontal from "../components/ContentHorizontal";
 
-export default function AboutScreen({ navigation }) {
+export default function Content({ navigation }) {
   return (
     <Box
       style={styles.container}
@@ -79,7 +79,6 @@ export default function AboutScreen({ navigation }) {
             >
               Coaches
             </Text>
-            
           </View>
           <Box style={styles.programsCard}>
             <CoachHorizontal navigation={navigation} />

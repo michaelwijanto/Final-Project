@@ -9,7 +9,6 @@ import ErrorPage from "./ErrorPage";
 
 export default function CoachDetail({ navigation, route }) {
   const { id } = route.params;
-  const { coachName } = route.params;
   const { loading, error, data } = useQuery(GET_COACH_DETAIL, {
     variables: {
       getCoachDetailId: id,
@@ -19,7 +18,6 @@ export default function CoachDetail({ navigation, route }) {
   if (loading) return <LoadingPage />;
   if (error) return <ErrorPage />;
 
-  console.log(coachName);
   return (
     <Box style={styles.container}>
       <Box style={styles.top}>
@@ -30,7 +28,6 @@ export default function CoachDetail({ navigation, route }) {
               uri: data.getCoachDetail.imgCoach,
             }}
             alt="Alternate Text"
-            // size="xl"
           />
         </Box>
         <Box style={styles.nameCoach}>
@@ -43,7 +40,6 @@ export default function CoachDetail({ navigation, route }) {
             marginTop="-5"
             space={4}
             mx={{
-              // base: "auto",
               md: 0,
             }}
           >

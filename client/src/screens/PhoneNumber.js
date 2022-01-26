@@ -49,7 +49,12 @@ export default function PhoneNumber({ navigation }) {
                 color: "#1F2937",
               }}
               // size="sm"
-              style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center"}}
+              style={{
+                marginTop: 10,
+                width: 100,
+                height: 50,
+                alignSelf: "center",
+              }}
               px="3"
               onPress={() =>
                 navigation.navigate("Gender", { form: { phoneNumber } })

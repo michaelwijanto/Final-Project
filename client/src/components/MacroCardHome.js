@@ -1,17 +1,7 @@
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import { Box, Heading, AspectRatio, Image, Text, Stack, Badge } from "native-base";
-
-import { useQuery } from "@apollo/client";
-import { GET_LEVEL } from "../../queries";
-// import ErrorPage from "../components/errorPage";
-import LoadingPage from "./LoadingPage";
-import ErrorPage from "./ErrorPage";
+import { StyleSheet } from "react-native";
+import { Box, AspectRatio, Image } from "native-base";
 
 export default function MacroCard({ navigation }) {
-  const { loading, error, data } = useQuery(GET_LEVEL);
-
-  if (loading) return <LoadingPage />;
-  if (error) return <ErrorPage />;
   return (
     <Box
       w="380"

@@ -14,8 +14,8 @@ import {
 
 export default function Gender({ navigation, route }) {
   const [gender, setGender] = useState("");
-  console.log({gender});
-  const {phoneNumber} = route.params.form
+  const { phoneNumber } = route.params.form;
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
@@ -33,9 +33,7 @@ export default function Gender({ navigation, route }) {
               <Select
                 defaultValue={gender}
                 isRequired={true}
-                onValueChange={(itemValue) =>
-                  setGender(itemValue)
-                }
+                onValueChange={(itemValue) => setGender(itemValue)}
                 minWidth="200"
                 accessibilityLabel="Choose Service"
                 placeholder="Choose Gender"
@@ -59,9 +57,18 @@ export default function Gender({ navigation, route }) {
               _text={{
                 color: "#1F2937",
               }}
-              style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center"}}
+              style={{
+                marginTop: 10,
+                width: 100,
+                height: 50,
+                alignSelf: "center",
+              }}
               px="3"
-              onPress={() => navigation.navigate("DateBirth", {form: {gender, phoneNumber}})}
+              onPress={() =>
+                navigation.navigate("DateBirth", {
+                  form: { gender, phoneNumber },
+                })
+              }
             >
               Next
             </Button>

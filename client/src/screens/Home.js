@@ -3,22 +3,10 @@ import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Native Base
-import {
-  Box,
-  Image,
-  Text,
-  ScrollView,
-  Alert,
-  VStack,
-  HStack,
-  useToast,
-  IconButton,
-  Pressable,
-} from "native-base";
+import { Box, Image, Text, ScrollView, useToast, Pressable } from "native-base";
 
 // Components
 import LevelHorizontal from "../components/LevelHorizontalHome";
-import CoachHorizontal from "../components/CoachHorizontalHome";
 import LogCard from "../components/LogCardHome";
 import MacroCard from "../components/MacroCardHome";
 import Articles from "../components/Articles";
@@ -37,7 +25,6 @@ export default function Home({ navigation, route }) {
         // console.log(value);
       }
     } catch (e) {
-      // error reading value
       console.error(e);
     }
   };
@@ -79,14 +66,6 @@ export default function Home({ navigation, route }) {
             <LevelHorizontal navigation={navigation} />
           </Box>
         </Box>
-        {/* <Box style={styles.boxCoach}>
-          <Box style={styles.textBoxPrograms}>
-            <Text style={styles.textPrograms}>Coaches</Text>
-          </Box>
-          <Box style={styles.programsCard}>
-            <CoachHorizontal navigation={navigation} />
-          </Box>
-        </Box> */}
         <Box style={styles.boxCoach} paddingBottom="5">
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Track Your Progress</Text>
@@ -111,9 +90,7 @@ export default function Home({ navigation, route }) {
           <Box style={styles.textBoxPrograms}>
             <Text style={styles.textPrograms}>Articles</Text>
           </Box>
-          <Box style={styles.programsCard}>
-             {/* <Articles />  */}
-            </Box>
+          <Box style={styles.programsCard}>{/* <Articles />  */}</Box>
         </Box>
       </ScrollView>
     </Box>

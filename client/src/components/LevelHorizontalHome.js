@@ -1,5 +1,13 @@
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import { Box, Heading, AspectRatio, Image, Text, Stack, Badge } from "native-base";
+import { StyleSheet, Pressable, FlatList } from "react-native";
+import {
+  Box,
+  Heading,
+  AspectRatio,
+  Image,
+  Text,
+  Stack,
+  Badge,
+} from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_LEVEL } from "../../queries";
@@ -11,6 +19,7 @@ export default function LevelHorizontal({ navigation }) {
 
   if (loading) return <LoadingPage />;
   if (error) return <ErrorPage />;
+
   return (
     <FlatList
       horizontal
@@ -70,7 +79,13 @@ export default function LevelHorizontal({ navigation }) {
 
               <Stack p="1">
                 <Stack>
-                  <Heading size="sm" ml="-1" paddingLeft="5" justifyContent="center" padding="3">
+                  <Heading
+                    size="sm"
+                    ml="-1"
+                    paddingLeft="5"
+                    justifyContent="center"
+                    padding="3"
+                  >
                     {item.description}
                   </Heading>
                 </Stack>

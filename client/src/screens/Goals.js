@@ -2,7 +2,6 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { POST_USER_PROFILE } from "../../mutations";
 import { useState } from "react";
-import LoadingPage from "../components/LoadingPage";
 
 import {
   FormControl,
@@ -53,7 +52,7 @@ export default function Goals({ navigation, route }) {
         !weight
       )
         throw { name: "Bad request" };
-      console.log("LOLOS");
+
       const sendUserProfile = await postUserProfile({
         variables: {
           accessToken: await AsyncStorage.getItem("@access_token"),
@@ -66,8 +65,7 @@ export default function Goals({ navigation, route }) {
           goals,
         },
       });
-      console.log("DI SINI");
-      console.log({ sendUserProfile });
+
       // await AsyncStorage.setItem("@hasilBMI", sendUserProfile.data.postUserProfile.message);
       navigation.navigate("ContentContainer");
     } catch (err) {

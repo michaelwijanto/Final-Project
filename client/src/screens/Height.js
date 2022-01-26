@@ -18,6 +18,7 @@ import {
 export default function Height({ navigation, route }) {
   const [height, setHeight] = useState(130);
   const { phoneNumber, gender, dateBirth } = route.params.form;
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
@@ -27,7 +28,9 @@ export default function Height({ navigation, route }) {
             md: "25%",
           }}
         >
-          <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>How tall are you?</Text>
+          <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>
+            How tall are you?
+          </Text>
           <FormControl>
             <Stack mx="4">
               <NumberInput
@@ -48,8 +51,14 @@ export default function Height({ navigation, route }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <FormControl.HelperText>It cannot be smaller than 130 or bigger than 230 (cm).</FormControl.HelperText>
-              <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Height required.</FormControl.ErrorMessage>
+              <FormControl.HelperText>
+                It cannot be smaller than 130 or bigger than 230 (cm).
+              </FormControl.HelperText>
+              <FormControl.ErrorMessage
+                leftIcon={<WarningOutlineIcon size="xs" />}
+              >
+                Height required.
+              </FormControl.ErrorMessage>
             </Stack>
             <Button
               size="sm"
@@ -57,9 +66,18 @@ export default function Height({ navigation, route }) {
               _text={{
                 color: "#1F2937",
               }}
-              style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center" }}
+              style={{
+                marginTop: 10,
+                width: 100,
+                height: 50,
+                alignSelf: "center",
+              }}
               px="3"
-              onPress={() => navigation.navigate("Weight", { form: { height, phoneNumber, gender, dateBirth } })}
+              onPress={() =>
+                navigation.navigate("Weight", {
+                  form: { height, phoneNumber, gender, dateBirth },
+                })
+              }
             >
               Next
             </Button>

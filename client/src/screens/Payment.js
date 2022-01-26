@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardField } from "@stripe/stripe-react-native";
 import { View } from "react-native";
-import { Box, Text, Input, FormControl } from "native-base";
+import { Text, Input, FormControl } from "native-base";
 
 export default function Payment({ navigation }) {
   const [formCard, setFormCard] = useState({
@@ -15,9 +15,17 @@ export default function Payment({ navigation }) {
       <Input></Input>
       <FormControl>
         <FormControl.Label>Enter your Full Name</FormControl.Label>
-        <Input name="fullName" placeholder="your full name" onChange={(e) => setFormCard({ ...formCard, fullname: e })} />
+        <Input
+          name="fullName"
+          placeholder="your full name"
+          onChange={(e) => setFormCard({ ...formCard, fullname: e })}
+        />
         <FormControl.Label>Enter your Address</FormControl.Label>
-        <Input name="address" placeholder="your address" onChange={(e) => setFormCard({ ...formCard, address: e })} />
+        <Input
+          name="address"
+          placeholder="your address"
+          onChange={(e) => setFormCard({ ...formCard, address: e })}
+        />
         <FormControl.Label>Enter your Phone Number</FormControl.Label>
         <Input
           name="phoneNumber"
