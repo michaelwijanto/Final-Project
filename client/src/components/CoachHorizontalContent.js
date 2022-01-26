@@ -53,7 +53,7 @@ export default function CoachHorizontal({ navigation }) {
                 ></Avatar>
               </Box>
               <Box>
-                <Heading textAlign="center">{item.name}</Heading>
+                <Heading size="md" textAlign="center">{item.name}</Heading>
               </Box>
             </Box>
           </Pressable>

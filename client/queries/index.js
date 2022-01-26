@@ -24,6 +24,7 @@ export const GET_COACHES = gql`
       imgCoach
       age
       bio
+      description
     }
   }
 `;
@@ -36,6 +37,7 @@ export const GET_COACH_DETAIL = gql`
       imgCoach
       age
       bio
+      description
     }
   }
 `;
