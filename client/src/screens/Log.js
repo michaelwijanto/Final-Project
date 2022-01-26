@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 import {
   Box,
   FlatList,
-  Heading,
-  Avatar,
   HStack,
   VStack,
   Text,
   Spacer,
   Center,
-  NativeBaseProvider,
   Button,
   Modal,
   FormControl,
@@ -21,6 +18,8 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "native-base";
+
+import LoadingPage from "../components/LoadingPage";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -29,29 +28,34 @@ import {
   FontAwesome,
   MaterialIcons,
 } from "@expo/vector-icons";
+
 import { POST_USER_LOG } from "../../mutations";
+import ErrorPage from "../components/ErrorPage";
+
 export default function Log({ navigation }) {
   const toast = useToast();
   const [customNotif, setCustomNotif] = useState({
     customLoading: false,
     customError: null,
   });
+
   const [showModal, setShowModal] = useState(false);
   const [formLog, setFormLog] = useState({
     height: 0,
     weight: 0,
   });
+
   const [accessToken, setAccessToken] = useState(null);
   useEffect(async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, []);
-  console.log({ accessToken });
+
   const { loading, data, error } = useQuery(GET_USER_LOGS, {
     variables: {
       accessToken: accessToken,
     },
   });
-  console.log({ loading, data, error });
+
   const [postUserLog, {}] = useMutation(POST_USER_LOG, {
     refetchQueries: [GET_USER_LOGS],
   });
@@ -59,7 +63,6 @@ export default function Log({ navigation }) {
     try {
       e.preventDefault();
       setCustomNotif({ ...customNotif, customLoading: true });
-      console.log({ formLog });
       const createLog = await postUserLog({
         variables: {
           accessToken,
@@ -67,14 +70,19 @@ export default function Log({ navigation }) {
           weight: formLog.weight,
         },
       });
-      console.log({ createLog });
+      if (createLog?.data?.postUserLog?.error)
+        throw { name: "error create user log" };
       toast.show({
-        title: "Success update body Log",
+        title: "Success",
         status: "success",
-        description: createLog.data.postUserLog.message[0],
+        description: "Your latest body development has been added",
       });
     } catch (err) {
-      console.log({ err });
+      toast.show({
+        title: "Please fill all update body Log",
+        status: "error",
+        description: createLog.data.postUserLog.message[0],
+      });
       setCustomNotif({ ...customNotif, customError: err });
     } finally {
       setCustomNotif({ ...customNotif, customLoading: false });
@@ -82,9 +90,19 @@ export default function Log({ navigation }) {
     }
   };
 
-  if (loading || customNotif.customLoading) return <Text>Loading...</Text>;
+  if (loading || customNotif.customLoading)
+    return (
+      <Center flex={1} px="3">
+        <LoadingPage />
+      </Center>
+    );
   if (error) return <Text>Error Fetching Logs</Text>;
-  if (customNotif.customError) return <Text>Error Add Log</Text>;
+  if (error || customNotif.customError)
+    return (
+      <Center flex={1} px="3">
+        <ErrorPage />
+      </Center>
+    );
   return (
     <Box
       flex={1}
@@ -209,11 +227,20 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+              <Text style={{ marginBottom: 10, fontSize: 12 }}>
+                130cm - 230cm
+              </Text>
               <FormControl.Label>Weight</FormControl.Label>
               <NumberInput
+                value={formLog.weight}
                 min={40}
                 max={160}
-                onChange={(val) => setFormLog({ ...formLog, weight: val })}
+                onChange={(val) => {
+                  if (isNaN(val)) setFormLog({ ...formLog, weight: 0 });
+                  else {
+                    setFormLog({ ...formLog, weight: val });
+                  }
+                }}
               >
                 <NumberInputField />
                 <NumberInputStepper>
@@ -221,6 +248,7 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+              <Text style={{ fontSize: 12 }}>40kg - 160kg</Text>
             </Modal.Body>
             <Modal.Footer>
               <Button.Group space={2}>
@@ -233,7 +261,16 @@ export default function Log({ navigation }) {
                 >
                   Cancel
                 </Button>
-                <Button onPress={onSubmitLog}>Save</Button>
+                {formLog.weight >= 40 &&
+                formLog.weight <= 160 &&
+                formLog.height >= 130 &&
+                formLog.height <= 230 ? (
+                  <Button onPress={onSubmitLog} colorScheme="lightBlue">
+                    Save
+                  </Button>
+                ) : (
+                  <Button colorScheme="gray">Save</Button>
+                )}
               </Button.Group>
             </Modal.Footer>
           </Modal.Content>

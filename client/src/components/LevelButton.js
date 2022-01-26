@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList } from "react-native";
-import { Box, Text, Button } from "native-base";
+import { Box, Button } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_LEVEL } from "../../queries";

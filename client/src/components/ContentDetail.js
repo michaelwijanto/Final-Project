@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingPage from "../components/LoadingPage";
 
 import { StyleSheet, View, ScrollView } from "react-native";
-import {
-  IconButton,
-  Icon,
-  Text,
-  Box,
-  Pressable,
-  Button,
-  Badge,
-  useToast,
-} from "native-base";
+import { Text, Box, Pressable, Button, Badge, useToast } from "native-base";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTENT_DETAIL, GET_USER_CONTENT_ID } from "../../queries";
@@ -21,9 +11,9 @@ import {
   UPDATE_STATUS_USER_CONTENT,
   PATCH_LIKE,
 } from "../../mutations";
-import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
+import YoutubePlayer from "react-native-youtube-iframe";
 
-import { Ionicons, Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import ErrorPage from "./ErrorPage";
 
 export default function ContentDetail({ navigation, route }) {
@@ -33,7 +23,6 @@ export default function ContentDetail({ navigation, route }) {
   const [accesstoken, setAccessToken] = useState("");
   const toast = useToast();
 
-  // Buat narik Access Token
   const getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem("@access_token");
@@ -55,14 +44,10 @@ export default function ContentDetail({ navigation, route }) {
     },
   });
 
-  // if (loadingContent) return <Text>Loading...</Text>;
-  // if (errorContent) return <Text>Error...</Text>;
-
   useEffect(() => {
     getStorage();
     getLike();
   }, []);
-  // Sampe sini
 
   const getLike = async () => {
     try {
@@ -78,7 +63,6 @@ export default function ContentDetail({ navigation, route }) {
           });
           status = "started";
           if (ContentData.getUserContentById.isLike) {
-            // console.log(ContentData.getUserContentById.isLike, "<<<<<<<< LIKE");
             setSelected(1);
           } else {
             setSelected(0);
@@ -89,20 +73,6 @@ export default function ContentDetail({ navigation, route }) {
       console.log(err);
     }
   };
-
-  // useEffect(async () => {
-  //   // console.log(ContentData.getUserContentById.isLike, "<<<<<<<<<<<");
-  //   if (ContentData) {
-  //     if (ContentData?.getUserContentById.isLike == true) {
-  //       setSelected(1);
-  //     } else {
-  //       console.log("masuk");
-  //       setSelected(0);
-  //     }
-  //   }
-  // }, [ContentData]);
-
-  console.log({ selected });
 
   const [
     PostUserContent,

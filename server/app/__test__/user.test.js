@@ -14,7 +14,6 @@ beforeAll(async () => {
     email: "testemail@email.com",
     password: "password",
     fullName: "tester",
-    address: "temp address",
     role: "user",
     isRegister: "true",
     pin: "123456",
@@ -39,7 +38,6 @@ describe("POST /api/users/register", () => {
     email: "new@email.com",
     password: "password",
     fullName: "test name",
-    address: "alamat rumah",
   };
   test("should successfully register with status code 201", (done) => {
     request(app)
@@ -72,7 +70,10 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Email Required"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Email Required"])
+        );
         done();
       })
       .catch((err) => {
@@ -92,7 +93,13 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Email cannot be empty", "Invalid email format"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining([
+            "Email cannot be empty",
+            "Invalid email format",
+          ])
+        );
         done();
       })
       .catch((err) => {
@@ -112,7 +119,10 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Email already exist"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Email already exist"])
+        );
         done();
       })
       .catch((err) => {
@@ -132,7 +142,10 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Invalid email format"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Invalid email format"])
+        );
         done();
       })
       .catch((err) => {
@@ -151,7 +164,10 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Password Required"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Password Required"])
+        );
         done();
       })
       .catch((err) => {
@@ -171,7 +187,10 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Password cannot be empty"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Password cannot be empty"])
+        );
         done();
       })
       .catch((err) => {
@@ -190,131 +209,16 @@ describe("POST /api/users/register", () => {
         const result = response.body;
         expect(response.status).toBe(400);
         expect(result).toEqual(expect.any(Object));
-        expect(result).toHaveProperty("error", expect.arrayContaining(["Full Name Required"]));
+        expect(result).toHaveProperty(
+          "error",
+          expect.arrayContaining(["Full Name Required"])
+        );
         done();
       })
       .catch((err) => {
         done(err);
       });
   });
-  // test("should fail if email empty", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "",
-  //       password: "password",
-  //       fullName: "test name",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Email cannot be empty");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
-  // test("should fail if email is not unique", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "new@email.com",
-  //       password: "password",
-  //       fullName: "test name",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Email already exist");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
-  // test("should fail if not email", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "testemail",
-  //       password: "password",
-  //       fullName: "test name",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Invalid email format");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
-  // test("should fail if no password", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "new@email.com",
-  //       fullName: "test name",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Password Required");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
-  // test("should fail if password is empty", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "new@email.com",
-  //       password: "",
-  //       fullName: "test name",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Password cannot be empty");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
-  // test("should fail if full name is empty", (done) => {
-  //   request(app)
-  //     .post("/api/users/register")
-  //     .send({
-  //       email: "new23@email.com",
-  //       password: "password",
-  //       address: "alamat rumah",
-  //     })
-  //     .then((response) => {
-  //       const result = response.body;
-  //       expect(response.status).toBe(400);
-  //       expect(result).toEqual(expect.any(Object));
-  //       expect(result).toHaveProperty("message", "Full Name Required");
-  //       done();
-  //     })
-  //     .catch((err) => {
-  //       done(err);
-  //     });
-  // });
 });
 
 describe("POST /api/users/login", () => {
@@ -327,13 +231,11 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result, '>>>>>>>>>>>>>>>>>>.salah login')
         access_token = result.access_token;
         expect(response.status).toBe(200);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("access_token", expect.any(String));
         expect(result).toHaveProperty("isRegister", expect.any(String));
-       
         done();
       })
       .catch((err) => {
@@ -401,7 +303,6 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result, ">>>>>>>>>>>>>>>>>> wronf email");
         expect(response.status).toBe(401);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("error", "Invalid email/password");
@@ -427,7 +328,6 @@ test("[GET/api/users success] - should be return object with status code 200", (
       expect(resp.body[0]).toHaveProperty("pin");
       expect(resp.body[0]).toHaveProperty("isRegister");
       expect(resp.body[0]).toHaveProperty("isActivated");
-
       done();
     })
     .catch((err) => {
@@ -445,7 +345,6 @@ test("[GET/api/users ERROR]  - should be return object with status code 500", (d
       expect(resp.body).toEqual(expect.any(Object));
       expect(resp.body).toHaveProperty("error");
       expect(resp.body.error).toBe("Internal server error");
-
       done();
     })
     .catch((err) => {
@@ -461,7 +360,6 @@ test("[GET/api/users ERROR]  - should be return object with status code 401", (d
       expect(resp.body).toEqual(expect.any(Object));
       expect(resp.body).toHaveProperty("error");
       expect(resp.body.error).toBe("Invalid token");
-
       done();
     })
     .catch((err) => {
@@ -477,15 +375,8 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
       pin: "123456",
     })
     .then((resp) => {
-      console.log(resp.body, ">>>>>>>>>>>>>>>>>>");
       expect(resp.status).toBe(200);
       expect(resp.body).toEqual(expect.any(Object));
-      // expect(resp.body).toHaveProperty("title")
-      // expect(resp.body).toHaveProperty("description")
-      // expect(resp.body).toHaveProperty("youtubeUrl")
-      // expect(resp.body).toHaveProperty("likes")
-      // expect(resp.body).toHaveProperty("statusLike")
-
       done();
     })
     .catch((err) => {
@@ -493,60 +384,20 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
     });
 });
 
-test("[PATCH/api/users  ERROR] - should be return object with status code 200", (done) => {
+test("[PATCH/api/users  ERROR] - should be return object with status code 400", (done) => {
   request(app)
     .patch("/api/users ")
     .send({
       pin: "",
     })
     .then((resp) => {
-      console.log(resp.body, ">>>>>>>>>>>>>>>>>> pinnnnn");
-      expect(resp.status).toBe(401);
+      expect(resp.status).toBe(400);
       expect(resp.body).toEqual(expect.any(Object));
-      expect(resp.body).toHaveProperty("error")
-      expect(resp.body.error).toBe('Invalid token')
-
+      expect(resp.body).toHaveProperty("error");
+      expect(resp.body.error).toBe("Please enter the correct pin!");
       done();
     })
     .catch((err) => {
       console.log(err);
     });
 });
-
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 400", (done) =>{
-//     request(app)
-//     .patch("/api/contents/1")
-//     .set("access_token",access_token)
-//     .send({
-//         statusLike: "",
-//      })
-//     .then((resp) =>{
-//         expect(resp.status).toBe(400)
-//         expect(resp.body).toEqual(expect.any(Object))
-//         expect(resp.body).toHaveProperty("error")
-
-//         done()
-//     })
-//     .catch((err) =>{
-//         console.log(err)
-//     })
-// })
-
-// test("[PATCH/api/contents/:id ERROR] - should be return object with status code 401", (done) =>{
-//         request(app)
-//         .patch("/api/contents/1")
-//         .send({
-//             statusLike: "",
-//          })
-//         .then((resp) =>{
-//             expect(resp.status).toBe(401)
-//             expect(resp.body).toEqual(expect.any(Object))
-//             expect(resp.body).toHaveProperty("error")
-//             expect(resp.body.error).toBe('Invalid token')
-
-//             done()
-//         })
-//         .catch((err) =>{
-//             console.log(err)
-//         })
-// })

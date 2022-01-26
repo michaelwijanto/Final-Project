@@ -8,7 +8,7 @@ const typeDefs = gql`
   }
 
   type successPayment {
-    status: Int,
+    status: Int
     detail: [String]
   }
 
@@ -19,43 +19,46 @@ const typeDefs = gql`
   type Mutation {
     successPayment(access_token: String): successPayment
   }
-`
+`;
 const resolvers = {
   Query: {
     transactionToken: async (_, args) => {
       try {
-        const { access_token } = args
-        
-        const { data } = await axios.get('http://localhost:3000/api/payment/transaction-token', {
-          headers: {
-            access_token
+        const { access_token } = args;
+        const { data } = await axios.get(
+          "http://localhost:3000/api/payment/transaction-token",
+          {
+            headers: {
+              access_token,
+            },
           }
-        })
-        console.log(data);
-        return data
+        );
+        return data;
       } catch (error) {
-        return error
+        return error;
       }
-    }
+    },
   },
   Mutation: {
     successPayment: async (_, args) => {
       try {
-        const { access_token } = args
+        const { access_token } = args;
         console.log(access_token);
-        const data = await axios.put("http://localhost:3000/api/payment/success",
-        {},{
-          headers: {
-            access_token
+        const data = await axios.put(
+          "http://localhost:3000/api/payment/success",
+          {},
+          {
+            headers: {
+              access_token,
+            },
           }
-        })
-        console.log(data);
-        return data
+        );
+        return data;
       } catch (error) {
-        return error.response.data
+        return error.response.data;
       }
-    }
-  }
-}
+    },
+  },
+};
 
-module.exports = { typeDefs, resolvers }
+module.exports = { typeDefs, resolvers };

@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    console.log(email);
+
     let temp = "";
     for (let i = 0; i < 6; i++) {
       temp += Math.floor(Math.random() * 10);
@@ -22,17 +22,16 @@ class UserController {
       isActivated: "false",
     };
 
-    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "tokomovieh8@gmail.com",
-        pass: "ToKoMovieH8!",
+        user: "activewithactive8@gmail.com",
+        pass: "activeactive888",
       },
     });
 
     let notif = {
-      from: "tokomovieh8@gmail.com", // sender address
+      from: "activewithactive8@gmail.com", // sender address
       to: email, // list of receivers
       subject: "Activate your email", // Subject line
       text: `Welcome to Active8! We are glad to have you be our member.
@@ -43,11 +42,16 @@ class UserController {
     Active8`,
     };
 
-    transporter.sendMail(notif, (err, data) => {});
+    transporter.sendMail(notif, (err, data) => {
+      // if (err) {
+      //   console.log(err, "ERROR NODE MAILER");
+      //   console.log("EMAIL NOT SEND");
+      // } else console.log("EMAIL SEND");
+    });
 
     try {
       let created = await User.create(newUser);
-      console.log("SINI");
+
       res.status(201).json({
         id: created.id,
         fullName: created.fullName,
@@ -85,7 +89,7 @@ class UserController {
       const profile = await UserProfile.findOne({ where: { UserId: user.id } });
       if (!profile) subscription = "false";
       if (profile) subscription = profile.subscription;
-      console.log({ profile }, "<<<<<<<<");
+
       res.status(200).json({
         access_token: token,
         isRegister: user.isRegister,
@@ -153,8 +157,6 @@ class UserController {
   static async getLevels(req, res, next) {
     try {
       const result = await Level.findAll();
-
-      console.log(result);
       res.status(200).json(result);
     } catch (err) {
       next(err);

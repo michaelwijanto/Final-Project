@@ -1,6 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Box, Text, Heading, FormControl, Input, Alert, Button, HStack, VStack, Center, NativeBaseProvider } from "native-base";
+import {
+  Box,
+  Text,
+  Heading,
+  FormControl,
+  Input,
+  Alert,
+  Button,
+  HStack,
+  VStack,
+  Center,
+  NativeBaseProvider,
+} from "native-base";
 
 import { REGISTER } from "../../mutations";
 
@@ -12,7 +24,7 @@ export default function SignUp({ navigation }) {
   });
   const [newError, setNewError] = useState([]);
   const [SignUpUser, { data, loading, error }] = useMutation(REGISTER);
-  
+
   const submitRegister = async (e) => {
     try {
       e.preventDefault();
@@ -24,8 +36,8 @@ export default function SignUp({ navigation }) {
           email: formRegister.email,
           password: formRegister.password,
         },
-      })
-      console.log("SINI");
+      });
+
       if (signUp.data.signUpUser.error) {
         const errors = signUp.data.signUpUser.error;
         setNewError(errors);
@@ -73,10 +85,18 @@ export default function SignUp({ navigation }) {
               newError.map((item, i) => (
                 <Alert w="100%" status="error" key={i}>
                   <VStack space={2} flexShrink={1} w="100%">
-                    <HStack flexShrink={1} space={2} justifyContent="space-between">
+                    <HStack
+                      flexShrink={1}
+                      space={2}
+                      justifyContent="space-between"
+                    >
                       <HStack space={2} flexShrink={1}>
                         <Alert.Icon mt="1" />
-                        <Text fontSize="md" textAlign="center" color="coolGray.800">
+                        <Text
+                          fontSize="md"
+                          textAlign="center"
+                          color="coolGray.800"
+                        >
                           {item}
                         </Text>
                       </HStack>
@@ -90,7 +110,9 @@ export default function SignUp({ navigation }) {
                 type="text"
                 name="fullName"
                 placeholder="input full name..."
-                onChangeText={(value) => setRegister({ ...formRegister, fullName: value })}
+                onChangeText={(value) =>
+                  setRegister({ ...formRegister, fullName: value })
+                }
               />
             </FormControl>
             <FormControl>
@@ -99,7 +121,9 @@ export default function SignUp({ navigation }) {
                 type="text"
                 name="email"
                 placeholder="input email..."
-                onChangeText={(value) => setRegister({ ...formRegister, email: value })}
+                onChangeText={(value) =>
+                  setRegister({ ...formRegister, email: value })
+                }
               />
             </FormControl>
             <FormControl>
@@ -107,12 +131,18 @@ export default function SignUp({ navigation }) {
               <Input
                 type="password"
                 name="password"
-                onChangeText={(value) => setRegister({ ...formRegister, password: value })}
+                onChangeText={(value) =>
+                  setRegister({ ...formRegister, password: value })
+                }
                 placeholder="input password..."
               />
             </FormControl>
 
-            <Button mt="2" colorScheme="lightBlue" onPress={(e) => submitRegister(e)}>
+            <Button
+              mt="2"
+              colorScheme="lightBlue"
+              onPress={(e) => submitRegister(e)}
+            >
               Sign Up
             </Button>
             <HStack mt="6" justifyContent="center">
@@ -131,7 +161,7 @@ export default function SignUp({ navigation }) {
                   fontWeight: "medium",
                   fontSize: "sm",
                 }}
-                style={{color: "indigo"}}
+                style={{ color: "indigo" }}
                 onPress={() => navigation.navigate("SignIn")}
               >
                 Sign In

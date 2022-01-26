@@ -19,57 +19,52 @@ import {
   ScrollView,
 } from "native-base";
 
-import {
-  FontAwesome5,
-  FontAwesome 
-} from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
 import LoadingPage from "../components/LoadingPage";
 import ErrorPage from "../components/ErrorPage";
 
-export default function Profile({ 
-  navigation,
-  route
-}) {
+export default function Profile({ navigation, route }) {
   const [subscription, setSubscription] = useState(null);
-  const [accessToken, setAccessToken] = useState('')
-  
+  const [accessToken, setAccessToken] = useState("");
+
+  console.log(route);
+
   const {
     loading: loadingProfile,
     data: profile,
     error: errorProfile,
   } = useQuery(GET_USER_PROFILE, {
     variables: {
-      accessToken
+      accessToken,
     },
   });
 
   // Check status transaction, if true, then reset token subscription
-  if (route.params?.status) {
-    const status = route.params.status
-    console.log(status);
-    if ( status === "successPayment" ) {
-      AsyncStorage.removeItem('@subscription')
-        .then( async res => {
-          await AsyncStorage.setItem("@subscription", 'true')
-          setSubscription('true')
+  if (route?.params?.status) {
+    const status = route.params.status;
+    if (status === "successPayment") {
+      AsyncStorage.removeItem("@subscription")
+        .then(async (res) => {
+          await AsyncStorage.setItem("@subscription", "true");
+          setSubscription("true");
         })
-        .catch(err => console.error(err))
+        .catch((err) => console.error(err));
     }
   }
 
-  useEffect( async () => {
+  useEffect(async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
     setSubscription(await AsyncStorage.getItem("@subscription"));
   }, []);
 
   // Handle Payment
   const handlePayment = () => {
-    navigation.navigate('SubcribePage')
+    navigation.navigate("SubcribePage");
   };
 
   // Handle Unsubscribe
-  const handleUnsubscribe = () => {}
+  const handleUnsubscribe = () => {};
 
   if (loadingProfile) return <LoadingPage></LoadingPage>;
   if (errorProfile) return <ErrorPage />;
@@ -95,8 +90,12 @@ export default function Profile({
             RB
           </Avatar>
           <VStack style={styles.section1}>
-            <Text style={styles.fullName}>{profile.getUserProfile.UserProfile.User.fullName}</Text>
-            <Text style={styles.email}>{profile.getUserProfile.UserProfile.User.email}</Text>
+            <Text style={styles.fullName}>
+              {profile.getUserProfile.UserProfile.User.fullName}
+            </Text>
+            <Text style={styles.email}>
+              {profile.getUserProfile.UserProfile.User.email}
+            </Text>
             <HStack mt={2}>
               <Badge variant="solid" mr={2}>
                 {profile.getUserProfile.UserProfile.Level.name}
@@ -113,7 +112,12 @@ export default function Profile({
           {subscription === "false" ? (
             <Fragment>
               <Text style={styles.price}>Rp. 199,000</Text>
-              <Button w="100%" size="lg" colorScheme="lightBlue" onPress={() => handlePayment()}>
+              <Button
+                w="100%"
+                size="lg"
+                colorScheme="lightBlue"
+                onPress={() => handlePayment()}
+              >
                 Subscribe Now
               </Button>
             </Fragment>
@@ -142,19 +146,27 @@ export default function Profile({
               <Text style={styles.textViewAll}>
                 <FontAwesome name="dashboard" size={18} color="blue" /> BMI
               </Text>
-              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.bmi}</Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.bmi}
+              </Text>
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-                <FontAwesome5 name="heartbeat" size={18} color="#DA1212" /> HEALTH
+                <FontAwesome5 name="heartbeat" size={18} color="#DA1212" />{" "}
+                HEALTH
               </Text>
-              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.health}</Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.health}
+              </Text>
             </Box>
             <Box style={styles.programsCardFlex}>
               <Text style={styles.textViewAll}>
-                <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI RANGE
+                <FontAwesome name="bar-chart-o" size={18} color="blue" />{" "}
+                HEALTHY BMI RANGE
               </Text>
-              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.healthy_bmi_range}</Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.healthy_bmi_range}
+              </Text>
             </Box>
           </Box>
         </Box>

@@ -4,6 +4,7 @@ import { POST_USER_PROFILE } from "../../mutations";
 import { useState } from "react";
 import LoadingPage from "../components/LoadingPage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Entypo } from "@expo/vector-icons";
 
 import {
   FormControl,
@@ -16,6 +17,7 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  Heading,
 } from "native-base";
 
 export default function Goals({ navigation, route }) {
@@ -53,7 +55,7 @@ export default function Goals({ navigation, route }) {
         !weight
       )
         throw { name: "Bad request" };
-      console.log("LOLOS");
+
       const sendUserProfile = await postUserProfile({
         variables: {
           accessToken: await AsyncStorage.getItem("@access_token"),
@@ -66,9 +68,7 @@ export default function Goals({ navigation, route }) {
           goals,
         },
       });
-      console.log("DI SINI");
-      console.log({ sendUserProfile });
-      // await AsyncStorage.setItem("@hasilBMI", sendUserProfile.data.postUserProfile.message);
+
       navigation.navigate("ContentContainer");
     } catch (err) {
       console.log({ err });
@@ -86,7 +86,12 @@ export default function Goals({ navigation, route }) {
       setLoading(false);
     }
   };
-  if (loading) return <LoadingPage />;
+  if (loading)
+    return (
+      <Center flex={1} px="3">
+        <LoadingPage />
+      </Center>
+    );
   if (error) return <Text>{error}</Text>;
   return (
     <NativeBaseProvider>
@@ -144,18 +149,33 @@ export default function Goals({ navigation, route }) {
                 Goals required.
               </FormControl.ErrorMessage>
             </Stack>
-            <Button
-              size="sm"
-              variant={"solid"}
-              _text={{
-                color: "#1F2937",
-              }}
-              style={{ marginTop: 10, height: 50 }}
-              px="3"
-              onPress={onSubmitUserProfile}
-            >
-              Submit
-            </Button>
+            {goals ? (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                style={{ marginTop: 10, height: 50 }}
+                px="3"
+                onPress={onSubmitUserProfile}
+              >
+                <Heading color={"white"}>Submit</Heading>
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                style={{ marginTop: 10, height: 50 }}
+                colorScheme="gray"
+                px="3"
+              >
+                <Entypo name="block" size={16} color="black" />
+              </Button>
+            )}
           </FormControl>
         </Box>
       </Center>

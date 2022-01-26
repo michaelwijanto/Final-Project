@@ -35,7 +35,6 @@ const resolvers = {
             "http://localhost:3000/api/user-contents",
             { headers: { access_token } }
           );
-          console.log(userContents);
           await redis.set("userContents", JSON.stringify(userContents));
           return userContents;
         }
@@ -47,25 +46,12 @@ const resolvers = {
     getUserContentById: async (_, args) => {
       try {
         const { access_token, ContentId } = args;
-        // const userContentCache = await redis.get("userContent");
-        // if (userContentCache) {
-        //   return JSON.parse(userContentCache);
-        // } else {
-        //   const { data: userContent } = await axios.get(
-        //     `http://localhost:3000/api/user-contents/${ContentId}`,
-        //     { headers: { access_token } }
-        //   );
-        //   console.log(userContent);
-        //   await redis.set("userContent", JSON.stringify(userContent));
-        //   return userContent;
-        // }
         const { data: userContent } = await axios.get(
           `http://localhost:3000/api/user-contents/${ContentId}`,
           { headers: { access_token } }
         );
         return userContent;
       } catch (err) {
-        console.log({ err });
         return err;
       }
     },
@@ -81,8 +67,6 @@ const resolvers = {
         );
         await redis.del("userContents");
         await redis.del("userContent");
-        console.log(data);
-        // return { message: "Successful create UserContent" };
         return data;
       } catch (err) {
         console.log({ err });
@@ -99,10 +83,8 @@ const resolvers = {
         );
         await redis.del("userContents");
         await redis.del("userContent");
-        console.log(data);
         return data;
       } catch (err) {
-        console.log({ err });
         return err;
       }
     },
@@ -117,7 +99,6 @@ const resolvers = {
         );
         return { message: "Liked this excercise!" };
       } catch (err) {
-        console.log({ err });
         return err;
       }
     },

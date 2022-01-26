@@ -1,5 +1,5 @@
 import { Spinner, HStack, Heading, Center } from "native-base";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function LoadingPage() {
   return (

@@ -15,21 +15,17 @@ import {
   Center,
   NativeBaseProvider,
   useToast,
-  IconButton,
-  CloseIcon,
   Alert,
   Spinner,
 } from "native-base";
 
 // Component
 import { SIGN_IN } from "../../mutations";
-import { TouchableOpacity } from "react-native";
 
 export default function SignIn({ navigation, route }) {
   const toast = useToast();
   useEffect(() => {
     if (route.params?.message) {
-      console.log("MASUK");
       toast.show({
         title: "Success Activated Your Account",
         status: "success",
@@ -53,7 +49,6 @@ export default function SignIn({ navigation, route }) {
 
   const submitLogin = (e) => {
     e.preventDefault();
-    console.log("SUBMIT");
     signInUser({
       variables: {
         email: signIn.email,
@@ -61,37 +56,36 @@ export default function SignIn({ navigation, route }) {
       },
     })
       .then((res) => {
-        console.log("RES");
+        if (res.data?.signInUser?.error === "Please activate your account!") {
+          navigation.navigate("Activate", {
+            mauAktivasi: res.data.signInUser.error,
+          });
+        }
         if (res.data?.signInUser?.error) {
           const errors = res.data.signInUser.error;
           setNewError({
             ...newError,
             message: errors,
           });
-          console.log("SALAH");
           setIsLogin(true);
           setTimeout(() => {
             setIsLogin(false);
           }, 3000);
         } else {
           console.log({ SIGNIN: res.data.signInUser });
-          console.log("Masuk Else");
           const { access_token, isRegister, subscription } =
             res.data?.signInUser;
           storeData("@access_token", access_token);
           storeData("@isRegister", isRegister);
           storeData("@subscription", subscription);
           if (isRegister === "true") {
-            console.log("register true");
             navigation.navigate("ContentContainer");
           } else {
-            console.log("register false");
             navigation.navigate("UserProfileStack");
           }
         }
       })
       .catch((err) => {
-        console.log("ERR");
         console.log({ err });
       });
   };
@@ -100,7 +94,6 @@ export default function SignIn({ navigation, route }) {
   useEffect(async () => {
     // await AsyncStorage.clear();
     if (route.params) {
-      console.log(route.params);
       setIsLogin(false);
     }
     // Invoking Local Storage
@@ -126,14 +119,12 @@ export default function SignIn({ navigation, route }) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-        if ( registerStat === "true" ){
-          navigation.navigate("ContentContainer")
-        }
-        else if (registerStat === "false") {
-          navigation.navigate("UserProfileStack")
-        } 
-        else {
-          console.log('stay');
+        if (registerStat === "true") {
+          navigation.navigate("ContentContainer");
+        } else if (registerStat === "false") {
+          navigation.navigate("UserProfileStack");
+        } else {
+          console.log("stay");
         }
       }
     } catch (e) {

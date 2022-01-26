@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Alert, Pressable, Linking, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Alert,
+  Pressable,
+  Linking,
+  ScrollView,
+  Image,
+} from "react-native";
 import { Box, Heading, AspectRatio, Text, Stack } from "native-base";
 import axios from "axios";
 import LoadingPage from "./LoadingPage";
@@ -91,7 +98,13 @@ export default function Articles({ navigation }) {
 
                   <Stack p="1">
                     <Stack>
-                      <Heading size="sm" ml="-1" paddingLeft="5" justifyContent="center" marginTop="4">
+                      <Heading
+                        size="sm"
+                        ml="-1"
+                        paddingLeft="5"
+                        justifyContent="center"
+                        marginTop="4"
+                      >
                         {item.title}
                       </Heading>
                     </Stack>

@@ -17,17 +17,6 @@ class userProfilesController {
         goals,
       } = req.body;
 
-      console.log({
-        height,
-        weight,
-        activityLevel,
-        phoneNumber,
-        gender,
-        dateBirth,
-        goals,
-        UserId,
-      });
-
       if (
         !height ||
         !weight ||
@@ -50,7 +39,6 @@ class userProfilesController {
       let birthDate = new Date(year, month, day);
       let age = today.getFullYear() - birthDate.getFullYear();
 
-      console.log({ age });
       let callBMI = await axios({
         method: "GET",
         url: "https://fitness-calculator.p.rapidapi.com/bmi",
@@ -61,7 +49,7 @@ class userProfilesController {
             "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
         },
       });
-      console.log({ callBMI });
+
       if (
         callBMI.data.data.health == "Severe Thinness" ||
         callBMI.data.data.health == "Moderate Thinness" ||
@@ -77,18 +65,6 @@ class userProfilesController {
         LevelId = 3;
       }
 
-      console.log({
-        UserId,
-        phoneNumber,
-        subscription: "false",
-        gender,
-        dateBirth: birthDate,
-        goals,
-        LevelId,
-        bmi: callBMI.data.data.bmi,
-        health: callBMI.data.data.health,
-        healthy_bmi_range: callBMI.data.data.healthy_bmi_range,
-      });
       const postUserProfile = await UserProfile.create(
         {
           UserId,
@@ -173,7 +149,7 @@ class userProfilesController {
   static async getUserProfile(req, res, next) {
     try {
       const UserId = req.user.id;
-      console.log({UserId});
+
       const response = await UserProfile.findOne({
         where: {
           UserId,

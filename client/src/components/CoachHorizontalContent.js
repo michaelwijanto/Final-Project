@@ -1,5 +1,5 @@
-import { StyleSheet, View, Pressable, FlatList } from "react-native";
-import { Box, Heading, AspectRatio, Image, Text, Stack, Avatar } from "native-base";
+import { StyleSheet, Pressable, FlatList } from "react-native";
+import { Box, Heading, Avatar } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACHES } from "../../queries";
@@ -54,7 +54,9 @@ export default function CoachHorizontal({ navigation }) {
                 ></Avatar>
               </Box>
               <Box>
-                <Heading textAlign="center">{item.name}</Heading>
+                <Heading size="md" textAlign="center">
+                  {item.name}
+                </Heading>
               </Box>
             </Box>
           </Pressable>
