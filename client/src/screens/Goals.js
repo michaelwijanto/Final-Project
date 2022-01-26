@@ -2,6 +2,8 @@ import React from "react";
 import { useMutation } from "@apollo/client";
 import { POST_USER_PROFILE } from "../../mutations";
 import { useState } from "react";
+import LoadingPage from "../components/LoadingPage";
+
 import {
   FormControl,
   Button,
@@ -19,7 +21,8 @@ export default function Goals({ navigation, route }) {
   const [postUserProfile, {}] = useMutation(POST_USER_PROFILE);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { activityLevel, phoneNumber, gender, dateBirth, height, weight } = route.params.form;
+  const { activityLevel, phoneNumber, gender, dateBirth, height, weight } =
+    route.params.form;
   const [goals, setGoals] = useState("");
 
   const onSubmitUserProfile = async (e) => {
@@ -39,7 +42,16 @@ export default function Goals({ navigation, route }) {
           goals,
         },
       });
-      if (!activityLevel || !dateBirth || !gender || !goals || !height || !phoneNumber || !weight) throw { name: "Bad request" };
+      if (
+        !activityLevel ||
+        !dateBirth ||
+        !gender ||
+        !goals ||
+        !height ||
+        !phoneNumber ||
+        !weight
+      )
+        throw { name: "Bad request" };
       console.log("LOLOS");
       const sendUserProfile = await postUserProfile({
         variables: {
@@ -85,7 +97,11 @@ export default function Goals({ navigation, route }) {
           }}
         >
           <FormControl>
-            <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>What's your goal?</Text>
+            <Text
+              style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}
+            >
+              What's your goal?
+            </Text>
             <Stack mx="4">
               <Select
                 onValueChange={(itemValue) => setGoals(itemValue)}
@@ -98,14 +114,34 @@ export default function Goals({ navigation, route }) {
                 }}
               >
                 <Select.Item label="maintain weight" value="main" key={1} />
-                <Select.Item label="Mild weight loss" value="mildlose" key={2} />
+                <Select.Item
+                  label="Mild weight loss"
+                  value="mildlose"
+                  key={2}
+                />
                 <Select.Item label="Weight loss" value="weightlose" key={3} />
-                <Select.Item label="Extreme weight loss" value="extremelose" key={4} />
-                <Select.Item label="Mild weight gain" value="mildgain" key={5} />
+                <Select.Item
+                  label="Extreme weight loss"
+                  value="extremelose"
+                  key={4}
+                />
+                <Select.Item
+                  label="Mild weight gain"
+                  value="mildgain"
+                  key={5}
+                />
                 <Select.Item label="Weight gain" value="weightgain" key={6} />
-                <Select.Item label="extremegain" value="Extreme weight gain" key={7} />
+                <Select.Item
+                  label="extremegain"
+                  value="Extreme weight gain"
+                  key={7}
+                />
               </Select>
-              <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>Goals required.</FormControl.ErrorMessage>
+              <FormControl.ErrorMessage
+                leftIcon={<WarningOutlineIcon size="xs" />}
+              >
+                Goals required.
+              </FormControl.ErrorMessage>
             </Stack>
             <Button
               size="sm"

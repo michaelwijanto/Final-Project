@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoadingPage from "../components/LoadingPage";
 
 import { StyleSheet, View, ScrollView } from "react-native";
-import { IconButton, Icon, Text, Box, Pressable, Button, Badge } from "native-base";
+import {
+  IconButton,
+  Icon,
+  Text,
+  Box,
+  Pressable,
+  Button,
+  Badge,
+  useToast,
+} from "native-base";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTENT_DETAIL, GET_USER_CONTENT_ID } from "../../queries";
-import { POST_USER_CONTENT, UPDATE_STATUS_USER_CONTENT, PATCH_LIKE } from "../../mutations";
+import {
+  POST_USER_CONTENT,
+  UPDATE_STATUS_USER_CONTENT,
+  PATCH_LIKE,
+} from "../../mutations";
 import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
@@ -16,6 +30,7 @@ export default function ContentDetail({ navigation, route }) {
   const [selected, setSelected] = useState(0);
   const [flaggingData, setFlaggingData] = useState(false);
   const [accesstoken, setAccessToken] = useState("");
+  const toast = useToast();
 
   // Buat narik Access Token
   const getStorage = async () => {
@@ -88,21 +103,34 @@ export default function ContentDetail({ navigation, route }) {
 
   console.log({ selected });
 
-  const [PostUserContent, { data: dataPostUserContent, loading: loadingPostUserContent, error: errorPostUserContent }] =
-    useMutation(POST_USER_CONTENT, {
-      refetchQueries: [GET_USER_CONTENT_ID],
-    });
+  const [
+    PostUserContent,
+    {
+      data: dataPostUserContent,
+      loading: loadingPostUserContent,
+      error: errorPostUserContent,
+    },
+  ] = useMutation(POST_USER_CONTENT, {
+    refetchQueries: [GET_USER_CONTENT_ID],
+  });
 
   status = "started";
 
-  const [PutUserContent, { data: dataPutUserContent, loading: loadingPutUserContent, error: errorPutUserContent }] = useMutation(
-    UPDATE_STATUS_USER_CONTENT,
+  const [
+    PutUserContent,
     {
-      refetchQueries: [GET_USER_CONTENT_ID],
-    }
-  );
+      data: dataPutUserContent,
+      loading: loadingPutUserContent,
+      error: errorPutUserContent,
+    },
+  ] = useMutation(UPDATE_STATUS_USER_CONTENT, {
+    refetchQueries: [GET_USER_CONTENT_ID],
+  });
 
-  const [PatchLike, { data: dataPatchLike, loading: loadingPatchLike, error: errorPatchLike }] = useMutation(PATCH_LIKE, {
+  const [
+    PatchLike,
+    { data: dataPatchLike, loading: loadingPatchLike, error: errorPatchLike },
+  ] = useMutation(PATCH_LIKE, {
     refetchQueries: [GET_USER_CONTENT_ID],
   });
 
@@ -128,13 +156,21 @@ export default function ContentDetail({ navigation, route }) {
     e.preventDefault();
     // console.log(ContentData.getUserContentById.status);
     if (ContentData.getUserContentById.status == "started") {
-      await PutUserContent({
+      const statusContent = await PutUserContent({
         variables: {
           accessToken: accesstoken,
           contentId: id,
         },
       });
-      status = ContentData.getUserContentById.status;
+
+      console.log(statusContent.data.putUserContent.message, "<<<<<<<<");
+      let message = statusContent.data.putUserContent.message;
+      toast.show({
+        title: "Excellent !",
+        description: message,
+        placement: "top",
+        status: "success",
+      });
     }
   };
 
@@ -182,7 +218,10 @@ export default function ContentDetail({ navigation, route }) {
     <Box height="100%">
       <ScrollView>
         <View>
-          <YoutubePlayer height={250} videoId={data.getContentById.youtubeUrl} />
+          <YoutubePlayer
+            height={250}
+            videoId={data.getContentById.youtubeUrl}
+          />
           <View>
             {status == "finish" ? (
               <Badge
@@ -205,14 +244,18 @@ export default function ContentDetail({ navigation, route }) {
             </View>
             <Box style={styles.containerLike}>
               <Text style={styles.like}>
-                <Pressable onPress={(e) => handleLike(e)}>{handleIconLike()}</Pressable>
+                <Pressable onPress={(e) => handleLike(e)}>
+                  {handleIconLike()}
+                </Pressable>
               </Text>
               {/* <Text style={styles.textLike}>{data.getContentById.likes}</Text> */}
             </Box>
 
             <Text style={styles.titleDescription}>Description</Text>
 
-            <Text style={styles.description}>{data.getContentById.description}</Text>
+            <Text style={styles.description}>
+              {data.getContentById.description}
+            </Text>
           </View>
         </View>
       </ScrollView>
@@ -266,8 +309,10 @@ const styles = StyleSheet.create({
   boxButtonFinish: {
     position: "absolute",
     bottom: 15,
+    // top: "58%",
+    right: 15,
     alignSelf: "center",
-    width: "80%",
+    // width: "80%",
   },
   buttonFinish: {
     marginTop: 10,

@@ -27,10 +27,7 @@ export default function LevelFilter({ navigation, route }) {
   const getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem("@access_token");
-      // console.log(value);
       if (value !== null) {
-        // value previously stored
-
         setAccessToken(value);
       }
     } catch (e) {

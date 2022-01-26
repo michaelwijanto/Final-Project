@@ -71,22 +71,22 @@ export default function SignIn({ navigation, route }) {
           console.log("SALAH");
           setIsLogin(true);
           setTimeout(() => {
-            setIsLogin(false)
+            setIsLogin(false);
           }, 3000);
         } else {
-          console.log({SIGNIN: res.data.signInUser});
+          console.log({ SIGNIN: res.data.signInUser });
           console.log("Masuk Else");
-          const { access_token, isRegister, subscription } = res.data?.signInUser;
+          const { access_token, isRegister, subscription } =
+            res.data?.signInUser;
           storeData("@access_token", access_token);
-          storeData('@isRegister', isRegister)
-          storeData("@subscription", subscription)
-          if ( isRegister === "true" ){
-            console.log('register true', );
-            navigation.navigate("ContentContainer")
-          }
-          else {
-            console.log('register false');
-            navigation.navigate("UserProfileStack")
+          storeData("@isRegister", isRegister);
+          storeData("@subscription", subscription);
+          if (isRegister === "true") {
+            console.log("register true");
+            navigation.navigate("ContentContainer");
+          } else {
+            console.log("register false");
+            navigation.navigate("UserProfileStack");
           }
         }
       })
@@ -126,14 +126,13 @@ export default function SignIn({ navigation, route }) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-        
-        if ( registerStat === "true" ){
-          console.log('register true');
-          navigation.navigate("ContentContainer")
-        }
-        else {
-          console.log('register false');
-          navigation.navigate("UserProfileStack")
+
+        if (registerStat === "true") {
+          console.log("register true");
+          navigation.navigate("ContentContainer");
+        } else {
+          console.log("register false");
+          navigation.navigate("UserProfileStack");
         }
       }
     } catch (e) {
@@ -175,7 +174,7 @@ export default function SignIn({ navigation, route }) {
               size="xs"
               style={{ textAlign: "center" }}
             >
-              Sign in to continue!
+              Sign in to Active8!
             </Heading>
 
             <VStack space={3} mt="5">
