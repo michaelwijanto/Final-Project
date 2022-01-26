@@ -16,6 +16,7 @@ import UserProfileStack from "./src/StackScreen/UserProfileStack";
 import Activate from "./src/screens/Activate";
 import ContentContainer from "./src/appChilds/ContentContainer";
 import PaymentWebview from "./src/components/PaymentWebview";
+import SubcriptionLandingPage from "./src/screens/SubscriptionLandingPage";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -25,8 +26,8 @@ function App() {
     <ApolloProvider client={client}>
       <NativeBaseProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
               name="SignIn"
               component={SignIn}
               options={{
@@ -66,6 +67,17 @@ function App() {
               component={PaymentWebview}
               options={{
                 headerShown: true
+              }}
+            />
+            <Stack.Screen
+              name="SubcribePage"
+              component={SubcriptionLandingPage}
+              options={{
+                headerShown: true,
+                title: "Get FIT with Active8!",
+                headerStyle: {
+                  backgroundColor: "#b9d0df",
+                },
               }}
             />
           </Stack.Navigator>

@@ -173,6 +173,7 @@ class userProfilesController {
   static async getUserProfile(req, res, next) {
     try {
       const UserId = req.user.id;
+      console.log({UserId});
       const response = await UserProfile.findOne({
         where: {
           UserId,

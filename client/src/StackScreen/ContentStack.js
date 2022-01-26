@@ -23,6 +23,7 @@ function ContentStackScreen() {
         component={ContentScreen}
         options={{
           title: "Contents",
+          headerTitleAlign: "center",
         }}
       />
       <ContentStack.Screen
@@ -49,7 +50,6 @@ function ContentStackScreen() {
       <ContentStack.Screen
         name="CoachChat"
         component={CoachChat}
-        
         options={({ route, navigation }) => ({
           title: `Chat with ${route.params.coachName}`,
         })}

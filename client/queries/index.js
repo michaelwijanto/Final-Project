@@ -46,6 +46,7 @@ export const GET_LEVEL = gql`
       id
       name
       thumbnail
+      description
     }
   }
 `;
@@ -101,6 +102,7 @@ export const GET_USER_CONTENT_ID = gql`
   }
 `;
 
+<<<<<<< HEAD
 export const GET_TRANSACTION_TOKEN = gql`
   query TransactionToken($accessToken: String) {
     transactionToken(access_token: $accessToken) {
@@ -109,3 +111,28 @@ export const GET_TRANSACTION_TOKEN = gql`
     }
   }
 `;
+=======
+export const GET_USER_PROFILE = gql`
+query GetUserProfile($accessToken: String) {
+  getUserProfile(access_token: $accessToken) {
+    UserProfile {
+      phoneNumber
+      subscription
+      gender
+      dateBirth
+      bmi
+      health
+      goals
+      healthy_bmi_range
+      Level {
+        name
+      }
+      User {
+        fullName
+        email
+      }
+    }
+  }
+}
+`;
+>>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19

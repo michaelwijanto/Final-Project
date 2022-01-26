@@ -7,27 +7,20 @@ import { ApolloClient, from, InMemoryCache } from "@apollo/client";
 // });
 
 // Tondiki
-// const client = new ApolloClient({
-//   uri: "http://192.168.8.104:4000/",
-//   cache: new InMemoryCache(),
-// });
-
-// Arie
-// const client = new ApolloClient({
-//   uri: "http://192.168.1.2:4000/",
-//   cache: new InMemoryCache(),
-// });
-
-// Arie
 const client = new ApolloClient({
+<<<<<<< HEAD
   uri: "http://192.168.1.7:4000/",//indihome
   // uri: "http://192.168.47.124:4000/",//telkomsel
+=======
+  uri: "http://192.168.8.104:4000/",
+>>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19
   cache: new InMemoryCache(),
 });
 
 // Arie
 // const client = new ApolloClient({
-//   uri: "http://192.168.1.7:4000/",
+//   // uri: "http://192.168.1.7:4000/",//indihome
+//   uri: "http://192.168.47.124:4000/",//telkomsel
 //   cache: new InMemoryCache(),
 // });
 
@@ -36,11 +29,6 @@ const client = new ApolloClient({
 //   uri: "http://10.237.124.193:4000",
 //   cache: new InMemoryCache(),
 // })
-// Arie
-// const client = new ApolloClient({
-//   uri: "http://192.168.1.7:4000/",
-//   cache: new InMemoryCache(),
-// });
 
 // Michael
 // const client = new ApolloClient({

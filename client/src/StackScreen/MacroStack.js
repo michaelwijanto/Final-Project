@@ -18,6 +18,7 @@ function MacroStackScreen() {
         component={Macro}
         options={{
           title: "Macro",
+          headerTitleAlign: "center",
         }}
       />
     </MacroStack.Navigator>

@@ -27,7 +27,6 @@ import { TouchableOpacity } from "react-native";
 
 export default function SignIn({ navigation, route }) {
   const toast = useToast();
-  // const [successActivate, showSuccessActivate] = useState(null);
   useEffect(() => {
     if (route.params?.message) {
       console.log("MASUK");
@@ -103,7 +102,6 @@ export default function SignIn({ navigation, route }) {
     // Invoking Local Storage
     getStorage();
     setLoading(false);
-    // removeStorage("@access_token");
   }, []);
 
   // Local Storage
@@ -139,17 +137,6 @@ export default function SignIn({ navigation, route }) {
       console.error(e);
     }
   };
-
-  // const removeStorage = async (key) => {
-  //   try {
-  //     await AsyncStorage.removeItem(key);
-  //     setLoading(false);
-  //     return true;
-  //   } catch (exception) {
-  //     return false;
-  //   }
-  // };
-  // console.log(loading);
 
   return (
     <NativeBaseProvider>
@@ -264,7 +251,7 @@ export default function SignIn({ navigation, route }) {
               </FormControl>
               <Button
                 mt="2"
-                colorScheme="indigo"
+                colorScheme="lightBlue"
                 style={{ marginTop: 25 }}
                 onPress={(e) => submitLogin(e)}
               >
