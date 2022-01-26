@@ -143,7 +143,7 @@ describe("GET /api/user-profiles", () => {
       })
       .then((res) => {
         const result = res.body;
-        console.log(result)
+       
         expect(res.status).toBe(201);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("message");
@@ -316,7 +316,7 @@ test("[PATCH/api/user-profiles/updateSubs success] - should be return object wit
     .patch("/api/user-profiles/updateSubs")
     .set("access_token",access_token)
     .then((resp) =>{
-        console.log(resp.body)
+        
         expect(resp.status).toBe(200)
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("message")

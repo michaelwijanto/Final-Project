@@ -178,8 +178,7 @@ test("[POST/api/users/login success] - should be return object with status code 
          access_token = resp.body.access_token  
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
-        //  expect(resp.body).toHaveProperty("access_token")
-        
+       
          done()
      })
      .catch((err) =>{

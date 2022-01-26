@@ -102,6 +102,16 @@ export const GET_USER_CONTENT_ID = gql`
   }
 `;
 
+<<<<<<< HEAD
+export const GET_TRANSACTION_TOKEN = gql`
+  query TransactionToken($accessToken: String) {
+    transactionToken(access_token: $accessToken) {
+      token
+      error
+    }
+  }
+`;
+=======
 export const GET_USER_PROFILE = gql`
 query GetUserProfile($accessToken: String) {
   getUserProfile(access_token: $accessToken) {
@@ -125,3 +135,4 @@ query GetUserProfile($accessToken: String) {
   }
 }
 `;
+>>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19

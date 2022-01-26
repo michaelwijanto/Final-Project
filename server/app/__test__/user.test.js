@@ -325,7 +325,7 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result, '>>>>>>>>>>>>>>>>>>.salah login')
+      
         access_token = result.access_token;
         expect(response.status).toBe(200);
         expect(result).toEqual(expect.any(Object));
@@ -399,7 +399,7 @@ describe("POST /api/users/login", () => {
       })
       .then((response) => {
         const result = response.body;
-        console.log(result, ">>>>>>>>>>>>>>>>>> wronf email");
+  
         expect(response.status).toBe(401);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("error", "Invalid email/password");
@@ -475,14 +475,10 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
       pin: "123456",
     })
     .then((resp) => {
-      console.log(resp.body, ">>>>>>>>>>>>>>>>>>");
+     
       expect(resp.status).toBe(200);
       expect(resp.body).toEqual(expect.any(Object));
-      // expect(resp.body).toHaveProperty("title")
-      // expect(resp.body).toHaveProperty("description")
-      // expect(resp.body).toHaveProperty("youtubeUrl")
-      // expect(resp.body).toHaveProperty("likes")
-      // expect(resp.body).toHaveProperty("statusLike")
+  
 
       done();
     })
@@ -498,7 +494,7 @@ test("[PATCH/api/users  ERROR] - should be return object with status code 200", 
       pin: "",
     })
     .then((resp) => {
-      console.log(resp.body, ">>>>>>>>>>>>>>>>>> pinnnnn");
+    
       expect(resp.status).toBe(401);
       expect(resp.body).toEqual(expect.any(Object));
       expect(resp.body).toHaveProperty("error")

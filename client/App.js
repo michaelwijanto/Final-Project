@@ -15,8 +15,8 @@ import SignUp from "./src/screens/SignUp";
 import UserProfileStack from "./src/StackScreen/UserProfileStack";
 import Activate from "./src/screens/Activate";
 import ContentContainer from "./src/appChilds/ContentContainer";
+import PaymentWebview from "./src/components/PaymentWebview";
 import SubcriptionLandingPage from "./src/screens/SubscriptionLandingPage";
-// import Payment from "./src/screens/Payment";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -60,6 +60,13 @@ function App() {
               component={ContentContainer}
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen 
+              name="PaymentScreen"
+              component={PaymentWebview}
+              options={{
+                headerShown: true
               }}
             />
             <Stack.Screen

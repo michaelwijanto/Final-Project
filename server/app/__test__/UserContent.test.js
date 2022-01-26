@@ -269,7 +269,7 @@ describe("USER CONTENT TEST", _ => {
         .then(res => {
           const result = res.body;
           expect.status = 201;
-          console.log(result, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ini post')
+         
           expect(result).toEqual(expect.any(Object));
           expect(result).toHaveProperty("id");
           expect(result).toHaveProperty("UserId");
@@ -289,12 +289,7 @@ describe("USER CONTENT TEST", _ => {
       .then((resp) =>{
           expect(resp.status).toBe(200)
           expect(resp.body).toEqual(expect.any(Object))
-          // expect(resp.body).toHaveProperty("title")
-          // expect(resp.body).toHaveProperty("description")
-          // expect(resp.body).toHaveProperty("youtubeUrl")
-          // expect(resp.body).toHaveProperty("likes")
-          // expect(resp.body).toHaveProperty("statusLike")
-        
+         
           
           
           done()
