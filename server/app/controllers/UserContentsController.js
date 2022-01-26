@@ -93,11 +93,11 @@ class UserContentsController {
         // }
       );
 
-      if (!userContentDetail) {
-        console.log("ga dapet");
-      }
+      // if (!userContentDetail) {
+      //   console.log("ga dapet");
+      // }
 
-      console.log("sebelum send");
+      // console.log("sebelum send");
       res.status(200).json(userContentDetail);
     } catch (error) {
       next(error);
@@ -204,6 +204,8 @@ class UserContentsController {
               activityLevel: getLog.activityLevel,
               UserId,
               LevelId: 3,
+              bmi:getLog.bmi,
+              health:getLog.health
             });
 
             code = 200;
@@ -228,6 +230,8 @@ class UserContentsController {
               activityLevel: getLog.activityLevel,
               UserId,
               LevelId: 2,
+              bmi:getLog.bmi,
+              health:getLog.health
             });
 
             code = 200;

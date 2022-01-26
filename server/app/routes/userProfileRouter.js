@@ -7,8 +7,8 @@ userProfileRouter.patch(
   "/updateSubs",
   userProfilesController.updateSubscription
 );
-userProfileRouter.post("/payment-sheet", userProfilesController.paymentStripe);
-userProfileRouter.post("/stripe", userProfilesController.stripe);
+// userProfileRouter.post("/payment-sheet", userProfilesController.paymentStripe);
+// userProfileRouter.post("/stripe", userProfilesController.stripe);
 
 
 module.exports = userProfileRouter;

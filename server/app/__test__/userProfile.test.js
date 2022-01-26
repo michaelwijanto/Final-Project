@@ -102,7 +102,61 @@ describe("GET /api/user-profiles", () => {
       .post("/api/user-profiles")
       .set("access_token", access_token)
       .send({
-        height: "170",
+        height: "150",
+        weight: "40",
+        activityLevel: "4",
+        phoneNumber: "081123123123",
+        subscription: "false",
+        gender: "male",
+        dateBirth: "30-12-2000",
+        goals: "weightlose",
+      })
+      .then((res) => {
+        const result = res.body;
+        console.log(result)
+        expect(res.status).toBe(201);
+        expect(result).toEqual(expect.any(Object));
+        expect(result).toHaveProperty("message");
+        done();
+      })
+      .catch((err) => {
+        console.log(er)
+      });
+  });
+
+  test("[postUserProfile - success]", (done) => {
+    request(app)
+      .post("/api/user-profiles")
+      .set("access_token", access_token)
+      .send({
+        height: "150",
+        weight: "50",
+        activityLevel: "4",
+        phoneNumber: "081123123123",
+        subscription: "false",
+        gender: "male",
+        dateBirth: "30-12-2000",
+        goals: "weightlose",
+      })
+      .then((res) => {
+        const result = res.body;
+        console.log(result)
+        expect(res.status).toBe(201);
+        expect(result).toEqual(expect.any(Object));
+        expect(result).toHaveProperty("message");
+        done();
+      })
+      .catch((err) => {
+        console.log(er)
+      });
+  });
+
+  test("[postUserProfile - success]", (done) => {
+    request(app)
+      .post("/api/user-profiles")
+      .set("access_token", access_token)
+      .send({
+        height: "150",
         weight: "80",
         activityLevel: "4",
         phoneNumber: "081123123123",
@@ -113,13 +167,14 @@ describe("GET /api/user-profiles", () => {
       })
       .then((res) => {
         const result = res.body;
+        console.log(result)
         expect(res.status).toBe(201);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("message");
         done();
       })
       .catch((err) => {
-        console.log(er)
+        console.log(err)
       });
   });
 
