@@ -1,6 +1,7 @@
 import {
   Button,
   Box,
+  Heading,
   Center,
   NativeBaseProvider,
   Text,
@@ -16,14 +17,17 @@ export default function LandingPage({ navigation }) {
             md: "25%",
           }}
         >
-          <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>
-            Before entering Active8, we need some of your data
+          <Text style={{ textAlign: "center", fontSize: 24, marginBottom: 15, lineHeight: 28 }}>
+            You're one step closer to achieve your goals!
+          </Text>
+          <Text style={{ textAlign: "center", fontSize: 18, marginBottom: 10}}>
+            But first we need to get your data!
           </Text>
           <Button
             size="sm"
             variant={"solid"}
             _text={{
-              color: "#1F2937",
+              color: "white",
             }}
             style={{
               marginTop: 10,
@@ -34,7 +38,7 @@ export default function LandingPage({ navigation }) {
             px="3"
             onPress={() => navigation.navigate("PhoneNumber")}
           >
-            Next
+            <Heading color={"white"}>Next</Heading>
           </Button>
         </Box>
       </Center>

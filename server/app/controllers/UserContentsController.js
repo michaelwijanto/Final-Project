@@ -4,7 +4,6 @@ const { UserContent, User, Content, UserProfile, Log } = require("../models");
 class UserContentsController {
   static async postUserContent(req, res, next) {
     try {
-      // console.log();
       const { id: UserId } = req.user;
       const { ContentId, isLike = false, status = "started" } = req.body;
 
@@ -63,42 +62,31 @@ class UserContentsController {
     try {
       const { id } = req.params;
       const { id: UserId } = req.user;
-      const userContentDetail = await UserContent.findOne(
-        {
-          include: [
-            {
-              model: User,
-              attributes: {
-                exclude: ["createdAt", "updatedAt"],
-              },
-            },
-            {
-              model: Content,
-              attributes: {
-                exclude: ["createdAt", "updatedAt"],
-              },
-            },
-          ],
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-          where: {
-            UserId,
-            ContentId: id,
-          },
-        }
-        // {
-        //   where: {
-        //     ContentId: id,
-        //   },
-        // }
-      );
 
-      if (!userContentDetail) {
-        console.log("ga dapet");
-      }
+      const userContentDetail = await UserContent.findOne({
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+          {
+            model: Content,
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        ],
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        where: {
+          UserId,
+          ContentId: id,
+        },
+      });
 
-      console.log("sebelum send");
       res.status(200).json(userContentDetail);
     } catch (error) {
       next(error);
@@ -125,7 +113,6 @@ class UserContentsController {
       });
 
       // Ambil Total Content Base current user level
-      // console.log(levelUser);
       const LevelId = levelUser.LevelId;
 
       await UserContent.update(
@@ -161,16 +148,13 @@ class UserContentsController {
         code = 200;
         message = `You finished! Go to the next exercise..`;
       } else {
-        console.log("sama");
         if (
           contentUser.rows.find((content) => content.status === "started") !==
           undefined
         ) {
-          console.log("masih ada started");
           code = 200;
-          message = `You finished! Go to the next exercise..`;
+          message = `You finished! Go to the next exercise.. `;
         } else {
-          console.log("masuk ke finish semua");
           // Find Level
           const findLevel = await UserProfile.findOne({
             where: {
@@ -227,7 +211,6 @@ class UserContentsController {
               );
 
               // Post Log History
-              console.log(getLog, "masuk");
               await Log.create({
                 height: getLog.height,
                 weight: getLog.weight,
@@ -264,7 +247,6 @@ class UserContentsController {
       });
 
       if (!findUserContent) throw { name: "Content_Not_Found" };
-      console.log(findUserContent, "<<<<<< USER CONTENT");
 
       if (findUserContent.isLike) {
         const userContent = await UserContent.update(

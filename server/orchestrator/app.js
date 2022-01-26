@@ -22,8 +22,8 @@ const {
 } = require("./schemas/userContent");
 const {
   typeDefs: paymentTypeDefs,
-  resolvers: paymentResolvers
-} = require('./schemas/Payment')
+  resolvers: paymentResolvers,
+} = require("./schemas/Payment");
 
 const server = new ApolloServer({
   typeDefs: [
@@ -32,7 +32,7 @@ const server = new ApolloServer({
     userProfileTypeDefs,
     contentTypeDefs,
     userContentTypeDefs,
-    paymentTypeDefs
+    paymentTypeDefs,
   ],
   resolvers: [
     userResolvers,
@@ -40,7 +40,7 @@ const server = new ApolloServer({
     userProfileResolvers,
     contentResolvers,
     userContentResolvers,
-    paymentResolvers
+    paymentResolvers,
   ],
 });
 

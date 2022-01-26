@@ -24,10 +24,15 @@ import {
   HStack,
   VStack,
 } from "native-base";
+import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
+import { Entypo } from "@expo/vector-icons";
 
 export const Example = ({ navigation }) => {
   const toast = useToast();
-  const [postMacro, { data, loading, error }] = useMutation(POST_MACRO);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [postMacro, {}] = useMutation(POST_MACRO);
   const [showModal, setShowModal] = useState(false);
   const [formMacro, setFormMacro] = useState({
     gender: "",
@@ -53,6 +58,7 @@ export const Example = ({ navigation }) => {
     try {
       e.preventDefault();
       console.log("SUBMIT");
+      setLoading(true)
       console.log({ formMacro });
       const sendMacro = await postMacro({
         variables: formMacro,
@@ -73,8 +79,23 @@ export const Example = ({ navigation }) => {
       // });
     } catch (err) {
       console.log({ err });
+    } finally {
+      setLoading(false)
     }
   };
+
+  if (loading)
+    return (
+      <Center flex={1} px="3">
+        <LoadingPage />
+      </Center>
+    );
+  if (error)
+    return (
+      <Center flex={1} px="3">
+        <ErrorPage />
+      </Center>
+    );
   return (
     <Box
       w={{
@@ -268,17 +289,41 @@ export const Example = ({ navigation }) => {
               Goals required.
             </FormControl.ErrorMessage>
           </Stack>
-          <Button
-            size="lg"
-            variant={"solid"}
-            style={{ marginTop: 10 }}
-            px="3"
-            onPress={onSubmitMacro}
-            marginBottom="5"
-            colorScheme="lightBlue"
-          >
-            Submit
-          </Button>
+          {formMacro.gender &&
+          formMacro.age >= 0 &&
+          formMacro.age <= 80 &&
+          formMacro.height >= 130 &&
+          formMacro.height <= 230 &&
+          formMacro.weight >= 40 &&
+          formMacro.weight <= 160 &&
+          formMacro.activitylevel &&
+          formMacro.goal ? (
+            <Button
+              size="lg"
+              variant={"solid"}
+              style={{ marginTop: 10 }}
+              px="3"
+              onPress={onSubmitMacro}
+              marginBottom="5"
+              colorScheme="lightBlue"
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              variant={"solid"}
+              style={{ marginTop: 10}}
+              px="3"
+              marginBottom="5"
+              colorScheme="gray"
+            >
+              <Box style={{flexDirection: "row", alignItems: "center"}}>
+                <Text marginRight={2} fontSize={18}>Submit</Text>
+                <Entypo name="block" size={20} color="black" />
+              </Box>
+            </Button>
+          )}
         </FormControl>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
           <Modal.Content maxWidth="260px">
@@ -316,7 +361,7 @@ export const Example = ({ navigation }) => {
               <Button
                 flex={1}
                 onPress={() => setShowModal(false)}
-                colorScheme="gray"
+                colorScheme="lightBlue"
               >
                 Close
               </Button>

@@ -10,7 +10,9 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  Heading
 } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 
 export default function ActivityLevel({ navigation, route }) {
   const [activityLevel, setActivityLevel] = useState(1);
@@ -78,34 +80,54 @@ export default function ActivityLevel({ navigation, route }) {
                 Activity Level required.
               </FormControl.ErrorMessage>
             </Stack>
-            <Button
-              size="sm"
-              variant={"solid"}
-              _text={{
-                color: "#1F2937",
-              }}
-              style={{
-                marginTop: 10,
-                width: 100,
-                height: 50,
-                alignSelf: "center",
-              }}
-              px="3"
-              onPress={() =>
-                navigation.navigate("Goals", {
-                  form: {
-                    activityLevel,
-                    phoneNumber,
-                    gender,
-                    dateBirth,
-                    height,
-                    weight,
-                  },
-                })
-              }
-            >
-              Next
-            </Button>
+            {activityLevel ? (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+                onPress={() =>
+                  navigation.navigate("Goals", {
+                    form: {
+                      activityLevel,
+                      phoneNumber,
+                      gender,
+                      dateBirth,
+                      height,
+                      weight,
+                    },
+                  })
+                }
+              >
+                <Heading color={"white"}>Next</Heading>
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                colorScheme="gray"
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+              >
+                <Entypo name="block" size={16} color="black" />
+              </Button>
+            )}
           </FormControl>
         </Box>
       </Center>

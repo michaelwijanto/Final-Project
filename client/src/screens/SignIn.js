@@ -56,6 +56,11 @@ export default function SignIn({ navigation, route }) {
       },
     })
       .then((res) => {
+        if (res.data?.signInUser?.error === "Please activate your account!") {
+          navigation.navigate("Activate", {
+            mauAktivasi: res.data.signInUser.error,
+          });
+        }
         if (res.data?.signInUser?.error) {
           const errors = res.data.signInUser.error;
           setNewError({
@@ -114,7 +119,6 @@ export default function SignIn({ navigation, route }) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
         setLoading(false);
-
         if (registerStat === "true") {
           navigation.navigate("ContentContainer");
         } else if (registerStat === "false") {

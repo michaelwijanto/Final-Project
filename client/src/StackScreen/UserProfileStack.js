@@ -18,6 +18,7 @@ function UserProfileStack() {
         headerStyle: {
           backgroundColor: "#b9d0df",
         },
+        headerTitleAlign: "center"
       }}
     >
       <Stack.Screen

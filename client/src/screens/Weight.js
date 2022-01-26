@@ -8,15 +8,17 @@ import {
   Center,
   NativeBaseProvider,
   Text,
+  Heading,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "native-base";
+import { Entypo } from "@expo/vector-icons";
 
 export default function Weight({ navigation, route }) {
-  const [weight, setWeight] = useState(40);
+  const [weight, setWeight] = useState(0);
   const { phoneNumber, gender, dateBirth, height } = route.params.form;
 
   return (
@@ -59,27 +61,47 @@ export default function Weight({ navigation, route }) {
                 Weight required.
               </FormControl.ErrorMessage>
             </Stack>
-            <Button
-              size="sm"
-              variant={"solid"}
-              _text={{
-                color: "#1F2937",
-              }}
-              style={{
-                marginTop: 10,
-                width: 100,
-                height: 50,
-                alignSelf: "center",
-              }}
-              px="3"
-              onPress={() =>
-                navigation.navigate("ActivityLevel", {
-                  form: { weight, phoneNumber, gender, dateBirth, height },
-                })
-              }
-            >
-              Next
-            </Button>
+            {weight >= 40 && weight <= 160 ? (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+                onPress={() =>
+                  navigation.navigate("ActivityLevel", {
+                    form: { weight, height, phoneNumber, gender, dateBirth, },
+                  })
+                }
+              >
+                <Heading color={"white"}>Next</Heading>
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                colorScheme="gray"
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+              >
+                <Entypo name="block" size={16} color="black" />
+              </Button>
+            )}
           </FormControl>
         </Box>
       </Center>

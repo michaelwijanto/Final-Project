@@ -36,8 +36,8 @@ const resolvers = {
   Mutation: {
     postMacro: async (_, args) => {
       try {
-        console.log({args});
-        let {data} = await axios({
+        console.log({ args });
+        let { data } = await axios({
           method: "GET",
           url: "https://fitness-calculator.p.rapidapi.com/macrocalculator",
           params: args,
@@ -47,19 +47,17 @@ const resolvers = {
               "8a2cc8bca1mshf123ad465cdd47bp1cc9a5jsn305fd03044ca",
           },
         });
-        const result = data.data
-        for(const i in result){
-          if(result[i].protein){
-            for(const j in result[i]){
-              result[i][j] = Math.floor(result[i][j])
+        const result = data.data;
+        for (const i in result) {
+          if (result[i].protein) {
+            for (const j in result[i]) {
+              result[i][j] = Math.floor(result[i][j]);
             }
-          } else result[i] = Math.floor(result[i])
+          } else result[i] = Math.floor(result[i]);
         }
-        console.log({result});
-        return result
+        return result;
       } catch (err) {
-        console.log({err});
-        return err
+        return err;
       }
     },
   },
