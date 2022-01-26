@@ -159,7 +159,7 @@ class UserContentsController {
 
       if (contentUser.count !== contentLenght) {
         code = 200;
-        message = `Congrats! You finished! Go to the next exercise..`;
+        message = `You finished! Go to the next exercise..`;
       } else {
         console.log("sama");
         if (
@@ -168,7 +168,7 @@ class UserContentsController {
         ) {
           console.log("masih ada started");
           code = 200;
-          message = `Congrats! You finished! Go to the next exercise..`;
+          message = `You finished! Go to the next exercise..`;
         } else {
           console.log("masuk ke finish semua");
           // Find Level
@@ -185,7 +185,7 @@ class UserContentsController {
           });
           if (findLevel.LevelId === 3) {
             code = 200;
-            message = `Congrats! You reach maximum Level!`;
+            message = `You reach maximum Level!`;
           } else {
             if (findLevel.LevelId === 2) {
               // Update Profile
@@ -213,7 +213,7 @@ class UserContentsController {
               });
 
               code = 200;
-              message = `Congrats, You did It! You level up to Hard Level!`;
+              message = `You did It! You level up to Hard Level!`;
             } else {
               await UserProfile.update(
                 {
@@ -239,7 +239,7 @@ class UserContentsController {
               });
 
               code = 200;
-              message = `Congrats, You did It! You level up to Medium Level!`;
+              message = `You did It! You level up to Medium Level!`;
             }
           }
         }

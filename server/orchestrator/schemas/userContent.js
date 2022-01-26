@@ -100,7 +100,7 @@ const resolvers = {
         await redis.del("userContents");
         await redis.del("userContent");
         console.log(data);
-        return { message: "Successful update UserContent" };
+        return data;
       } catch (err) {
         console.log({ err });
         return err;
