@@ -8,6 +8,7 @@ import {
   Center,
   NativeBaseProvider,
   Text,
+  Heading,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -80,7 +81,7 @@ export default function Height({ navigation, route }) {
                   })
                 }
               >
-                Next
+                <Heading color={"white"}>Next</Heading>
               </Button>
             ) : (
               <Button

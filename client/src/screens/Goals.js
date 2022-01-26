@@ -15,6 +15,7 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  Heading
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
@@ -160,7 +161,7 @@ export default function Goals({ navigation, route }) {
                 px="3"
                 onPress={onSubmitUserProfile}
               >
-                Submit
+                <Heading color={"white"}>Submit</Heading>
               </Button>
             ) : (
               <Button

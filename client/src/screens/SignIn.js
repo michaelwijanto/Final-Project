@@ -61,7 +61,10 @@ export default function SignIn({ navigation, route }) {
       },
     })
       .then((res) => {
-        console.log("RES");
+        console.log(res, "RESULT");
+        if(res.data?.signInUser?.error === "Please activate your account!") {
+          navigation.navigate("Activate", {mauAktivasi: res.data.signInUser.error})
+        }
         if (res.data?.signInUser?.error) {
           const errors = res.data.signInUser.error;
           setNewError({
@@ -98,7 +101,7 @@ export default function SignIn({ navigation, route }) {
 
   // Alert Message
   useEffect(async () => {
-    // await AsyncStorage.clear();
+    await AsyncStorage.clear();
     if (route.params) {
       console.log(route.params);
       setIsLogin(false);

@@ -9,6 +9,7 @@ import {
   NativeBaseProvider,
   Text,
   Input,
+  Heading
 } from "native-base";
 import { Entypo } from '@expo/vector-icons'; 
 
@@ -56,7 +57,7 @@ export default function PhoneNumber({ navigation }) {
                 navigation.navigate("Gender", { form: { phoneNumber } })
               }
             >
-              Next
+              <Heading color={"white"}>Next</Heading>
             </Button> : 
             <Button
             size="sm"
@@ -69,7 +70,7 @@ export default function PhoneNumber({ navigation }) {
             style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center"}}
             px="3"
           >
-            <Entypo name="block" size={16} color="black" />
+            <Entypo name="block" size={24} color="black" />
           </Button>
             }
           </FormControl>

@@ -16,19 +16,30 @@ import {
   NativeBaseProvider,
 } from "native-base";
 
-export default function Activate({ navigation }) {
+export default function Activate({ navigation, route }) {
   const [pin, setPin] = useState("");
   const [ActivateUser, { data, loading, error }] = useMutation(ACTIVATE);
   const [newError, setNewError] = useState([]);
   const toast = useToast();
   useEffect(() => {
+    if (route.params?.mauAktivasi) {
+      toast.show({
+        title: route.params.mauAktivasi,
+        status: "error",
+        placement: "top",
+      });
+    }
+  }, [route.params]);
+
+  useEffect(() => {
+    if(route.params?.message)
     toast.show({
       title: "Activate Your Account",
       status: "info",
       description: "Your activation pin has been sent to your email",
       placement: "top",
     });
-  }, []);
+  }, [route.params]);
 
   const submitPin = async (e) => {
     try {

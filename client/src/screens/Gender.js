@@ -9,6 +9,7 @@ import {
   Center,
   NativeBaseProvider,
   Select,
+  Heading,
   Text,
 } from "native-base";
 import { Entypo } from "@expo/vector-icons";
@@ -72,7 +73,7 @@ export default function Gender({ navigation, route }) {
                   })
                 }
               >
-                Next
+                <Heading color={"white"}>Next</Heading>
               </Button>
             ) : (
               <Button

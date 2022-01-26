@@ -7,6 +7,7 @@ import {
   Box,
   Center,
   NativeBaseProvider,
+  Heading,
   Text,
 } from "native-base";
 import DatePicker from "react-native-datepicker";
@@ -81,7 +82,7 @@ export default function DateBirth({ navigation, route }) {
                   })
                 }
               >
-                Next
+                <Heading color={"white"}>Next</Heading>
               </Button>
             ) : (
               <Button

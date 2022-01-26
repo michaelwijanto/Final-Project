@@ -313,9 +313,8 @@ export const Example = ({ navigation }) => {
             <Button
               size="lg"
               variant={"solid"}
-              style={{ marginTop: 10 }}
+              style={{ marginTop: 10}}
               px="3"
-              onPress={onSubmitMacro}
               marginBottom="5"
               colorScheme="gray"
             >

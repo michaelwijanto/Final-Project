@@ -10,6 +10,7 @@ import {
   NativeBaseProvider,
   Select,
   Text,
+  Heading
 } from "native-base";
 import { Entypo } from "@expo/vector-icons";
 
@@ -106,7 +107,7 @@ export default function ActivityLevel({ navigation, route }) {
                   })
                 }
               >
-                Next
+                <Heading color={"white"}>Next</Heading>
               </Button>
             ) : (
               <Button
