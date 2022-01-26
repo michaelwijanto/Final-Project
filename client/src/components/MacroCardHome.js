@@ -5,12 +5,13 @@ import { useQuery } from "@apollo/client";
 import { GET_LEVEL } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function MacroCard({ navigation }) {
   const { loading, error, data } = useQuery(GET_LEVEL);
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
   return (
     <Box
       w="380"

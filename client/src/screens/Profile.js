@@ -25,6 +25,7 @@ import {
 } from "@expo/vector-icons";
 
 import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
 
 export default function Profile({ navigation }) {
   const [subscription, setSubscription] = useState(null);
@@ -50,7 +51,7 @@ export default function Profile({ navigation }) {
   };
 
   if (loadingProfile) return <LoadingPage></LoadingPage>;
-  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
+  if (errorProfile) return <ErrorPage />;
   return (
     <Box
       style={styles.container}
