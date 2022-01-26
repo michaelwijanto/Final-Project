@@ -94,11 +94,11 @@ class UserContentsController {
         // }
       );
 
-      if (!userContentDetail) {
-        console.log("ga dapet");
-      }
+      // if (!userContentDetail) {
+      //   console.log("ga dapet");
+      // }
 
-      console.log("sebelum send");
+      // console.log("sebelum send");
       res.status(200).json(userContentDetail);
     } catch (error) {
       next(error);
@@ -168,7 +168,7 @@ class UserContentsController {
         ) {
           console.log("masih ada started");
           code = 200;
-          message = `You finished! Go to the next exercise..`;
+          message = `You finished! Go to the next exercise.. `;
         } else {
           console.log("masuk ke finish semua");
           // Find Level
