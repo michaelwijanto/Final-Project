@@ -1,32 +1,45 @@
 import { useMutation } from "@apollo/client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { ACTIVATE } from "../../mutations";
-import { useToast, Box, Text, Heading, FormControl, Input, Alert, Button, HStack, VStack, Center, NativeBaseProvider } from "native-base";
+import {
+  useToast,
+  Box,
+  Text,
+  Heading,
+  FormControl,
+  Input,
+  Alert,
+  Button,
+  HStack,
+  VStack,
+  Center,
+  NativeBaseProvider,
+} from "native-base";
 
 export default function Activate({ navigation }) {
   const [pin, setPin] = useState("");
   const [ActivateUser, { data, loading, error }] = useMutation(ACTIVATE);
   const [newError, setNewError] = useState([]);
-  const toast = useToast()
+  const toast = useToast();
   useEffect(() => {
     toast.show({
       title: "Activate Your Account",
       status: "info",
       description: "Your activation pin has been sent to your email",
-      placement: "top"
-    })
+      placement: "top",
+    });
   }, []);
-  
+
   const submitPin = async (e) => {
     try {
       e.preventDefault();
       console.log(pin, typeof pin);
       const activate = await ActivateUser({
         variables: {
-          pin: pin,
+          pin,
         },
       });
-
+      console.log("line 29", activate, "<<cek status");
       if (activate.data.activateUser.error) {
         console.log("FAILED");
         const errors = activate.data.activateUser.error;
@@ -36,7 +49,7 @@ export default function Activate({ navigation }) {
         const success = activate.data.activateUser.message;
         navigation.navigate("SignIn", {
           message: true,
-          status: "success"
+          status: "success",
         });
       }
     } catch (err) {
@@ -71,10 +84,6 @@ export default function Activate({ navigation }) {
                           {item}
                         </Text>
                       </HStack>
-                      {/* <IconButton
-                        variant="unstyled"
-                        icon={<CloseIcon size="3" color="coolGray.600" />}
-                      /> */}
                     </HStack>
                   </VStack>
                 </Alert>

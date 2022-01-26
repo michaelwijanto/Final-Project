@@ -1,6 +1,16 @@
 import { useState } from "react";
-import { FormControl, Button, Stack, WarningOutlineIcon, Box, Center, NativeBaseProvider, Text } from "native-base";
+import {
+  FormControl,
+  Button,
+  Stack,
+  WarningOutlineIcon,
+  Box,
+  Center,
+  NativeBaseProvider,
+  Text,
+} from "native-base";
 import DatePicker from "react-native-datepicker";
+import { Entypo } from "@expo/vector-icons";
 
 export default function DateBirth({ navigation, route }) {
   const [dateBirth, setDateBirth] = useState("");
@@ -15,7 +25,9 @@ export default function DateBirth({ navigation, route }) {
             md: "25%",
           }}
         >
-          <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>When's your birthday?</Text>
+          <Text style={{ textAlign: "center", fontSize: 20, marginBottom: 10 }}>
+            When's your birthday?
+          </Text>
           <FormControl>
             <Stack mx="4">
               <DatePicker
@@ -43,24 +55,53 @@ export default function DateBirth({ navigation, route }) {
                   setDateBirth(date);
                 }}
               />
-              <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>dateBirth required</FormControl.ErrorMessage>
+              <FormControl.ErrorMessage
+                leftIcon={<WarningOutlineIcon size="xs" />}
+              >
+                dateBirth required
+              </FormControl.ErrorMessage>
             </Stack>
-            <Button
-              size="sm"
-              variant={"solid"}
-              _text={{
-                color: "#1F2937",
-              }}
-              style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center" }}
-              px="3"
-              onPress={() =>
-                navigation.navigate("Height", {
-                  form: { dateBirth, phoneNumber, gender },
-                })
-              }
-            >
-              Next
-            </Button>
+            {dateBirth.length == 10 ? (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+                onPress={() =>
+                  navigation.navigate("Height", {
+                    form: { dateBirth, phoneNumber, gender },
+                  })
+                }
+              >
+                Next
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant={"solid"}
+                _text={{
+                  color: "#1F2937",
+                }}
+                colorScheme="gray"
+                style={{
+                  marginTop: 10,
+                  width: 100,
+                  height: 50,
+                  alignSelf: "center",
+                }}
+                px="3"
+              >
+                <Entypo name="block" size={24} color="black" />
+              </Button>
+            )}
           </FormControl>
         </Box>
       </Center>

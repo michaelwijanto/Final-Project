@@ -31,6 +31,8 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { POST_USER_LOG } from "../../mutations";
+import ErrorPage from "../components/ErrorPage";
+
 export default function Log({ navigation }) {
   const toast = useToast();
   const [customNotif, setCustomNotif] = useState({
@@ -69,8 +71,9 @@ export default function Log({ navigation }) {
         },
       });
       console.log("ABIS CREATE");
-      console.log( createLog, "INIIIIIIII" );
-      if(createLog?.data?.postUserLog?.error) throw {name: "error create user log"}
+      console.log(createLog, "INIIIIIIII");
+      if (createLog?.data?.postUserLog?.error)
+        throw { name: "error create user log" };
       toast.show({
         title: "Success",
         status: "success",
@@ -91,9 +94,16 @@ export default function Log({ navigation }) {
     }
   };
 
-  if (loading || customNotif.customLoading) return <Center px="3"><LoadingPage /></Center>;
+  if (loading || customNotif.customLoading)
+    return (
+      <Center flex={1} px="3">
+        <LoadingPage />
+      </Center>
+    );
   if (error) return <Text>Error Fetching Logs</Text>;
-  if (customNotif.customError) return <Text>Error Add Log</Text>;
+  if (error || customNotif.customError) return <Center flex={1} px="3">
+  <ErrorPage />
+</Center>
   return (
     <Box
       flex={1}
@@ -218,12 +228,20 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <Text  style={{marginBottom: 10, fontSize: 12}}>130cm - 230cm</Text>
+              <Text style={{ marginBottom: 10, fontSize: 12 }}>
+                130cm - 230cm
+              </Text>
               <FormControl.Label>Weight</FormControl.Label>
               <NumberInput
+                value={formLog.weight}
                 min={40}
                 max={160}
-                onChange={(val) => setFormLog({ ...formLog, weight: val })}
+                onChange={(val) => {
+                  if (isNaN(val)) setFormLog({ ...formLog, weight: 0 });
+                  else {
+                    setFormLog({ ...formLog, weight: val });
+                  }
+                }}
               >
                 <NumberInputField />
                 <NumberInputStepper>
@@ -231,7 +249,7 @@ export default function Log({ navigation }) {
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
-              <Text style={{fontSize: 12}}>40kg - 160kg</Text>
+              <Text style={{ fontSize: 12 }}>40kg - 160kg</Text>
             </Modal.Body>
             <Modal.Footer>
               <Button.Group space={2}>
@@ -244,7 +262,14 @@ export default function Log({ navigation }) {
                 >
                   Cancel
                 </Button>
-                <Button onPress={onSubmitLog}>Save</Button>
+                {formLog.weight >= 40 &&
+                formLog.weight <= 160 &&
+                formLog.height >= 130 &&
+                formLog.height <= 230 ? (
+                  <Button onPress={onSubmitLog} colorScheme="lightBlue">Save</Button>
+                ) : (
+                  <Button colorScheme="gray">Save</Button>
+                )}
               </Button.Group>
             </Modal.Footer>
           </Modal.Content>

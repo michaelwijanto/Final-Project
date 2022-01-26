@@ -125,14 +125,17 @@ export default function SignIn({ navigation, route }) {
       if (value !== null) {
         // value previously stored
         const registerStat = await AsyncStorage.getItem("@isRegister");
+        console.log(registerStat);
         setLoading(false);
-
-        if (registerStat === "true") {
-          console.log("register true");
-          navigation.navigate("ContentContainer");
-        } else {
-          console.log("register false");
-          navigation.navigate("UserProfileStack");
+        
+        if ( registerStat === "true" ){
+          navigation.navigate("ContentContainer")
+        }
+        else if (registerStat === "false") {
+          navigation.navigate("UserProfileStack")
+        } 
+        else {
+          console.log('stay');
         }
       }
     } catch (e) {

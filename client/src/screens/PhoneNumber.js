@@ -10,6 +10,7 @@ import {
   Text,
   Input,
 } from "native-base";
+import { Entypo } from '@expo/vector-icons'; 
 
 export default function PhoneNumber({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -42,7 +43,7 @@ export default function PhoneNumber({ navigation }) {
                 Phone Number required.
               </FormControl.ErrorMessage>
             </Stack>
-            <Button
+            {phoneNumber.length >= 10 ? <Button
               size="sm"
               variant={"solid"}
               _text={{
@@ -56,7 +57,21 @@ export default function PhoneNumber({ navigation }) {
               }
             >
               Next
-            </Button>
+            </Button> : 
+            <Button
+            size="sm"
+            variant={"solid"}
+            _text={{
+              color: "grey",
+            }}
+            colorScheme="gray"
+            // size="sm"
+            style={{ marginTop: 10, width: 100, height: 50, alignSelf: "center"}}
+            px="3"
+          >
+            <Entypo name="block" size={16} color="black" />
+          </Button>
+            }
           </FormControl>
         </Box>
       </Center>

@@ -118,7 +118,7 @@ class UserController {
           pin: inputtedPin,
         },
       });
-      if (!findUser) throw { name: "USER_NOT_FOUND" };
+      if (!findUser) throw { name: "INVALID_PIN" };
 
       // if (findUser.pin.split(";")[1] === inputtedPin) {
       await User.update(

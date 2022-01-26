@@ -2,34 +2,52 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Apollo Client
+import { useQuery } from "@apollo/client";
+import { GET_USER_PROFILE, GET_TRANSACTION_TOKEN } from "../../queries";
+
 // Native Base
 import {
   Box,
   Image,
   Text,
   ScrollView,
-  Alert,
-  VStack,
-  HStack,
   useToast,
-  IconButton,
-  Pressable,
   Button,
   Heading,
 } from "native-base";
 
 // Components
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function Subscribtion({ navigation, route }) {
+export default function Subscribtion({ 
+  navigation,
+  route
+}) {
   const toast = useToast();
+  const [accessToken, setAccessToken] = useState('')
+  const { error, data } = useQuery(GET_TRANSACTION_TOKEN, {
+    variables: {
+      accessToken
+    }
+  })
+
   useEffect(() => {
     getStorage();
   }, []);
+
+  // Generate Token
+  console.log(data?.transactionToken.token);
+  const paymentProcess = async () => {
+    navigation.navigate('PaymentScreen', {
+      token: data?.transactionToken.token
+    })
+  }
 
   const getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
+        setAccessToken(value)
       }
     } catch (e) {
       console.error(e);
@@ -95,7 +113,7 @@ export default function Subscribtion({ navigation, route }) {
             <Button
               color="#b9d0df"
               size="lg"
-              onPress={() => console.log("hello world")}
+              onPress={() => paymentProcess()}
             >
               <Box style={styles.boxButton}>
                 <Heading marginRight="2" color="white" size="md">

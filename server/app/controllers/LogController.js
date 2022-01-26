@@ -52,6 +52,7 @@ class LogController {
         where: {
           UserId,
         },
+        order: [["id", "DESC"]]
       });
       console.log(UserId, logData);
       res.status(200).json(logData);

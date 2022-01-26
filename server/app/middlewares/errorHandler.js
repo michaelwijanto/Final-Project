@@ -29,6 +29,8 @@ const errorHandler = (err, req, res, next) => {
     case "PlsActivate":
       res.status(400).json({ error: "Please activate your account!" });
       break;
+    case "INVALID_PIN":
+      res.status(400).json({ error: "Please enter the correct pin!" });
     default:
       res.status(500).json({ error: "Internal server error" });
       break;
