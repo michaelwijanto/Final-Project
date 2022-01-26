@@ -167,7 +167,7 @@ test("[POST/api/log-history ERROR]  - should be return object with status code 4
     .post("/api/log-history ")
     .set("access_token",access_token)
     .then((resp) =>{ 
-        
+        console.log(resp.status, '>>>>>>>>>>>>>>>>>>>>>> ini')
         expect(resp.status).toBe(500)
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("error")

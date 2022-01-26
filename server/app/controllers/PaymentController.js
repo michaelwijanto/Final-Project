@@ -3,6 +3,7 @@ const { UserProfile } = require('../models')
 
 class PaymentController {
   static async transactionToken (req, res, next) {
+
     const {
       id,
       email,
@@ -11,7 +12,9 @@ class PaymentController {
 
     try {
       const { phoneNumber } = await UserProfile.findOne({
-        where:{UserId: id}
+        where: {
+          UserId: id
+        }
       })
 
       let temp = "";
@@ -58,13 +61,26 @@ class PaymentController {
     }
   }
 
-  // static async updatePayment (req, res, next){
-  //   try {
-  //     console.log(req.body);
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
+  static async updatePayment (req, res, next){
+    try {
+      const {
+        id
+      } = req.user
+      
+      const update = await UserProfile.update({
+        subscription: "true"
+      },{
+        where: {
+          UserId: id
+        },
+        returning: true
+      })
+
+      res.status(200).json(update)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = PaymentController

@@ -176,3 +176,45 @@ test("[GET/api/payment/transaction-token ERROR]  - should be return object with 
         console.log(err)
     })
 }) 
+
+
+test("[PUT/api/payment/success success] - should be return object with status code 200", (done) =>{
+  request(app)
+  .put("/api/payment/success")
+  .set("access_token",access_token)
+  .then((resp) =>{
+    console.log(resp.body[1][0])
+      
+      expect(resp.body).toEqual(expect.any(Object))
+      expect(resp.body[1][0]).toHaveProperty("subscription")
+      expect(resp.body[1][0]).toHaveProperty("goals")
+    
+      
+      
+      done()
+  })
+  .catch((err) =>{
+      console.log(err)
+   })
+})
+
+test("[PUT/api/payment/success success] - should be return object with status code 200", (done) =>{
+  request(app)
+  .put("/api/payment/success")
+ 
+  .then((resp) =>{
+      console.log(resp.body)
+      expect(resp.status).toBe(401)
+      expect(resp.body).toEqual(expect.any(Object))
+      expect(resp.body).toHaveProperty("error")
+      expect(resp.body.error).toBe('Invalid token')
+      
+      
+      done()
+  })
+  .catch((err) =>{
+      console.log(err)
+   })
+})
+
+ 

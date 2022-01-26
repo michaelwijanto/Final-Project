@@ -487,7 +487,7 @@ test("[PATCH/api/users  success] - should be return object with status code 200"
     });
 });
 
-test("[PATCH/api/users  ERROR] - should be return object with status code 200", (done) => {
+test("[PATCH/api/users  ERROR] - should be return object with status code 400", (done) => {
   request(app)
     .patch("/api/users ")
     .send({
@@ -495,10 +495,10 @@ test("[PATCH/api/users  ERROR] - should be return object with status code 200", 
     })
     .then((resp) => {
     
-      expect(resp.status).toBe(401);
+      expect(resp.status).toBe(400);
       expect(resp.body).toEqual(expect.any(Object));
       expect(resp.body).toHaveProperty("error")
-      expect(resp.body.error).toBe('Invalid token')
+      expect(resp.body.error).toBe('Please enter the correct pin!')
 
       done();
     })

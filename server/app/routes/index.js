@@ -37,7 +37,6 @@ router.use(
   authenticate,
   payment
 )
-// router.post('/api/payment/transaction-result', PaymentController.updatePayment);
 
 
 module.exports = router

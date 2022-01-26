@@ -114,6 +114,7 @@ const resolvers = {
         await redis.del("users");
         return { message: "Sign Up Succesful" };
       } catch (err) {
+        console.log(err.response.data);
         return err.response.data;
       }
     },
@@ -134,7 +135,8 @@ const resolvers = {
         console.log(data);
         return data;
       } catch (err) {
-        err.response.data;
+        console.log("di mutation", err.response.data);
+        return { error: [err.response.data.error] };
       }
     },
   },
