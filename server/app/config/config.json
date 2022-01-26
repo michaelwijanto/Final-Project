@@ -1,22 +1,14 @@
 {
   "development": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "password",
-=======
-    "password": "postgres",
->>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19
     "database": "Active8",
     "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "password",
-=======
-    "password": "admin123",
->>>>>>> 78c52c03936a1aa406f7350444bab9583aa8fd19
     "database": "Active8_test",
     "host": "127.0.0.1",
     "dialect": "postgres",

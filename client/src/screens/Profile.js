@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useQuery } from "@apollo/client";
+import { GET_USER_PROFILE, GET_TRANSACTION_TOKEN } from "../../queries";
 
 // Native Base
 import {
@@ -14,8 +16,7 @@ import {
   Center,
   ScrollView,
 } from "native-base";
-import { useQuery } from "@apollo/client";
-import { GET_USER_PROFILE } from "../../queries";
+
 import {
   MaterialCommunityIcons,
   FontAwesome5,
@@ -24,19 +25,21 @@ import {
   Octicons
 } from "@expo/vector-icons";
 
-import { useQuery } from "@apollo/client";
-import { GET_TRANSACTION_TOKEN } from "../../queries";
-
 export default function Profile({ navigation }) {
   const [accessToken, setAccessToken] = useState('')
-  const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
+  const { error: errorTransaction, data: tokenTransaction } = useQuery(GET_TRANSACTION_TOKEN, {
     variables: {
       accessToken
     }
   })
+  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
+    variables: {
+      accessToken
+    },
+  });
 
-  useEffect(() => {
-    getStorage()
+  useEffect( async () => {
+    setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, [])
 
   const handlePayment = (price) => {
@@ -46,29 +49,8 @@ export default function Profile({ navigation }) {
     })    
   };
 
-  const getStorage = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@access_token");
-      if (value !== null) {
-        // value previously stored
-        setAccessToken(value)
-      }
-    } catch (e) {
-      // error reading value
-      console.error(e);
-    }
-  };
-
-  const [accessToken, setAccessToken] = useState(null);
-  useEffect(async () => {
-    setAccessToken(await AsyncStorage.getItem("@access_token"));
-  }, []);
   console.log({ accessToken });
-  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
-    variables: {
-      accessToken: accessToken,
-    },
-  });
+
 
   console.log({loading, data, error});
   if(loading) return <Text>Loading...</Text>
