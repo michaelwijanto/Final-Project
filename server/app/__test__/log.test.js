@@ -33,7 +33,8 @@ beforeAll(async () =>{
             name: "Easy",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Medium",  
+          createdAt: new Date(),
             updateedAt: new Date()
             
         },
@@ -41,14 +42,16 @@ beforeAll(async () =>{
             name: "Medium",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Medium",  
+          createdAt: new Date(),
             updateedAt: new Date()
         },
         {
             name: "Hard",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Medium", 
+          createdAt: new Date(),
             updateedAt: new Date()
         }
     ])
@@ -61,15 +64,7 @@ beforeAll(async () =>{
         pin: "123456",
         isActivated: "true",
     })
-    //  Log.create({
-    //         height: "170",
-    //         weight: "70",
-    //         activityLevel: "1",
-    //         LevelId:1,
-    //         UserId: 1,
-    //         createdAt: new Date(),
-    //         updateedAt: new Date()
-    //     })
+   
 })
 
 beforeEach(() => {
@@ -138,7 +133,7 @@ test("[POST/api/log-history  success] - should be return object with status code
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("height")
         expect(resp.body).toHaveProperty("weight")
-        expect(resp.body).toHaveProperty("activityLevel")
+       
  
         done()
     })
@@ -155,7 +150,7 @@ test("[POST/api/log-history ERROR]  - should be return object with status code 4
         weight: "80",
      })
     .then((resp) =>{ 
-        console.log(resp.body)
+        
         expect(resp.status).toBe(401)
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("error")
@@ -172,8 +167,8 @@ test("[POST/api/log-history ERROR]  - should be return object with status code 4
     .post("/api/log-history ")
     .set("access_token",access_token)
     .then((resp) =>{ 
-        console.log(resp.body, 'blank <<<<<<<<<<<<<<<<<<<')
-        expect(resp.status).toBe(400)
+        console.log(resp.status, '>>>>>>>>>>>>>>>>>>>>>> ini')
+        expect(resp.status).toBe(500)
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("error")
         
@@ -196,11 +191,7 @@ test("[GET/api/log-history success] - should be return object with status code 2
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
          expect(resp.body[0]).toHaveProperty("height")
-        //  expect(resp.body[0]).toHaveProperty("imgCoach")
-        //  expect(resp.body[0]).toHaveProperty("age")
-        //  expect(resp.body[0]).toHaveProperty("bio")
-         
-         
+
          done()
      })
      .catch((err) =>{

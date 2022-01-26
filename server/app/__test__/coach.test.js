@@ -3,19 +3,19 @@ const app = require('../app')
 const {User,Coach,Level} = require('../models/index')
 
 beforeAll(async () =>{
-    await Coach.destroy({
+     Coach.destroy({
         where: {},
         truncate: true,
         cascade: true,
         restartIdentity: true,
     })
-    await User.destroy({
+     User.destroy({
         where: {},
         truncate: true,
         cascade: true,
         restartIdentity: true,
     })
-    await Level.destroy({
+     Level.destroy({
         where: {},
         truncate: true,
         cascade: true,
@@ -27,14 +27,16 @@ beforeAll(async () =>{
             name: "Easy",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Easy",  
+          createdAt: new Date(),
             updateedAt: new Date()
             
         },
         {
             name: "Medium",
             thumbnail:
-          "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+            description:"Medium",
             createdAt: new Date(),
             updateedAt: new Date()
         },
@@ -42,11 +44,12 @@ beforeAll(async () =>{
             name: "Hard",
             thumbnail:
           "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-            createdAt: new Date(),
+          description:"Hard", 
+          createdAt: new Date(),
             updateedAt: new Date()
         }
     ])
-        User.create({
+    await  User.create({
         email: "ariesastra@mail.com",
         password: "password",
         fullName: "Arie Sastra",
@@ -55,18 +58,20 @@ beforeAll(async () =>{
         pin: "123456",
         isActivated: "true",
     }) 
-    await Coach.bulkCreate([
-                {
-                    name: "Tondiki",
-                    imgCoach:
-                        "https://ik.imagekit.io/ebq3r9zrvle/H8/WhatsApp_Image_2022-01-15_at_00.02.10.jpeg_NlyT9AIyg8I.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1642860034024",
-                    age: "20",
-                    bio: "This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                
-                }
-             ])
+     Coach.bulkCreate([
+        {
+            name: "Tondiki",
+            imgCoach:
+                "https://ik.imagekit.io/ebq3r9zrvle/H8/WhatsApp_Image_2022-01-15_at_00.02.10.jpeg_NlyT9AIyg8I.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1642860034024",
+            age: "20",
+            bio: "This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki This is tondiki",
+            description:
+            "`Behind every great athlete is a masterful coach that inspires the athlete to evolve into the strongest performer they can become.` Cathy Engelbert ",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        
+        }
+    ])
 })
 
 beforeEach(() => {
@@ -85,7 +90,7 @@ test("[POST/api/users/login success] - should be return object with status code 
          access_token = resp.body.access_token  
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
-        //  expect(resp.body).toHaveProperty("access_token")
+       
         
          done()
      })
@@ -138,7 +143,7 @@ test("[GET/api/users/coach success] - should be return object with status code 2
     request(app)
      .get("/api/users/coach/1")
      .then((resp) =>{
-        console.log(resp.body, '>>>>>>>>>>>>>>>>>>>>>> ini kan')
+       
         
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
@@ -181,10 +186,7 @@ test("[GET/api/users/coach success] - should be return object with status code 2
          expect(resp.status).toBe(200)
          expect(resp.body).toEqual(expect.any(Object))
          expect(resp.body[0]).toHaveProperty("name")
-        //  expect(resp.body[0]).toHaveProperty("imgCoach")
-        //  expect(resp.body[0]).toHaveProperty("age")
-        //  expect(resp.body[0]).toHaveProperty("bio")
-         
+        
          
          done()
      })

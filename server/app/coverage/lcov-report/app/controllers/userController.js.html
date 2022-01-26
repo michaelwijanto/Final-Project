@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.72% </span>
+                <span class="strong">96.96% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>59/61</span>
+                <span class='fraction'>64/66</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/14</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>56/56</span>
+                <span class='fraction'>60/60</span>
             </div>
         
             
@@ -237,10 +237,14 @@
 <a name='L172'></a><a href='#L172'>172</a>
 <a name='L173'></a><a href='#L173'>173</a>
 <a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -302,19 +306,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,8 +323,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -391,6 +398,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -410,9 +418,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { compare } = require("../helpers/bcrypt");
-const { User, Coach, Level } = require("../models/index");
+const { User, Coach, Level, UserProfile } = require("../models/index");
 const { sign } = require("../helpers/jwt");
 const nodemailer = require("nodemailer");
 &nbsp;
@@ -435,7 +443,7 @@ class UserController {
       isActivated: "false",
     };
 &nbsp;
-    console.log({newUser});
+    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -485,9 +493,6 @@ class UserController {
         throw { name: "Invalid" };
       }
       <span class="missing-if-branch" title="if path not taken" >I</span>if (user.isActivated === "false") <span class="cstat-no" title="statement not covered" >throw { name: "PlsActivate" };</span>
-&nbsp;
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (user.isActivated === "false") <span class="cstat-no" title="statement not covered" >throw { name: "PlsActivate" };</span>
-&nbsp;
       const payload = {
         id: user.id,
         email: user.email,
@@ -497,9 +502,15 @@ class UserController {
         isActivated: user.isActivated,
       };
       const token = sign(payload);
+      let subscription;
+      const profile = await UserProfile.findOne({ where: { UserId: user.id } });
+      if (!profile) subscription = "false";
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (profile) <span class="cstat-no" title="statement not covered" >subscription = profile.subscription;</span>
+      console.log({ profile }, "&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;");
       res.status(200).json({
         access_token: token,
-        isRegister: user.isRegister
+        isRegister: user.isRegister,
+        subscription: subscription,
       });
     } catch (err) {
       next(err);
@@ -528,7 +539,7 @@ class UserController {
           pin: inputtedPin,
         },
       });
-      if (!findUser) throw { name: "USER_NOT_FOUND" };
+      if (!findUser) throw { name: "INVALID_PIN" };
 &nbsp;
       // if (findUser.pin.split(";")[1] === inputtedPin) {
       await User.update(
@@ -564,6 +575,7 @@ class UserController {
     try {
       const result = await Level.findAll();
 &nbsp;
+      console.log(result);
       res.status(200).json(result);
     } catch (err) {
       next(err);
@@ -592,7 +604,7 @@ module.exports = UserController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Jan 25 2022 16:39:33 GMT+0700 (Western Indonesia Time)
+                at Wed Jan 26 2022 23:50:19 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
