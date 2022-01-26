@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { POST_USER_PROFILE } from "../../mutations";
 import { useState } from "react";
 import LoadingPage from "../components/LoadingPage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   FormControl,
@@ -16,8 +17,7 @@ import {
   Select,
   Text,
 } from "native-base";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import LoadingPage from "../components/LoadingPage";
+
 export default function Goals({ navigation, route }) {
   const [postUserProfile, {}] = useMutation(POST_USER_PROFILE);
   const [loading, setLoading] = useState(false);

@@ -25,7 +25,6 @@ import YoutubePlayer, { YoutubeIframeRef } from "react-native-youtube-iframe";
 
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import ErrorPage from "./ErrorPage";
-import LoadingPage from "./LoadingPage";
 
 export default function ContentDetail({ navigation, route }) {
   const { id } = route.params;
