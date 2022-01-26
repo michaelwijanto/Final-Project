@@ -84,11 +84,12 @@ class UserController {
       let subscription;
       const profile = await UserProfile.findOne({where: {UserId: user.id}})
       if(!profile) subscription = "false"
+      if(profile) subscription = profile.subscription
       console.log({profile}, "<<<<<<<<");
       res.status(200).json({
         access_token: token,
         isRegister: user.isRegister,
-        subscription: profile.subscription
+        subscription: subscription
       });
     } catch (err) {
       next(err);
