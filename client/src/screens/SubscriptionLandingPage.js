@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Apollo Client
 import { useQuery } from "@apollo/client";
-import { GET_USER_PROFILE, GET_TRANSACTION_TOKEN } from "../../queries";
+import { GET_TRANSACTION_TOKEN } from "../../queries";
 
 // Native Base
 import {
@@ -19,17 +19,14 @@ import {
 
 // Components
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function Subscribtion({ 
-  navigation,
-  route
-}) {
+export default function Subscribtion({ navigation, route }) {
   const toast = useToast();
-  const [accessToken, setAccessToken] = useState('')
+  const [accessToken, setAccessToken] = useState("");
   const { error, data } = useQuery(GET_TRANSACTION_TOKEN, {
     variables: {
-      accessToken
-    }
-  })
+      accessToken,
+    },
+  });
 
   useEffect(() => {
     getStorage();
@@ -38,16 +35,16 @@ export default function Subscribtion({
   // Generate Token
   console.log(data?.transactionToken.token);
   const paymentProcess = async () => {
-    navigation.navigate('PaymentScreen', {
-      token: data?.transactionToken.token
-    })
-  }
+    navigation.navigate("PaymentScreen", {
+      token: data?.transactionToken.token,
+    });
+  };
 
   const getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
-        setAccessToken(value)
+        setAccessToken(value);
       }
     } catch (e) {
       console.error(e);
@@ -110,11 +107,7 @@ export default function Subscribtion({
                 <Text style={styles.textVideo}>Access All Exercise</Text>
               </Box>
             </Box>
-            <Button
-              color="#b9d0df"
-              size="lg"
-              onPress={() => paymentProcess()}
-            >
+            <Button color="#b9d0df" size="lg" onPress={() => paymentProcess()}>
               <Box style={styles.boxButton}>
                 <Heading marginRight="2" color="white" size="md">
                   SUBSCRIBE
@@ -123,7 +116,6 @@ export default function Subscribtion({
                   name="cash-usd"
                   size={32}
                   color="white"
-                  
                 />
               </Box>
             </Button>
@@ -197,6 +189,5 @@ const styles = StyleSheet.create({
   boxButton: {
     flexDirection: "row",
     alignItems: "center",
-    
   },
 });

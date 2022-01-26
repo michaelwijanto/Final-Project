@@ -21,6 +21,7 @@ export default function Activate({ navigation, route }) {
   const [ActivateUser, { data, loading, error }] = useMutation(ACTIVATE);
   const [newError, setNewError] = useState([]);
   const toast = useToast();
+
   useEffect(() => {
     if (route.params?.mauAktivasi) {
       toast.show({
@@ -50,13 +51,10 @@ export default function Activate({ navigation, route }) {
           pin,
         },
       });
-      console.log("line 29", activate, "<<cek status");
       if (activate.data.activateUser.error) {
-        console.log("FAILED");
         const errors = activate.data.activateUser.error;
         setNewError(errors);
       } else {
-        console.log("SUCCESS");
         const success = activate.data.activateUser.message;
         navigation.navigate("SignIn", {
           message: true,
@@ -88,10 +86,18 @@ export default function Activate({ navigation, route }) {
               newError.map((item, i) => (
                 <Alert w="100%" status="error" key={i}>
                   <VStack space={2} flexShrink={1} w="100%">
-                    <HStack flexShrink={1} space={2} justifyContent="space-between">
+                    <HStack
+                      flexShrink={1}
+                      space={2}
+                      justifyContent="space-between"
+                    >
                       <HStack space={2} flexShrink={1}>
                         <Alert.Icon mt="1" />
-                        <Text fontSize="md" textAlign="center" color="coolGray.800">
+                        <Text
+                          fontSize="md"
+                          textAlign="center"
+                          color="coolGray.800"
+                        >
                           {item}
                         </Text>
                       </HStack>
@@ -100,7 +106,9 @@ export default function Activate({ navigation, route }) {
                 </Alert>
               ))}
             <FormControl style={{ alignItems: "center" }}>
-              <FormControl.Label textAlign="center">Enter Pin</FormControl.Label>
+              <FormControl.Label textAlign="center">
+                Enter Pin
+              </FormControl.Label>
               <Input
                 type="number"
                 name="pin"

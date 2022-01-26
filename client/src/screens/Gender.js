@@ -16,8 +16,8 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function Gender({ navigation, route }) {
   const [gender, setGender] = useState("");
-  console.log({ gender });
   const { phoneNumber } = route.params.form;
+  
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">

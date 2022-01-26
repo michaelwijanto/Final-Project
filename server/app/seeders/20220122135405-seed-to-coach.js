@@ -12,7 +12,7 @@ module.exports = {
           age: "20",
           bio: "BNSP Certification",
           description:
-            "`Behind every great athlete is a masterful coach that inspires the athlete to evolve into the strongest performer they can become.` Cathy Engelbert ",
+            "Hello Tondiki here! I'm here as a BNSP certified Personal Trainer (Badan Nasional Sertifikat Profesi) who will help you achieve your ideal body! I used to help at the easy level!",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -23,18 +23,18 @@ module.exports = {
           age: "24",
           bio: "RAI Institute Certification",
           description:
-            "`Gaya hidup sehat bukanlah barang yang bisa dibeli, tapi kebiasaan yang harus Anda lakukan secara rutin.` Denny Santoso",
+            "Hello, Arie here! I am a Personal Trainer here who passed the RAI Institute certification. I am ready to help you to achieve your goals! I can train at medium level. So, see you there!",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: "Wisnu",
+          name: "Whisnu",
           imgCoach:
             "https://ik.imagekit.io/ebq3r9zrvle/H8/Foto_Whisnu_Budi_Hantoro_5Wk7RJBxl.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1642860033957",
           age: "23",
           bio: "CPT Certification",
           description:
-            "`If when you look in the mirror you don't see the perfect version of yourself, you better see the hardest working version of yourself.` Chris Bumstead",
+            "Hello, I'm Whisnu! I'm a CPT Certified Personal Trainer here. To lose the overweight, don't be shy! I often train for people who are overweight and want to lose it precisely and efficiently of course.",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -45,7 +45,7 @@ module.exports = {
           age: "21",
           bio: "BNSP Certification",
           description:
-            "`Ketimbang kita berfokus dalam hal ini memuja-muji kehebatan dari sebuah kesakitan, kenapa gak kita berfokus memuja-muji kehebatan dari sebuah badan.` Ade Rai",
+            "Hi, I'm Michael! I am a BNSP certified Personal Trainer here. And fun fact, I'm a senior from Coach Tondiki! So, for those of you who are familiar with the world of fitness, you can contact me. I'm usually at hard level. So what are you waiting for?",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -54,9 +54,9 @@ module.exports = {
           imgCoach:
             "https://ik.imagekit.io/ebq3r9zrvle/H8/WhatsApp_Image_2022-01-26_at_19.12.03_DBeX2oczN.jpeg?ik-sdk-version=javascript-1.4.3&updatedAt=1643199298745",
           age: "22",
-          bio: "CPT Certification",
+          bio: "RAI Institute Certification",
           description:
-            "`Everybody wants to be a bodybuilder, but don't nobody wanna lift  no heavy ass weight.` Ronnie Coleman",
+            "Hello there, I'm Andre! I'm a certified Personal Trainer from the RAI Institute here. I train quite often for people who want to shape their bodies to be more athletic with enough exercise intensity. So don't be surprised if you meet me! Cheerios!",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

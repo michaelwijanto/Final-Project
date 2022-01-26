@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    console.log(email);
+
     let temp = "";
     for (let i = 0; i < 6; i++) {
       temp += Math.floor(Math.random() * 10);
@@ -22,7 +22,6 @@ class UserController {
       isActivated: "false",
     };
 
-    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -44,16 +43,15 @@ class UserController {
     };
 
     transporter.sendMail(notif, (err, data) => {
-      if(err) {
-        console.log(err, "ERROR NODE MAILER");
-        console.log("EMAIL NOT SEND");
-      }
-      else console.log("EMAIL SEND");
+      // if (err) {
+      //   console.log(err, "ERROR NODE MAILER");
+      //   console.log("EMAIL NOT SEND");
+      // } else console.log("EMAIL SEND");
     });
 
     try {
       let created = await User.create(newUser);
-      console.log("SINI");
+
       res.status(201).json({
         id: created.id,
         fullName: created.fullName,
@@ -88,14 +86,14 @@ class UserController {
       };
       const token = sign(payload);
       let subscription;
-      const profile = await UserProfile.findOne({where: {UserId: user.id}})
-      if(!profile) subscription = "false"
-      if(profile) subscription = profile.subscription
-      console.log({profile}, "<<<<<<<<");
+      const profile = await UserProfile.findOne({ where: { UserId: user.id } });
+      if (!profile) subscription = "false";
+      if (profile) subscription = profile.subscription;
+
       res.status(200).json({
         access_token: token,
         isRegister: user.isRegister,
-        subscription: subscription
+        subscription: subscription,
       });
     } catch (err) {
       next(err);
@@ -159,8 +157,6 @@ class UserController {
   static async getLevels(req, res, next) {
     try {
       const result = await Level.findAll();
-
-      console.log(result);
       res.status(200).json(result);
     } catch (err) {
       next(err);

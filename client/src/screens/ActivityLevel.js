@@ -15,9 +15,9 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 export default function ActivityLevel({ navigation, route }) {
-  const [activityLevel, setActivityLevel] = useState(0);
+  const [activityLevel, setActivityLevel] = useState(1);
   const { phoneNumber, gender, dateBirth, height, weight } = route.params.form;
-  console.log({ ACTIVITY: { phoneNumber, gender, dateBirth, height, weight } });
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">

@@ -16,7 +16,7 @@ import { Entypo } from "@expo/vector-icons";
 export default function DateBirth({ navigation, route }) {
   const [dateBirth, setDateBirth] = useState("");
   const { phoneNumber, gender } = route.params.form;
-  console.log({ phoneNumber, gender });
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">

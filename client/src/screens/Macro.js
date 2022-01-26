@@ -51,7 +51,7 @@ export const Example = ({ navigation }) => {
   });
 
   useEffect(() => {
-    console.log(formMacro);
+    // console.log(formMacro);
   }, [formMacro]);
 
   const onSubmitMacro = async (e) => {

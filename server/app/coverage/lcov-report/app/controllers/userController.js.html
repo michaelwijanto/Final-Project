@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.96% </span>
+                <span class="strong">98.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/66</span>
+                <span class='fraction'>60/61</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.25% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/16</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>60/60</span>
+                <span class='fraction'>55/55</span>
             </div>
         
             
@@ -241,7 +241,9 @@
 <a name='L176'></a><a href='#L176'>176</a>
 <a name='L177'></a><a href='#L177'>177</a>
 <a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -249,7 +251,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">48x</span>
@@ -266,7 +268,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -288,9 +289,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -328,7 +334,7 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -396,8 +402,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -427,7 +431,7 @@ const nodemailer = require("nodemailer");
 class UserController {
   static async postRegister(req, res, next) {
     const { email, password, fullName } = req.body;
-    console.log(email);
+&nbsp;
     let temp = "";
     for (let i = 0; i &lt; 6; i++) {
       temp += Math.floor(Math.random() * 10);
@@ -443,17 +447,16 @@ class UserController {
       isActivated: "false",
     };
 &nbsp;
-    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "tokomovieh8@gmail.com",
-        pass: "ToKoMovieH8!",
+        user: "activewithactive8@gmail.com",
+        pass: "activeactive888",
       },
     });
 &nbsp;
     let notif = {
-      from: "tokomovieh8@gmail.com", // sender address
+      from: "activewithactive8@gmail.com", // sender address
       to: email, // list of receivers
       subject: "Activate your email", // Subject line
       text: `Welcome to Active8! We are glad to have you be our member.
@@ -464,11 +467,16 @@ class UserController {
     Active8`,
     };
 &nbsp;
-    transporter.sendMail(notif, <span class="fstat-no" title="function not covered" >(e</span>rr, data) =&gt; {});
+    transporter.sendMail(notif, <span class="fstat-no" title="function not covered" >(e</span>rr, data) =&gt; {
+      // if (err) {
+      //   console.log(err, "ERROR NODE MAILER");
+      //   console.log("EMAIL NOT SEND");
+      // } else console.log("EMAIL SEND");
+    });
 &nbsp;
     try {
       let created = await User.create(newUser);
-      console.log("SINI");
+&nbsp;
       res.status(201).json({
         id: created.id,
         fullName: created.fullName,
@@ -505,8 +513,8 @@ class UserController {
       let subscription;
       const profile = await UserProfile.findOne({ where: { UserId: user.id } });
       if (!profile) subscription = "false";
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (profile) <span class="cstat-no" title="statement not covered" >subscription = profile.subscription;</span>
-      console.log({ profile }, "&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;");
+      if (profile) subscription = profile.subscription;
+&nbsp;
       res.status(200).json({
         access_token: token,
         isRegister: user.isRegister,
@@ -574,8 +582,6 @@ class UserController {
   static async getLevels(req, res, next) {
     try {
       const result = await Level.findAll();
-&nbsp;
-      console.log(result);
       res.status(200).json(result);
     } catch (err) {
       next(err);
@@ -604,7 +610,7 @@ module.exports = UserController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Jan 26 2022 23:50:19 GMT+0700 (Western Indonesia Time)
+                at Thu Jan 27 2022 02:45:25 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,16 +1,7 @@
-import {
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useCallback
-} from 'react'
-import {
-  Text
-} from 'react-native'
+import { useState, useEffect, useLayoutEffect, useCallback } from "react";
+import { Text } from "react-native";
 // GiftedChat
-import {
-  GiftedChat
-} from 'react-native-gifted-chat'
+import { GiftedChat } from "react-native-gifted-chat";
 // Firebase Firestore
 // import {
 //   collection,
@@ -21,53 +12,45 @@ import {
 // } from 'firebase/firestore'
 // import { db } from '../../firebase'
 // Apollo Client
-import { useQuery } from '@apollo/client';
-import { GET_USER } from '../../queries';
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../../queries";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export default function CoachChat({ route }) {
+  const { coachName, coachImage, id } = route.params;
+  const [messages, setMessages] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
 
-export default function CoachChat({
-  route
-}) {
-  const { coachName, coachImage, id } = route.params
-  const [messages, setMessages] = useState([])
-  const [accessToken, setAccessToken] = useState('')
-  
   const getStorage = async () => {
     try {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
-        // value previously stored
-        // console.log(value);
-        setAccessToken(value)        
+        setAccessToken(value);
       }
     } catch (e) {
-      // error reading value
       console.error(e);
     }
   };
 
   useEffect(() => {
-    getStorage()
-  }, [])
+    getStorage();
+  }, []);
 
   const { loading, error, data } = useQuery(GET_USER, {
     variables: {
-      accessToken
+      accessToken,
     },
   });
 
-  
-  let user = {}
+  let user = {};
   if (!loading) {
-    user = data?.getUserProfile.UserProfile
+    user = data?.getUserProfile.UserProfile;
     console.log(user, accessToken);
   }
-  
+
   useLayoutEffect(() => {
     // const collectionRef = collection(db, 'chats')
     // const setQuery = query(collectionRef, orderBy('createdAt', 'desc'))
-
     // const unsubscribe = onSnapshot(setQuery, snapshot => {
     //   console.log('snapshop')
     //   setMessages(
@@ -80,7 +63,6 @@ export default function CoachChat({
     //   )
     // })
     // return () => unsubscribe()
-
     // using @react-native-firebase
     // return db.onSnapshot(querySnapshot => {
     //   console.log('snapshot');
@@ -93,13 +75,13 @@ export default function CoachChat({
     //       }))
     //     )
     // })
-  }, [])
+  }, []);
 
   const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(
-      previousMessages, messages)
-    )
-    const { _id, createdAt, text, user } = messages[0]
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+    const { _id, createdAt, text, user } = messages[0];
     // addDoc(collection(db, 'chats'), {
     //   _id,
     //   createdAt,
@@ -109,27 +91,26 @@ export default function CoachChat({
 
     // useing @react-native-firebase
     // db.add({_id, createdAt, text, user})
-  }, [])
+  }, []);
 
   return (
     <>
-      {
-        loading ? 
-        <Text>loading...</Text> : (
-          <GiftedChat
-            messages={messages}
-            onSend={messages => onSend(messages)}
-            user={{
-              _id: user?.id,
-              avatar: 'https://i.pravatar.cc/300',
-            }}
-            messagesContainerStyle={{
-              backgroundColor: '#fff'
-            }}
-            showAvatarForEveryMessage={true}
-          />
-        )
-      }
+      {loading ? (
+        <Text>loading...</Text>
+      ) : (
+        <GiftedChat
+          messages={messages}
+          onSend={(messages) => onSend(messages)}
+          user={{
+            _id: user?.id,
+            avatar: "https://i.pravatar.cc/300",
+          }}
+          messagesContainerStyle={{
+            backgroundColor: "#fff",
+          }}
+          showAvatarForEveryMessage={true}
+        />
+      )}
     </>
-  )
+  );
 }

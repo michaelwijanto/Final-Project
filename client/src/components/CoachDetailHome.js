@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Box, Heading, Image, Text, HStack, Button } from "native-base";
+import { Box, Heading, Image, Text, Badge, HStack } from "native-base";
 
 import { useQuery } from "@apollo/client";
 import { GET_COACH_DETAIL } from "../../queries";
@@ -9,7 +9,6 @@ import ErrorPage from "./ErrorPage";
 
 export default function CoachDetail({ navigation, route }) {
   const { id } = route.params;
-  const { coachName } = route.params;
   const { loading, error, data } = useQuery(GET_COACH_DETAIL, {
     variables: {
       getCoachDetailId: id,
@@ -19,25 +18,45 @@ export default function CoachDetail({ navigation, route }) {
   if (loading) return <LoadingPage />;
   if (error) return <ErrorPage />;
 
-  console.log(coachName);
   return (
     <Box style={styles.container}>
       <Box style={styles.top}>
-        <Image
-          style={styles.imageBanner}
-          source={{
-            uri: data.getCoachDetail.imgCoach,
-          }}
-          alt="Alternate Text"
-          // size="xl"
-        />
+        <Box>
+          <Image
+            style={styles.imageBanner}
+            source={{
+              uri: data.getCoachDetail.imgCoach,
+            }}
+            alt="Alternate Text"
+          />
+        </Box>
         <Box style={styles.nameCoach}>
           <Heading>{data.getCoachDetail.name}</Heading>
-          <Heading> Age : {data.getCoachDetail.age}</Heading>
+          <Heading size="md"> Age : {data.getCoachDetail.age}</Heading>
         </Box>
+        ;
         <Box style={styles.bioCoach}>
-          <Text style={styles.textCoach}>{data.getCoachDetail.bio}</Text>
-          <Button
+          <HStack
+            marginTop="-5"
+            space={4}
+            mx={{
+              md: 0,
+            }}
+          >
+            <Badge
+              colorScheme="success"
+              _text={{
+                fontSize: 14,
+              }}
+            >
+              {data.getCoachDetail.bio}
+            </Badge>
+          </HStack>
+          <Text style={styles.textCoach}>
+            {data.getCoachDetail.description}
+          </Text>
+
+          {/* <Button
             w="100%"
             size="lg"
             colorScheme="gray"
@@ -51,7 +70,7 @@ export default function CoachDetail({ navigation, route }) {
             }
           >
             Start Chat Now
-          </Button>
+          </Button> */}
         </Box>
       </Box>
     </Box>
@@ -77,15 +96,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginRight: 30,
+    alignItems: "center",
   },
   bioCoach: {
     marginTop: 15,
     marginLeft: 30,
     marginRight: 30,
   },
+  titleBadge: {},
   textCoach: {
     textAlign: "justify",
-    fontSize: 16,
+    fontSize: 14,
+    marginTop: 15,
+    color: "gray",
   },
   chatButton: {
     position: "absolute",

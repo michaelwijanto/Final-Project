@@ -3,14 +3,11 @@ import { useEffect, useState } from "react";
 import {
   Box,
   FlatList,
-  Heading,
-  Avatar,
   HStack,
   VStack,
   Text,
   Spacer,
   Center,
-  NativeBaseProvider,
   Button,
   Modal,
   FormControl,
@@ -21,6 +18,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "native-base";
+
 import LoadingPage from "../components/LoadingPage";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
@@ -30,6 +28,7 @@ import {
   FontAwesome,
   MaterialIcons,
 } from "@expo/vector-icons";
+
 import { POST_USER_LOG } from "../../mutations";
 import ErrorPage from "../components/ErrorPage";
 
@@ -39,22 +38,24 @@ export default function Log({ navigation }) {
     customLoading: false,
     customError: null,
   });
+
   const [showModal, setShowModal] = useState(false);
   const [formLog, setFormLog] = useState({
     height: 0,
     weight: 0,
   });
+
   const [accessToken, setAccessToken] = useState(null);
   useEffect(async () => {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, []);
-  console.log({ accessToken });
+
   const { loading, data, error } = useQuery(GET_USER_LOGS, {
     variables: {
       accessToken: accessToken,
     },
   });
-  console.log({ loading, data, error });
+
   const [postUserLog, {}] = useMutation(POST_USER_LOG, {
     refetchQueries: [GET_USER_LOGS],
   });
@@ -62,7 +63,6 @@ export default function Log({ navigation }) {
     try {
       e.preventDefault();
       setCustomNotif({ ...customNotif, customLoading: true });
-      console.log({ formLog });
       const createLog = await postUserLog({
         variables: {
           accessToken,
@@ -70,8 +70,6 @@ export default function Log({ navigation }) {
           weight: formLog.weight,
         },
       });
-      console.log("ABIS CREATE");
-      console.log(createLog, "INIIIIIIII");
       if (createLog?.data?.postUserLog?.error)
         throw { name: "error create user log" };
       toast.show({
@@ -80,8 +78,6 @@ export default function Log({ navigation }) {
         description: "Your latest body development has been added",
       });
     } catch (err) {
-      console.log("MASUK ERROR");
-      console.log({ err });
       toast.show({
         title: "Please fill all update body Log",
         status: "error",
@@ -101,9 +97,12 @@ export default function Log({ navigation }) {
       </Center>
     );
   if (error) return <Text>Error Fetching Logs</Text>;
-  if (error || customNotif.customError) return <Center flex={1} px="3">
-  <ErrorPage />
-</Center>
+  if (error || customNotif.customError)
+    return (
+      <Center flex={1} px="3">
+        <ErrorPage />
+      </Center>
+    );
   return (
     <Box
       flex={1}
@@ -266,7 +265,9 @@ export default function Log({ navigation }) {
                 formLog.weight <= 160 &&
                 formLog.height >= 130 &&
                 formLog.height <= 230 ? (
-                  <Button onPress={onSubmitLog} colorScheme="lightBlue">Save</Button>
+                  <Button onPress={onSubmitLog} colorScheme="lightBlue">
+                    Save
+                  </Button>
                 ) : (
                   <Button colorScheme="gray">Save</Button>
                 )}

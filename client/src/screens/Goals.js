@@ -15,7 +15,7 @@ import {
   NativeBaseProvider,
   Select,
   Text,
-  Heading
+  Heading,
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo } from "@expo/vector-icons";
@@ -55,7 +55,7 @@ export default function Goals({ navigation, route }) {
         !weight
       )
         throw { name: "Bad request" };
-      console.log("LOLOS");
+
       const sendUserProfile = await postUserProfile({
         variables: {
           accessToken: await AsyncStorage.getItem("@access_token"),
@@ -68,8 +68,7 @@ export default function Goals({ navigation, route }) {
           goals,
         },
       });
-      console.log("DI SINI");
-      console.log({ sendUserProfile });
+
       navigation.navigate("ContentContainer");
     } catch (err) {
       console.log({ err });

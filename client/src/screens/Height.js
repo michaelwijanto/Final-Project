@@ -20,6 +20,7 @@ import { Entypo } from "@expo/vector-icons";
 export default function Height({ navigation, route }) {
   const [height, setHeight] = useState(0);
   const { phoneNumber, gender, dateBirth } = route.params.form;
+
   return (
     <NativeBaseProvider>
       <Center flex={1} px="3">
