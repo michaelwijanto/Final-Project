@@ -10,6 +10,7 @@ import { MaterialCommunityIcons, FontAwesome5, FontAwesome, MaterialIcons, Octic
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTION_TOKEN } from "../../queries";
 import LoadingPage from "../components/LoadingPage";
+import ErrorPage from "../components/ErrorPage";
 
 export default function Profile({ navigation }) {
   const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
@@ -64,7 +65,7 @@ export default function Profile({ navigation }) {
   console.log({ subscription });
   console.log({ loadingProfile, profile, errorProfile });
   if (loadingProfile) return <LoadingPage></LoadingPage>;
-  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
+  if (errorProfile) return <ErrorPage />;
   return (
     <Box
       style={styles.container}

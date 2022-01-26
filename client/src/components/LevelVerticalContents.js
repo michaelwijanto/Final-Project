@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function LevelFilter({ navigation, route }) {
   const { id } = route.params;
@@ -50,7 +51,7 @@ export default function LevelFilter({ navigation, route }) {
   });
 
   if (loading) return <LoadingPage></LoadingPage>;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
 
   let newData = [];
 

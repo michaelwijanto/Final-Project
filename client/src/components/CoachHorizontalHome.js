@@ -4,13 +4,13 @@ import { Box, Heading, AspectRatio, Image, Text, Stack, ChevronRightIcon, Avatar
 import { useQuery } from "@apollo/client";
 import { GET_COACHES } from "../../queries";
 import LoadingPage from "./LoadingPage";
-// import ErrorPage from "../components/errorPage";
+import ErrorPage from "./ErrorPage";
 
 export default function CoachHorizontal({ navigation }) {
   const { loading, error, data } = useQuery(GET_COACHES);
 
   if (loading) return <LoadingPage></LoadingPage>;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
   return (
     <FlatList
       horizontal
