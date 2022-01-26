@@ -38,7 +38,8 @@ beforeAll(async () =>{
       name: "Easy",
       thumbnail:
        "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
-      createdAt: new Date(),
+       description:"Medium",
+       createdAt: new Date(),
       updateedAt: new Date()
       
     },
@@ -46,6 +47,7 @@ beforeAll(async () =>{
       name: "Medium",
       thumbnail:
       "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+      description:"Medium",
       createdAt: new Date(),
       updateedAt: new Date()
     },
@@ -53,6 +55,7 @@ beforeAll(async () =>{
         name: "Hard",
         thumbnail:
         "https://media.istockphoto.com/vectors/woman-doing-exercise-with-speed-jumping-rope-in-3-step-vector-id1155709302?k=20&m=1155709302&s=612x612&w=0&h=aFuHgThusnLFaeSxfg40EWCSBsvosw-kxBhpLoA5kYg=",
+        description:"Medium",
         createdAt: new Date(),
         updateedAt: new Date()
     }
@@ -102,7 +105,61 @@ describe("GET /api/user-profiles", () => {
       .post("/api/user-profiles")
       .set("access_token", access_token)
       .send({
-        height: "170",
+        height: "150",
+        weight: "40",
+        activityLevel: "4",
+        phoneNumber: "081123123123",
+        subscription: "false",
+        gender: "male",
+        dateBirth: "30-12-2000",
+        goals: "weightlose",
+      })
+      .then((res) => {
+        const result = res.body;
+        console.log(result)
+        expect(res.status).toBe(201);
+        expect(result).toEqual(expect.any(Object));
+        expect(result).toHaveProperty("message");
+        done();
+      })
+      .catch((err) => {
+        console.log(er)
+      });
+  });
+
+  test("[postUserProfile - success]", (done) => {
+    request(app)
+      .post("/api/user-profiles")
+      .set("access_token", access_token)
+      .send({
+        height: "150",
+        weight: "50",
+        activityLevel: "4",
+        phoneNumber: "081123123123",
+        subscription: "false",
+        gender: "male",
+        dateBirth: "30-12-2000",
+        goals: "weightlose",
+      })
+      .then((res) => {
+        const result = res.body;
+       
+        expect(res.status).toBe(201);
+        expect(result).toEqual(expect.any(Object));
+        expect(result).toHaveProperty("message");
+        done();
+      })
+      .catch((err) => {
+        console.log(er)
+      });
+  });
+
+  test("[postUserProfile - success]", (done) => {
+    request(app)
+      .post("/api/user-profiles")
+      .set("access_token", access_token)
+      .send({
+        height: "150",
         weight: "80",
         activityLevel: "4",
         phoneNumber: "081123123123",
@@ -113,13 +170,14 @@ describe("GET /api/user-profiles", () => {
       })
       .then((res) => {
         const result = res.body;
+        console.log(result)
         expect(res.status).toBe(201);
         expect(result).toEqual(expect.any(Object));
         expect(result).toHaveProperty("message");
         done();
       })
       .catch((err) => {
-        console.log(er)
+        console.log(err)
       });
   });
 
@@ -258,7 +316,7 @@ test("[PATCH/api/user-profiles/updateSubs success] - should be return object wit
     .patch("/api/user-profiles/updateSubs")
     .set("access_token",access_token)
     .then((resp) =>{
-        console.log(resp.body)
+        
         expect(resp.status).toBe(200)
         expect(resp.body).toEqual(expect.any(Object))
         expect(resp.body).toHaveProperty("message")
