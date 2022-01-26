@@ -66,6 +66,7 @@ const resolvers = {
     getUserProfile: async (_, args) => {
       try {
         const { access_token } = args;
+        console.log({access_token});
         const { data: user } = await axios.get("http://localhost:3000/api/user-profiles", { headers: { access_token } });
         console.log(user);
         return user;

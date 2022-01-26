@@ -23,8 +23,12 @@ import {
 } from "native-base";
 import { GET_USER_LOGS } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  FontAwesome5,
+  FontAwesome,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { POST_USER_LOG } from "../../mutations";
 export default function Log({ navigation }) {
   const toast = useToast();
@@ -37,19 +41,19 @@ export default function Log({ navigation }) {
     height: 0,
     weight: 0,
   });
-  const [accessToken, setAccessToken] = useState(null)
+  const [accessToken, setAccessToken] = useState(null);
   useEffect(async () => {
-    setAccessToken(await AsyncStorage.getItem("@access_token"))
-  }, [])
-  console.log({accessToken});
+    setAccessToken(await AsyncStorage.getItem("@access_token"));
+  }, []);
+  console.log({ accessToken });
   const { loading, data, error } = useQuery(GET_USER_LOGS, {
     variables: {
-      accessToken: accessToken
+      accessToken: accessToken,
     },
-  })
+  });
   console.log({ loading, data, error });
   const [postUserLog, {}] = useMutation(POST_USER_LOG, {
-    refetchQueries: [GET_USER_LOGS]
+    refetchQueries: [GET_USER_LOGS],
   });
   const onSubmitLog = async (e) => {
     try {
@@ -106,6 +110,34 @@ export default function Log({ navigation }) {
             <HStack space={3} justifyContent="space-between">
               <VStack>
                 <Box style={{ flexDirection: "row" }}>
+                <FontAwesome5 name="heartbeat" size={24} color="black" />
+                  <Text
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    color="coolGray.800"
+                    bold
+                    style={{ marginLeft: 5 }}
+                  >
+                    {item.health}
+                  </Text>
+                </Box>
+                <Box style={{ flexDirection: "row", marginTop: 5 }}>
+                <FontAwesome name="dashboard" size={24} color="black" />
+                  <Text
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    color="coolGray.800"
+                    bold
+                    style={{ marginLeft: 5 }}
+                  >
+                    {item.bmi}
+                  </Text>
+                </Box>
+              </VStack>
+              <VStack>
+                <Box style={{ flexDirection: "row" }}>
                   <Text
                     _dark={{
                       color: "warmGray.50",
@@ -140,18 +172,18 @@ export default function Log({ navigation }) {
                   />
                 </Box>
               </VStack>
-              <Spacer />
-              <Text
-                fontSize="xs"
-                _dark={{
-                  color: "warmGray.50",
-                }}
-                color="coolGray.800"
-                alignSelf="flex-start"
-              >
-                {item.createdAt.split("").slice(0, 10).join("")}
-              </Text>
             </HStack>
+            <Spacer />
+            <Text
+              fontSize="xs"
+              _dark={{
+                color: "warmGray.50",
+              }}
+              color="coolGray.800"
+              alignSelf="center"
+            >
+              {item.createdAt.split("").slice(0, 10).join("")}
+            </Text>
           </Box>
         )}
         keyExtractor={(item) => item.id}
