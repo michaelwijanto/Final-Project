@@ -37,6 +37,7 @@ const typeDefs = gql`
   type AccessToken {
     access_token: String
     isRegister: String
+    subscription: String
     error: String
   }
 

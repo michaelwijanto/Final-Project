@@ -2,27 +2,22 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Pressable, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import {
-  Box,
-  Heading,
-  AspectRatio,
-  Image,
-  Text,
-  IconButton,
-  Icon,
-  Modal,
-  Button,
-} from "native-base";
+import { Box, Heading, AspectRatio, Image, Text, IconButton, Icon, Modal, Button } from "native-base";
 
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
-// import LoadingPage from "../components/loadingPage";
+import LoadingPage from "./LoadingPage";
 
 export default function ContentHorizontal({ navigation }) {
   const [access_token, setAccessToken] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [subscription, setSubscription] = useState(null);
+  useEffect(async () => {
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+  console.log({ SUBSCRIPTION: subscription });
 
   // Buat narik Access Token
   const getStorage = async () => {
@@ -50,10 +45,8 @@ export default function ContentHorizontal({ navigation }) {
     },
   });
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingPage />;
   if (error) return <Text>Error...</Text>;
-
-  const subscription = "false";
 
   const handleOnContent = (id) => {};
 
@@ -215,18 +208,12 @@ export default function ContentHorizontal({ navigation }) {
                           }}
                           onPress={() => setShowModal(true)}
                         ></IconButton>
-                        <Modal
-                          isOpen={showModal}
-                          onClose={() => setShowModal(false)}
-                        >
+                        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                           <Modal.Content maxWidth="300px" maxHeight="200px">
                             <Modal.CloseButton />
                             <Modal.Header>
                               Subscribe to continue
-                              <Button
-                                marginTop="2"
-                                onPress={() => handleSubs(false)}
-                              >
+                              <Button marginTop="2" onPress={() => handleSubs(false)}>
                                 Join
                               </Button>
                             </Modal.Header>

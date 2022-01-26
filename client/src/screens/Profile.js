@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Apollo Client
 import { useQuery } from "@apollo/client";
-import {
-  GET_USER_PROFILE, 
-  // GET_TRANSACTION_TOKEN
-} from "../../queries";
+import { GET_USER_PROFILE } from "../../queries";
 
 // Native Base
 import {
@@ -24,49 +21,36 @@ import {
 
 import {
   FontAwesome5,
-  FontAwesome,
-  Octicons
+  FontAwesome 
 } from "@expo/vector-icons";
 
+import LoadingPage from "../components/LoadingPage";
+
 export default function Profile({ navigation }) {
+  const [subscription, setSubscription] = useState(null);
   const [accessToken, setAccessToken] = useState('')
   
-  useEffect( async () => {
-    getStorage()
-  }, [])
-
-  const getStorage = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@access_token");
-      if (value !== null) {
-        // value previously stored
-        setAccessToken(value);
-      }
-    } catch (e) {
-      // error reading value
-      console.error(e);
-    }
-  };
-
-  // const { error: errorTransaction, data: tokenTransaction } = useQuery(GET_TRANSACTION_TOKEN, {
-  //   variables: {
-  //     accessToken
-  //   }
-  // })
-  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
+  const {
+    loading: loadingProfile,
+    data: profile,
+    error: errorProfile,
+  } = useQuery(GET_USER_PROFILE, {
     variables: {
       accessToken
     },
   });
 
+  useEffect( async () => {
+    setAccessToken(await AsyncStorage.getItem("@access_token"));
+    setSubscription(await AsyncStorage.getItem("@subscription"));
+  }, []);
+
   const handlePayment = () => {
-    navigation.navigate('SubcribePage', {
-      // token: tokenTransaction?.transactionToken.token
-    })    
+    navigation.navigate('SubcribePage')
   };
 
-  if(error) return <Text>Error Fetching User Profile</Text>
-
+  if (loadingProfile) return <LoadingPage></LoadingPage>;
+  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
   return (
     <Box
       style={styles.container}
@@ -76,72 +60,83 @@ export default function Profile({ navigation }) {
       }}
       _light={{ backgroundColor: "#F5F8FA" }}
     >
-    {
-      loading ? (
-        <Text>loading...</Text>
-      ) : (
-        <>
-          <Box style={styles.top}>
-            <HStack space={2}>
-              <Avatar
-                bg="purple.600"
-                alignSelf="center"
-                size="2xl"
-                source={{
-                  uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
-                }}
-              >
-                RB
-              </Avatar>
-              <VStack style={styles.section1}>
-                <Text style={styles.fullName}>{data?.getUserProfile?.UserProfile?.User?.fullName}</Text>
-                <Text style={styles.email}>{data?.getUserProfile?.UserProfile?.User?.email}</Text>
-                <HStack mt={2}>
-                  <Badge variant="solid" mr={2}>
-                    {data?.getUserProfile?.UserProfile?.Level?.name}
-                  </Badge>
-                  <Badge variant="subtle" colorScheme="info">
-                    {data?.getUserProfile?.UserProfile?.goals}
-                  </Badge>
-                </HStack>
-              </VStack>
+      <Box style={styles.top}>
+        <HStack space={2}>
+          <Avatar
+            bg="purple.600"
+            alignSelf="center"
+            size="2xl"
+            source={{
+              uri: "https://divedigital.id/wp-content/uploads/2021/10/1-min.png",
+            }}
+          >
+            RB
+          </Avatar>
+          <VStack style={styles.section1}>
+            <Text style={styles.fullName}>{profile.getUserProfile.UserProfile.User.fullName}</Text>
+            <Text style={styles.email}>{profile.getUserProfile.UserProfile.User.email}</Text>
+            <HStack mt={2}>
+              <Badge variant="solid" mr={2}>
+                {profile.getUserProfile.UserProfile.Level.name}
+              </Badge>
+              <Badge variant="subtle" colorScheme="info">
+                {profile.getUserProfile.UserProfile.goals}
+              </Badge>
             </HStack>
-          </Box>
-          <ScrollView style={styles.section2}>
-            <Center>
+          </VStack>
+        </HStack>
+      </Box>
+      <ScrollView style={styles.section2}>
+        <Center>
+          {subscription === "false" ? (
+            <Fragment>
               <Text style={styles.price}>Rp. 199,000</Text>
+              <Button w="100%" size="lg" colorScheme="lightBlue" onPress={() => handlePayment()}>
+                Subscribe Now
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Text style={styles.price}>
+                PRO <FontAwesome5 name="crown" size={35} color="#FFE162" />
+              </Text>
               <Button
                 w="100%"
                 size="lg"
                 colorScheme="gray"
-                onPress={() => handlePayment()}
+                // onPress={() => handlePayment()}
               >
-                Subscribe Now
+                Unsubscribe
               </Button>
-            </Center>
-            <Box style={styles.boxPrograms}>
-              <Box style={styles.textBoxPrograms}>
-                <Text style={styles.textPrograms}>YOUR STATS</Text>
-              </Box>
-              <Box style={styles.programsCard}>
-              <Box style={styles.programsCardFlex}>
-              <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
-              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.bmi}</Text>
-              </Box>
-              <Box style={styles.programsCardFlex}>
-              <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
-              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.health}</Text>
-              </Box>
-              <Box style={styles.programsCardFlex}>
-              <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
-              <Text style={styles.textViewAll}>{data?.getUserProfile?.UserProfile?.healthy_bmi_range}</Text>
-              </Box>
-              </Box>
+            </Fragment>
+          )}
+        </Center>
+        <Box style={styles.boxPrograms}>
+          <Box style={styles.textBoxPrograms}>
+            <Text style={styles.textPrograms}>YOUR STATS</Text>
+          </Box>
+          <Box style={styles.programsCard}>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome name="dashboard" size={18} color="blue" /> BMI
+              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.bmi}</Text>
             </Box>
-          </ScrollView>
-        </>   
-      )
-    }
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome5 name="heartbeat" size={18} color="#DA1212" /> HEALTH
+              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.health}</Text>
+            </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome name="bar-chart-o" size={18} color="blue" /> HEALTHY BMI RANGE
+              </Text>
+              <Text style={styles.textViewAll}>{profile.getUserProfile.UserProfile.healthy_bmi_range}</Text>
+            </Box>
+          </Box>
+        </Box>
+      </ScrollView>
     </Box>
   );
 }
@@ -204,7 +199,7 @@ const styles = StyleSheet.create({
     marginLeft: 98,
     fontSize: 20,
     color: "#1C2F3C",
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
   },
   textViewAll: {
     paddingTop: 12,
@@ -214,8 +209,8 @@ const styles = StyleSheet.create({
   programsCard: {
     paddingLeft: 18,
   },
-  programsCardFlex:{
+  programsCardFlex: {
     flexDirection: "row",
     justifyContent: "space-between",
-  }
+  },
 });

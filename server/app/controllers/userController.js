@@ -22,7 +22,7 @@ class UserController {
       isActivated: "false",
     };
 
-    console.log({newUser});
+    console.log({ newUser });
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -82,13 +82,14 @@ class UserController {
       };
       const token = sign(payload);
       let subscription;
-      const profile = await UserProfile.findOne({where: {UserId: user.id}})
-      if(!profile || profile.subscription === "false") subscription = "false"
-      subscription = "true"
+      const profile = await UserProfile.findOne({ where: { UserId: user.id } });
+      if (!profile) subscription = "false";
+      if (profile) subscription = profile.subscription;
+      console.log({ profile }, "<<<<<<<<");
       res.status(200).json({
         access_token: token,
         isRegister: user.isRegister,
-        subscription
+        subscription: subscription,
       });
     } catch (err) {
       next(err);
