@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CONTENT_CARD } from "../../queries";
 // import ErrorPage from "../components/errorPage";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function ContentHorizontal({ navigation }) {
   const [access_token, setAccessToken] = useState("");
@@ -46,7 +47,7 @@ export default function ContentHorizontal({ navigation }) {
   });
 
   if (loading) return <LoadingPage />;
-  if (error) return <Text>Error...</Text>;
+  if (error) return <ErrorPage />;
 
   const handleOnContent = (id) => {};
 
