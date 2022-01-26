@@ -14,36 +14,34 @@ import {
   Center,
   ScrollView,
 } from "native-base";
-import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../queries";
 import {
   MaterialCommunityIcons,
   FontAwesome5,
   FontAwesome,
   MaterialIcons,
-  Octicons
+  Octicons,
 } from "@expo/vector-icons";
 
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTION_TOKEN } from "../../queries";
 
 export default function Profile({ navigation }) {
-  const [accessToken, setAccessToken] = useState('')
   const { loading, error, data } = useQuery(GET_TRANSACTION_TOKEN, {
     variables: {
-      accessToken
-    }
-  })
+      accessToken,
+    },
+  });
 
   useEffect(() => {
-    getStorage()
-  }, [])
+    getStorage();
+  }, []);
 
   const handlePayment = (price) => {
     console.log(price);
-    navigation.navigate('PaymentScreen', {
-      token: data.transactionToken.token
-    })    
+    navigation.navigate("PaymentScreen", {
+      token: data.transactionToken.token,
+    });
   };
 
   const getStorage = async () => {
@@ -51,7 +49,7 @@ export default function Profile({ navigation }) {
       const value = await AsyncStorage.getItem("@access_token");
       if (value !== null) {
         // value previously stored
-        setAccessToken(value)
+        setAccessToken(value);
       }
     } catch (e) {
       // error reading value
@@ -64,15 +62,19 @@ export default function Profile({ navigation }) {
     setAccessToken(await AsyncStorage.getItem("@access_token"));
   }, []);
   console.log({ accessToken });
-  const { loading, data, error } = useQuery(GET_USER_PROFILE, {
+  const {
+    loading: loadingProfile,
+    data: profile,
+    error: errorProfile,
+  } = useQuery(GET_USER_PROFILE, {
     variables: {
       accessToken: accessToken,
     },
   });
 
-  console.log({loading, data, error});
-  if(loading) return <Text>Loading...</Text>
-  if(error) return <Text>Error Fetching User Profile</Text>
+  console.log({ loadingProfile, profile, errorProfile });
+  if (loadingProfile) return <Text>Loading...</Text>;
+  if (errorProfile) return <Text>Error Fetching User Profile</Text>;
   return (
     <Box
       style={styles.container}
@@ -95,14 +97,18 @@ export default function Profile({ navigation }) {
             RB
           </Avatar>
           <VStack style={styles.section1}>
-            <Text style={styles.fullName}>{data.getUserProfile.UserProfile.User.fullName}</Text>
-            <Text style={styles.email}>{data.getUserProfile.UserProfile.User.email}</Text>
+            <Text style={styles.fullName}>
+              {profile.getUserProfile.UserProfile.User.fullName}
+            </Text>
+            <Text style={styles.email}>
+              {profile.getUserProfile.UserProfile.User.email}
+            </Text>
             <HStack mt={2}>
               <Badge variant="solid" mr={2}>
-                {data.getUserProfile.UserProfile.Level.name}
+                {profile.getUserProfile.UserProfile.Level.name}
               </Badge>
               <Badge variant="subtle" colorScheme="info">
-                {data.getUserProfile.UserProfile.goals}
+                {profile.getUserProfile.UserProfile.goals}
               </Badge>
             </HStack>
           </VStack>
@@ -125,18 +131,31 @@ export default function Profile({ navigation }) {
             <Text style={styles.textPrograms}>YOUR STATS</Text>
           </Box>
           <Box style={styles.programsCard}>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome name="dashboard" size={18} color="black" /> BMI</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.bmi}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.health}</Text>
-          </Box>
-          <Box style={styles.programsCardFlex}>
-          <Text style={styles.textViewAll}><Octicons name="dash" size={18} color="black" /> HEALTHY BMI RANGE</Text>
-          <Text style={styles.textViewAll}>{data.getUserProfile.UserProfile.healthy_bmi_range}</Text>
-          </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome name="dashboard" size={18} color="black" /> BMI
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.bmi}
+              </Text>
+            </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <FontAwesome5 name="heartbeat" size={18} color="black" /> HEALTH
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.health}
+              </Text>
+            </Box>
+            <Box style={styles.programsCardFlex}>
+              <Text style={styles.textViewAll}>
+                <Octicons name="dash" size={18} color="black" /> HEALTHY BMI
+                RANGE
+              </Text>
+              <Text style={styles.textViewAll}>
+                {profile.getUserProfile.UserProfile.healthy_bmi_range}
+              </Text>
+            </Box>
           </Box>
         </Box>
       </ScrollView>
@@ -202,7 +221,7 @@ const styles = StyleSheet.create({
     marginLeft: 98,
     fontSize: 20,
     color: "#1C2F3C",
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
   },
   textViewAll: {
     paddingTop: 12,
@@ -212,8 +231,8 @@ const styles = StyleSheet.create({
   programsCard: {
     paddingLeft: 18,
   },
-  programsCardFlex:{
+  programsCardFlex: {
     flexDirection: "row",
     justifyContent: "space-between",
-  }
+  },
 });

@@ -1,3 +1,4 @@
+const e = require("express");
 const { UserContent, User, Content, UserProfile, Log } = require("../models");
 
 class UserContentsController {
@@ -126,112 +127,120 @@ class UserContentsController {
       // Ambil Total Content Base current user level
       // console.log(levelUser);
       const LevelId = levelUser.LevelId;
-      const content = await Content.findAll({
+
+      await UserContent.update(
+        {
+          status: "finish",
+        },
+        {
+          where: {
+            UserId,
+            ContentId,
+          },
+        }
+      );
+
+      //Ambil Total Array yang sesuai sama Level User
+      const contentLenght = await Content.count({
         where: {
           LevelId,
         },
       });
-      const lastContentId = content[content.length - 1].id;
+
+      //Ambil Data User Content
+      const contentUser = await UserContent.findAndCountAll({
+        where: {
+          UserId,
+        },
+      });
+
       let message;
       let code;
 
-      // compare content base User content
-      if (lastContentId !== findContent.ContentId) {
-        // Update content
-        await UserContent.update(
-          {
-            status: "finish",
-          },
-          {
-            where: {
-              UserId,
-              ContentId,
-            },
-          }
-        );
+      if (contentUser.count !== contentLenght) {
         code = 200;
         message = `Congrats! You finished! Go to the next exercise..`;
       } else {
-        // Update Status User Content
-        await UserContent.update(
-          {
-            status: "finish",
-          },
-          {
+        console.log("sama");
+        if (
+          contentUser.rows.find((content) => content.status === "started") !==
+          undefined
+        ) {
+          console.log("masih ada started");
+          code = 200;
+          message = `Congrats! You finished! Go to the next exercise..`;
+        } else {
+          console.log("masuk ke finish semua");
+          // Find Level
+          const findLevel = await UserProfile.findOne({
             where: {
               UserId,
-              ContentId,
             },
-          }
-        );
-
-        // Find Level
-        const findLevel = await UserProfile.findOne({
-          where: {
-            UserId,
-          },
-        });
-
-        // Condition
-        const getLog = await Log.findOne({
-          where: {
-            UserId,
-          },
-        });
-
-        if (findLevel.LevelId === 3) {
-          code = 200;
-          message = `Congrats! You reach maximum Level!`;
-        } else {
-          if (findLevel.LevelId === 2) {
-            // Update Profile
-            const profile = await UserProfile.update(
-              {
-                LevelId: 3,
-              },
-              {
-                where: {
-                  UserId,
-                },
-                returning: true,
-              }
-            );
-
-            // Post Log History
-            await Log.create({
-              height: getLog.height,
-              weight: getLog.weight,
-              activityLevel: getLog.activityLevel,
+          });
+          // Condition
+          const getLog = await Log.findOne({
+            where: {
               UserId,
-              LevelId: 3,
-            });
-
+            },
+          });
+          if (findLevel.LevelId === 3) {
             code = 200;
-            message = `Congrats, You did It! You level up to Hard Level!`;
+            message = `Congrats! You reach maximum Level!`;
           } else {
-            await UserProfile.update(
-              {
-                LevelId: 2,
-              },
-              {
-                where: {
-                  UserId,
+            if (findLevel.LevelId === 2) {
+              // Update Profile
+              await UserProfile.update(
+                {
+                  LevelId: 3,
                 },
-              }
-            );
+                {
+                  where: {
+                    UserId,
+                  },
+                  returning: true,
+                }
+              );
 
-            // Post Log History
-            console.log(getLog, "masuk");
-            await Log.create({
-              height: getLog.height,
-              weight: getLog.weight,
-              activityLevel: getLog.activityLevel,
-              UserId,
-              LevelId: 2,
-            });
+              // Post Log History
+              await Log.create({
+                height: getLog.height,
+                weight: getLog.weight,
+                activityLevel: getLog.activityLevel,
+                bmi: getLog.bmi,
+                health: getLog.health,
+                UserId,
+                LevelId: 3,
+              });
 
-            code = 200;
-            message = `Congrats, You did It! You level up to Medium Level!`;
+              code = 200;
+              message = `Congrats, You did It! You level up to Hard Level!`;
+            } else {
+              await UserProfile.update(
+                {
+                  LevelId: 2,
+                },
+                {
+                  where: {
+                    UserId,
+                  },
+                }
+              );
+
+              // Post Log History
+              console.log(getLog, "masuk");
+              await Log.create({
+                height: getLog.height,
+                weight: getLog.weight,
+                activityLevel: getLog.activityLevel,
+                bmi: getLog.bmi,
+                health: getLog.health,
+                UserId,
+                LevelId: 2,
+              });
+
+              code = 200;
+              message = `Congrats, You did It! You level up to Medium Level!`;
+            }
           }
         }
       }
